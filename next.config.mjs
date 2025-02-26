@@ -1,11 +1,9 @@
 import createNextIntlPlugin from "next-intl/plugin";
 
-const locales = ["en", "es", "fr", "de"];
-const defaultLocale = "en";
-
 const nextConfig = {
+  serverExternalPackages: ["mongoose"],
   experimental: {
-    serverComponentsExternalPackages: ["mongoose"],
+    typedRoutes: true,
   },
   images: {
     domains: ["localhost"],
@@ -19,9 +17,7 @@ const nextConfig = {
   output: "standalone",
 };
 
-const withNextIntl = createNextIntlPlugin({
-  locales,
-  defaultLocale,
-});
+// Use the default location for the request config (i18n/request.ts)
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 export default withNextIntl(nextConfig);

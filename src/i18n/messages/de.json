@@ -1,0 +1,48 @@
+{
+  "app": {
+    "name": "Scaffold",
+    "description": "Eine moderne Full-Stack-Vorlage"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "dashboard": "Dashboard",
+    "profile": "Profil",
+    "signIn": "Anmelden",
+    "signOut": "Abmelden"
+  },
+  "auth": {
+    "signIn": "Anmelden",
+    "signOut": "Abmelden",
+    "emailPlaceholder": "E-Mail-Adresse eingeben",
+    "emailLabel": "E-Mail",
+    "submit": "Weiter",
+    "sendLink": "Magic Link senden",
+    "checkEmail": "Überprüfen Sie Ihre E-Mails",
+    "emailSent": "Wir haben einen Link an {email} gesendet",
+    "verify": "Überprüfung Ihrer Anmeldung...",
+    "success": "Erfolgreich angemeldet!",
+    "error": "Etwas ist schiefgelaufen",
+    "invalidLink": "Ungültiger oder abgelaufener Link",
+    "tryAgain": "Erneut versuchen"
+  },
+  "dashboard": {
+    "welcome": "Willkommen in Ihrem Dashboard",
+    "description": "Dies ist eine geschützte Seite, auf die nur authentifizierte Benutzer zugreifen können."
+  },
+  "home": {
+    "title": "Willkommen bei {appName}",
+    "description": "Eine moderne Full-Stack-Vorlage mit Authentifizierung, Internationalisierung und sofort einsetzbaren Komponenten.",
+    "getStarted": "Loslegen"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "create": "Erstellen",
+    "submit": "Absenden"
+  }
+}

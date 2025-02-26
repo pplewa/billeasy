@@ -1,11 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Locale } from "@/i18n";
+import { Link, Locale, usePathname } from "@/i18n/routing";
 import useAuthStore from "@/store/auth-store";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function MainNav() {
   const t = useTranslations("navigation");
@@ -38,21 +36,19 @@ export default function MainNav() {
     <header className="border-b sticky top-0 z-40 bg-white">
       <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href={`/${locale}`} className="text-xl font-bold">
+          <Link href="/" className="text-xl font-bold">
             Scaffold
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link
-              href={`/${locale}`}
-              className={`text-sm ${
-                pathname === `/${locale}` ? "font-medium" : ""
-              }`}
+              href="/"
+              className={`text-sm ${pathname === "/" ? "font-medium" : ""}`}
             >
               {t("home")}
             </Link>
             {user && (
               <Link
-                href={`/${locale}/dashboard`}
+                href="/dashboard"
                 className={`text-sm ${
                   pathname.includes("/dashboard") ? "font-medium" : ""
                 }`}
@@ -74,7 +70,7 @@ export default function MainNav() {
             </div>
           ) : (
             <Button variant="outline" size="sm" asChild>
-              <Link href={`/${locale}/signin`}>{t("signIn")}</Link>
+              <Link href="/signin">{t("signIn")}</Link>
             </Button>
           )}
           <LanguageSwitcher />
@@ -88,9 +84,6 @@ function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
 
-  // Get path without the locale prefix
-  const pathnameWithoutLocale = pathname.replace(`/${locale}`, "") || "/";
-
   const languages: Record<Locale, { name: string; flag: string }> = {
     en: { name: "English", flag: "🇺🇸" },
     es: { name: "Español", flag: "🇪🇸" },
@@ -103,7 +96,8 @@ function LanguageSwitcher() {
       {Object.entries(languages).map(([lang, { name, flag }]) => (
         <Link
           key={lang}
-          href={`/${lang}${pathnameWithoutLocale}`}
+          href={pathname}
+          locale={lang as Locale}
           className={`text-xs px-2 py-1 rounded-md ${
             locale === lang ? "bg-gray-100 font-medium" : "hover:bg-gray-50"
           }`}

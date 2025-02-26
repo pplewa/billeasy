@@ -1,4 +1,4 @@
-import { Locale } from "@/i18n";
+import { Locale } from "@/i18n/routing";
 import nodemailer, { TransportOptions } from "nodemailer";
 
 // Get email configuration from environment variables
@@ -125,6 +125,7 @@ export async function sendMagicLinkEmail(
   const html = htmls[locale] || htmls.en;
 
   // Send the email
+  console.log({ text });
   const info = await transporter.sendMail({
     from: `"Scaffold" <${EMAIL_FROM}>`,
     to,

@@ -1,6 +1,6 @@
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
-import { defaultLocale, locales } from "./i18n";
+import { defaultLocale, routing } from "./i18n/routing";
 
 // Define the paths that don't require authentication
 const publicPaths = ["/", "/signin", "/verify"];
@@ -13,17 +13,13 @@ const isPublicPath = (path: string): boolean => {
 };
 
 // Create the next-intl middleware
-const intlMiddleware = createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix: "always",
-});
+const i18nMiddleware = createMiddleware(routing);
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Normalize the pathname to remove locale
-  const pathnameWithoutLocale = locales.some(
+  const pathnameWithoutLocale = routing.locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
     ? pathname.replace(/^\/[^\/]+/, "") || "/"
@@ -48,7 +44,7 @@ export default async function middleware(request: NextRequest) {
   }
 
   // Otherwise, apply the intl middleware
-  return intlMiddleware(request);
+  return i18nMiddleware(request);
 }
 
 export const config = {

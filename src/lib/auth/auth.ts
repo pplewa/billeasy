@@ -1,4 +1,4 @@
-import { Locale } from "@/i18n";
+import { Locale } from "@/i18n/routing";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
