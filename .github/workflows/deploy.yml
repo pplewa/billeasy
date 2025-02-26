@@ -1,0 +1,115 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+        env:
+          # Set production env vars for the build
+          NODE_ENV: production
+          # Use placeholder values for build-time env vars
+          MONGODB_URI: mongodb://placeholder:27017/scaffold
+          JWT_SECRET: placeholder-jwt-secret
+          SMTP_HOST: placeholder-smtp-host
+          SMTP_PORT: 587
+          SMTP_USER: placeholder-smtp-user
+          SMTP_PASS: placeholder-smtp-pass
+          EMAIL_FROM: noreply@example.com
+          NEXT_PUBLIC_APP_URL: https://example.com
+
+      - name: Build Docker image
+        run: |
+          docker build -t scaffold:${{ github.sha }} .
+          docker save scaffold:${{ github.sha }} | gzip > scaffold-image.tar.gz
+
+      - name: Upload Docker image as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-image
+          path: scaffold-image.tar.gz
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: docker-image
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - name: Deploy to server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          CONTAINER_PORT: ${{ secrets.CONTAINER_PORT || 3000 }}
+          HOST_PORT: ${{ secrets.HOST_PORT || 3000 }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+        run: |
+          # Transfer Docker image to server
+          scp scaffold-image.tar.gz $SSH_USER@$SSH_HOST:/tmp/
+
+          # SSH into server, load and run Docker image
+          ssh $SSH_USER@$SSH_HOST << 'EOL'
+            # Load Docker image
+            docker load < /tmp/scaffold-image.tar.gz
+            
+            # Stop and remove the existing container if it exists
+            docker stop scaffold || true
+            docker rm scaffold || true
+            
+            # Run the new container
+            docker run -d \
+              --name scaffold \
+              -p $HOST_PORT:$CONTAINER_PORT \
+              -e NODE_ENV=production \
+              -e MONGODB_URI=$MONGODB_URI \
+              -e JWT_SECRET=$JWT_SECRET \
+              -e SMTP_HOST=$SMTP_HOST \
+              -e SMTP_PORT=$SMTP_PORT \
+              -e SMTP_USER=$SMTP_USER \
+              -e SMTP_PASS=$SMTP_PASS \
+              -e EMAIL_FROM=$EMAIL_FROM \
+              -e NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL \
+              --restart unless-stopped \
+              scaffold:${{ github.sha }}
+            
+            # Clean up
+            rm /tmp/scaffold-image.tar.gz
+          EOL
