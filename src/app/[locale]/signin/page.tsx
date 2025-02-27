@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
-export default function SignInPage() {
+function SignInContent() {
   const t = useTranslations("auth");
+  const tCommon = useTranslations("common");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSent, setIsSent] = useState(false);
@@ -50,8 +51,8 @@ export default function SignInPage() {
         <h1 className="text-2xl font-bold mb-6">{t("checkEmail")}</h1>
         <p className="mb-4">{t("emailSent", { email })}</p>
         <p className="text-sm text-gray-500">
-          The link will expire in 30 minutes. If you don't see the email, check
-          your spam folder.
+          The link will expire in 30 minutes. If you don&apos;t see the email,
+          check your spam folder.
         </p>
       </div>
     );
@@ -83,9 +84,26 @@ export default function SignInPage() {
         </div>
 
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? t("loading") : t("sendLink")}
+          {isLoading ? tCommon("loading") : t("sendLink")}
         </Button>
       </form>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-sm border">
+          <h1 className="text-2xl font-bold mb-6">Loading...</h1>
+          <div className="flex justify-center my-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        </div>
+      }
+    >
+      <SignInContent />
+    </Suspense>
   );
 }

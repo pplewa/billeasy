@@ -1,8 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Suspense } from "react";
 
-export default function DashboardPage() {
+function DashboardContent() {
   const t = useTranslations("dashboard");
 
   return (
@@ -55,5 +56,24 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-4xl mx-auto">
+          <div className="h-8 w-48 bg-gray-200 rounded animate-pulse mb-6"></div>
+          <div className="h-4 w-full bg-gray-200 rounded animate-pulse mb-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-gray-100 border rounded-lg p-6 h-64"></div>
+            <div className="bg-gray-100 border rounded-lg p-6 h-64"></div>
+          </div>
+        </div>
+      }
+    >
+      <DashboardContent />
+    </Suspense>
   );
 }
