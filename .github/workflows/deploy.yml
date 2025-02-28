@@ -78,9 +78,9 @@ jobs:
       - name: Deploy containers
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USERNAME }}
-          password: ${{ secrets.DEPLOY_PASSWORD }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_HOST }}
+          password: ${{ secrets.SERVER_HOST }}
           script: |
             cd /home/ubuntu/scaffold
             docker load < scaffold-image_${{ github.sha }}.tar
