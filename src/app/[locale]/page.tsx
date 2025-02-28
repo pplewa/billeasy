@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { Suspense } from "react";
 
-export default function HomePage() {
+function HomeContent() {
   const t = useTranslations("home");
   const appT = useTranslations("app");
   const appName = appT("name");
@@ -59,5 +60,19 @@ function FeatureCard({
       <h3 className="text-lg font-medium mb-2">{title}</h3>
       <p className="text-gray-600">{description}</p>
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center min-h-[50vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
   );
 }

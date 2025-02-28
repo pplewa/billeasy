@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/auth-store";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function VerifyPage() {
+function VerifyContent() {
   const t = useTranslations("auth");
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -93,5 +93,22 @@ export default function VerifyPage() {
         </>
       )}
     </div>
+  );
+}
+
+export default function VerifyPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-sm border text-center">
+          <h1 className="text-2xl font-bold mb-4">Verifying...</h1>
+          <div className="flex justify-center my-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        </div>
+      }
+    >
+      <VerifyContent />
+    </Suspense>
   );
 }

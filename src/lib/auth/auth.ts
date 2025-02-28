@@ -117,18 +117,18 @@ export async function verifyAuthToken(token: string): Promise<AuthResult> {
   // Generate a JWT for the authenticated session
   const authToken = jwt.sign(
     {
-      sub: user._id.toString(),
+      sub: String(user._id),
       email: user.email,
       role: user.role,
     },
     JWT_SECRET,
-    { expiresIn: JWT_EXPIRES_IN }
+    { expiresIn: JWT_EXPIRES_IN as string } as jwt.SignOptions
   );
 
   return {
     success: true,
     user: {
-      id: user._id.toString(),
+      id: String(user._id),
       email: user.email,
       name: user.name,
       image: user.image,
@@ -141,8 +141,8 @@ export async function verifyAuthToken(token: string): Promise<AuthResult> {
 /**
  * Set the authentication token in a cookie
  */
-export function setAuthCookie(authToken: string): void {
-  const cookieStore = cookies();
+export async function setAuthCookie(authToken: string): Promise<void> {
+  const cookieStore = await cookies();
 
   cookieStore.set("authToken", authToken, {
     httpOnly: true,
@@ -156,8 +156,8 @@ export function setAuthCookie(authToken: string): void {
 /**
  * Remove the authentication cookie
  */
-export function removeAuthCookie(): void {
-  const cookieStore = cookies();
+export async function removeAuthCookie(): Promise<void> {
+  const cookieStore = await cookies();
   cookieStore.delete("authToken");
 }
 
@@ -165,7 +165,7 @@ export function removeAuthCookie(): void {
  * Get the current authenticated user from the JWT
  */
 export async function getCurrentUser(): Promise<UserInfo | null> {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const authToken = cookieStore.get("authToken")?.value;
 
   if (!authToken || !JWT_SECRET) {
@@ -183,7 +183,7 @@ export async function getCurrentUser(): Promise<UserInfo | null> {
     }
 
     return {
-      id: user._id.toString(),
+      id: String(user._id),
       email: user.email,
       name: user.name,
       image: user.image,

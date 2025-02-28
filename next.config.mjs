@@ -2,9 +2,6 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig = {
   serverExternalPackages: ["mongoose"],
-  experimental: {
-    typedRoutes: true,
-  },
   images: {
     domains: ["localhost"],
     remotePatterns: [
