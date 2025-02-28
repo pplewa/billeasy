@@ -40,28 +40,28 @@ jobs:
           docker build -t scaffold:${{ github.sha }} .
           docker save scaffold:${{ github.sha }} > scaffold-image_${{ github.sha }}.tar
 
-      - name: List files in the repository
-        run: |
-          ls .
+      # - name: List files in the repository
+      #   run: |
+      #     ls .
 
-      - name: Upload backend image artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: scaffold-image
-          path: scaffold-image_${{ github.sha }}.tar
+      # - name: Upload backend image artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: scaffold-image
+      #     path: scaffold-image_${{ github.sha }}.tar
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main'
 
-    steps:
-     # Download artifacts
-      - name: Download image
-        uses: actions/download-artifact@v4
-        with:
-          name: scaffold-image
-          path: .
+  #   steps:
+  #    # Download artifacts
+  #     - name: Download image
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: scaffold-image
+  #         path: .
 
       # Deploy to server
       - name: Copy files to server
