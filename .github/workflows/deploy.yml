@@ -40,6 +40,10 @@ jobs:
           docker build -t scaffold:${{ github.sha }} .
           docker save scaffold:${{ github.sha }} > scaffold-image_${{ github.sha }}.tar
 
+      - name: List files in the repository
+        run: |
+          ls .
+
       - name: Upload backend image artifact
         uses: actions/upload-artifact@v4
         with:
