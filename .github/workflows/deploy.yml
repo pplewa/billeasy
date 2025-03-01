@@ -31,8 +31,8 @@ jobs:
           SMTP_PORT=587
           SMTP_USER=${{ secrets.SMTP_USER }}
           SMTP_PASS=${{ secrets.SMTP_PASS }}
-          EMAIL_FROM=billeasy@plewa.au
-          NEXT_PUBLIC_APP_URL=http://15.235.193.214:3001
+          EMAIL_FROM=team@billeasy.online
+          NEXT_PUBLIC_APP_URL=https://billeasy.online
           EOF
 
       - name: Build Docker image
@@ -89,7 +89,7 @@ jobs:
             # Run the new container
             docker run -d \
               --name billeasy \
-              -p 3001:3000 \
+              -p 3002:3000 \
               -e NODE_ENV=production \
               --restart unless-stopped \
               billeasy:${{ github.sha }}
