@@ -1,4 +1,4 @@
-# Next.js Scaffold Project
+# Next.js Bill Easy Project
 
 A modern, full-stack starter template with authentication, internationalization, and ready-to-use components.
 
@@ -27,8 +27,8 @@ A modern, full-stack starter template with authentication, internationalization,
 1. Clone this repository
 
    ```bash
-   git clone https://github.com/yourusername/scaffold.git
-   cd scaffold
+   git clone https://github.com/yourusername/billeasy.git
+   cd billeasy
    ```
 
 2. Install dependencies
@@ -41,7 +41,7 @@ A modern, full-stack starter template with authentication, internationalization,
 
    ```
    # MongoDB
-   MONGODB_URI=mongodb://localhost:27017/scaffold
+   MONGODB_URI=mongodb://localhost:27017/billeasy
 
    # Authentication
    JWT_SECRET=your-jwt-secret

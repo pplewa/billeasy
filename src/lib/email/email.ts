@@ -52,23 +52,23 @@ export async function sendMagicLinkEmail(
 
   // Get subject and text based on locale
   const subjects: EmailContent = {
-    en: "Your Sign-In Link for Scaffold",
-    es: "Tu Enlace de Inicio de Sesión para Scaffold",
-    fr: "Votre Lien de Connexion pour Scaffold",
-    de: "Ihr Anmeldelink für Scaffold",
+    en: "Your Sign-In Link for Bill Easy",
+    es: "Tu Enlace de Inicio de Sesión para Bill Easy",
+    fr: "Votre Lien de Connexion pour Bill Easy",
+    de: "Ihr Anmeldelink für Bill Easy",
   };
 
   const texts: EmailContent = {
-    en: `Hello,\n\nClick the link below to sign in to your account:\n\n${url}\n\nThis link will expire in 30 minutes.\n\nIf you did not request this email, please ignore it.\n\nThanks,\nThe Scaffold Team`,
-    es: `Hola,\n\nHaz clic en el enlace de abajo para iniciar sesión en tu cuenta:\n\n${url}\n\nEste enlace caducará en 30 minutos.\n\nSi no has solicitado este correo, por favor ignóralo.\n\nGracias,\nEl Equipo de Scaffold`,
-    fr: `Bonjour,\n\nCliquez sur le lien ci-dessous pour vous connecter à votre compte:\n\n${url}\n\nCe lien expirera dans 30 minutes.\n\nSi vous n'avez pas demandé cet e-mail, veuillez l'ignorer.\n\nCordialement,\nL'équipe Scaffold`,
-    de: `Hallo,\n\nKlicken Sie auf den untenstehenden Link, um sich in Ihrem Konto anzumelden:\n\n${url}\n\nDieser Link läuft in 30 Minuten ab.\n\nWenn Sie diese E-Mail nicht angefordert haben, ignorieren Sie sie bitte.\n\nDanke,\nDas Scaffold-Team`,
+    en: `Hello,\n\nClick the link below to sign in to your account:\n\n${url}\n\nThis link will expire in 30 minutes.\n\nIf you did not request this email, please ignore it.\n\nThanks,\nThe Bill Easy Team`,
+    es: `Hola,\n\nHaz clic en el enlace de abajo para iniciar sesión en tu cuenta:\n\n${url}\n\nEste enlace caducará en 30 minutos.\n\nSi no has solicitado este correo, por favor ignóralo.\n\nGracias,\nEl Equipo de Bill Easy`,
+    fr: `Bonjour,\n\nCliquez sur le lien ci-dessous pour vous connecter à votre compte:\n\n${url}\n\nCe lien expirera dans 30 minutes.\n\nSi vous n'avez pas demandé cet e-mail, veuillez l'ignorer.\n\nCordialement,\nL'équipe Bill Easy`,
+    de: `Hallo,\n\nKlicken Sie auf den untenstehenden Link, um sich in Ihrem Konto anzumelden:\n\n${url}\n\nDieser Link läuft in 30 Minuten ab.\n\nWenn Sie diese E-Mail nicht angefordert haben, ignorieren Sie sie bitte.\n\nDanke,\nDas Bill Easy-Team`,
   };
 
   const htmls: EmailContent = {
     en: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #333;">Sign in to Scaffold</h2>
+        <h2 style="color: #333;">Sign in to Bill Easy</h2>
         <p>Hello,</p>
         <p>Click the button below to sign in to your account:</p>
         <div style="text-align: center; margin: 30px 0;">
@@ -76,12 +76,12 @@ export async function sendMagicLinkEmail(
         </div>
         <p style="color: #666; font-size: 14px;">This link will expire in 30 minutes.</p>
         <p style="color: #666; font-size: 14px;">If you did not request this email, please ignore it.</p>
-        <p>Thanks,<br>The Scaffold Team</p>
+        <p>Thanks,<br>The Bill Easy Team</p>
       </div>
     `,
     es: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #333;">Inicia sesión en Scaffold</h2>
+        <h2 style="color: #333;">Inicia sesión en Bill Easy</h2>
         <p>Hola,</p>
         <p>Haz clic en el botón de abajo para iniciar sesión en tu cuenta:</p>
         <div style="text-align: center; margin: 30px 0;">
@@ -89,12 +89,12 @@ export async function sendMagicLinkEmail(
         </div>
         <p style="color: #666; font-size: 14px;">Este enlace caducará en 30 minutos.</p>
         <p style="color: #666; font-size: 14px;">Si no has solicitado este correo, por favor ignóralo.</p>
-        <p>Gracias,<br>El Equipo de Scaffold</p>
+        <p>Gracias,<br>El Equipo de Bill Easy</p>
       </div>
     `,
     fr: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #333;">Connectez-vous à Scaffold</h2>
+        <h2 style="color: #333;">Connectez-vous à Bill Easy</h2>
         <p>Bonjour,</p>
         <p>Cliquez sur le bouton ci-dessous pour vous connecter à votre compte:</p>
         <div style="text-align: center; margin: 30px 0;">
@@ -102,12 +102,12 @@ export async function sendMagicLinkEmail(
         </div>
         <p style="color: #666; font-size: 14px;">Ce lien expirera dans 30 minutes.</p>
         <p style="color: #666; font-size: 14px;">Si vous n'avez pas demandé cet e-mail, veuillez l'ignorer.</p>
-        <p>Cordialement,<br>L'équipe Scaffold</p>
+        <p>Cordialement,<br>L'équipe Bill Easy</p>
       </div>
     `,
     de: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #333;">Melden Sie sich bei Scaffold an</h2>
+        <h2 style="color: #333;">Melden Sie sich bei Bill Easy an</h2>
         <p>Hallo,</p>
         <p>Klicken Sie auf die Schaltfläche unten, um sich in Ihrem Konto anzumelden:</p>
         <div style="text-align: center; margin: 30px 0;">
@@ -115,7 +115,7 @@ export async function sendMagicLinkEmail(
         </div>
         <p style="color: #666; font-size: 14px;">Dieser Link läuft in 30 Minuten ab.</p>
         <p style="color: #666; font-size: 14px;">Wenn Sie diese E-Mail nicht angefordert haben, ignorieren Sie sie bitte.</p>
-        <p>Danke,<br>Das Scaffold-Team</p>
+        <p>Danke,<br>Das Bill Easy-Team</p>
       </div>
     `,
   };
@@ -126,7 +126,7 @@ export async function sendMagicLinkEmail(
 
   // Send the email
   const info = await transporter.sendMail({
-    from: `"Scaffold" <${EMAIL_FROM}>`,
+    from: `"Bill Easy" <${EMAIL_FROM}>`,
     to,
     subject,
     text,

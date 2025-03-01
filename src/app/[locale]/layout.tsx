@@ -43,7 +43,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               </main>
               <footer className="border-t py-4 text-center text-sm text-gray-500">
                 <div className="container mx-auto px-4">
-                  &copy; {new Date().getFullYear()} Scaffold. All rights
+                  &copy; {new Date().getFullYear()} Bill Easy. All rights
                   reserved.
                 </div>
               </footer>

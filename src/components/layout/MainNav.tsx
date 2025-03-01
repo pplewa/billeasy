@@ -37,7 +37,7 @@ export default function MainNav() {
       <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="text-xl font-bold">
-            Scaffold
+            Bill Easy
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link

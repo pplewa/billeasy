@@ -31,14 +31,14 @@ jobs:
           SMTP_PORT=587
           SMTP_USER=${{ secrets.SMTP_USER }}
           SMTP_PASS=${{ secrets.SMTP_PASS }}
-          EMAIL_FROM=scaffold@plewa.au
+          EMAIL_FROM=billeasy@plewa.au
           NEXT_PUBLIC_APP_URL=http://15.235.193.214:3001
           EOF
 
       - name: Build Docker image
         run: |
-          docker build -t scaffold:${{ github.sha }} .
-          docker save scaffold:${{ github.sha }} > scaffold-image_${{ github.sha }}.tar
+          docker build -t billeasy:${{ github.sha }} .
+          docker save billeasy:${{ github.sha }} > billeasy-image_${{ github.sha }}.tar
 
       # - name: List files in the repository
       #   run: |
@@ -47,8 +47,8 @@ jobs:
       # - name: Upload backend image artifact
       #   uses: actions/upload-artifact@v4
       #   with:
-      #     name: scaffold-image
-      #     path: scaffold-image_${{ github.sha }}.tar
+      #     name: billeasy-image
+      #     path: billeasy-image_${{ github.sha }}.tar
 
   # deploy:
   #   needs: build
@@ -60,7 +60,7 @@ jobs:
   #     - name: Download image
   #       uses: actions/download-artifact@v4
   #       with:
-  #         name: scaffold-image
+  #         name: billeasy-image
   #         path: .
 
       # Deploy to server
@@ -70,8 +70,8 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: "scaffold-image_${{ github.sha }}.tar"
-          target: "/home/ubuntu/scaffold"
+          source: "billeasy-image_${{ github.sha }}.tar"
+          target: "/home/ubuntu/billeasy"
           rm: true
 
       # Load and start containers
@@ -82,15 +82,15 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd /home/ubuntu/scaffold
-            docker load < scaffold-image_${{ github.sha }}.tar
-            docker stop scaffold || true
-            docker rm scaffold || true
+            cd /home/ubuntu/billeasy
+            docker load < billeasy-image_${{ github.sha }}.tar
+            docker stop billeasy || true
+            docker rm billeasy || true
             # Run the new container
             docker run -d \
-              --name scaffold \
+              --name billeasy \
               -p 3001:3000 \
               -e NODE_ENV=production \
               --restart unless-stopped \
-              scaffold:${{ github.sha }}
+              billeasy:${{ github.sha }}
  
