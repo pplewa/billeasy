@@ -32,15 +32,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Set the auth cookie
-    if (verification.authToken) {
-      setAuthCookie(verification.authToken);
-    }
-
-    return NextResponse.json({
+    // Create a response object
+    const response = NextResponse.json({
       success: true,
       user: verification.user,
     });
+
+    // Set the auth cookie
+    if (verification.authToken) {
+      return setAuthCookie(response, verification.authToken);
+    }
+
+    return response;
   } catch (error) {
     console.error("Error in verify API:", error);
     return NextResponse.json(

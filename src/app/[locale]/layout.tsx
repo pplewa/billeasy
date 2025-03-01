@@ -1,3 +1,4 @@
+import AuthProvider from "@/components/auth/AuthProvider";
 import MainNav from "@/components/layout/MainNav";
 import { Locale, locales } from "@/i18n/routing";
 import { NextIntlClientProvider } from "next-intl";
@@ -34,17 +35,20 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="flex min-h-screen flex-col">
-            <MainNav />
-            <main className="flex-1 container mx-auto px-4 py-8">
-              {children}
-            </main>
-            <footer className="border-t py-4 text-center text-sm text-gray-500">
-              <div className="container mx-auto px-4">
-                &copy; {new Date().getFullYear()} Scaffold. All rights reserved.
-              </div>
-            </footer>
-          </div>
+          <AuthProvider>
+            <div className="flex min-h-screen flex-col">
+              <MainNav />
+              <main className="flex-1 container mx-auto px-4 py-8">
+                {children}
+              </main>
+              <footer className="border-t py-4 text-center text-sm text-gray-500">
+                <div className="container mx-auto px-4">
+                  &copy; {new Date().getFullYear()} Scaffold. All rights
+                  reserved.
+                </div>
+              </footer>
+            </div>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -6,6 +6,7 @@ import AuthToken from "../db/models/AuthToken";
 import User, { IUser } from "../db/models/User";
 import connectToDatabase from "../db/mongodb";
 import { sendMagicLinkEmail } from "../email/email";
+import { NextResponse, NextRequest } from "next/server";
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "7d";
@@ -141,32 +142,40 @@ export async function verifyAuthToken(token: string): Promise<AuthResult> {
 /**
  * Set the authentication token in a cookie
  */
-export async function setAuthCookie(authToken: string): Promise<void> {
-  const cookieStore = await cookies();
-
-  cookieStore.set("authToken", authToken, {
+export function setAuthCookie(response: NextResponse, authToken: string): NextResponse {
+  response.cookies.set("authToken", authToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 7, // 1 week
     path: "/",
     sameSite: "lax",
   });
+  
+  return response;
 }
 
 /**
  * Remove the authentication cookie
  */
-export async function removeAuthCookie(): Promise<void> {
-  const cookieStore = await cookies();
-  cookieStore.delete("authToken");
+export function removeAuthCookie(response: NextResponse): NextResponse {
+  response.cookies.delete("authToken");
+  return response;
 }
 
 /**
  * Get the current authenticated user from the JWT
  */
-export async function getCurrentUser(): Promise<UserInfo | null> {
-  const cookieStore = await cookies();
-  const authToken = cookieStore.get("authToken")?.value;
+export async function getCurrentUser(request?: NextRequest): Promise<UserInfo | null> {
+  let authToken: string | undefined;
+  
+  if (request) {
+    // Get the token from the request cookies
+    authToken = request.cookies.get("authToken")?.value;
+  } else {
+    // Get the token from the server-side cookies
+    const cookieStore = await cookies();
+    authToken = cookieStore.get("authToken")?.value;
+  }
 
   if (!authToken || !JWT_SECRET) {
     return null;
