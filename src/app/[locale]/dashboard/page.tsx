@@ -2,9 +2,14 @@
 
 import { useTranslations } from "next-intl";
 import { Suspense } from "react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { FileText } from "lucide-react";
 
 function DashboardContent() {
   const t = useTranslations("dashboard");
+  const params = useParams();
+  const locale = params.locale as string;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -54,6 +59,21 @@ function DashboardContent() {
             ))}
           </div>
         </div>
+      </div>
+
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Link
+          href={`/${locale}/invoices`}
+          className="bg-white border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4"
+        >
+          <div className="bg-blue-100 p-3 rounded-full">
+            <FileText className="h-6 w-6 text-blue-600" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold">Invoices</h3>
+            <p className="text-sm text-gray-500">Manage your invoices</p>
+          </div>
+        </Link>
       </div>
     </div>
   );

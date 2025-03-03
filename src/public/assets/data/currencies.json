@@ -1,0 +1,44 @@
+{
+    "USD": {
+        "currency": "United States Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "EUR": {
+        "currency": "Euro",
+        "decimals": 2,
+        "beforeDecimal": "Euro",
+        "afterDecimal": "Cent"
+    },
+    "GBP": {
+        "currency": "British Pound",
+        "decimals": 2,
+        "beforeDecimal": "Pound",
+        "afterDecimal": "Penny"
+    },
+    "JPY": {
+        "currency": "Japanese Yen",
+        "decimals": 0,
+        "beforeDecimal": "Yen",
+        "afterDecimal": null
+    },
+    "CAD": {
+        "currency": "Canadian Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "AUD": {
+        "currency": "Australian Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "INR": {
+        "currency": "Indian Rupee",
+        "decimals": 2,
+        "beforeDecimal": "Rupee",
+        "afterDecimal": "Paisa"
+    }
+} 
