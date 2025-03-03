@@ -21,7 +21,7 @@ export function InvoiceCard({ invoice, locale, onDelete, onDuplicate }: InvoiceC
   const [isDuplicating, setIsDuplicating] = useState(false);
 
   // Format the invoice date
-  const formattedDate = formatDate(new Date(invoice.details.invoiceDate));
+  const formattedDate = formatDate(new Date(invoice.details?.invoiceDate || new Date()));
   
   // Get the invoice ID as string
   const invoiceId = invoice._id.toString();
@@ -73,13 +73,13 @@ export function InvoiceCard({ invoice, locale, onDelete, onDuplicate }: InvoiceC
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="text-lg">Invoice #{invoice.details.invoiceNumber}</CardTitle>
+        <CardTitle className="text-lg">Invoice #{invoice.details?.invoiceNumber}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           <div className="flex justify-between">
             <span className="text-sm font-medium">Client:</span>
-            <span className="text-sm">{invoice.receiver.name}</span>
+            <span className="text-sm">{invoice.receiver?.name}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-sm font-medium">Date:</span>
@@ -88,7 +88,7 @@ export function InvoiceCard({ invoice, locale, onDelete, onDuplicate }: InvoiceC
           <div className="flex justify-between">
             <span className="text-sm font-medium">Amount:</span>
             <span className="text-sm">
-              {invoice.details.currency} {invoice.items.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}
+              {invoice.details?.currency} {invoice.details?.items?.reduce((sum, item) => sum + (item?.unitPrice ?? 0) * (item?.quantity ?? 0), 0).toFixed(2)}
             </span>
           </div>
         </div>

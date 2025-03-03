@@ -21,7 +21,7 @@ interface Params {
  */
 export async function GET(req: NextRequest, { params }: Params) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const invoice = await getInvoiceById(id);
 
     if (!invoice) {
