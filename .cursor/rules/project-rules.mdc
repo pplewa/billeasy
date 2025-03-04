@@ -7,4 +7,5 @@ alwaysApply: false
 # Your rule content
 
 - Do not use Next Auth, use email based existing auth mechanism
-
+- Always check for existing depencencies and reuse what is availble before installing something with similar functionality
+- Before implementing something that wasn't specifically asked for check if it is okay to proceed

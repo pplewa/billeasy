@@ -1,13 +1,33 @@
 "use client";
 
+// Next.js
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+// UI Components
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { formatDate } from "@/lib/utils";
+
+// Icons
+import {
+  ArrowLeft,
+  Download,
+  Edit,
+  Mail,
+  Printer,
+  ChevronDown,
+} from "lucide-react";
+
+// Services
 import { fetchInvoiceById } from "@/services/invoice/client/invoiceClient";
-import { ArrowLeft, Download, Edit, Printer } from "lucide-react";
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+
+// Invoice Components
+import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
+import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
+
+
+import { formatDate } from "@/lib/utils";
 
 // Define interfaces for the invoice structure as used in the view
 interface InvoiceItem {
@@ -131,10 +151,19 @@ export default function ViewInvoicePage() {
               Edit
             </Link>
           </Button>
-          <Button>
-            <Download className="mr-2 h-4 w-4" />
-            Download PDF
-          </Button>
+          <InvoiceEmailModal invoice={invoice}>
+            <Button variant="outline">
+              <Mail className="mr-2 h-4 w-4" />
+              Email
+            </Button>
+          </InvoiceEmailModal>
+          <InvoiceExportModal invoice={invoice}>
+            <Button>
+              <Download className="mr-2 h-4 w-4" />
+              Export
+              <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </InvoiceExportModal>
         </div>
       </div>
 
@@ -288,13 +317,13 @@ export default function ViewInvoicePage() {
                   alt="Signature"
                   className="h-16 object-contain"
                 />
-              ) : (
+              ) : invoice.details.signature?.data ? (
                 <img
                   src={invoice.details.signature?.data || ''}
                   alt="Signature"
                   className="h-16 object-contain"
                 />
-              )}
+              ) : null}
               <p className="text-gray-600 mt-2">Authorized Signature</p>
             </div>
           </div>

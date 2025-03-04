@@ -39,7 +39,7 @@ export default async function middleware(request: NextRequest) {
   // If the path is sign-in related and the user is authenticated, redirect to dashboard
   if (pathnameWithoutLocale === "/signin" && isAuthenticated) {
     return NextResponse.redirect(
-      new URL(`/${defaultLocale}/dashboard`, request.url)
+      new URL(`/${defaultLocale}/invoices`, request.url)
     );
   }
 

@@ -73,12 +73,12 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
           // Check if any fields in this step have errors
           const hasErrors = step.fields.some((field) => {
             const fieldParts = field.split(".");
-            let currentErrors: Record<string, any> = errors;
+            let currentErrors: Record<string, unknown> = errors;
             for (const part of fieldParts) {
               if (!currentErrors || !currentErrors[part]) {
                 return false;
               }
-              currentErrors = currentErrors[part];
+              currentErrors = currentErrors[part] as Record<string, unknown>;
             }
             return true;
           });

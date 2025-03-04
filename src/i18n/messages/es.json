@@ -6,6 +6,7 @@
   "navigation": {
     "home": "Inicio",
     "dashboard": "Panel",
+    "invoices": "Facturas",
     "profile": "Perfil",
     "signIn": "Iniciar Sesión",
     "signOut": "Cerrar Sesión"

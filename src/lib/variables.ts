@@ -17,6 +17,7 @@ export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:30
 export const GENERATE_PDF_API = "/api/invoice/generate";
 export const SEND_PDF_API = "/api/invoice/send";
 export const EXPORT_INVOICE_API = "/api/invoice/export";
+export const SEND_INVOICE_API = "/api/invoice/send";
 
 /**
  * External API endpoints

@@ -1,6 +1,3 @@
-// Next
-import { NextResponse } from "next/server";
-
 // Utils
 import numberToWords from "number-to-words";
 
@@ -194,8 +191,8 @@ export const getInvoiceTemplate = async (templateId: number) => {
  * @returns {Promise<Buffer>} A promise that resolves to a buffer.
  */
 export const fileToBuffer = async (file: File) => {
-    // Convert Blob to ArrayBuffer
-    const arrayBuffer = await new NextResponse(file).arrayBuffer();
+    // Convert File to ArrayBuffer
+    const arrayBuffer = await file.arrayBuffer();
 
     // Convert ArrayBuffer to Buffer
     const pdfBuffer = Buffer.from(arrayBuffer);

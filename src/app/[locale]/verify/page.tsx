@@ -49,9 +49,9 @@ function VerifyContent() {
 
         setStatus("success");
 
-        // Redirect to dashboard after a short delay
+        // Redirect to invoices after a short delay
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push("/invoices");
         }, 2000);
       } catch (err) {
         setStatus("error");

@@ -17,3 +17,18 @@ export function formatDate(date: Date): string {
     day: 'numeric'
   });
 }
+
+/**
+ * Format a number as currency with the specified currency code
+ * @param amount The amount to format
+ * @param currencyCode The ISO currency code (e.g., 'USD', 'EUR')
+ * @returns A formatted currency string
+ */
+export function formatCurrency(amount: number, currencyCode: string = 'USD'): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currencyCode,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+}

@@ -2,6 +2,7 @@ import AuthProvider from "@/components/auth/AuthProvider";
 import MainNav from "@/components/layout/MainNav";
 import { Locale, locales } from "@/i18n/routing";
 import { NextIntlClientProvider } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -45,13 +46,22 @@ export default async function LocaleLayout({ children, params }: Props) {
           <AuthProvider>
             <div className="flex min-h-screen flex-col">
               <MainNav />
-              <main className="flex-1 container mx-auto px-4 py-8">
-                {children}
-              </main>
+              <main className="flex-1 container mx-auto">{children}</main>
               <footer className="border-t py-4 text-center text-sm text-gray-500">
                 <div className="container mx-auto px-4">
-                  &copy; {new Date().getFullYear()} Bill Easy. All rights
-                  reserved.
+                  &copy; {new Date().getFullYear()} Bill Easy {" · "} All rights
+                  reserved {" · "}
+                  <Link
+                    href={{ pathname: "/privacy-policy" }}
+                  >
+                    Privacy Policy
+                  </Link>
+                  {" · "}
+                  <Link
+                    href={{ pathname: "/terms-of-service" }}
+                  >
+                    Terms of Service
+                  </Link>
                 </div>
               </footer>
             </div>

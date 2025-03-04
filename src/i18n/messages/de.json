@@ -6,6 +6,7 @@
   "navigation": {
     "home": "Startseite",
     "dashboard": "Dashboard",
+    "invoices": "Rechnungen",
     "profile": "Profil",
     "signIn": "Anmelden",
     "signOut": "Abmelden"

@@ -48,12 +48,12 @@ export default function MainNav() {
             </Link>
             {user && (
               <Link
-                href="/dashboard"
+                href={{ pathname: "/invoices" }}
                 className={`text-sm ${
-                  pathname.includes("/dashboard") ? "font-medium" : ""
+                  pathname.includes("/invoices") ? "font-medium" : ""
                 }`}
               >
-                {t("dashboard")}
+                {t("invoices")}
               </Link>
             )}
           </nav>

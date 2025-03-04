@@ -16,7 +16,8 @@ interface UploadSignatureProps {
 
 export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { uploadedSignature, setUploadedSignature, clearUploadedSignature } = useSignatureContext();
+  const { uploadedSignature, setUploadedSignature, clearUploadedSignature } =
+    useSignatureContext();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -74,18 +75,12 @@ export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
         </CardContent>
         <div className="flex justify-end gap-2 pt-2">
           {uploadedSignature && (
-            <Button
-              variant="outline"
-              onClick={clearUploadedSignature}
-            >
+            <Button variant="outline" onClick={clearUploadedSignature}>
               Clear
               <Eraser className="ml-2 h-4 w-4" />
             </Button>
           )}
-          <Button
-            disabled={!uploadedSignature}
-            onClick={handleSaveSignature}
-          >
+          <Button disabled={!uploadedSignature} onClick={handleSaveSignature}>
             Done
             <Check className="ml-2 h-4 w-4" />
           </Button>
@@ -93,4 +88,4 @@ export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
       </Card>
     </TabsContent>
   );
-} 
+}

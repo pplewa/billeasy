@@ -36,6 +36,7 @@ export default function InvoicesPage() {
 
   useEffect(() => {
     loadInvoices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadInvoices = async () => {
@@ -61,7 +62,9 @@ export default function InvoicesPage() {
 
   const handleDeleteInvoice = (id: string) => {
     // Remove the invoice from the list
-    setInvoices((prev) => prev.filter((invoice) => invoice._id.toString() !== id));
+    setInvoices((prev) =>
+      prev.filter((invoice) => invoice._id.toString() !== id)
+    );
   };
 
   const handleDuplicateInvoice = (invoice: InvoiceDocument) => {
@@ -108,7 +111,10 @@ export default function InvoicesPage() {
         </div>
       )}
 
-      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+      <AlertDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
@@ -126,7 +132,9 @@ export default function InvoicesPage() {
                     setIsDeleting(true);
                     await deleteInvoice(deleteId);
                     setInvoices((prev) =>
-                      prev.filter((invoice) => invoice._id.toString() !== deleteId)
+                      prev.filter(
+                        (invoice) => invoice._id.toString() !== deleteId
+                      )
                     );
                     toast({
                       title: "Success",
@@ -161,4 +169,4 @@ export default function InvoicesPage() {
       </AlertDialog>
     </div>
   );
-} 
+}

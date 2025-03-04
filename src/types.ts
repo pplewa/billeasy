@@ -53,6 +53,7 @@ export enum ExportTypes {
     XLSX = "xlsx",
     CSV = "csv",
     JSON = "json",
+    XML = "xml",
 }
 
 // Custom Input Type
