@@ -18,6 +18,11 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED="1"
 ENV NODE_ENV="production"
 
+# Check Chrome location
+RUN which google-chrome-stable || echo "Chrome not found at standard location"
+RUN ls -la /usr/bin/google-chrome* || echo "No Chrome in /usr/bin/"
+RUN find / -name "chrome" -o -name "chrome-*" -o -name "chromium" -o -name "google-chrome*" 2>/dev/null || echo "Chrome not found in filesystem search"
+
 # Build the Next.js application
 RUN npm run build
 
@@ -46,9 +51,9 @@ EXPOSE 3000
 ENV PORT="3000"
 ENV HOSTNAME="0.0.0.0"
 
-# Configure Puppeteer to use the pre-installed Chrome in the image
-ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/google-chrome-stable"
+# Configure Puppeteer - We'll use Puppeteer's default path finding mechanism
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
+# We're not setting PUPPETEER_EXECUTABLE_PATH because we'll find the path in the code
 
 # Start the Next.js application
 CMD ["node", "server.js"] 

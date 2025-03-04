@@ -168,45 +168,53 @@ export async function exportInvoiceService(req: NextRequest) {
                         </html>
                     `;
                     
-                    // Launch a headless browser
-                    const browser = await puppeteer.default.launch({
-                        headless: true,
-                        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-                        args: ['--no-sandbox', '--disable-setuid-sandbox']
-                    });
-                    
                     try {
-                        // Create a new page
-                        const page = await browser.newPage();
+                        console.log('Launching Puppeteer for PDF export');
                         
-                        // Set content to our HTML
-                        await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
-                        
-                        // Generate PDF
-                        const pdfBuffer = await page.pdf({
-                            format: 'A4',
-                            printBackground: true,
-                            margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' }
+                        // Launch a headless browser without specifying executablePath
+                        const browser = await puppeteer.default.launch({
+                            headless: true,
+                            args: ['--no-sandbox', '--disable-setuid-sandbox']
                         });
                         
-                        // Close the browser
-                        await browser.close();
-                        
-                        // Return the PDF
-                        return new NextResponse(pdfBuffer, {
-                            headers: {
-                                'Content-Type': 'application/pdf',
-                                'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`
-                            }
+                        try {
+                            // Create a new page
+                            const page = await browser.newPage();
+                            
+                            // Set content to our HTML
+                            await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
+                            
+                            // Generate PDF
+                            const pdfBuffer = await page.pdf({
+                                format: 'A4',
+                                printBackground: true,
+                                margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' }
+                            });
+                            
+                            // Close the browser
+                            await browser.close();
+                            
+                            // Return the PDF
+                            return new NextResponse(pdfBuffer, {
+                                headers: {
+                                    'Content-Type': 'application/pdf',
+                                    'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`
+                                }
+                            });
+                        } catch (error) {
+                            // Make sure to close the browser in case of error
+                            await browser.close();
+                            throw error;
+                        }
+                    } catch (error: unknown) {
+                        console.error('Error launching browser:', error);
+                        return new NextResponse(`Error launching browser: ${error instanceof Error ? error.message : String(error)}`, {
+                            status: 500
                         });
-                    } catch (error) {
-                        // Make sure to close the browser in case of error
-                        await browser.close();
-                        throw error;
                     }
-                } catch (error) {
+                } catch (error: unknown) {
                     console.error('Error generating PDF:', error);
-                    return new NextResponse(`Error generating PDF: ${error}`, {
+                    return new NextResponse(`Error generating PDF: ${error instanceof Error ? error.message : String(error)}`, {
                         status: 500
                     });
                 }
@@ -218,12 +226,12 @@ export async function exportInvoiceService(req: NextRequest) {
                     status: 400,
                 });
         }
-    } catch (error) {
-        console.error(error);
+    } catch (error: unknown) {
+        console.error('Error exporting invoice:', error);
 
         // Return an error response
-        return new NextResponse(`Error exporting: \n${error}`, {
+        return new NextResponse(`Error exporting: ${error instanceof Error ? error.message : String(error)}`, {
             status: 500,
         });
     }
-} 
+}

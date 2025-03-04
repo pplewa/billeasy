@@ -75,41 +75,50 @@ export async function generatePdfService(req: NextRequest) {
             // This is a simplified implementation using Puppeteer
             const puppeteer = await import('puppeteer');
             
-            // Launch a headless browser using Chrome from the Docker container
-            const browser = await puppeteer.default.launch({
-                headless: true,
-                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-                args: ['--no-sandbox', '--disable-setuid-sandbox']
-            });
+            // Log environment for debugging
+            console.log('Launching Puppeteer in production mode');
+            console.log('Node environment:', process.env.NODE_ENV);
             
             try {
-                // Create a new page
-                const page = await browser.newPage();
-                
-                // Set content to our HTML
-                await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
-                
-                // Generate PDF
-                const pdfBuffer = await page.pdf({
-                    format: 'A4',
-                    printBackground: true,
-                    margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' }
+                // Launch a headless browser with improved error handling
+                const browser = await puppeteer.default.launch({
+                    headless: true,
+                    // Don't specify executablePath to let Puppeteer find Chrome automatically
+                    args: ['--no-sandbox', '--disable-setuid-sandbox']
                 });
                 
-                // Close the browser
-                await browser.close();
-                
-                // Return the PDF
-                return new NextResponse(pdfBuffer, {
-                    headers: {
-                        'Content-Type': 'application/pdf',
-                        'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`
-                    }
-                });
-            } catch (error) {
-                // Make sure to close the browser in case of error
-                await browser.close();
-                throw error;
+                try {
+                    // Create a new page
+                    const page = await browser.newPage();
+                    
+                    // Set content to our HTML
+                    await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
+                    
+                    // Generate PDF
+                    const pdfBuffer = await page.pdf({
+                        format: 'A4',
+                        printBackground: true,
+                        margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' }
+                    });
+                    
+                    // Close the browser
+                    await browser.close();
+                    
+                    // Return the PDF
+                    return new NextResponse(pdfBuffer, {
+                        headers: {
+                            'Content-Type': 'application/pdf',
+                            'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`
+                        }
+                    });
+                } catch (error) {
+                    // Make sure to close the browser in case of error
+                    await browser.close();
+                    throw error;
+                }
+            } catch (error: unknown) {
+                console.error('Error launching browser:', error);
+                throw new Error(`Failed to launch browser: ${error instanceof Error ? error.message : String(error)}`);
             }
         } else {
             // For development, we use the same approach but with more detailed logging
@@ -117,51 +126,55 @@ export async function generatePdfService(req: NextRequest) {
             
             const puppeteer = await import('puppeteer');
             
-            // Launch a headless browser with more verbose options for development
-            const browser = await puppeteer.default.launch({
-                headless: true,
-                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                // Uncomment for debugging if needed
-                // devtools: true,
-            });
-            
             try {
-                // Create a new page
-                const page = await browser.newPage();
-                
-                // Enable console logging from the browser
-                page.on('console', (msg) => console.log('Browser console:', msg.text()));
-                
-                // Set content to our HTML
-                await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
-                
-                console.log('HTML content loaded in browser');
-                
-                // Generate PDF
-                const pdfBuffer = await page.pdf({
-                    format: 'A4',
-                    printBackground: true,
-                    margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' }
+                // Launch a headless browser with more verbose options for development
+                const browser = await puppeteer.default.launch({
+                    headless: true,
+                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                    // Uncomment for debugging if needed
+                    // devtools: true,
                 });
                 
-                console.log('PDF generated successfully');
-                
-                // Close the browser
-                await browser.close();
-                
-                // Return the PDF
-                return new NextResponse(pdfBuffer, {
-                    headers: {
-                        'Content-Type': 'application/pdf',
-                        'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`
-                    }
-                });
+                try {
+                    // Create a new page
+                    const page = await browser.newPage();
+                    
+                    // Enable console logging from the browser
+                    page.on('console', (msg) => console.log('Browser console:', msg.text()));
+                    
+                    // Set content to our HTML
+                    await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
+                    
+                    console.log('HTML content loaded in browser');
+                    
+                    // Generate PDF
+                    const pdfBuffer = await page.pdf({
+                        format: 'A4',
+                        printBackground: true,
+                        margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' }
+                    });
+                    
+                    console.log('PDF generated successfully');
+                    
+                    // Close the browser
+                    await browser.close();
+                    
+                    // Return the PDF
+                    return new NextResponse(pdfBuffer, {
+                        headers: {
+                            'Content-Type': 'application/pdf',
+                            'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`
+                        }
+                    });
+                } catch (error) {
+                    // Make sure to close the browser in case of error
+                    await browser.close();
+                    console.error('Error in PDF generation:', error);
+                    throw error;
+                }
             } catch (error) {
-                // Make sure to close the browser in case of error
-                await browser.close();
-                console.error('Error in PDF generation:', error);
-                throw error;
+                console.error('Error launching browser:', error);
+                throw new Error(`Failed to launch browser: ${error instanceof Error ? error.message : String(error)}`);
             }
         }
     } catch (error) {
