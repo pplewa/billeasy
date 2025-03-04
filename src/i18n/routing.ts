@@ -13,11 +13,29 @@ export const routing = defineRouting({
   localePrefix: "always",
   pathnames: {
     "/": "/",
-    "/dashboard": {
-      en: "/dashboard",
-      es: "/panel",
-      fr: "/tableau-de-bord",
-      de: "/dashboard",
+    "/invoices": {
+      en: "/invoices",
+      es: "/facturas",
+      fr: "/factures",
+      de: "/rechnungen",
+    },
+    "/invoice/create": {
+      en: "/invoice/create",
+      es: "/factura/crear",
+      fr: "/facture/creer",
+      de: "/rechnung/erstellen",
+    },
+    "/privacy-policy": {
+      en: "/privacy-policy",
+      es: "/politica-de-privacidad",
+      fr: "/politique-de-confidentialite",
+      de: "/datenschutzrichtlinie",
+    },
+    "/terms-of-service": {
+      en: "/terms-of-service",
+      es: "/terminos-de-servicio",
+      fr: "/conditions-d-utilisation",
+      de: "/nutzungsbedingungen",
     },
     "/signin": {
       en: "/signin",
