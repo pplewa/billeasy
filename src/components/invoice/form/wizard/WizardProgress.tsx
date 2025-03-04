@@ -5,15 +5,13 @@ import { useFormContext } from "react-hook-form";
 import { ReceiptText, FileText, Receipt, Settings, UserSquare2 } from "lucide-react";
 
 // React Wizard
-import { WizardValues } from "react-use-wizard";
+import { useWizard } from "react-use-wizard";
 
-// Components
-import { Button } from "@/components/ui/button";
+// Utils
+import { cn } from "@/lib/utils";
 
 // Types
 import { InvoiceType } from "@/types";
-
-import { cn } from "@/lib/utils";
 
 interface WizardProgressProps {
   wizard: {
@@ -62,6 +60,7 @@ const steps = [
 
 export function WizardProgress({ wizard }: WizardProgressProps) {
   const { formState: { errors } } = useFormContext<InvoiceType>();
+  const { goToStep } = useWizard();
 
   return (
     <nav aria-label="Progress">
@@ -74,21 +73,23 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
           // Check if any fields in this step have errors
           const hasErrors = step.fields.some((field) => {
             const fieldParts = field.split(".");
-            let currentErrors = errors;
+            let currentErrors: Record<string, any> = errors;
             for (const part of fieldParts) {
-              if (!currentErrors || !currentErrors[part as keyof typeof currentErrors]) {
+              if (!currentErrors || !currentErrors[part]) {
                 return false;
               }
-              currentErrors = currentErrors[part as keyof typeof currentErrors] as any;
+              currentErrors = currentErrors[part];
             }
             return true;
           });
 
           return (
             <li key={step.id} className="md:flex-1">
-              <div
+              <button
+                type="button"
+                onClick={() => goToStep(index)}
                 className={cn(
-                  "group flex flex-col border-l-4 py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4",
+                  "group text-left flex w-full flex-col border-l-4 py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4 transition-colors hover:border-primary/70",
                   isActive
                     ? "border-primary"
                     : isCompleted
@@ -117,7 +118,7 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
                     Please fix the errors in this step
                   </span>
                 )}
-              </div>
+              </button>
             </li>
           );
         })}

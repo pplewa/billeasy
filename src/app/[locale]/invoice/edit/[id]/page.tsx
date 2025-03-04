@@ -9,7 +9,7 @@ import { InvoiceType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use, Usable } from "react";
 import { useForm } from "react-hook-form";
 
 export default function EditInvoicePage({
@@ -17,6 +17,7 @@ export default function EditInvoicePage({
 }: {
   params: { id: string; locale: string };
 }) {
+  const { locale, id } = use(params as unknown as Usable<{ locale: string; id: string }>);
   const router = useRouter();
   const { toast } = useToast();
   const [invoice, setInvoice] = useState<InvoiceType | null>(null);
@@ -33,7 +34,7 @@ export default function EditInvoicePage({
     const loadInvoice = async () => {
       try {
         setLoading(true);
-        const data = await fetchInvoiceById(params.id);
+        const data = await fetchInvoiceById(id);
         setInvoice(data);
 
         // Reset form with the loaded invoice data
@@ -45,25 +46,25 @@ export default function EditInvoicePage({
           description: "Failed to load invoice. Please try again.",
           variant: "destructive",
         });
-        router.push(`/${params.locale}/invoices`);
+        router.push(`/${locale}/invoices`);
       } finally {
         setLoading(false);
       }
     };
 
     loadInvoice();
-  }, [params.id, params.locale, router, toast, form]);
+  }, [id, locale, router, toast, form]);
 
   // Handle form submission
   const handleSubmit = async (data: InvoiceType) => {
     try {
       setIsSubmitting(true);
-      await updateInvoice(params.id, data);
+      await updateInvoice(id, data);
       toast({
         title: "Success",
         description: "Invoice updated successfully",
       });
-      router.push(`/${params.locale}/invoices`);
+      router.push(`/${locale}/invoices`);
     } catch (error) {
       console.error("Error updating invoice:", error);
       toast({

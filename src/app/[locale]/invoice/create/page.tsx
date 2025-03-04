@@ -35,10 +35,10 @@ const defaultInvoice: InvoiceType = {
     {
       id: crypto.randomUUID(),
       name: "",
+      description: "",
       quantity: 1,
-      price: 0,
-      taxRate: 0,
-      discount: 0,
+      unitPrice: 0,
+      total: 0,
     },
   ],
   details: {
@@ -47,10 +47,12 @@ const defaultInvoice: InvoiceType = {
     dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
     currency: "USD",
     language: "en",
-    taxSystem: "inclusive",
-    notes: "",
-    terms: "",
-    signature: "",
+    subTotal: 0,
+    totalAmount: 0,
+    totalAmountInWords: "",
+    additionalNotes: "",
+    paymentTerms: "",
+    signature: { data: "", fontFamily: "" },
   },
   settings: {
     template: "default",
