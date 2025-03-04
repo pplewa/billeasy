@@ -1,4 +1,4 @@
-FROM ghcr.io/puppeteer/puppeteer:20.9.0 AS base
+FROM ghcr.io/puppeteer/puppeteer:24.3.1 AS base
 
 # Install dependencies only when needed
 FROM base AS deps
