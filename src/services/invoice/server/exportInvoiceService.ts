@@ -171,6 +171,7 @@ export async function exportInvoiceService(req: NextRequest) {
                     // Launch a headless browser
                     const browser = await puppeteer.default.launch({
                         headless: true,
+                        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
                         args: ['--no-sandbox', '--disable-setuid-sandbox']
                     });
                     

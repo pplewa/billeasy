@@ -75,9 +75,10 @@ export async function generatePdfService(req: NextRequest) {
             // This is a simplified implementation using Puppeteer
             const puppeteer = await import('puppeteer');
             
-            // Launch a headless browser
+            // Launch a headless browser using Chrome from the Docker container
             const browser = await puppeteer.default.launch({
                 headless: true,
+                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
                 args: ['--no-sandbox', '--disable-setuid-sandbox']
             });
             
@@ -119,6 +120,7 @@ export async function generatePdfService(req: NextRequest) {
             // Launch a headless browser with more verbose options for development
             const browser = await puppeteer.default.launch({
                 headless: true,
+                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
                 // Uncomment for debugging if needed
                 // devtools: true,

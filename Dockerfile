@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM ghcr.io/puppeteer/puppeteer:20.9.0 AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -28,25 +28,27 @@ WORKDIR /app
 ENV NODE_ENV="production"
 ENV NEXT_TELEMETRY_DISABLED="1"
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+# Use pptruser which is already set up in the Puppeteer image
+USER pptruser
 
 COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
-RUN chown nextjs:nodejs .next
+RUN chown pptruser:pptruser .next
 
 # Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 EXPOSE 3000
 
 ENV PORT="3000"
 ENV HOSTNAME="0.0.0.0"
+
+# Configure Puppeteer to use the pre-installed Chrome in the image
+ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/google-chrome-stable"
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
 
 # Start the Next.js application
 CMD ["node", "server.js"] 
