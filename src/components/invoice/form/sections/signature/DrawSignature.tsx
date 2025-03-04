@@ -29,8 +29,8 @@ export function DrawSignature({ handleSaveSignature }: DrawSignatureProps) {
       <Card className="border-none shadow-none">
         <CardContent className="space-y-4 p-0">
           <div className="relative aspect-[3/1] w-full overflow-hidden rounded-lg border">
-            {/* @ts-expect-error - SignatureCanvas types are incorrect */}
             <SignatureCanvas
+              // @ts-expect-error - SignatureCanvas has incomplete type definitions
               ref={signatureRef}
               penColor={selectedColor.value}
               canvasProps={{

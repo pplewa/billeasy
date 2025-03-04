@@ -8,8 +8,9 @@ import { getCurrentUser } from "@/lib/auth/auth";
 // POST /api/invoices/[id]/duplicate - Duplicate an invoice
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const user = await getCurrentUser(request);
     
@@ -20,7 +21,7 @@ export async function POST(
       );
     }
     
-    const invoice = await getInvoiceById(params.id);
+    const invoice = await getInvoiceById(id);
     
     if (!invoice) {
       return NextResponse.json(
@@ -29,15 +30,7 @@ export async function POST(
       );
     }
     
-    // Check if the invoice belongs to the user
-    if (invoice.userId.toString() !== user.id) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 403 }
-      );
-    }
-    
-    const duplicatedInvoice = await duplicateInvoice(params.id, user.id);
+    const duplicatedInvoice = await duplicateInvoice(id);
     
     if (!duplicatedInvoice) {
       return NextResponse.json(

@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 
-import { dancingScript, greatVibes, pacifico } from "@/lib/fonts";
+import { dancingScript, greatVibes, pacifico, outfit } from "@/lib/fonts";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,7 +39,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${dancingScript.variable} ${greatVibes.variable} ${pacifico.variable}`}
+      className={`${dancingScript.variable} ${greatVibes.variable} ${pacifico.variable} ${outfit.variable}`}
     >
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>

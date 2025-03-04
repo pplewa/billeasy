@@ -8,7 +8,7 @@ import { createInvoice } from "@/services/invoice/client/invoiceClient";
 import { InvoiceType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // Default invoice data
@@ -31,16 +31,6 @@ const defaultInvoice: InvoiceType = {
     email: "",
     phone: "",
   },
-  items: [
-    {
-      id: crypto.randomUUID(),
-      name: "",
-      description: "",
-      quantity: 1,
-      unitPrice: 0,
-      total: 0,
-    },
-  ],
   details: {
     invoiceNumber: `INV-${Date.now().toString().slice(-6)}`,
     invoiceDate: new Date(),
@@ -53,22 +43,37 @@ const defaultInvoice: InvoiceType = {
     additionalNotes: "",
     paymentTerms: "",
     signature: { data: "", fontFamily: "" },
-  },
-  settings: {
-    template: "default",
-    color: "#3b82f6",
-    logo: "",
+    items: [
+      {
+        id: crypto.randomUUID(),
+        name: "",
+        description: "",
+        quantity: 1,
+        unitPrice: 0,
+        total: 0,
+      },
+    ],
   },
 };
 
 export default function CreateInvoicePage({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [locale, setLocale] = useState<string>("");
+
+  // Get locale from params
+  useEffect(() => {
+    const getLocale = async () => {
+      const resolvedParams = await params;
+      setLocale(resolvedParams.locale);
+    };
+    getLocale();
+  }, [params]);
 
   // Create form methods
   const form = useForm<InvoiceType>({
@@ -86,7 +91,7 @@ export default function CreateInvoicePage({
         title: "Success",
         description: "Invoice created successfully",
       });
-      router.push(`/${params.locale}/invoices`);
+      router.push(`/${locale}/invoices`);
     } catch (error) {
       console.error("Error creating invoice:", error);
       toast({

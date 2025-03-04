@@ -9,20 +9,31 @@ import { InvoiceType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, use, Usable } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function EditInvoicePage({
   params,
 }: {
-  params: { id: string; locale: string };
+  params: Promise<{ id: string; locale: string }>;
 }) {
-  const { locale, id } = use(params as unknown as Usable<{ locale: string; id: string }>);
   const router = useRouter();
   const { toast } = useToast();
   const [invoice, setInvoice] = useState<InvoiceType | null>(null);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [locale, setLocale] = useState<string>("");
+  const [invoiceId, setInvoiceId] = useState<string>("");
+
+  // Get locale and id from params
+  useEffect(() => {
+    const getParams = async () => {
+      const resolvedParams = await params;
+      setLocale(resolvedParams.locale);
+      setInvoiceId(resolvedParams.id);
+    };
+    getParams();
+  }, [params]);
 
   // Create form methods
   const form = useForm<InvoiceType>({
@@ -32,9 +43,11 @@ export default function EditInvoicePage({
 
   useEffect(() => {
     const loadInvoice = async () => {
+      if (!invoiceId) return; // Wait until we have the ID
+      
       try {
         setLoading(true);
-        const data = await fetchInvoiceById(id);
+        const data = await fetchInvoiceById(invoiceId);
         setInvoice(data);
 
         // Reset form with the loaded invoice data
@@ -46,20 +59,24 @@ export default function EditInvoicePage({
           description: "Failed to load invoice. Please try again.",
           variant: "destructive",
         });
-        router.push(`/${locale}/invoices`);
+        if (locale) {
+          router.push(`/${locale}/invoices`);
+        }
       } finally {
         setLoading(false);
       }
     };
 
     loadInvoice();
-  }, [id, locale, router, toast, form]);
+  }, [invoiceId, locale, router, toast, form]);
 
   // Handle form submission
   const handleSubmit = async (data: InvoiceType) => {
+    if (!invoiceId) return;
+    
     try {
       setIsSubmitting(true);
-      await updateInvoice(id, data);
+      await updateInvoice(invoiceId, data);
       toast({
         title: "Success",
         description: "Invoice updated successfully",

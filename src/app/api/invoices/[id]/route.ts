@@ -7,19 +7,16 @@ import {
   duplicateInvoice,
 } from "@/services/invoice/server/invoiceService";
 
-interface Params {
-  params: {
-    id: string;
-  };
-}
-
 /**
  * GET handler for fetching a specific invoice by ID
  * @param {NextRequest} req - The request object
- * @param {Params} params - The route parameters containing the invoice ID
+ * @param {Object} context - The context object containing the route parameters
  * @returns {Promise<NextResponse>} The response containing the invoice or an error
  */
-export async function GET(req: NextRequest, { params }: Params) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const { id } = await params;
     const invoice = await getInvoiceById(id);
@@ -44,12 +41,15 @@ export async function GET(req: NextRequest, { params }: Params) {
 /**
  * PUT handler for updating a specific invoice
  * @param {NextRequest} req - The request object containing the updated invoice data
- * @param {Params} params - The route parameters containing the invoice ID
+ * @param {Object} context - The context object containing the route parameters
  * @returns {Promise<NextResponse>} The response containing the updated invoice or an error
  */
-export async function PUT(req: NextRequest, { params }: Params) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await req.json();
 
     // Validate the request body against the schema
@@ -85,12 +85,15 @@ export async function PUT(req: NextRequest, { params }: Params) {
 /**
  * DELETE handler for deleting a specific invoice
  * @param {NextRequest} req - The request object
- * @param {Params} params - The route parameters containing the invoice ID
+ * @param {Object} context - The context object containing the route parameters
  * @returns {Promise<NextResponse>} The response indicating success or an error
  */
-export async function DELETE(req: NextRequest, { params }: Params) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     // Check if the invoice exists
     const existingInvoice = await getInvoiceById(id);
@@ -116,12 +119,15 @@ export async function DELETE(req: NextRequest, { params }: Params) {
 /**
  * POST handler for duplicating a specific invoice
  * @param {NextRequest} req - The request object
- * @param {Params} params - The route parameters containing the invoice ID
+ * @param {Object} context - The context object containing the route parameters
  * @returns {Promise<NextResponse>} The response containing the duplicated invoice or an error
  */
-export async function POST(req: NextRequest, { params }: Params) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const action = req.nextUrl.searchParams.get("action");
 
     // Only handle the duplicate action

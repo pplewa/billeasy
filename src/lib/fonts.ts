@@ -1,4 +1,4 @@
-import { Dancing_Script, Great_Vibes, Pacifico } from "next/font/google";
+import { Dancing_Script, Great_Vibes, Pacifico, Outfit } from "next/font/google";
 
 export const dancingScript = Dancing_Script({
   subsets: ["latin"],
@@ -18,4 +18,10 @@ export const pacifico = Pacifico({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-pacifico",
+});
+
+export const outfit = Outfit({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-outfit",
 }); 

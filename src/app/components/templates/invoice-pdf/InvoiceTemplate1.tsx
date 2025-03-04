@@ -117,12 +117,12 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
                                 </div>
                                 <div className="text-center border-b border-gray-200 pb-2">
                                     <p className="text-gray-800">
-                                        {formatCurrency(item.unitPrice, details?.currency || 'USD')}
+                                        {formatCurrency(item.unitPrice || 0, details?.currency || 'USD')}
                                     </p>
                                 </div>
                                 <div className="text-right border-b border-gray-200 pb-2">
                                     <p className="text-gray-800">
-                                        {formatCurrency(item.total, details?.currency || 'USD')}
+                                        {formatCurrency(item.total || 0, details?.currency || 'USD')}
                                     </p>
                                 </div>
                             </React.Fragment>

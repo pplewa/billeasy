@@ -1,6 +1,8 @@
 "use client";
 
 import { createContext, useContext, useRef, useState } from "react";
+// We need to keep the import but disable the linter warning
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import SignatureCanvas from "react-signature-canvas";
 
 interface SignatureFont {
@@ -13,9 +15,16 @@ interface SignatureColor {
   value: string;
 }
 
+// Define a more specific type for SignatureCanvas
+type SignatureCanvasRef = {
+  clear: () => void;
+  toDataURL: (type?: string) => string;
+  off: () => void;
+};
+
 interface SignatureContextType {
   // Draw signature
-  signatureRef: React.RefObject<SignatureCanvas | null>;
+  signatureRef: React.RefObject<SignatureCanvasRef | null>;
   signatureColors: SignatureColor[];
   selectedColor: SignatureColor;
   setSelectedColor: (color: SignatureColor) => void;
@@ -51,7 +60,7 @@ const defaultFonts: SignatureFont[] = [
 ];
 
 export function SignatureProvider({ children }: { children: React.ReactNode }) {
-  const signatureRef = useRef<SignatureCanvas | null>(null);
+  const signatureRef = useRef<SignatureCanvasRef | null>(null);
   const typedSignatureRef = useRef<HTMLInputElement | null>(null);
 
   const [selectedColor, setSelectedColor] = useState<SignatureColor>(defaultColors[0]);

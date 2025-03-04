@@ -28,10 +28,7 @@ export default function InvoiceLayout({ data, children }: InvoiceLayoutProps) {
                 href="https://fonts.gstatic.com"
                 crossOrigin="anonymous"
             />
-            <link
-                href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
-                rel="stylesheet"
-            ></link>
+            {/* Outfit font is now loaded via the layout.tsx file */}
             {details?.signature?.fontFamily && (
                 <>
                     <link href={fontHref} rel="stylesheet" />
@@ -43,7 +40,7 @@ export default function InvoiceLayout({ data, children }: InvoiceLayoutProps) {
     return (
         <>
             {head}
-            <section style={{ fontFamily: "Outfit, sans-serif" }}>
+            <section style={{ fontFamily: "var(--font-outfit), sans-serif" }}>
                 <div className="flex flex-col p-4 sm:p-10 bg-white rounded-xl min-h-[60rem]">
                     {children}
                 </div>

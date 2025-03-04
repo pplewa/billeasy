@@ -26,6 +26,8 @@ import { fetchInvoiceById } from "@/services/invoice/client/invoiceClient";
 import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
 import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
 
+// Types
+import { InvoiceType } from "@/types";
 
 import { formatDate } from "@/lib/utils";
 
@@ -46,7 +48,7 @@ interface InvoiceDetails {
   currency?: string;
   notes?: string;
   terms?: string;
-  signature?: string | { data?: string; fontFamily?: string };
+  signature?: { data?: string; fontFamily?: string };
 }
 
 interface InvoiceSettings {
@@ -81,6 +83,29 @@ interface ViewInvoiceDocument {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+/**
+ * Converts a ViewInvoiceDocument to InvoiceType format
+ * @param doc The ViewInvoiceDocument to convert
+ * @returns An object in InvoiceType format
+ */
+const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
+  return {
+    sender: doc.sender,
+    receiver: doc.receiver,
+    details: {
+      invoiceLogo: doc.settings?.logo,
+      invoiceNumber: doc.details?.invoiceNumber || '',
+      invoiceDate: doc.details?.invoiceDate,
+      dueDate: doc.details?.dueDate,
+      currency: doc.details?.currency,
+      items: doc.items,
+      additionalNotes: doc.details?.notes,
+      paymentTerms: doc.details?.terms || '',
+      signature: doc.details?.signature as { data?: string; fontFamily?: string } | undefined,
+    }
+  };
+};
 
 export default function ViewInvoicePage() {
   const router = useRouter();
@@ -151,13 +176,13 @@ export default function ViewInvoicePage() {
               Edit
             </Link>
           </Button>
-          <InvoiceEmailModal invoice={invoice}>
+          <InvoiceEmailModal invoice={adaptToInvoiceType(invoice)}>
             <Button variant="outline">
               <Mail className="mr-2 h-4 w-4" />
               Email
             </Button>
           </InvoiceEmailModal>
-          <InvoiceExportModal invoice={invoice}>
+          <InvoiceExportModal invoice={adaptToInvoiceType(invoice)}>
             <Button>
               <Download className="mr-2 h-4 w-4" />
               Export
