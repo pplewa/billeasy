@@ -1,24 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
-import { Plus, Trash2 } from "lucide-react";
+import { useFormContext } from "react-hook-form";
 
-import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/ui/form-input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { PlusCircle, X } from "lucide-react";
+import {
+  AddressLookahead,
+  AddressDetails,
+} from "@/components/ui/address-lookahead";
 
 import { InvoiceType } from "@/types";
 
 export function BillToSection() {
   const [showCustomInputs, setShowCustomInputs] = useState(false);
-  
-  const { control, register, formState: { errors } } = useFormContext<InvoiceType>();
-  
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "receiver.customInputs",
-  });
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    watch,
+  } = useFormContext<InvoiceType>();
+
+  // Handle address selection from the lookahead component
+  const handleAddressSelect = (addressDetails: AddressDetails) => {
+    setValue("receiver.address", addressDetails.address, {
+      shouldValidate: true,
+    });
+    setValue("receiver.city", addressDetails.city, { shouldValidate: true });
+    setValue("receiver.zipCode", addressDetails.zipCode, {
+      shouldValidate: true,
+    });
+    setValue("receiver.country", addressDetails.country, {
+      shouldValidate: true,
+    });
+  };
 
   return (
     <Card className="w-full">
@@ -32,37 +50,22 @@ export function BillToSection() {
           error={errors.receiver?.name?.message}
           placeholder="Client name or business name"
         />
-        
-        <FormInput
+
+        <AddressLookahead
           label="Address"
-          {...register("receiver.address")}
+          onAddressSelect={handleAddressSelect}
           error={errors.receiver?.address?.message}
-          placeholder="Street address"
+          value={watch("receiver.address")}
+          cityValue={watch("receiver.city")}
+          zipCodeValue={watch("receiver.zipCode")}
+          countryValue={watch("receiver.country")}
+          onCityChange={(value) => setValue("receiver.city", value, { shouldValidate: true })}
+          onZipCodeChange={(value) => setValue("receiver.zipCode", value, { shouldValidate: true })}
+          onCountryChange={(value) => setValue("receiver.country", value, { shouldValidate: true })}
+          onChange={(e) => setValue("receiver.address", e.target.value, { shouldValidate: true })}
+          id="receiver-address"
         />
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <FormInput
-            label="Zip Code"
-            {...register("receiver.zipCode")}
-            error={errors.receiver?.zipCode?.message}
-            placeholder="Zip code"
-          />
-          
-          <FormInput
-            label="City"
-            {...register("receiver.city")}
-            error={errors.receiver?.city?.message}
-            placeholder="City"
-          />
-          
-          <FormInput
-            label="Country"
-            {...register("receiver.country")}
-            error={errors.receiver?.country?.message}
-            placeholder="Country"
-          />
-        </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormInput
             label="Email"
@@ -70,7 +73,7 @@ export function BillToSection() {
             error={errors.receiver?.email?.message}
             placeholder="Email address"
           />
-          
+
           <FormInput
             label="Phone"
             {...register("receiver.phone")}
@@ -78,66 +81,74 @@ export function BillToSection() {
             placeholder="Phone number"
           />
         </div>
-        
-        {showCustomInputs && (
-          <div className="space-y-4 mt-4">
-            <h3 className="text-sm font-medium">Custom Fields</h3>
-            
-            {fields.map((field, index) => (
-              <div key={field.id} className="flex items-center gap-2">
-                <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormInput
-                    label="Field Name"
-                    {...register(`receiver.customInputs.${index}.key`)}
-                    error={errors.receiver?.customInputs?.[index]?.key?.message}
-                    placeholder="e.g., Tax ID"
-                  />
-                  
-                  <FormInput
-                    label="Value"
-                    {...register(`receiver.customInputs.${index}.value`)}
-                    error={errors.receiver?.customInputs?.[index]?.value?.message}
-                    placeholder="e.g., 123456789"
-                  />
-                </div>
-                
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="mt-6"
-                  onClick={() => remove(index)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => append({ key: "", value: "" })}
-              className="mt-2"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Custom Field
-            </Button>
-          </div>
-        )}
-        
-        {!showCustomInputs && (
+
+        {/* Custom inputs section */}
+        <div className="pt-2">
           <Button
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => setShowCustomInputs(true)}
+            onClick={() => setShowCustomInputs(!showCustomInputs)}
+            className="flex items-center"
           >
-            <Plus className="h-4 w-4 mr-2" />
-            Add Custom Fields
+            {showCustomInputs ? (
+              <>
+                <X className="mr-2 h-4 w-4" />
+                Hide Custom Fields
+              </>
+            ) : (
+              <>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Add Custom Fields
+              </>
+            )}
           </Button>
-        )}
+
+          {showCustomInputs && (
+            <div className="mt-4 space-y-4">
+              {getValues("receiver.customInputs")?.map((customInput: {key?: string, value?: string}, index: number) => (
+                <div
+                  key={index}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                >
+                  <FormInput
+                    label={`Field ${index + 1} Name`}
+                    {...register(`receiver.customInputs.${index}.key`)}
+                    error={errors.receiver?.customInputs?.[index]?.key?.message}
+                    placeholder="Field name"
+                  />
+                  <FormInput
+                    label={`Field ${index + 1} Value`}
+                    {...register(`receiver.customInputs.${index}.value`)}
+                    error={
+                      errors.receiver?.customInputs?.[index]?.value?.message
+                    }
+                    placeholder="Field value"
+                  />
+                </div>
+              ))}
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const currentInputs =
+                    getValues("receiver.customInputs") || [];
+                  setValue("receiver.customInputs", [
+                    ...currentInputs,
+                    { key: "", value: "" },
+                  ]);
+                }}
+                className="flex items-center"
+              >
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Add Another Field
+              </Button>
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
-} 
+}

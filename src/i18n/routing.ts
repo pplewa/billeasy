@@ -25,6 +25,12 @@ export const routing = defineRouting({
       fr: "/facture/creer",
       de: "/rechnung/erstellen",
     },
+    "/drafts": {
+      en: "/drafts",
+      es: "/borradores",
+      fr: "/brouillons",
+      de: "/entwurfe",
+    },
     "/privacy-policy": {
       en: "/privacy-policy",
       es: "/politica-de-privacidad",

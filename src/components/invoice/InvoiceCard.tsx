@@ -7,15 +7,24 @@ import { Pencil, Trash, Copy, Eye } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { InvoiceStatusSelector } from "./InvoiceStatusSelector";
+import { InvoiceStatus } from "@/types";
 
 interface InvoiceCardProps {
   invoice: InvoiceDocument;
   locale: string;
   onDelete: (id: string) => void;
   onDuplicate: (invoice: InvoiceDocument) => void;
+  onStatusChange?: (id: string, status: string) => void;
 }
 
-export function InvoiceCard({ invoice, locale, onDelete, onDuplicate }: InvoiceCardProps) {
+export function InvoiceCard({ 
+  invoice, 
+  locale, 
+  onDelete, 
+  onDuplicate,
+  onStatusChange 
+}: InvoiceCardProps) {
   const { toast } = useToast();
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDuplicating, setIsDuplicating] = useState(false);
@@ -25,6 +34,16 @@ export function InvoiceCard({ invoice, locale, onDelete, onDuplicate }: InvoiceC
   
   // Get the invoice ID as string
   const invoiceId = invoice._id.toString();
+
+  // Get the invoice status or default to draft
+  const status = invoice.details?.status || InvoiceStatus.DRAFT;
+
+  // Handle status change
+  const handleStatusChange = (newStatus: string) => {
+    if (onStatusChange) {
+      onStatusChange(invoiceId, newStatus);
+    }
+  };
 
   // Handle delete
   const handleDelete = async () => {
@@ -72,8 +91,13 @@ export function InvoiceCard({ invoice, locale, onDelete, onDuplicate }: InvoiceC
 
   return (
     <Card className="w-full">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-lg">Invoice #{invoice.details?.invoiceNumber}</CardTitle>
+        <InvoiceStatusSelector 
+          invoiceId={invoiceId} 
+          currentStatus={status} 
+          onStatusChange={handleStatusChange} 
+        />
       </CardHeader>
       <CardContent>
         <div className="space-y-2">

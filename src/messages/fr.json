@@ -7,6 +7,8 @@
     "home": "Accueil",
     "dashboard": "Tableau de bord",
     "invoices": "Factures",
+    "createInvoice": "Créer une facture",
+    "drafts": "Brouillons",
     "profile": "Profil",
     "signIn": "Se connecter",
     "signOut": "Se déconnecter"

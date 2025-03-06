@@ -176,7 +176,28 @@ export const getInvoiceTemplate = async (templateId: number) => {
         const importedModule = await import(
             `@/app/components/templates/invoice-pdf/${componentName}`
         );
-        return importedModule.default;
+        
+        // Get the original template component
+        const OriginalTemplate = importedModule.default;
+        
+        // Return a wrapper function that processes the props before passing to the original template
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return (props: any) => {
+            // Create a deep copy of the props to avoid mutating the original
+            const processedProps = JSON.parse(JSON.stringify(props));
+            
+            // Process signature font family if it exists
+            if (processedProps.signature?.fontFamily) {
+                const fontFamily = processedProps.signature.fontFamily;
+                // Extract the font name from the CSS variable if needed
+                if (typeof fontFamily === 'string' && fontFamily.startsWith('var(--font-')) {
+                    processedProps.signature.fontFamily = fontFamily.replace(/var\(--font-([^)]+)\)/, '$1');
+                }
+            }
+            
+            // Return the original template with processed props
+            return OriginalTemplate(processedProps);
+        };
     } catch (err) {
         console.error(`Error importing template ${componentName}: ${err}`);
 

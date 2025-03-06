@@ -21,6 +21,7 @@ import {
 import { Loader2, PlusCircle } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { InvoiceParserForm } from "@/components/invoice/InvoiceParserForm";
 
 export default function InvoicesPage() {
   const router = useRouter();
@@ -72,6 +73,23 @@ export default function InvoicesPage() {
     setInvoices((prev) => [invoice, ...prev]);
   };
 
+  const handleStatusChange = (id: string, status: string) => {
+    // Update the invoice status in the local state
+    setInvoices((prev) =>
+      prev.map((invoice) => {
+        if (invoice._id.toString() === id) {
+          const updatedInvoice = { ...invoice };
+          if (!updatedInvoice.details) {
+            updatedInvoice.details = {};
+          }
+          updatedInvoice.details.status = status;
+          return updatedInvoice as InvoiceDocument;
+        }
+        return invoice;
+      }) as InvoiceDocument[]
+    );
+  };
+
   return (
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-6">
@@ -87,27 +105,42 @@ export default function InvoicesPage() {
           <Loader2 className="h-8 w-8 animate-spin" />
         </div>
       ) : invoices.length === 0 ? (
-        <div className="text-center py-12 bg-muted rounded-lg">
-          <h2 className="text-xl font-semibold mb-2">No invoices found</h2>
-          <p className="text-muted-foreground mb-4">
-            Create your first invoice to get started.
-          </p>
-          <Button onClick={handleCreateInvoice}>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Create Invoice
-          </Button>
+        <div className="space-y-8">
+          <div className="text-center py-12 bg-muted rounded-lg">
+            <h2 className="text-xl font-semibold mb-2">No invoices found</h2>
+            <p className="text-muted-foreground mb-4">
+              Create your first invoice to get started.
+            </p>
+            <Button onClick={handleCreateInvoice}>
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Create Invoice
+            </Button>
+          </div>
+          
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Quick Invoice Generator</h2>
+            <InvoiceParserForm locale={locale} />
+          </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {invoices.map((invoice) => (
-            <InvoiceCard
-              key={invoice._id.toString()}
-              invoice={invoice}
-              locale={locale}
-              onDelete={handleDeleteInvoice}
-              onDuplicate={handleDuplicateInvoice}
-            />
-          ))}
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {invoices.map((invoice) => (
+              <InvoiceCard
+                key={invoice._id.toString()}
+                invoice={invoice}
+                locale={locale}
+                onDelete={handleDeleteInvoice}
+                onDuplicate={handleDuplicateInvoice}
+                onStatusChange={handleStatusChange}
+              />
+            ))}
+          </div>
+          
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Quick Invoice Generator</h2>
+            <InvoiceParserForm locale={locale} />
+          </div>
         </div>
       )}
 

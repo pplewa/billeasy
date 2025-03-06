@@ -14,6 +14,14 @@ export type FormType = UseFormReturn<InvoiceType>;
 export type NameType = FieldPath<InvoiceType>;
 export type CurrencyType = string;
 
+// Invoice status types
+export enum InvoiceStatus {
+  DRAFT = "draft",
+  SENT = "sent",
+  PAID = "paid",
+  OVERDUE = "overdue"
+}
+
 export type CurrencyDetails = {
     currency: string;
     decimals: number;

@@ -16,6 +16,19 @@ import { InvoiceType } from "@/types";
 const InvoiceTemplate2 = (data: InvoiceType) => {
     const { sender, receiver, details } = data;
 
+    // Parse numeric values to ensure they're numbers, not strings
+    const parseNumber = (value: unknown): number => {
+        if (value === undefined || value === null) return 0;
+        return typeof value === 'string' ? parseFloat(value) || 0 : (typeof value === 'number' ? value : 0);
+    };
+
+    // Get the items from the correct location
+    const invoiceItems = details?.items || [];
+
+    // Calculate totals
+    const subTotal = parseNumber(details?.subTotal);
+    const totalAmount = parseNumber(details?.totalAmount);
+
     return (
         <InvoiceLayout data={data}>
             <div className="flex flex-col md:flex-row justify-between items-start gap-8 border-b border-gray-200 pb-8">
@@ -48,7 +61,6 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                         {sender?.phone && (
                             <>
                                 Phone: {sender.phone}
-                                <br />
                             </>
                         )}
                     </address>
@@ -111,90 +123,111 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
 
             <div className="mt-8">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Items</h3>
-                <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                        <thead>
-                            <tr className="bg-gray-100">
-                                <th className="text-left p-3 font-semibold text-gray-700">Item</th>
-                                <th className="text-center p-3 font-semibold text-gray-700">Qty</th>
-                                <th className="text-right p-3 font-semibold text-gray-700">Rate</th>
-                                <th className="text-right p-3 font-semibold text-gray-700">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {details?.items?.map((item, index) => (
-                                <tr key={item.id || index} className="border-b border-gray-200">
-                                    <td className="p-3">
-                                        <p className="font-medium text-gray-800">{item.name}</p>
-                                        <p className="text-sm text-gray-600">{item.description}</p>
-                                    </td>
-                                    <td className="p-3 text-center">{item.quantity}</td>
-                                    <td className="p-3 text-right">
-                                        {formatCurrency(item.unitPrice || 0, details?.currency || 'USD')}
-                                    </td>
-                                    <td className="p-3 text-right">
-                                        {formatCurrency(item.total || 0, details?.currency || 'USD')}
-                                    </td>
+                <div className="mt-8">
+                    <div className="border border-gray-200 rounded-lg overflow-hidden">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="text-left py-3 px-4 font-semibold text-gray-700 w-1/2">Item</th>
+                                    <th className="text-center py-3 px-4 font-semibold text-gray-700">Qty</th>
+                                    <th className="text-center py-3 px-4 font-semibold text-gray-700">Rate</th>
+                                    <th className="text-right py-3 px-4 font-semibold text-gray-700">Amount</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {invoiceItems?.map((item, index) => {
+                                    // Parse item values
+                                    const quantity = parseNumber(item.quantity);
+                                    const unitPrice = parseNumber(item.unitPrice);
+                                    const total = parseNumber(item.total);
+                                    
+                                    return (
+                                        <tr key={item.id || index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                                            <td className="py-3 px-4 border-t border-gray-200">
+                                                <p className="font-medium text-gray-800">
+                                                    {item.name}
+                                                </p>
+                                                <p className="text-sm text-gray-600 whitespace-pre-line">
+                                                    {item.description}
+                                                </p>
+                                            </td>
+                                            <td className="text-center py-3 px-4 border-t border-gray-200">
+                                                <p className="text-gray-800">{quantity}</p>
+                                            </td>
+                                            <td className="text-center py-3 px-4 border-t border-gray-200">
+                                                <p className="text-gray-800">
+                                                    {formatCurrency(unitPrice, details?.currency || 'USD')}
+                                                </p>
+                                            </td>
+                                            <td className="text-right py-3 px-4 border-t border-gray-200">
+                                                <p className="text-gray-800">
+                                                    {formatCurrency(total || (quantity * unitPrice), details?.currency || 'USD')}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
             <div className="mt-8 flex justify-end">
-                <div className="w-full md:w-1/2 lg:w-1/3">
-                    <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                        <div className="flex justify-between">
-                            <span className="text-gray-700">Subtotal:</span>
-                            <span className="font-medium">
-                                {formatCurrency(details?.subTotal || 0, details?.currency || 'USD')}
-                            </span>
-                        </div>
+                <div className="w-full sm:w-1/2 lg:w-1/3">
+                    <table className="w-full">
+                        <tbody>
+                            <tr>
+                                <td className="py-2 font-medium text-gray-700">Subtotal:</td>
+                                <td className="py-2 text-right text-gray-700">
+                                    {formatCurrency(subTotal, details?.currency || 'USD')}
+                                </td>
+                            </tr>
 
-                        {details?.taxDetails?.amount != undefined &&
-                            details?.taxDetails?.amount > 0 && (
-                                <div className="flex justify-between">
-                                    <span className="text-gray-700">Tax:</span>
-                                    <span>
+                            {details?.taxDetails?.amount != undefined &&
+                                parseNumber(details?.taxDetails?.amount) > 0 && (
+                                <tr>
+                                    <td className="py-2 font-medium text-gray-700">Tax:</td>
+                                    <td className="py-2 text-right text-gray-700">
                                         {details.taxDetails.amountType === "amount"
-                                            ? formatCurrency(details.taxDetails.amount, details?.currency || 'USD')
-                                            : `${details.taxDetails.amount}%`}
-                                    </span>
-                                </div>
+                                            ? formatCurrency(parseNumber(details.taxDetails.amount), details?.currency || 'USD')
+                                            : `${parseNumber(details.taxDetails.amount)}%`}
+                                    </td>
+                                </tr>
                             )}
 
-                        {details?.discountDetails?.amount != undefined &&
-                            details?.discountDetails?.amount > 0 && (
-                                <div className="flex justify-between">
-                                    <span className="text-gray-700">Discount:</span>
-                                    <span>
+                            {details?.discountDetails?.amount != undefined &&
+                                parseNumber(details?.discountDetails?.amount) > 0 && (
+                                <tr>
+                                    <td className="py-2 font-medium text-gray-700">Discount:</td>
+                                    <td className="py-2 text-right text-gray-700">
                                         {details.discountDetails.amountType === "amount"
-                                            ? formatCurrency(details.discountDetails.amount, details?.currency || 'USD')
-                                            : `${details.discountDetails.amount}%`}
-                                    </span>
-                                </div>
+                                            ? formatCurrency(parseNumber(details.discountDetails.amount), details?.currency || 'USD')
+                                            : `${parseNumber(details.discountDetails.amount)}%`}
+                                    </td>
+                                </tr>
                             )}
 
-                        {details?.shippingDetails?.cost != undefined &&
-                            details?.shippingDetails?.cost > 0 && (
-                                <div className="flex justify-between">
-                                    <span className="text-gray-700">Shipping:</span>
-                                    <span>
+                            {details?.shippingDetails?.cost != undefined &&
+                                parseNumber(details?.shippingDetails?.cost) > 0 && (
+                                <tr>
+                                    <td className="py-2 font-medium text-gray-700">Shipping:</td>
+                                    <td className="py-2 text-right text-gray-700">
                                         {details.shippingDetails.costType === "amount"
-                                            ? formatCurrency(details.shippingDetails.cost, details?.currency || 'USD')
-                                            : `${details.shippingDetails.cost}%`}
-                                    </span>
-                                </div>
+                                            ? formatCurrency(parseNumber(details.shippingDetails.cost), details?.currency || 'USD')
+                                            : `${parseNumber(details.shippingDetails.cost)}%`}
+                                    </td>
+                                </tr>
                             )}
 
-                        <div className="border-t border-gray-200 pt-2 flex justify-between">
-                            <span className="font-bold text-gray-900">Total:</span>
-                            <span className="font-bold text-gray-900">
-                                {formatCurrency(details?.totalAmount || 0, details?.currency || 'USD')}
-                            </span>
-                        </div>
-                    </div>
+                            <tr className="border-t border-gray-200">
+                                <td className="py-3 font-bold text-gray-900">Total:</td>
+                                <td className="py-3 text-right font-bold text-gray-900">
+                                    {formatCurrency(totalAmount, details?.currency || 'USD')}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -243,8 +276,8 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
             </div>
 
             {details?.signature?.data && (
-                <div className="mt-8 flex justify-end">
-                    <div className="text-center">
+                <div className="mt-8 border-t border-gray-200 pt-4">
+                    <div className="flex flex-col items-end">
                         <div 
                             className="max-w-xs" 
                             style={{ 

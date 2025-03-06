@@ -37,12 +37,20 @@ export function SignatureSection() {
       >
         {signatureData ? (
           <div className="relative aspect-[3/1] w-[300px] overflow-hidden rounded-lg border">
-            <img
-              src={signatureData}
-              alt="Signature"
-              className="h-full w-full object-contain"
-              style={signatureFontFamily ? { fontFamily: signatureFontFamily } : undefined}
-            />
+            {signatureData.startsWith('data:image') ? (
+              <img
+                src={signatureData}
+                alt="Signature"
+                className="h-full w-full object-contain"
+              />
+            ) : (
+              <div 
+                className="h-full w-full flex items-center justify-center"
+                style={{ fontFamily: signatureFontFamily }}
+              >
+                <p className="text-xl">{signatureData}</p>
+              </div>
+            )}
           </div>
         ) : (
           <div

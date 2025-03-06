@@ -33,36 +33,9 @@ function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProp
     if (activeTab === SignatureTabs.DRAW) {
       signatureData = signatureRef.current?.toDataURL("image/png") ?? "";
     } else if (activeTab === SignatureTabs.TYPE) {
-      // Create a canvas to render the typed signature with the selected font
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        // Set canvas dimensions based on text size
-        const fontSize = 48;
-        ctx.font = `${fontSize}px ${selectedFont.variable}`;
-        const textMetrics = ctx.measureText(typedSignature);
-        const textWidth = textMetrics.width;
-        const textHeight = fontSize;
-
-        canvas.width = textWidth + 40; // Add padding
-        canvas.height = textHeight + 40; // Add padding
-
-        // Clear canvas and set font
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = `${fontSize}px ${selectedFont.variable}`;
-        ctx.fillStyle = "#000000";
-        ctx.textBaseline = "middle";
-
-        // Draw text centered
-        ctx.fillText(
-          typedSignature,
-          20, // Left padding
-          canvas.height / 2 // Vertical center
-        );
-
-        signatureData = canvas.toDataURL("image/png");
-        fontFamily = selectedFont.variable;
-      }
+      // For typed signatures, just use the text directly
+      signatureData = typedSignature;
+      fontFamily = selectedFont.variable;
     } else if (activeTab === SignatureTabs.UPLOAD) {
       signatureData = uploadedSignature;
     }
