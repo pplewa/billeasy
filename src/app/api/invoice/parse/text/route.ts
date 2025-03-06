@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parseInvoiceFromText } from '@/lib/services/openai';
-import { getCurrentUser } from '@/lib/auth/auth';
 
 export const config = {
   api: {
@@ -18,15 +17,7 @@ export async function POST(request: NextRequest) {
   }
   
   try {
-    // Check authentication
-    const user = await getCurrentUser(request);
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
-    }
-
+    // Authentication is not required for parsing
     // Parse request body
     const body = await request.json();
     const { text } = body;

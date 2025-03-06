@@ -78,11 +78,11 @@ const CustomInputSchema = z.object({
 // Item Schema
 export const ItemSchema = z.object({
   id: z.string().optional(),
-  name: fieldValidators.stringMin1,
+  name: fieldValidators.stringOptional,
   description: fieldValidators.stringOptional,
-  quantity: fieldValidators.quantity,
-  unitPrice: fieldValidators.unitPrice,
-  total: fieldValidators.stringToNumber,
+  quantity: fieldValidators.nonNegativeNumber,
+  unitPrice: fieldValidators.nonNegativeNumber,
+  total: fieldValidators.nonNegativeNumber,
 });
 
 // Invoice Sender Schema
@@ -111,9 +111,9 @@ const InvoiceReceiverSchema = z.object({
 
 // Payment Information Schema
 const PaymentInformationSchema = z.object({
-  bankName: fieldValidators.stringMin1,
-  accountName: fieldValidators.stringMin1,
-  accountNumber: fieldValidators.stringMin1,
+  bankName: fieldValidators.stringOptional,
+  accountName: fieldValidators.stringOptional,
+  accountNumber: fieldValidators.stringOptional,
 }).partial();
 
 // Discount Details Schema
@@ -144,12 +144,12 @@ const SignatureSchema = z.object({
 // Invoice Details Schema
 const InvoiceDetailsSchema = z.object({
   invoiceLogo: fieldValidators.stringOptional,
-  invoiceNumber: fieldValidators.stringMin1,
+  invoiceNumber: fieldValidators.stringOptional,
   invoiceDate: fieldValidators.date,
   dueDate: fieldValidators.date,
   purchaseOrderNumber: fieldValidators.stringOptional,
-  currency: fieldValidators.string,
-  language: fieldValidators.string,
+  currency: fieldValidators.stringOptional,
+  language: fieldValidators.stringOptional,
   status: z.string().optional().default("draft"),
   items: z.array(ItemSchema).optional(),
   paymentInformation: PaymentInformationSchema.optional(),
@@ -158,9 +158,9 @@ const InvoiceDetailsSchema = z.object({
   shippingDetails: ShippingDetailsSchema.optional(),
   subTotal: fieldValidators.nonNegativeNumber,
   totalAmount: fieldValidators.nonNegativeNumber,
-  totalAmountInWords: fieldValidators.string,
+  totalAmountInWords: fieldValidators.stringOptional,
   additionalNotes: fieldValidators.stringOptional,
-  paymentTerms: fieldValidators.stringMin1,
+  paymentTerms: fieldValidators.stringOptional,
   signature: SignatureSchema.optional(),
   updatedAt: fieldValidators.stringOptional,
   pdfTemplate: z.number().optional(),

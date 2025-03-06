@@ -52,7 +52,20 @@ export function deepMerge<T extends Record<string, any>>(
     const sourceValue = source[key as keyof typeof source];
     const targetValue = target[key as keyof T];
 
-    if (
+    // Special case for invoice items - ensure they're properly handled
+    if (key === 'items' && Array.isArray(sourceValue) && sourceValue.length > 0) {
+      // For invoice items, always prefer the source array if it has items
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      output[key as keyof T] = sourceValue as unknown as T[keyof T];
+    }
+    // Handle arrays specially - prefer source arrays over target arrays
+    else if (Array.isArray(sourceValue)) {
+      // If source has a non-empty array, use it
+      if (sourceValue.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        output[key as keyof T] = sourceValue as unknown as T[keyof T];
+      }
+    } else if (
       typeof sourceValue === 'object' &&
       sourceValue !== null &&
       !Array.isArray(sourceValue) &&
@@ -67,11 +80,11 @@ export function deepMerge<T extends Record<string, any>>(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         sourceValue as any
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) as any;
+      ) as unknown as T[keyof T];
     } else if (sourceValue !== undefined) {
-      // For arrays or primitive values, just use the source value
+      // For all other types, prefer source value if it exists
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      output[key as keyof T] = sourceValue as any;
+      output[key as keyof T] = sourceValue as unknown as T[keyof T];
     }
   });
 

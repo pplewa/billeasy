@@ -11,3 +11,4 @@ alwaysApply: false
 - Before implementing something that wasn't specifically asked for check if it is okay to proceed
 - in Next.js 15, the params and searchParams props are now Promises. 
 - Current version of is "next-intl": "^3.26.5" that has different structure and API to older versions, please ensure any translations work is following current version
+- All fields in create invoice need to be optional

@@ -61,7 +61,13 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
     ...props 
   }, ref) => {
     // Mode state
-    const [mode, setMode] = useState<AddressMode>("lookahead");
+    const [mode, setMode] = useState<AddressMode>(() => {
+      // Start in manual mode if address values are already populated
+      if ((value || defaultValue) && (cityValue || zipCodeValue || countryValue)) {
+        return "manual";
+      }
+      return "lookahead";
+    });
     
     // Input state
     const [inputValue, setInputValue] = useState<string>(value || defaultValue || "");
@@ -102,7 +108,12 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
         zipCode: zipCodeValue,
         country: countryValue
       }));
-    }, [cityValue, zipCodeValue, countryValue]);
+      
+      // Switch to manual mode if we have populated address values
+      if (inputValue && (cityValue || zipCodeValue || countryValue)) {
+        setMode("manual");
+      }
+    }, [cityValue, zipCodeValue, countryValue, inputValue]);
 
     // Handle input change
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

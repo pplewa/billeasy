@@ -34,7 +34,6 @@ export default function Home({
   const [text, setText] = useState("");
   const [isTextFocused, setIsTextFocused] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const {
     setParsedInvoice,
     setParserLoading,
@@ -104,8 +103,6 @@ export default function Home({
         return;
       }
 
-      setSelectedFile(file);
-
       // Automatically parse the file
       await handleParseFile(file);
     }
@@ -128,7 +125,25 @@ export default function Home({
         throw new Error("Could not extract any invoice data from the text");
       }
 
-      setParsedInvoice(invoice);
+      // Restructure invoice to ensure items are in the right place
+      const restructuredInvoice: any = { ...invoice };
+      
+      // If items exist at the top level, move them to details.items
+      if ((invoice as any).items && Array.isArray((invoice as any).items)) {
+        restructuredInvoice.details = restructuredInvoice.details || {};
+        restructuredInvoice.details.items = (invoice as any).items;
+        delete restructuredInvoice.items; // Remove from top level
+      }
+      
+      // Ensure each item has an id
+      if (restructuredInvoice.details?.items) {
+        restructuredInvoice.details.items = restructuredInvoice.details.items.map((item: any) => ({
+          ...item,
+          id: item.id || crypto.randomUUID()
+        }));
+      }
+
+      setParsedInvoice(restructuredInvoice);
 
       // Redirect to invoice creation page
       router.push(`/${locale}/invoice/create`);
@@ -276,12 +291,6 @@ export default function Home({
                   </div>
                 </div>
               </div>
-              {selectedFile ? (
-                <p className="text-sm text-muted-foreground mt-3">
-                  Selected file:{" "}
-                  <span className="font-medium">{selectedFile.name}</span>
-                </p>
-              ) : null}
             </CardContent>
           </Card>
 
@@ -336,10 +345,6 @@ export default function Home({
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary text-white mb-6 z-10">
                   <span className="text-xl font-bold">1</span>
                 </div>
-                <div
-                  className="absolute top-8 left-1/2 h-0.5 bg-primary/30 w-full hidden md:block"
-                  style={{ transform: "translateX(50%)" }}
-                ></div>
                 <h3 className="text-xl font-semibold mb-3">Create</h3>
                 <p className="text-muted-foreground">
                   Type a description or upload an existing invoice. Our AI will
@@ -351,10 +356,6 @@ export default function Home({
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary text-white mb-6 z-10">
                   <span className="text-xl font-bold">2</span>
                 </div>
-                <div
-                  className="absolute top-8 left-1/2 h-0.5 bg-primary/30 w-full hidden md:block"
-                  style={{ transform: "translateX(50%)" }}
-                ></div>
                 <h3 className="text-xl font-semibold mb-3">Customize</h3>
                 <p className="text-muted-foreground">
                   Review and edit your invoice details in our user-friendly

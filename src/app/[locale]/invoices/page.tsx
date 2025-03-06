@@ -91,7 +91,7 @@ export default function InvoicesPage() {
   };
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Invoices</h1>
         <Button onClick={handleCreateInvoice}>

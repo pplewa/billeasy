@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parseInvoiceFromImage, parseInvoiceFromText } from '@/lib/services/openai';
-import { getCurrentUser } from '@/lib/auth/auth';
 import { processFileBuffer } from '@/lib/services/document-processing';
 
 // Set max file size to 1MB
@@ -19,15 +18,8 @@ export async function POST(request: NextRequest) {
   }
   
   try {
-    // Check authentication
-    const user = await getCurrentUser(request);
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
-    }
-
+    // Authentication is not required for parsing
+    
     // Check if the request is multipart/form-data
     const contentType = request.headers.get('content-type') || '';
     if (!contentType.includes('multipart/form-data')) {
