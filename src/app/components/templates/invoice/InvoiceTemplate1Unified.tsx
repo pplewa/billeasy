@@ -1,0 +1,306 @@
+import React from "react";
+
+// Components
+import InvoiceLayout from "./InvoiceLayout";
+
+// Helpers
+import { formatCurrency } from "@/lib/utils";
+
+// Types
+import { InvoiceType, ItemType } from "@/types-optional";
+
+/**
+ * Invoice Template 1 - Classic business style
+ * A clean, professional template with a blue accent color
+ */
+const InvoiceTemplate1 = (data: InvoiceType) => {
+  const { sender, receiver, details } = data;
+
+  // Parse numeric values to ensure they're numbers, not strings
+  const parseNumber = (value: unknown): number => {
+    if (value === undefined || value === null) return 0;
+    return typeof value === "string"
+      ? parseFloat(value) || 0
+      : typeof value === "number"
+        ? value
+        : 0;
+  };
+
+  // Get the items from the correct location
+  const invoiceItems = details?.items || [];
+
+  // Calculate totals
+  const subTotal = parseNumber(details?.subTotal);
+  const totalAmount = parseNumber(details?.totalAmount);
+
+  return (
+    <InvoiceLayout data={data}>
+      <div className="flex justify-between">
+        <div>
+          {details?.invoiceLogo && (
+            <img
+              src={details.invoiceLogo}
+              width={140}
+              height={100}
+              alt={`Logo of ${sender?.name || "Company"}`}
+              className="object-contain"
+            />
+          )}
+          <h1 className="mt-2 text-lg md:text-xl font-semibold text-blue-600">
+            {sender?.name}
+          </h1>
+        </div>
+        <div className="text-right">
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
+            Invoice #
+          </h2>
+          <span className="mt-1 block text-gray-500">
+            {details?.invoiceNumber}
+          </span>
+          <address className="mt-4 not-italic text-gray-800">
+            {sender?.address}
+            <br />
+            {sender?.zipCode}, {sender?.city}
+            <br />
+            {sender?.country}
+            <br />
+          </address>
+        </div>
+      </div>
+
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div>
+          <h3 className="text-lg font-medium text-gray-800">Bill To:</h3>
+          <div className="mt-2 text-gray-600">
+            {receiver?.name && <p className="font-medium">{receiver?.name}</p>}
+            {receiver?.address && <p>{receiver?.address}</p>}
+            {receiver?.zipCode && (
+              <p>
+                {receiver?.zipCode}, {receiver?.city}
+              </p>
+            )}
+            {receiver?.country && <p>{receiver?.country}</p>}
+            {receiver?.email && <p>Email: {receiver?.email}</p>}
+            {receiver?.phone && <p>Phone: {receiver?.phone}</p>}
+          </div>
+        </div>
+        <div className="sm:text-right">
+          <h3 className="text-lg font-medium text-gray-800">
+            Invoice Details:
+          </h3>
+          <div className="mt-2 text-gray-600">
+            <p>
+              <span className="font-medium">Invoice Date: </span>
+              {details?.invoiceDate instanceof Date
+                ? details.invoiceDate.toLocaleDateString()
+                : details?.invoiceDate}
+            </p>
+            <p>
+              <span className="font-medium">Due Date: </span>
+              {details?.dueDate instanceof Date
+                ? details.dueDate.toLocaleDateString()
+                : details?.dueDate}
+            </p>
+            {details?.purchaseOrderNumber && (
+              <p>
+                <span className="font-medium">PO Number: </span>
+                {details.purchaseOrderNumber}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <h3 className="text-lg font-medium text-gray-800 mb-4">Items</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-gray-200 text-gray-700">
+                <th className="text-left py-3 px-4">Description</th>
+                <th className="text-right py-3 px-4">Quantity</th>
+                <th className="text-right py-3 px-4">Price</th>
+                <th className="text-right py-3 px-4">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoiceItems.map((item: ItemType, index: number) => {
+                const quantity = parseNumber(item.quantity);
+                const unitPrice = parseNumber(item.unitPrice || item.price);
+                const itemTotal = parseNumber(item.total);
+                
+                return (
+                  <tr key={item.id || index} className="border-b border-gray-100">
+                    <td className="py-3 px-4">
+                      <div className="font-medium">{item.name}</div>
+                      {item.description && (
+                        <div className="text-sm text-gray-500">{item.description}</div>
+                      )}
+                    </td>
+                    <td className="text-right py-3 px-4">{quantity}</td>
+                    <td className="text-right py-3 px-4">
+                      {formatCurrency(unitPrice, details?.currency || "USD")}
+                    </td>
+                    <td className="text-right py-3 px-4">
+                      {formatCurrency(itemTotal, details?.currency || "USD")}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="mt-8 flex justify-end">
+        <div className="w-full md:w-1/3">
+          <table className="w-full">
+            <tbody>
+              <tr>
+                <td className="font-medium text-gray-800 py-1">Subtotal:</td>
+                <td className="text-gray-600 text-right py-1">
+                  {formatCurrency(subTotal, details?.currency || "USD")}
+                </td>
+              </tr>
+
+              {/* Tax row */}
+              {details?.tax?.amount != undefined &&
+                parseNumber(details?.tax?.amount) > 0 && (
+                  <tr>
+                    <td className="font-medium text-gray-800 py-1">Tax:</td>
+                    <td className="text-gray-600 text-right py-1">
+                      {details.tax.amountType === "amount"
+                        ? formatCurrency(
+                            parseNumber(details.tax.amount),
+                            details?.currency || "USD"
+                          )
+                        : `${parseNumber(details.tax.amount)}%`}
+                    </td>
+                  </tr>
+                )}
+
+              {/* Discount row */}
+              {details?.discount?.amount != undefined &&
+                parseNumber(details?.discount?.amount) > 0 && (
+                  <tr>
+                    <td className="font-medium text-gray-800 py-1">
+                      Discount:
+                    </td>
+                    <td className="text-gray-600 text-right py-1">
+                      {details.discount.amountType === "amount"
+                        ? formatCurrency(
+                            parseNumber(details.discount.amount),
+                            details?.currency || "USD"
+                          )
+                        : `${parseNumber(details.discount.amount)}%`}
+                    </td>
+                  </tr>
+                )}
+
+              {/* Shipping row */}
+              {details?.shipping?.cost != undefined &&
+                parseNumber(details?.shipping?.cost) > 0 && (
+                  <tr>
+                    <td className="font-medium text-gray-800 py-1">
+                      Shipping:
+                    </td>
+                    <td className="text-gray-600 text-right py-1">
+                      {details.shipping.costType === "amount"
+                        ? formatCurrency(
+                            parseNumber(details.shipping.cost),
+                            details?.currency || "USD"
+                          )
+                        : `${parseNumber(details.shipping.cost)}%`}
+                    </td>
+                  </tr>
+                )}
+
+              <tr className="border-t border-gray-200">
+                <td className="font-semibold text-gray-800 py-2">Total:</td>
+                <td className="font-semibold text-gray-800 text-right py-2">
+                  {formatCurrency(totalAmount, details?.currency || "USD")}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {details?.paymentInformation && (
+        <div className="mt-8 border-t border-gray-200 pt-4">
+          <h3 className="text-lg font-medium text-gray-800">
+            Payment Information
+          </h3>
+          <div className="mt-2 text-gray-600">
+            {details.paymentInformation.bankName && (
+              <p>
+                <span className="font-medium">Bank: </span>
+                {details.paymentInformation.bankName}
+              </p>
+            )}
+            {details.paymentInformation.accountName && (
+              <p>
+                <span className="font-medium">Account Name: </span>
+                {details.paymentInformation.accountName}
+              </p>
+            )}
+            {details.paymentInformation.accountNumber && (
+              <p>
+                <span className="font-medium">Account Number: </span>
+                {details.paymentInformation.accountNumber}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {details?.additionalNotes && (
+        <div className="mt-8 border-t border-gray-200 pt-4">
+          <h3 className="text-lg font-medium text-gray-800">Notes</h3>
+          <p className="mt-2 text-gray-600 whitespace-pre-line">
+            {details.additionalNotes}
+          </p>
+        </div>
+      )}
+
+      {details?.paymentTerms && (
+        <div className="mt-8 border-t border-gray-200 pt-4">
+          <h3 className="text-lg font-medium text-gray-800">Terms</h3>
+          <p className="mt-2 text-gray-600 whitespace-pre-line">
+            {details.paymentTerms}
+          </p>
+        </div>
+      )}
+
+      {details?.signature?.data && (
+        <div className="mt-8 border-t border-gray-200 pt-4">
+          <div className="flex flex-col items-end">
+            <div
+              className="max-w-xs"
+              style={{
+                fontFamily: details.signature.fontFamily
+                  ? `${details.signature.fontFamily}, cursive`
+                  : "cursive",
+              }}
+            >
+              {details.signature.data.startsWith("data:image") ? (
+                <img
+                  src={details.signature.data}
+                  alt="Signature"
+                  className="h-16 object-contain"
+                />
+              ) : (
+                <p className="text-xl text-gray-800">
+                  {details.signature.data}
+                </p>
+              )}
+            </div>
+            <p className="mt-2 text-sm text-gray-500">Authorized Signature</p>
+          </div>
+        </div>
+      )}
+    </InvoiceLayout>
+  );
+};
+
+export default InvoiceTemplate1; 

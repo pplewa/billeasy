@@ -31,6 +31,9 @@ import DynamicInvoiceView from "@/components/invoice/DynamicInvoiceView";
 // Types
 import { InvoiceType } from "@/types";
 
+// Add the import for our new adapter
+import { normalizeInvoice } from "@/lib/invoice-adapter";
+
 // Define interfaces for the invoice structure as used in the view
 interface InvoiceItem {
   id: string;
@@ -102,91 +105,9 @@ interface ViewInvoiceDocument {
  * @returns An object in InvoiceType format
  */
 const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
-  if (!doc) return {} as InvoiceType;
-  
-  // Calculate subtotal and total amount from items
-  const items = doc.items || [];
-  
-  // Process items to ensure numeric values
-  const processedItems = items.map((item, index) => {
-    const quantity = typeof item.quantity === 'string' ? parseFloat(item.quantity) : (item.quantity || 0);
-    const unitPrice = typeof item.unitPrice !== 'undefined'
-      ? (typeof item.unitPrice === 'string' ? parseFloat(item.unitPrice as unknown as string) : item.unitPrice)
-      : (typeof item.price === 'string' ? parseFloat(item.price as unknown as string) : (item.price || 0));
-    
-    // Handle discount properly based on type
-    let discount = 0;
-    if (typeof item.discount === 'object' && item.discount !== null && 'amount' in item.discount) {
-      discount = typeof item.discount.amount === 'string' 
-        ? parseFloat(item.discount.amount) 
-        : (item.discount.amount || 0);
-    } else if (typeof item.discount === 'number') {
-      discount = item.discount;
-    } else if (typeof item.discount === 'string') {
-      discount = parseFloat(item.discount) || 0;
-    }
-    
-    // Calculate item total
-    const subtotal = quantity * unitPrice;
-    // Apply a percentage discount by default (safely convert to number)
-    const discountAmount = subtotal * (Number(discount) / 100);
-    const total = subtotal - discountAmount;
-    
-    return {
-      id: item.id || `item-${index}`,
-      name: item.name || '',
-      description: item.description || '',
-      quantity: quantity,
-      unitPrice: unitPrice,
-      discount: discount,
-      total: total
-    };
-  });
-  
-  // Calculate subtotal and total
-  const subTotal = processedItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-  const totalAmount = processedItems.reduce((sum, item) => sum + (item.total || 0), 0);
-  
-  // Process signature data
-  let signature;
-  if (doc.details?.signature) {
-    if (typeof doc.details.signature === 'string') {
-      signature = { data: doc.details.signature };
-    } else {
-      // Process font family to extract the actual font name if it's a CSS variable
-      let fontFamily = doc.details.signature.fontFamily || '';
-      if (fontFamily.startsWith('var(--font-')) {
-        fontFamily = fontFamily.replace(/var\(--font-([^)]+)\)/, '$1');
-      }
-      
-      signature = {
-        data: doc.details.signature.data || '',
-        fontFamily: fontFamily
-      };
-    }
-  }
-  
-  // Convert template string to number
-  const templateId = doc.settings?.template ? parseInt(doc.settings.template, 10) : 1;
-  
-  return {
-    sender: doc.sender,
-    receiver: doc.receiver,
-    details: {
-      invoiceLogo: doc.settings?.logo,
-      invoiceNumber: doc.details?.invoiceNumber || '',
-      invoiceDate: doc.details?.invoiceDate,
-      dueDate: doc.details?.dueDate,
-      currency: doc.details?.currency,
-      items: processedItems,
-      additionalNotes: doc.details?.notes,
-      paymentTerms: doc.details?.terms || '',
-      signature: signature,
-      subTotal: subTotal,
-      totalAmount: totalAmount,
-      pdfTemplate: templateId
-    }
-  };
+  // Cast to any to avoid type mismatch with SourceInvoice
+  // This is safe since normalizeInvoice can handle any invoice-like structure
+  return normalizeInvoice(doc as any);
 };
 
 export default function ViewInvoicePage() {

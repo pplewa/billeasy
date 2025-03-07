@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { InvoiceSchema, ItemSchema } from "@/lib/schemas-optional";
+import { InvoiceSchema, ItemSchema } from "@/lib/schemas-unified";
 
 // Form types with relaxed validation
 export type InvoiceType = z.infer<typeof InvoiceSchema>;
