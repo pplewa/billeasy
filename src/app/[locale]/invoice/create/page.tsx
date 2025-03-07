@@ -66,7 +66,6 @@ interface InvoiceDetails {
   invoiceDate?: string | Date | null;
   dueDate?: string | Date | null;
   currency?: string | null;
-  language?: string | null;
   subTotal?: number | string | null;
   totalAmount?: number | string | null;
   signature?: unknown;
@@ -168,14 +167,6 @@ function ForceUpdateButton({
           formMethods.setValue(
             "details.currency",
             parsedInvoice.details.currency
-          );
-        }
-
-        // Update language
-        if (parsedInvoice.details.language) {
-          formMethods.setValue(
-            "details.language",
-            parsedInvoice.details.language
           );
         }
 
@@ -319,14 +310,6 @@ function ItemsUpdater({ parsedInvoice }: { parsedInvoice?: ParsedInvoice }) {
           );
         }
 
-        // Update language
-        if (parsedInvoice.details.language) {
-          formMethods.setValue(
-            "details.language",
-            parsedInvoice.details.language
-          );
-        }
-
         // Update totals
         if (parsedInvoice.details.subTotal) {
           formMethods.setValue(
@@ -442,11 +425,6 @@ export default function CreateInvoicePage({
         // Add currency if available
         if (parsedInvoice.details.currency) {
           baseInvoice.details.currency = parsedInvoice.details.currency;
-        }
-
-        // Add language if available
-        if (parsedInvoice.details.language) {
-          baseInvoice.details.language = parsedInvoice.details.language;
         }
 
         // Add totals if available

@@ -91,7 +91,6 @@ const InvoiceDetailsSchema = z.object({
   invoiceDate: fieldValidators.dateOptional,
   dueDate: fieldValidators.dateOptional,
   currency: fieldValidators.stringOptional,
-  language: fieldValidators.stringOptional,
   items: fieldValidators.arrayOptional(ItemSchema),
   subTotal: fieldValidators.numberOptional,
   totalAmount: fieldValidators.numberOptional,

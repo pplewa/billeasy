@@ -1,44 +1,80 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/ui/form-input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 
 import { InvoiceType } from "@/types";
 
-// Sample currencies - in a real app, these would come from an API or config
-const currencies = [
-  { code: "USD", name: "US Dollar" },
-  { code: "EUR", name: "Euro" },
-  { code: "GBP", name: "British Pound" },
-  { code: "JPY", name: "Japanese Yen" },
-  { code: "CAD", name: "Canadian Dollar" },
-  { code: "AUD", name: "Australian Dollar" },
-];
+// Currency type definition
+type Currency = {
+  code: string;
+  name: string;
+};
 
-// Sample languages - in a real app, these would come from an API or config
-const languages = [
-  { code: "en", name: "English" },
-  { code: "es", name: "Spanish" },
-  { code: "fr", name: "French" },
-  { code: "de", name: "German" },
-  { code: "it", name: "Italian" },
-  { code: "ja", name: "Japanese" },
-];
+type CurrencyDetails = {
+  currency: string;
+  decimals: number;
+  beforeDecimal: string;
+  afterDecimal: string | null;
+};
 
 export function InvoiceDetailsSection() {
   const { register, setValue, watch, formState: { errors } } = useFormContext<InvoiceType>();
   
   const invoiceDate = watch("details.invoiceDate");
   const dueDate = watch("details.dueDate");
+  const selectedCurrency = watch("details.currency");
+  
+  const [open, setOpen] = useState(false);
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
+  
+  // Load currencies from JSON file
+  useEffect(() => {
+    const loadCurrencies = async () => {
+      try {
+        // In Next.js, files in the public directory are served at the root path
+        const response = await fetch('/assets/data/currencies.json');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch currencies: ${response.status}`);
+        }
+        const data = await response.json();
+        
+        // Transform the data into the format we need and sort alphabetically
+        const formattedCurrencies = Object.entries(data)
+          .map(([code, details]) => ({
+            code,
+            name: (details as CurrencyDetails).currency
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
+        
+        setCurrencies(formattedCurrencies);
+      } catch (error) {
+        console.error("Failed to load currencies:", error);
+        // Fallback to default currencies if loading fails
+        setCurrencies([
+          { code: "USD", name: "United States Dollar" },
+          { code: "EUR", name: "Euro" },
+          { code: "GBP", name: "British Pound" },
+          { code: "JPY", name: "Japanese Yen" },
+          { code: "CAD", name: "Canadian Dollar" },
+          { code: "AUD", name: "Australian Dollar" },
+          { code: "INR", name: "Indian Rupee" },
+        ]);
+      }
+    };
+    
+    loadCurrencies();
+  }, []);
 
   return (
     <Card className="w-full">
@@ -119,56 +155,56 @@ export function InvoiceDetailsSection() {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Currency */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Currency</label>
-            <Select 
-              onValueChange={(value) => setValue("details.currency", value)}
-              defaultValue={watch("details.currency")}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select currency" />
-              </SelectTrigger>
-              <SelectContent>
-                {currencies.map((currency) => (
-                  <SelectItem key={currency.code} value={currency.code}>
-                    {currency.code} - {currency.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.details?.currency?.message && (
-              <p className="text-sm font-medium text-destructive">
-                {errors.details.currency.message}
-              </p>
-            )}
-          </div>
-          
-          {/* Language */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Language</label>
-            <Select 
-              onValueChange={(value) => setValue("details.language", value)}
-              defaultValue={watch("details.language")}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent>
-                {languages.map((language) => (
-                  <SelectItem key={language.code} value={language.code}>
-                    {language.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.details?.language?.message && (
-              <p className="text-sm font-medium text-destructive">
-                {errors.details.language.message}
-              </p>
-            )}
-          </div>
+        {/* Searchable Currency Combobox */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Currency</label>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-full justify-between"
+              >
+                {selectedCurrency ? 
+                  currencies.find(c => c.code === selectedCurrency)?.code + " - " + 
+                  currencies.find(c => c.code === selectedCurrency)?.name : 
+                  "Select currency"}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[300px] p-0">
+              <Command>
+                <CommandInput placeholder="Search currency..." className="h-9" />
+                <CommandEmpty>No currency found.</CommandEmpty>
+                <CommandGroup className="max-h-[300px] overflow-auto">
+                  {currencies.map((currency) => (
+                    <CommandItem
+                      key={currency.code}
+                      value={currency.code}
+                      onSelect={(currentValue) => {
+                        setValue("details.currency", currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          selectedCurrency === currency.code ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {currency.code} - {currency.name}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
+          {errors.details?.currency?.message && (
+            <p className="text-sm font-medium text-destructive">
+              {errors.details.currency.message}
+            </p>
+          )}
         </div>
       </CardContent>
     </Card>

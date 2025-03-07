@@ -72,7 +72,6 @@ const InvoiceDetailsSchema = new Schema(
     invoiceDate: { type: Date, required: true },
     dueDate: { type: Date, required: true },
     currency: { type: String, required: true },
-    language: { type: String, required: true },
     taxSystem: { type: String, required: true },
     notes: { type: String, required: false },
     terms: { type: String, required: false },

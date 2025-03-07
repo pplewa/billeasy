@@ -148,7 +148,6 @@ export const FORM_DEFAULT_VALUES = {
       },
     ],
     currency: "USD",
-    language: "English",
     taxDetails: {
       amount: 0,
       amountType: "amount",
@@ -232,7 +231,6 @@ export const FORM_FILL_VALUES = {
       },
     ],
     currency: "USD",
-    language: "English",
     taxDetails: {
       amount: 15,
       amountType: "percentage",

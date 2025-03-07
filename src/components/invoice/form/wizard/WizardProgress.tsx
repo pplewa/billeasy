@@ -33,7 +33,7 @@ const steps = [
     title: "Invoice Details",
     description: "Add invoice details and payment information",
     icon: ReceiptText,
-    fields: ["details.invoiceNumber", "details.invoiceDate", "details.dueDate", "details.currency", "details.language", "details.paymentInformation"],
+    fields: ["details.invoiceNumber", "details.invoiceDate", "details.dueDate", "details.currency", "details.paymentInformation"],
   },
   {
     id: "items",

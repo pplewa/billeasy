@@ -163,7 +163,6 @@ const InvoiceDetailsSchema = z.object({
   dueDate: fieldValidators.date,
   purchaseOrderNumber: fieldValidators.stringOptional,
   currency: fieldValidators.stringOptional,
-  language: fieldValidators.stringOptional,
   status: z.string().optional().default("draft"),
   items: z.array(ItemSchema).optional(),
   paymentInformation: PaymentInformationSchema.optional(),

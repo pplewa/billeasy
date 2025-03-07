@@ -128,7 +128,6 @@ const InvoiceDetailsSchema = new Schema(
     dueDate: { type: Date },
     purchaseOrderNumber: { type: String },
     currency: { type: String },
-    language: { type: String },
     items: [ItemSchema],
     paymentInformation: PaymentInformationSchema,
     taxDetails: TaxDetailsSchema,

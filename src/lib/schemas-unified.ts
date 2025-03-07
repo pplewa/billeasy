@@ -117,7 +117,6 @@ const InvoiceDetailsSchema = z.object({
   invoiceDate: fieldValidators.dateOptional,
   dueDate: fieldValidators.dateOptional,
   currency: fieldValidators.stringOptional,
-  language: fieldValidators.stringOptional,
   status: fieldValidators.stringOptional,
   
   // Content fields
