@@ -1,12 +1,52 @@
 import { InvoiceType } from "@/types-optional";
 
 /**
- * Fetch all invoices from the API
- * @returns {Promise<InvoiceType[]>} A promise that resolves to an array of invoices
+ * Interface for pagination and filter options
+ */
+export interface FetchOptions {
+  page?: number;
+  limit?: number;
+  status?: string;
+  search?: string;
+}
+
+/**
+ * Interface for paginated invoice response
+ */
+export interface PaginatedInvoices {
+  invoices: InvoiceType[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+  hasMore: boolean;
+}
+
+/**
+ * Fetch invoices from the API with pagination and filtering
+ * @param {FetchOptions} options - Options for pagination and filtering
+ * @returns {Promise<PaginatedInvoices>} A promise that resolves to a paginated invoice response
  * @throws {Error} If there is an error fetching the invoices
  */
-export async function fetchInvoices() {
-  const response = await fetch("/api/invoices", {
+export async function fetchInvoices(options: FetchOptions = {}): Promise<PaginatedInvoices> {
+  const { page = 1, limit = 9, status = "", search = "" } = options;
+  
+  // Build query string
+  const params = new URLSearchParams();
+  params.append("page", page.toString());
+  params.append("limit", limit.toString());
+  
+  if (status) {
+    params.append("status", status);
+  }
+  
+  if (search) {
+    params.append("search", search);
+  }
+  
+  const queryString = params.toString();
+  const url = `/api/invoices${queryString ? `?${queryString}` : ""}`;
+
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

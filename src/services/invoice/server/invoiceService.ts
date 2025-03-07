@@ -3,12 +3,81 @@ import { Invoice, InvoiceDocument } from "@/models/Invoice-optional";
 import { InvoiceType } from "@/types-optional";
 
 /**
- * Get all invoices from the database
- * @returns {Promise<InvoiceDocument[]>} A promise that resolves to an array of invoice documents
+ * Interface for pagination and filter options
  */
-export async function getAllInvoices(): Promise<InvoiceDocument[]> {
+interface FetchOptions {
+  page?: number;
+  limit?: number;
+  status?: string;
+  search?: string;
+}
+
+/**
+ * Interface for paginated invoice response
+ */
+interface PaginatedInvoices {
+  invoices: InvoiceDocument[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+  hasMore: boolean;
+}
+
+/**
+ * Get all invoices from the database with pagination and filtering
+ * @param {FetchOptions} options - Options for pagination and filtering
+ * @returns {Promise<PaginatedInvoices>} A promise that resolves to a paginated invoice response
+ */
+export async function getAllInvoices(options: FetchOptions = {}): Promise<PaginatedInvoices> {
   await connectToDatabase();
-  return Invoice.find().sort({ createdAt: -1 });
+  
+  const {
+    page = 1,
+    limit = 9,
+    status = "",
+    search = "",
+  } = options;
+  
+  // Calculate skip value for pagination
+  const skip = (page - 1) * limit;
+  
+  // Build query filter
+  const filter: Record<string, any> = {};
+  
+  // Add status filter if provided
+  if (status) {
+    filter["details.status"] = status;
+  }
+  
+  // Add search query if provided
+  if (search) {
+    // Create a text search across multiple fields
+    filter["$or"] = [
+      { "receiver.name": { $regex: search, $options: "i" } },
+      { "sender.name": { $regex: search, $options: "i" } },
+      { "details.invoiceNumber": { $regex: search, $options: "i" } },
+    ];
+  }
+  
+  // Execute count query for pagination
+  const totalCount = await Invoice.countDocuments(filter);
+  
+  // Calculate total pages
+  const totalPages = Math.ceil(totalCount / limit);
+  
+  // Execute query with pagination and sorting
+  const invoices = await Invoice.find(filter)
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+  
+  return {
+    invoices,
+    totalCount,
+    totalPages,
+    currentPage: page,
+    hasMore: page < totalPages,
+  };
 }
 
 /**

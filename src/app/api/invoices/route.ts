@@ -1,15 +1,28 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createInvoice, getAllInvoices } from "@/services/invoice/server/invoiceService";
 import { InvoiceSchema } from "@/lib/schemas-optional";
 
 /**
- * GET handler for fetching all invoices
- * @returns {Promise<NextResponse>} The response containing all invoices or an error
+ * GET handler for fetching all invoices with pagination and filtering
+ * @returns {Promise<NextResponse>} The response containing filtered invoices or an error
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const invoices = await getAllInvoices();
-    return NextResponse.json(invoices);
+    const searchParams = request.nextUrl.searchParams;
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "9");
+    const status = searchParams.get("status") || "";
+    const search = searchParams.get("search") || "";
+
+    // Fetch invoices with pagination and filters
+    const result = await getAllInvoices({
+      page,
+      limit,
+      status,
+      search,
+    });
+
+    return NextResponse.json(result);
   } catch (error) {
     console.error("Error fetching invoices:", error);
     return NextResponse.json(
@@ -21,10 +34,10 @@ export async function GET() {
 
 /**
  * POST handler for creating a new invoice
- * @param {Request} request - The request object containing the invoice data
+ * @param {NextRequest} request - The request containing the invoice data to create
  * @returns {Promise<NextResponse>} The response containing the created invoice or an error
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     console.log("[API] Received invoice:", JSON.stringify(body));
