@@ -12,9 +12,6 @@ import { BillToSection } from "@/components/invoice/form/sections/BillToSection"
 import { InvoiceDetailsSection } from "@/components/invoice/form/sections/InvoiceDetailsSection";
 import { Items } from "@/components/invoice/form/sections/Items";
 import { PaymentInformationSection } from "@/components/invoice/form/sections/PaymentInformationSection";
-import { TaxDetailsSection } from "@/components/invoice/form/sections/TaxDetailsSection";
-import { DiscountDetailsSection } from "@/components/invoice/form/sections/DiscountDetailsSection";
-import { ShippingDetailsSection } from "@/components/invoice/form/sections/ShippingDetailsSection";
 import { SignatureSection } from "@/components/invoice/form/sections/SignatureSection";
 import { AdditionalNotesSection } from "@/components/invoice/form/sections/AdditionalNotesSection";
 
@@ -34,7 +31,10 @@ function Step1() {
 function Step2() {
   return (
     <WizardStep>
-      <InvoiceDetailsSection />
+      <div className="space-y-8">
+        <InvoiceDetailsSection />
+        <PaymentInformationSection />
+      </div>
     </WizardStep>
   );
 }
@@ -51,19 +51,6 @@ function Step4() {
   return (
     <WizardStep>
       <div className="space-y-8">
-        <PaymentInformationSection />
-        <TaxDetailsSection />
-        <DiscountDetailsSection />
-        <ShippingDetailsSection />
-      </div>
-    </WizardStep>
-  );
-}
-
-function Step5() {
-  return (
-    <WizardStep>
-      <div className="space-y-8">
         <SignatureSection />
         <AdditionalNotesSection />
       </div>
@@ -74,8 +61,11 @@ function Step5() {
 export function InvoiceForm() {
   const { form, isLoading, isSubmitting, onSubmit } = useInvoiceContext();
 
-  // Handle form submission
-  const handleSubmit = form.handleSubmit(onSubmit);
+  // Handle form submission without validation
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit();
+  };
 
   // Reset form when loading state changes
   useEffect(() => {
@@ -100,7 +90,6 @@ export function InvoiceForm() {
           <Step2 />
           <Step3 />
           <Step4 />
-          <Step5 />
         </Wizard>
 
         <div className="flex justify-end">

@@ -3,7 +3,7 @@
 import { InvoiceForm } from "@/components/invoice/InvoiceForm";
 import { useToast } from "@/components/ui/use-toast";
 import { InvoiceContextProvider } from "@/contexts/InvoiceContext";
-import { InvoiceSchema } from "@/lib/schemas";
+import { InvoiceSchema } from "@/lib/schemas-optional";
 import { fetchInvoiceById, updateInvoice } from "@/services/invoice/client/invoiceClient";
 import { InvoiceType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,7 +38,12 @@ export default function EditInvoicePage({
   // Create form methods
   const form = useForm<InvoiceType>({
     resolver: zodResolver(InvoiceSchema),
-    mode: "onChange",
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+    criteriaMode: "all",
+    shouldFocusError: false,
+    shouldUseNativeValidation: false,
+    delayError: 500,
   });
 
   useEffect(() => {
@@ -71,12 +76,16 @@ export default function EditInvoicePage({
   }, [invoiceId, locale, router, toast, form]);
 
   // Handle form submission
-  const handleSubmit = async (data: InvoiceType) => {
+  const handleSubmit = async () => {
     if (!invoiceId) return;
     
     try {
       setIsSubmitting(true);
-      await updateInvoice(invoiceId, data);
+      
+      // Get raw values from the form - bypass validation
+      const formData = form.getValues();
+      
+      await updateInvoice(invoiceId, formData);
       toast({
         title: "Success",
         description: "Invoice updated successfully",

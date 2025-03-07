@@ -3,13 +3,13 @@
 import { InvoiceForm } from "@/components/invoice/InvoiceForm";
 import { useToast } from "@/components/ui/use-toast";
 import { InvoiceContextProvider } from "@/contexts/InvoiceContext";
-import { InvoiceSchema } from "@/lib/schemas";
+import { InvoiceSchema } from "@/lib/schemas-optional";
 import { createInvoice } from "@/services/invoice/client/invoiceClient";
-import { InvoiceType } from "@/types";
+import { InvoiceType } from "@/types-optional";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import useInvoiceParserStore from "@/store/invoice-parser-store";
 import useAuthStore from "@/store/auth-store";
 import {
@@ -21,95 +21,250 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Save, Download, ArrowRight, AlertCircle } from "lucide-react";
+import { Save, Download, ArrowRight, AlertCircle, Zap } from "lucide-react";
 import { Link } from "@/i18n/routing";
 
-// Default invoice data
-const defaultInvoice: InvoiceType = {
-  sender: {
-    name: "",
-    address: "",
-    zipCode: "",
-    city: "",
-    country: "",
-    email: "",
-    phone: "",
-  },
-  receiver: {
-    name: "",
-    address: "",
-    zipCode: "",
-    city: "",
-    country: "",
-    email: "",
-    phone: "",
-  },
-  details: {
-    invoiceNumber: `INV-${Date.now().toString().slice(-6)}`,
-    invoiceDate: new Date(),
-    dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-    currency: "USD",
-    language: "en",
-    status: "draft", // Default status is draft
-    subTotal: 0,
-    totalAmount: 0,
-    totalAmountInWords: "",
-    additionalNotes: "",
-    paymentTerms: "",
-    signature: { data: "", fontFamily: "" },
-    items: [
-      {
-        id: crypto.randomUUID(),
-        name: "",
-        description: "",
-        quantity: 1,
-        unitPrice: 0,
-        total: 0,
-      },
-    ],
-  },
-};
+// Define ParsedInvoice type at the top of the file
+type ParsedInvoiceItem = {
+  id?: string;
+  name?: string;
+  description?: string;
+  quantity?: number;
+  unitPrice?: number;
+  total?: number;
+}
 
-// Component to force update items when the form mounts
-function ItemsUpdater({ 
-  form, 
-  parsedItems
+// Using a more flexible type that matches the actual structure from the parser store
+type ParsedInvoice = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sender?: Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  receiver?: Record<string, any>;
+  details?: {
+    items?: ParsedInvoiceItem[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+} | null;
+
+// Component to force update items when user clicks a button
+function ForceUpdateButton({ 
+  parsedInvoice
 }: { 
-  form: ReturnType<typeof useForm<InvoiceType>>,
-  parsedItems?: { id?: string, name?: string, description?: string, quantity?: number, unitPrice?: number, total?: number }[]
+  parsedInvoice?: ParsedInvoice
 }) {
-  useEffect(() => {
-    if (parsedItems && parsedItems.length > 0) {
-      console.log('FormUpdater: Force updating items', parsedItems);
-      
-      // Format the items properly
-      const formattedItems = parsedItems.map(item => ({
+  const { toast } = useToast();
+  const formMethods = useFormContext<InvoiceType>();
+  
+  const handleForceUpdate = () => {
+    // Check for null form methods or missing invoice data
+    if (!formMethods) {
+      toast({
+        title: "Form Not Ready",
+        description: "Please wait for the form to initialize.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!parsedInvoice?.details?.items || parsedInvoice.details.items.length === 0) {
+      toast({
+        title: "No items found",
+        description: "There are no items to add to the invoice.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    console.log("[DEBUG] ForceUpdateButton: Starting update with full invoice:", parsedInvoice);
+    
+    try {
+      // STEP 1: Update items
+      const formattedItems = parsedInvoice.details.items.map((item: ParsedInvoiceItem) => ({
         id: item.id || crypto.randomUUID(),
-        name: item.name || item.description || 'Item',
-        description: item.description || '',
-        quantity: typeof item.quantity === 'number' ? item.quantity : 1,
-        unitPrice: typeof item.unitPrice === 'number' ? item.unitPrice : 0,
-        total: typeof item.total === 'number' ? item.total : 0
+        name: item.name || "Item", 
+        description: item.description || "",
+        quantity: item.quantity || 1,
+        unitPrice: item.unitPrice || 0,
+        total: (item.quantity || 1) * (item.unitPrice || 0),
+        taxRate: 0,  // Default tax rate
+        discount: 0  // Default discount
       }));
       
-      // Add a small delay to ensure form is ready
-      setTimeout(() => {
-        // Get current form values
-        const currentValues = form.getValues();
-        
-        // Update with formatted items
-        if (!currentValues.details) {
-          currentValues.details = { items: formattedItems };
-        } else {
-          currentValues.details.items = formattedItems;
+      console.log("[DEBUG] ForceUpdateButton: Formatted items:", formattedItems);
+      
+      // STEP 2: Update details
+      // Handle invoice details
+      if (parsedInvoice.details) {
+        // Update invoice number
+        if (parsedInvoice.details.invoiceNumber) {
+          formMethods.setValue("details.invoiceNumber", parsedInvoice.details.invoiceNumber);
         }
         
-        // Reset form with updated values
-        form.reset(currentValues);
-        console.log('FormUpdater: Reset form with items', formattedItems);
-      }, 300);
+        // Update dates
+        if (parsedInvoice.details.invoiceDate) {
+          formMethods.setValue("details.invoiceDate", new Date(parsedInvoice.details.invoiceDate));
+        }
+        
+        if (parsedInvoice.details.dueDate) {
+          formMethods.setValue("details.dueDate", new Date(parsedInvoice.details.dueDate));
+        }
+        
+        // Update currency
+        if (parsedInvoice.details.currency) {
+          formMethods.setValue("details.currency", parsedInvoice.details.currency);
+        }
+        
+        // Update language
+        if (parsedInvoice.details.language) {
+          formMethods.setValue("details.language", parsedInvoice.details.language);
+        }
+        
+        // Update totals
+        if (parsedInvoice.details.subTotal) {
+          formMethods.setValue("details.subTotal", parsedInvoice.details.subTotal);
+        }
+        
+        if (parsedInvoice.details.totalAmount) {
+          formMethods.setValue("details.totalAmount", parsedInvoice.details.totalAmount);
+        }
+      }
+      
+      // Finally, update items
+      formMethods.setValue("details.items", formattedItems, { 
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true
+      });
+      
+      // Verify items were added
+      const updatedItems = formMethods.getValues("details.items");
+      console.log("[DEBUG] ForceUpdateButton: Items after update:", updatedItems);
+      
+      if (updatedItems && updatedItems.length > 0) {
+        toast({
+          title: "Invoice Data Updated",
+          description: `Updated invoice details and ${formattedItems.length} items. Please check all sections.`,
+        });
+      } else {
+        toast({
+          title: "Update Failed",
+          description: "Failed to add items. Please try again or add items manually.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error("[DEBUG] ForceUpdateButton: Error updating invoice data:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update invoice data. Please try again.",
+        variant: "destructive"
+      });
     }
-  }, [form, parsedItems]);
+  };
+
+  return (
+    <Button 
+      onClick={handleForceUpdate} 
+      size="lg" 
+      className="w-full md:w-auto font-bold"
+      variant="destructive"
+    >
+      <Zap className="w-4 h-4 mr-2" />
+      Force Update Invoice
+    </Button>
+  );
+}
+
+// Component to automatically update items when form is mounted
+function ItemsUpdater({ 
+  parsedInvoice
+}: { 
+  parsedInvoice?: ParsedInvoice
+}) {
+  const { toast } = useToast();
+  const formMethods = useFormContext<InvoiceType>();
+  
+  useEffect(() => {
+    // Guard against null/undefined values
+    if (!parsedInvoice?.details?.items || !formMethods || parsedInvoice.details.items.length === 0) {
+      return;
+    }
+    
+    try {
+      console.log("[DEBUG] ItemsUpdater: Starting update with full parsed invoice:", parsedInvoice);
+      
+      // STEP 1: Update items
+      const formattedItems = parsedInvoice.details.items.map((item: ParsedInvoiceItem) => ({
+        id: item.id || crypto.randomUUID(),
+        name: item.name || "Item", 
+        description: item.description || "",
+        quantity: item.quantity || 1,
+        unitPrice: item.unitPrice || 0,
+        total: (item.quantity || 1) * (item.unitPrice || 0),
+        taxRate: 0,  // Default tax rate
+        discount: 0  // Default discount
+      }));
+      
+      console.log("[DEBUG] ItemsUpdater: Formatted items:", formattedItems);
+      
+      // STEP 2: Update details
+      // Handle invoice details
+      if (parsedInvoice.details) {
+        // Update invoice number
+        if (parsedInvoice.details.invoiceNumber) {
+          formMethods.setValue("details.invoiceNumber", parsedInvoice.details.invoiceNumber);
+        }
+        
+        // Update dates
+        if (parsedInvoice.details.invoiceDate) {
+          formMethods.setValue("details.invoiceDate", new Date(parsedInvoice.details.invoiceDate));
+        }
+        
+        if (parsedInvoice.details.dueDate) {
+          formMethods.setValue("details.dueDate", new Date(parsedInvoice.details.dueDate));
+        }
+        
+        // Update currency
+        if (parsedInvoice.details.currency) {
+          formMethods.setValue("details.currency", parsedInvoice.details.currency);
+        }
+        
+        // Update language
+        if (parsedInvoice.details.language) {
+          formMethods.setValue("details.language", parsedInvoice.details.language);
+        }
+        
+        // Update totals
+        if (parsedInvoice.details.subTotal) {
+          formMethods.setValue("details.subTotal", parsedInvoice.details.subTotal);
+        }
+        
+        if (parsedInvoice.details.totalAmount) {
+          formMethods.setValue("details.totalAmount", parsedInvoice.details.totalAmount);
+        }
+      }
+      
+      // Finally, update items
+      formMethods.setValue("details.items", formattedItems);
+      
+      // Verify items were added
+      const updatedItems = formMethods.getValues("details.items");
+      console.log("[DEBUG] ItemsUpdater: Items after update:", updatedItems);
+      
+      // Show toast if items were successfully added
+      if (updatedItems && updatedItems.length > 0) {
+        toast({
+          title: "Invoice Data Added",
+          description: `Added invoice details and ${formattedItems.length} items. Please check all sections.`,
+        });
+      }
+    } catch (error) {
+      console.error("[DEBUG] ItemsUpdater: Error updating invoice data:", error);
+    }
+  }, [parsedInvoice, formMethods, toast]);
   
   return null; // This component doesn't render anything
 }
@@ -127,7 +282,6 @@ export default function CreateInvoicePage({
   const { user, isLoading: authLoading } = useAuthStore();
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [actionType, setActionType] = useState<'save' | 'export' | null>(null);
-  const [draftSaved, setDraftSaved] = useState(false);
 
   // Get locale from params
   useEffect(() => {
@@ -138,159 +292,160 @@ export default function CreateInvoicePage({
     getLocale();
   }, [params]);
 
-  // Create form methods with merged data from parser if available
+  // Create form with minimal initial values
   const initialValues = useMemo(() => {
+    // Start with a very minimal structure
+    const baseInvoice: Partial<InvoiceType> = {
+      details: {
+        items: []
+      }
+    };
+
+    // If we have parsed data, merge it with the base structure
     if (parsedInvoice) {
-      console.log('Raw parsed invoice:', JSON.stringify(parsedInvoice, null, 2));
-      
-      // Start with default invoice
-      const merged = { ...defaultInvoice };
-      
-      // Merge sender and receiver separately
+      console.log('[DEBUG] Parsed invoice data:', parsedInvoice);
+
+      // Add sender if available
       if (parsedInvoice.sender) {
-        merged.sender = { 
-          ...merged.sender, 
-          ...parsedInvoice.sender,
-          // Ensure required fields have fallback values
-          name: parsedInvoice.sender.name || "Company Name",
-          address: parsedInvoice.sender.address || "Address Line",
-          city: parsedInvoice.sender.city || "City",
-          zipCode: parsedInvoice.sender.zipCode || "00000",
-          country: parsedInvoice.sender.country || "Country"
-        };
+        baseInvoice.sender = parsedInvoice.sender;
       }
-      
+
+      // Add receiver if available
       if (parsedInvoice.receiver) {
-        merged.receiver = { 
-          ...merged.receiver, 
-          ...parsedInvoice.receiver,
-          // Ensure required fields have fallback values
-          name: parsedInvoice.receiver.name || "Client Name",
-          address: parsedInvoice.receiver.address || "Address Line",
-          city: parsedInvoice.receiver.city || "City",
-          zipCode: parsedInvoice.receiver.zipCode || "00000",
-          country: parsedInvoice.receiver.country || "Country"
-        };
+        baseInvoice.receiver = parsedInvoice.receiver;
       }
-      
-      // Handle details separately
+
+      // Add details if available
       if (parsedInvoice.details) {
-        merged.details = { ...merged.details, ...parsedInvoice.details };
+        // Start with an empty details object if it doesn't exist
+        if (!baseInvoice.details) {
+          baseInvoice.details = {};
+        }
         
-        // Special handling for items
+        // Add invoice number if available
+        if (parsedInvoice.details.invoiceNumber) {
+          baseInvoice.details.invoiceNumber = parsedInvoice.details.invoiceNumber;
+        }
+        
+        // Add dates if available
+        if (parsedInvoice.details.invoiceDate) {
+          baseInvoice.details.invoiceDate = new Date(parsedInvoice.details.invoiceDate);
+        }
+        
+        if (parsedInvoice.details.dueDate) {
+          baseInvoice.details.dueDate = new Date(parsedInvoice.details.dueDate);
+        }
+        
+        // Add currency if available
+        if (parsedInvoice.details.currency) {
+          baseInvoice.details.currency = parsedInvoice.details.currency;
+        }
+        
+        // Add language if available
+        if (parsedInvoice.details.language) {
+          baseInvoice.details.language = parsedInvoice.details.language;
+        }
+        
+        // Add totals if available
+        if (parsedInvoice.details.subTotal) {
+          baseInvoice.details.subTotal = parsedInvoice.details.subTotal;
+        }
+        
+        if (parsedInvoice.details.totalAmount) {
+          baseInvoice.details.totalAmount = parsedInvoice.details.totalAmount;
+        }
+
+        // Add items if available
         if (parsedInvoice.details.items?.length) {
-          // Create properly structured items with required fields
-          merged.details.items = parsedInvoice.details.items.map(item => ({
+          const formattedItems = parsedInvoice.details.items.map((item: ParsedInvoiceItem) => ({
             id: item.id || crypto.randomUUID(),
-            name: item.name || item.description || 'Item',
-            description: item.description || '',
-            quantity: typeof item.quantity === 'number' ? item.quantity : 1,
-            unitPrice: typeof item.unitPrice === 'number' ? item.unitPrice : 0,
-            total: typeof item.total === 'number' ? item.total : 0
+            name: item.name || "Item",
+            description: item.description || "",
+            quantity: item.quantity || 1,
+            unitPrice: item.unitPrice || 0,
+            total: (item.quantity || 1) * (item.unitPrice || 0),
+            taxRate: 0,  // Default tax rate
+            discount: 0  // Default discount
           }));
-          
-          console.log('Properly structured items:', JSON.stringify(merged.details.items, null, 2));
+
+          // Set items in the base invoice
+          baseInvoice.details.items = formattedItems;
+
+          console.log('[DEBUG] Formatted items:', formattedItems);
         }
       }
-      
-      console.log('Final merged values:', JSON.stringify(merged, null, 2));
-      return merged;
+
+      console.log('[DEBUG] Final form structure:', baseInvoice);
     }
-    return defaultInvoice;
+
+    return baseInvoice;
   }, [parsedInvoice]);
-  
+
   const form = useForm<InvoiceType>({
     resolver: zodResolver(InvoiceSchema),
     defaultValues: initialValues,
-    mode: "onChange",
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+    criteriaMode: "all",
+    shouldFocusError: false,
+    shouldUseNativeValidation: false,
+    delayError: 500,
   });
 
-  // Debug the parsed invoice and merged values
-  useEffect(() => {
-    if (parsedInvoice) {
-      console.log('Form values after init:', form.getValues());
-      
-      // Force update items in the form
-      if (parsedInvoice.details?.items?.length) {
-        console.log('Setting items directly:', parsedInvoice.details.items);
-        
-        const formattedItems = parsedInvoice.details.items.map(item => ({
-          id: item.id || crypto.randomUUID(),
-          name: item.name || item.description || '',
-          description: item.description || '',
-          quantity: typeof item.quantity === 'number' ? item.quantity : 1,
-          unitPrice: typeof item.unitPrice === 'number' ? item.unitPrice : 0,
-          total: typeof item.total === 'number' ? item.total : 0
-        }));
-        
-        // Use setTimeout to ensure the form is fully mounted
-        setTimeout(() => {
-          // HARD RESET: First empty the array and then set the values
-          form.setValue('details.items', [], { shouldValidate: false });
-          
-          // Then add each item individually
-          formattedItems.forEach((item) => {
-            const currentItems = form.getValues('details.items') || [];
-            form.setValue('details.items', [...currentItems, item], { shouldValidate: true });
-          });
-          
-          console.log('Form values after forcing items update:', form.getValues('details.items'));
-        }, 500);
-      }
-    }
-  }, [parsedInvoice, form]);
-
-  // Force a rerender with another timeout
+  // Log the form values after initialization
   useEffect(() => {
     if (parsedInvoice?.details?.items?.length) {
+      // Wait for form to fully initialize
       const timer = setTimeout(() => {
-        // This will force all form fields to rerender
-        form.reset(form.getValues());
-        console.log('Forced form reset at 1 second');
-      }, 1000);
+        const values = form.getValues();
+        console.log('[DEBUG] Form values after initialization:', values);
+        console.log('[DEBUG] Form items after initialization:', values.details?.items);
+      }, 100);
       
       return () => clearTimeout(timer);
     }
-  }, [parsedInvoice, form]);
-  
-  // Reset the parser state when unmounting to prevent reusing the same data
+  }, [form, parsedInvoice]);
+
+  // Remove all the complex update effects
+  // Only keep the cleanup effect
   useEffect(() => {
     return () => {
       resetParserState();
     };
   }, [resetParserState]);
 
-  // Autosave draft every 30 seconds
+  // Keep the autosave functionality
   useEffect(() => {
     const autosaveInterval = setInterval(() => {
       const formData = form.getValues();
-      if (formData && Object.keys(formData).length > 0) {
-        // Only save if there is actual content beyond the defaults
-        if (formData.sender?.name || formData.receiver?.name) {
-          saveDraftInvoice(formData);
-          setDraftSaved(true);
-          
-          // Reset the saved state after 3 seconds
-          setTimeout(() => setDraftSaved(false), 3000);
-        }
+      if (formData && (formData.sender?.name || formData.receiver?.name)) {
+        saveDraftInvoice(formData);
       }
-    }, 30000); // 30 seconds
+    }, 30000);
 
     return () => clearInterval(autosaveInterval);
   }, [form, saveDraftInvoice]);
-  
-  // Handle form submission when authenticated
-  const handleSubmit = async (data: InvoiceType) => {
+
+  // Handle form submission with minimal validation
+  const handleSubmit = async () => {
     try {
       setIsSubmitting(true);
-      await createInvoice(data);
+      
+      // Get raw values from the form - bypass validation
+      const formData = form.getValues();
+      
+      // Submit the raw form data
+      await createInvoice(formData);
+      
       toast({
         title: "Success",
         description: "Invoice created successfully",
       });
+      
       router.push(`/${locale}/invoices`);
     } catch (error) {
       console.error("Error creating invoice:", error);
+      
       toast({
         title: "Error",
         description: "Failed to create invoice. Please try again.",
@@ -342,23 +497,8 @@ export default function CreateInvoicePage({
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Create Invoice</h1>
-          <p className="text-muted-foreground">
-            <Link href="/drafts" className="text-primary hover:underline">
-              View all drafts
-            </Link>
-          </p>
         </div>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
-          <Button
-            variant="outline"
-            className="w-full md:w-auto"
-            onClick={() => handleAuthenticatedAction('save')}
-            disabled={isSubmitting}
-          >
-            <Save className="w-4 h-4 mr-2" />
-            Save Draft
-            {draftSaved && <span className="ml-2">✓</span>}
-          </Button>
           <Button
             variant="outline"
             className="w-full md:w-auto"
@@ -384,59 +524,25 @@ export default function CreateInvoicePage({
         </div>
       </div>
 
-      {/* Debug message if items were parsed */}
+      {/* Only show the force update button */}
       {parsedInvoice?.details?.items && parsedInvoice.details.items.length > 0 && (
         <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-md">
           <div className="flex items-start gap-2">
             <AlertCircle className="h-5 w-5 text-yellow-500 mt-0.5" />
             <div>
-              <h3 className="font-medium">Important</h3>
-              <p>We detected {parsedInvoice.details.items.length} items in your parsed invoice.</p>
-              <p className="text-sm text-muted-foreground">These items should appear in Step 3 (Items) of your form. If they don't appear, use the button below to force update.</p>
+              <h3 className="font-medium">Items Detected</h3>
+              <p>{parsedInvoice.details.items.length} items have been loaded from your invoice.</p>
+              <p className="text-sm text-muted-foreground">If you don&apos;t see the items in Step 3, click the button below.</p>
               <div className="mt-2">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => {
-                    if (parsedInvoice?.details?.items?.length) {
-                      // Force update items by directly manipulating the form
-                      const formattedItems = parsedInvoice.details.items.map(item => ({
-                        id: item.id || crypto.randomUUID(),
-                        name: item.name || item.description || 'Item',
-                        description: item.description || '',
-                        quantity: typeof item.quantity === 'number' ? item.quantity : 1,
-                        unitPrice: typeof item.unitPrice === 'number' ? item.unitPrice : 0,
-                        total: typeof item.total === 'number' ? item.total : 0
-                      }));
-                      
-                      // Reset the form with the current values but with the new items
-                      const currentValues = form.getValues();
-                      if (currentValues.details) {
-                        currentValues.details.items = formattedItems;
-                      } else {
-                        currentValues.details = { items: formattedItems };
-                      }
-                      
-                      // Reset the form with the updated values
-                      form.reset(currentValues);
-                      
-                      // Notify the user
-                      toast({
-                        title: "Items updated",
-                        description: "The parsed invoice items have been added to the form."
-                      });
-                    }
-                  }}
-                >
-                  Force Update Items
-                </Button>
+                <ForceUpdateButton parsedInvoice={parsedInvoice} />
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Set the form context for the InvoiceForm component */}
+      <ItemsUpdater parsedInvoice={parsedInvoice} />
+
       <InvoiceContextProvider
         form={form}
         invoice={null}
@@ -446,11 +552,6 @@ export default function CreateInvoicePage({
       >
         <InvoiceForm />
       </InvoiceContextProvider>
-      
-      {/* Helper component to force update items on mount */}
-      {parsedInvoice?.details?.items && (
-        <ItemsUpdater form={form} parsedItems={parsedInvoice.details.items} />
-      )}
 
       {/* Authentication Dialog */}
       <AlertDialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>

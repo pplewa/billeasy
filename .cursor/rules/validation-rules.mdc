@@ -1,0 +1,33 @@
+---
+description: Validation rules
+globs: 
+alwaysApply: false
+---
+
+# Validation rules
+
+- ALL form fields in the application MUST be OPTIONAL. No field should ever be required.
+- Schema validation:
+   - Always use schemas from "@/lib/schemas-optional" NOT "@/lib/schemas"
+   - All schemas should use .partial() to make fields optional
+   - Never add .required() to any field
+- Tax and discount handling:
+   - These should be optional object structures: { amount: number; amountType: string }
+   - Forms should include toggles to enable/disable tax and discount inputs
+   - Default values should be { amount: 0, amountType: 'fixed' }
+- API endpoints:
+   - Must handle legacy formats through transformation logic
+   - Must include proper logging for debugging
+   - Should use permissive validation that accepts null/undefined fields
+   - Must transform legacy discount (numbers) to object format
+   - Must transform legacy taxRate values to tax objects
+- Type imports:
+   - Always use types from "@/types-optional" NOT "@/types"
+   - For models, use imports from "@/models/Invoice-optional"
+- When making any changes:
+   - Never introduce stricter validation
+   - Preserve backward compatibility
+   - Consider edge cases with null/undefined values
+   - Implement proper error handling
+
+

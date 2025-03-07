@@ -54,6 +54,20 @@ const ItemSchema = new Schema(
     quantity: { type: Number },
     unitPrice: { type: Number },
     total: { type: Number },
+    tax: {
+      type: {
+        amount: { type: Number },
+        amountType: { type: String }
+      },
+      required: false
+    },
+    discount: {
+      type: {
+        amount: { type: Number },
+        amountType: { type: String }
+      },
+      required: false
+    }
   },
   { _id: false, strict: false }
 );

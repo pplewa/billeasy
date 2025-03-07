@@ -83,7 +83,21 @@ export const ItemSchema = z.object({
   quantity: fieldValidators.nonNegativeNumber,
   unitPrice: fieldValidators.nonNegativeNumber,
   total: fieldValidators.nonNegativeNumber,
-});
+  tax: z.preprocess(
+    (val) => val ?? {},
+    z.object({
+      amount: fieldValidators.nonNegativeNumber,
+      amountType: z.enum(["percentage", "fixed"]).optional(),
+    }).passthrough().optional()
+  ),
+  discount: z.preprocess(
+    (val) => val ?? {},
+    z.object({
+      amount: fieldValidators.nonNegativeNumber,
+      amountType: z.enum(["percentage", "fixed"]).optional(),
+    }).passthrough().optional()
+  ),
+}).partial().passthrough();
 
 // Invoice Sender Schema
 const InvoiceSenderSchema = z.object({
@@ -171,4 +185,4 @@ export const InvoiceSchema = z.object({
   sender: InvoiceSenderSchema,
   receiver: InvoiceReceiverSchema,
   details: InvoiceDetailsSchema,
-}).partial(); 
+}).partial().passthrough(); 

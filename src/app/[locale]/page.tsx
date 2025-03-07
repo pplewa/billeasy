@@ -125,7 +125,7 @@ export default function Home({
         throw new Error("Could not extract any invoice data from the text");
       }
 
-      // Restructure invoice to ensure items are in the right place
+      // Restructure invoice to ensure it's properly formatted
       const restructuredInvoice: any = { ...invoice };
       
       // If items exist at the top level, move them to details.items
@@ -135,14 +135,27 @@ export default function Home({
         delete restructuredInvoice.items; // Remove from top level
       }
       
-      // Ensure each item has an id
-      if (restructuredInvoice.details?.items) {
+      // Make sure we have a details section with an items array
+      restructuredInvoice.details = restructuredInvoice.details || {};
+      restructuredInvoice.details.items = restructuredInvoice.details.items || [];
+      
+      // Ensure each item is properly structured with all required fields
+      if (restructuredInvoice.details.items.length > 0) {
         restructuredInvoice.details.items = restructuredInvoice.details.items.map((item: any) => ({
-          ...item,
-          id: item.id || crypto.randomUUID()
+          id: item.id || crypto.randomUUID(),
+          name: item.name || item.description || 'Item',
+          description: item.description || '',
+          quantity: typeof item.quantity === 'number' ? item.quantity : 1,
+          unitPrice: typeof item.unitPrice === 'number' ? item.unitPrice : 0,
+          total: typeof item.total === 'number' ? item.total : 0
         }));
       }
+      
+      // Ensure the invoice has sender and receiver sections
+      restructuredInvoice.sender = restructuredInvoice.sender || {};
+      restructuredInvoice.receiver = restructuredInvoice.receiver || {};
 
+      console.log('Storing restructured invoice:', JSON.stringify(restructuredInvoice, null, 2));
       setParsedInvoice(restructuredInvoice);
 
       // Redirect to invoice creation page

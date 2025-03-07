@@ -51,19 +51,31 @@ Return a valid JSON object that conforms to the following invoice structure:
     "totalAmount": number,
     "totalAmountInWords": "string",
     "additionalNotes": "string",
-    "paymentTerms": "string"
-  },
-  "items": [
-    {
-      "id": "string uuid",
-      "name": "string",
-      "description": "string",
-      "quantity": number,
-      "unitPrice": number,
-      "total": number
-    }
-  ]
+    "paymentTerms": "string",
+    "items": [
+      {
+        "id": "string uuid",
+        "name": "string",
+        "description": "string",
+        "quantity": number,
+        "unitPrice": number,
+        "total": number,
+        "taxRate": number,
+        "discount": number
+      }
+    ]
+  }
 }
+
+For each item, ALWAYS include:
+- id: Generate a random UUID for each item
+- name: Item name or description
+- description: Additional details about the item
+- quantity: The number of items (default to 1 if unclear)
+- unitPrice: The price per unit (default to 0 if unclear)
+- total: quantity * unitPrice
+- taxRate: The tax rate (default to 0 if unclear)
+- discount: The discount (default to 0 if unclear)
 
 Only include fields where you have information. If you're uncertain about any field, omit it entirely.
 For dates, use ISO format (YYYY-MM-DD). If no date is specified, DO NOT include the field.
@@ -137,19 +149,31 @@ Return a valid JSON object that conforms to the following invoice structure:
     "totalAmount": number,
     "totalAmountInWords": "string",
     "additionalNotes": "string",
-    "paymentTerms": "string"
-  },
-  "items": [
-    {
-      "id": "string uuid",
-      "name": "string",
-      "description": "string",
-      "quantity": number,
-      "unitPrice": number,
-      "total": number
-    }
-  ]
+    "paymentTerms": "string",
+    "items": [
+      {
+        "id": "string uuid",
+        "name": "string",
+        "description": "string",
+        "quantity": number,
+        "unitPrice": number,
+        "total": number,
+        "taxRate": number,
+        "discount": number
+      }
+    ]
+  }
 }
+
+For each item, ALWAYS include:
+- id: Generate a random UUID for each item
+- name: Item name or description
+- description: Additional details about the item
+- quantity: The number of items (default to 1 if unclear)
+- unitPrice: The price per unit (default to 0 if unclear)
+- total: quantity * unitPrice
+- taxRate: The tax rate (default to 0 if unclear)
+- discount: The discount (default to 0 if unclear)
 
 Only include fields where you have information. If you're uncertain about any field, omit it entirely.
 For dates, use ISO format (YYYY-MM-DD). If no date is specified, DO NOT include the field.

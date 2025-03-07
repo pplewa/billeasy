@@ -8,7 +8,7 @@ interface InvoiceContextType {
   form: ReturnType<typeof useForm<InvoiceType>>;
   isLoading: boolean;
   isSubmitting: boolean;
-  onSubmit: (data: InvoiceType) => Promise<void>;
+  onSubmit: () => Promise<void>;
 }
 
 const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
@@ -19,7 +19,7 @@ interface InvoiceContextProviderProps {
   invoice: InvoiceType | null;
   isLoading: boolean;
   isSubmitting: boolean;
-  onSubmit: (data: InvoiceType) => Promise<void>;
+  onSubmit: () => Promise<void>;
 }
 
 export function InvoiceContextProvider({ 

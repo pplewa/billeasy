@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, routing } from "./i18n/routing";
 
 // Define the paths that don't require authentication
-const publicPaths = ["/", "/signin", "/verify", "/invoice/create", "/drafts", "/api/invoice/parse/text", "/api/invoice/parse/file"];
+const publicPaths = ["/", "/signin", "/verify", "/invoice/create", "/api/invoice/parse/text", "/api/invoice/parse/file"];
 
 // Check if the given path is a public path
 const isPublicPath = (path: string): boolean => {

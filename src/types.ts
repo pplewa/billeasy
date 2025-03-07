@@ -2,13 +2,13 @@
 import { z } from "zod";
 
 // RHF
-import { FieldPath, UseFormReturn } from "react-hook-form";
+import { FieldPath, FieldValues, UseFormReturn } from "react-hook-form";
 
-// Zod schemas
-import { InvoiceSchema, ItemSchema } from "@/lib/schemas";
+// Zod schemas - import from the optional schemas for permissive validation
+import { InvoiceSchema, ItemSchema } from "@/lib/schemas-optional";
 
 // Form types
-export type InvoiceType = z.infer<typeof InvoiceSchema>;
+export type InvoiceType = z.infer<typeof InvoiceSchema> & FieldValues;
 export type ItemType = z.infer<typeof ItemSchema>;
 export type FormType = UseFormReturn<InvoiceType>;
 export type NameType = FieldPath<InvoiceType>;

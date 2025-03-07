@@ -24,7 +24,7 @@ import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/ui/form-input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { InvoiceType } from "@/types";
+import { InvoiceType } from "@/types-optional";
 
 interface SortableItemProps {
   id: string;
@@ -52,14 +52,80 @@ function SortableItem({ id, index, onRemove }: SortableItemProps) {
   // Watch quantity and unit price to calculate total
   const quantity = watch(`details.items.${index}.quantity`);
   const unitPrice = watch(`details.items.${index}.unitPrice`);
+  const taxObj = watch(`details.items.${index}.tax`);
+  const discountObj = watch(`details.items.${index}.discount`);
 
-  // Calculate and update total when quantity or unit price changes
+  // Within the SortableItem component, update to include enable/disable toggles
+  const [taxEnabled, setTaxEnabled] = React.useState(false);
+  const [discountEnabled, setDiscountEnabled] = React.useState(false);
+  
+  // Initialize checkbox states based on existing data
   React.useEffect(() => {
-    if (quantity && unitPrice) {
-      const total = quantity * unitPrice;
-      setValue(`details.items.${index}.total`, total);
+    // If taxObj exists and has amount, enable tax checkbox
+    if (taxObj && typeof taxObj.amount === 'number') {
+      setTaxEnabled(true);
     }
-  }, [quantity, unitPrice, index, setValue]);
+    
+    // If discountObj exists and has amount, enable discount checkbox
+    if (discountObj && typeof discountObj.amount === 'number') {
+      setDiscountEnabled(true);
+    }
+  }, []);
+
+  // Initialize tax and discount when they are enabled
+  React.useEffect(() => {
+    if (taxEnabled && (!taxObj || taxObj.amount === undefined)) {
+      setValue(`details.items.${index}.tax`, { amount: 0, amountType: 'percentage' });
+    } else if (!taxEnabled && taxObj) {
+      setValue(`details.items.${index}.tax`, undefined);
+    }
+  }, [taxEnabled, taxObj, index, setValue]);
+
+  React.useEffect(() => {
+    if (discountEnabled && (!discountObj || discountObj.amount === undefined)) {
+      setValue(`details.items.${index}.discount`, { amount: 0, amountType: 'percentage' });
+    } else if (!discountEnabled && discountObj) {
+      setValue(`details.items.${index}.discount`, undefined);
+    }
+  }, [discountEnabled, discountObj, index, setValue]);
+
+  // Watch fields and calculate total
+  React.useEffect(() => {
+    try {
+      // Only proceed if we have the necessary values
+      const qty = quantity === undefined || quantity === null || quantity === '' ? 0 : Number(quantity);
+      const price = unitPrice === undefined || unitPrice === null || unitPrice === '' ? 0 : Number(unitPrice);
+      
+      // Calculate base amount
+      let total = qty * price;
+      
+      // Apply tax if available and enabled
+      if (taxEnabled && taxObj && taxObj.amount !== undefined && taxObj.amount !== null && taxObj.amount !== '') {
+        const taxAmount = Number(taxObj.amount || 0);
+        if (taxObj.amountType === 'percentage') {
+          total += (total * taxAmount) / 100;
+        } else if (taxObj.amountType === 'fixed') {
+          total += taxAmount;
+        }
+      }
+      
+      // Apply discount if available and enabled
+      if (discountEnabled && discountObj && discountObj.amount !== undefined && discountObj.amount !== null && discountObj.amount !== '') {
+        const discountAmount = Number(discountObj.amount || 0);
+        if (discountObj.amountType === 'percentage') {
+          total -= (total * discountAmount) / 100;
+        } else if (discountObj.amountType === 'fixed') {
+          total -= discountAmount;
+        }
+      }
+      
+      // Round to 2 decimal places and update the total
+      total = Math.round(total * 100) / 100;
+      setValue(`details.items.${index}.total`, total);
+    } catch (error) {
+      console.error("Error calculating total:", error);
+    }
+  }, [quantity, unitPrice, taxObj, discountObj, taxEnabled, discountEnabled, index, setValue]);
 
   return (
     <div
@@ -76,61 +142,147 @@ function SortableItem({ id, index, onRemove }: SortableItemProps) {
         <GripVertical className="h-5 w-5 text-muted-foreground" />
       </button>
 
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-6 gap-4">
-        <div className="md:col-span-2">
-          <FormInput
-            label="Item Name"
-            {...register(`details.items.${index}.name`)}
-            placeholder="Item name"
-          />
+      <div className="flex-1 grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+          <div className="md:col-span-2">
+            <FormInput
+              label="Item Name"
+              {...register(`details.items.${index}.name`)}
+              placeholder="Item name"
+            />
+          </div>
+
+          <div>
+            <FormInput
+              label="Quantity"
+              type="number"
+              {...register(`details.items.${index}.quantity`, {
+                valueAsNumber: true,
+              })}
+              placeholder="0"
+            />
+          </div>
+
+          <div>
+            <FormInput
+              label="Unit Price"
+              type="number"
+              step="0.01"
+              {...register(`details.items.${index}.unitPrice`, {
+                valueAsNumber: true,
+              })}
+              placeholder="0.00"
+            />
+          </div>
+
+          <div>
+            <FormInput
+              label="Total"
+              type="number"
+              step="0.01"
+              {...register(`details.items.${index}.total`, {
+                valueAsNumber: true,
+              })}
+              readOnly
+              placeholder="0.00"
+            />
+          </div>
+
+          <div className="flex items-end">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={onRemove}
+              className="mt-6"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
-        <div>
-          <FormInput
-            label="Quantity"
-            type="number"
-            {...register(`details.items.${index}.quantity`, {
-              valueAsNumber: true,
-            })}
-            placeholder="0"
-          />
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Tax Fields */}
+          <div className="border p-3 rounded-md">
+            <div className="flex justify-between items-center mb-2">
+              <h4 className="text-sm font-medium">Tax</h4>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id={`tax-enabled-${index}`}
+                  checked={taxEnabled}
+                  onChange={(e) => setTaxEnabled(e.target.checked)}
+                  className="rounded border-gray-300"
+                />
+                <label htmlFor={`tax-enabled-${index}`} className="text-xs">Enable</label>
+              </div>
+            </div>
+            
+            {taxEnabled && (
+              <div className="grid grid-cols-2 gap-2">
+                <FormInput
+                  label="Amount"
+                  type="number"
+                  step="0.01"
+                  {...register(`details.items.${index}.tax.amount`, {
+                    valueAsNumber: true,
+                  })}
+                  placeholder="0.00"
+                />
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Type</label>
+                  <select
+                    {...register(`details.items.${index}.tax.amountType`)}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="percentage">Percentage (%)</option>
+                    <option value="fixed">Fixed Amount</option>
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
 
-        <div>
-          <FormInput
-            label="Unit Price"
-            type="number"
-            step="0.01"
-            {...register(`details.items.${index}.unitPrice`, {
-              valueAsNumber: true,
-            })}
-            placeholder="0.00"
-          />
-        </div>
-
-        <div>
-          <FormInput
-            label="Total"
-            type="number"
-            step="0.01"
-            {...register(`details.items.${index}.total`, {
-              valueAsNumber: true,
-            })}
-            readOnly
-            placeholder="0.00"
-          />
-        </div>
-
-        <div className="flex items-end">
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={onRemove}
-            className="mt-6"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          {/* Discount Fields */}
+          <div className="border p-3 rounded-md">
+            <div className="flex justify-between items-center mb-2">
+              <h4 className="text-sm font-medium">Discount</h4>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id={`discount-enabled-${index}`}
+                  checked={discountEnabled}
+                  onChange={(e) => setDiscountEnabled(e.target.checked)}
+                  className="rounded border-gray-300"
+                />
+                <label htmlFor={`discount-enabled-${index}`} className="text-xs">Enable</label>
+              </div>
+            </div>
+            
+            {discountEnabled && (
+              <div className="grid grid-cols-2 gap-2">
+                <FormInput
+                  label="Amount"
+                  type="number"
+                  step="0.01"
+                  {...register(`details.items.${index}.discount.amount`, {
+                    valueAsNumber: true,
+                  })}
+                  placeholder="0.00"
+                />
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Type</label>
+                  <select
+                    {...register(`details.items.${index}.discount.amountType`)}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="percentage">Percentage (%)</option>
+                    <option value="fixed">Fixed Amount</option>
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -161,6 +313,9 @@ export function Items() {
     }
   }
 
+  // Create an array of IDs for SortableContext
+  const itemIds = fields.map((field) => field.id?.toString() || '');
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -173,13 +328,13 @@ export function Items() {
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={fields.map((field) => field.id)}
+            items={itemIds}
             strategy={verticalListSortingStrategy}
           >
             {fields.map((field, index) => (
               <SortableItem
-                key={field.id}
-                id={field.id}
+                key={field.id?.toString() || index.toString()}
+                id={field.id?.toString() || index.toString()}
                 index={index}
                 onRemove={() => remove(index)}
               />
@@ -191,15 +346,19 @@ export function Items() {
           type="button"
           variant="outline"
           size="sm"
-          onClick={() =>
-            append({
+          onClick={() => {
+            const newItem: Partial<ItemType> = {
               id: crypto.randomUUID(),
               name: "",
               quantity: 1,
               unitPrice: 0,
               total: 0,
-            })
-          }
+              // Explicitly set undefined to allow toggles to work properly
+              tax: undefined,
+              discount: undefined
+            };
+            append(newItem);
+          }}
           className="mt-4"
         >
           <Plus className="h-4 w-4 mr-2" />

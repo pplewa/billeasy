@@ -19,7 +19,8 @@ export async function parseInvoiceText(text: string): Promise<{ invoice: Partial
     throw new Error(error.error || 'Failed to parse invoice text');
   }
 
-  return response.json();
+  const data = await response.json();
+  return data;
 }
 
 /**
@@ -41,5 +42,6 @@ export async function parseInvoiceFile(file: File): Promise<{ invoice: Partial<I
     throw new Error(error.error || 'Failed to parse invoice file');
   }
 
-  return response.json();
+  const data = await response.json();
+  return data;
 } 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { InvoiceSchema } from "@/lib/schemas";
+import { InvoiceSchema } from "@/lib/schemas-optional";
 import {
   getInvoiceById,
   updateInvoice,
@@ -51,6 +51,61 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
+
+    // Transform any legacy format items to new format
+    if (body.details?.items?.length) {
+      console.log("[API] Transforming legacy item formats");
+      body.details.items = body.details.items.map((item: { 
+        discount?: number | { amount: number; amountType: string } | null;
+        taxRate?: number | null;
+        tax?: { amount: number; amountType: string } | null;
+        [key: string]: unknown; 
+      }) => {
+        console.log(`[API] Processing item: ${JSON.stringify(item)}`);
+        
+        // Convert legacy number discount to object format
+        if (typeof item.discount === 'number') {
+          console.log(`[API] Converting legacy discount: ${item.discount} to object format`);
+          item.discount = {
+            amount: item.discount,
+            amountType: 'fixed'
+          };
+        } else if (item.discount === null || item.discount === undefined) {
+          // Set default discount object for null/undefined values
+          item.discount = {
+            amount: 0,
+            amountType: 'fixed'
+          };
+        }
+        
+        // Convert legacy taxRate to tax object format
+        if (typeof item.taxRate === 'number') {
+          console.log(`[API] Converting legacy taxRate: ${item.taxRate} to tax object`);
+          item.tax = {
+            amount: item.taxRate,
+            amountType: 'percentage'
+          };
+          // Keep taxRate for backward compatibility
+        } else if (item.tax === null || item.tax === undefined) {
+          // Set default tax object if not present
+          console.log(`[API] Setting default tax object`);
+          item.tax = {
+            amount: 0,
+            amountType: 'percentage'
+          };
+        } else if (item.tax) {
+          // Ensure the tax object has proper amount and amountType
+          console.log(`[API] Ensuring tax object has proper fields`);
+          item.tax = {
+            amount: typeof item.tax.amount === 'number' ? item.tax.amount : 0,
+            amountType: item.tax.amountType || 'percentage'
+          };
+        }
+        
+        console.log(`[API] Transformed item: ${JSON.stringify(item)}`);
+        return item;
+      });
+    }
 
     // Validate the request body against the schema
     const result = InvoiceSchema.safeParse(body);

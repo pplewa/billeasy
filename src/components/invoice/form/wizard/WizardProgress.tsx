@@ -2,7 +2,7 @@
 
 // RHF
 import { useFormContext } from "react-hook-form";
-import { ReceiptText, FileText, Receipt, Settings, UserSquare2 } from "lucide-react";
+import { ReceiptText, FileText, Receipt, UserSquare2 } from "lucide-react";
 
 // React Wizard
 import { useWizard } from "react-use-wizard";
@@ -31,23 +31,16 @@ const steps = [
   {
     id: "invoice-details",
     title: "Invoice Details",
-    description: "Add invoice details",
+    description: "Add invoice details and payment information",
     icon: ReceiptText,
-    fields: ["details.invoiceNumber", "details.invoiceDate", "details.dueDate", "details.currency", "details.language"],
+    fields: ["details.invoiceNumber", "details.invoiceDate", "details.dueDate", "details.currency", "details.language", "details.paymentInformation"],
   },
   {
     id: "items",
     title: "Items",
-    description: "Add invoice items",
+    description: "Add invoice items with tax and discount",
     icon: Receipt,
     fields: ["details.items"],
-  },
-  {
-    id: "additional-details",
-    title: "Additional Details",
-    description: "Add payment, tax, discount, and shipping details",
-    icon: Settings,
-    fields: ["details.paymentInformation", "details.taxDetails", "details.discountDetails", "details.shippingDetails"],
   },
   {
     id: "signature",

@@ -115,8 +115,7 @@ npx @shadcn/ui add [component-name]
 
 ### Adding New Locales
 
-1. Add the new locale code to the `locales` array in `next.config.js`
-2. Create a new message file in the `src/messages` directory
+1. Create a new message file in the `src/i18n/messages` directory
 
 ## Features
 

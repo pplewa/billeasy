@@ -21,7 +21,6 @@ import {
 import { Loader2, PlusCircle } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { InvoiceParserForm } from "@/components/invoice/InvoiceParserForm";
 
 export default function InvoicesPage() {
   const router = useRouter();
@@ -117,10 +116,6 @@ export default function InvoicesPage() {
             </Button>
           </div>
           
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Quick Invoice Generator</h2>
-            <InvoiceParserForm locale={locale} />
-          </div>
         </div>
       ) : (
         <div className="space-y-8">
@@ -137,10 +132,6 @@ export default function InvoicesPage() {
             ))}
           </div>
           
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Quick Invoice Generator</h2>
-            <InvoiceParserForm locale={locale} />
-          </div>
         </div>
       )}
 

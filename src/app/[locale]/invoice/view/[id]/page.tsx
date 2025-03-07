@@ -39,8 +39,15 @@ interface InvoiceItem {
   quantity: number;
   price?: number;
   unitPrice?: number;
-  taxRate: number;
-  discount?: number;
+  tax?: {
+    amount: number;
+    amountType?: string;
+  };
+  discount?: {
+    amount: number;
+    amountType?: string;
+  } | number; // Can be either the new structure or a legacy number
+  taxRate?: number; // For backwards compatibility
   total?: number;
 }
 
@@ -478,7 +485,7 @@ export default function ViewInvoicePage() {
                 <th className="text-left p-2 border print:border-black print:font-bold">Item</th>
                 <th className="text-right p-2 border print:border-black print:font-bold">Quantity</th>
                 <th className="text-right p-2 border print:border-black print:font-bold">Price</th>
-                <th className="text-right p-2 border print:border-black print:font-bold">Tax Rate</th>
+                <th className="text-right p-2 border print:border-black print:font-bold">Tax</th>
                 <th className="text-right p-2 border print:border-black print:font-bold">Discount</th>
                 <th className="text-right p-2 border print:border-black print:font-bold">Total</th>
               </tr>
@@ -494,12 +501,46 @@ export default function ViewInvoicePage() {
                     ? (typeof item.unitPrice === 'string' ? parseFloat(item.unitPrice as unknown as string) : item.unitPrice)
                     : (typeof item.price === 'string' ? parseFloat(item.price as unknown as string) : (item.price || 0));
                   
-                  const discount = typeof item.discount === 'string' ? parseFloat(item.discount as unknown as string) : (item.discount || 0);
+                  // Get tax amount based on new structure first, fallback to legacy taxRate
+                  let taxAmount = 0;
+                  let taxAmountType = 'percentage';
+                  if (item.tax && typeof item.tax.amount !== 'undefined') {
+                    taxAmount = typeof item.tax.amount === 'string' ? parseFloat(item.tax.amount) : item.tax.amount;
+                    taxAmountType = item.tax.amountType || 'percentage';
+                  } else if (typeof item.taxRate !== 'undefined') {
+                    taxAmount = typeof item.taxRate === 'string' ? parseFloat(item.taxRate) : item.taxRate;
+                    taxAmountType = 'percentage';
+                  }
                   
-                  // Calculate item total with discount applied
-                  const subtotal = quantity * price;
-                  const discountAmount = subtotal * (discount / 100);
-                  const itemTotal = subtotal - discountAmount;
+                  // Get discount amount based on new structure first, fallback to legacy discount
+                  let discountAmount = 0;
+                  let discountAmountType = 'percentage';
+                  if (item.discount && typeof item.discount.amount !== 'undefined') {
+                    discountAmount = typeof item.discount.amount === 'string' ? parseFloat(item.discount.amount) : item.discount.amount;
+                    discountAmountType = item.discount.amountType || 'percentage';
+                  } else if (typeof item.discount !== 'undefined' && typeof item.discount === 'number') {
+                    discountAmount = item.discount;
+                    discountAmountType = 'percentage';
+                  }
+                  
+                  // Calculate item total with tax and discount applied
+                  let subtotal = quantity * price;
+                  
+                  // Apply tax
+                  if (taxAmountType === 'percentage') {
+                    subtotal += subtotal * (taxAmount / 100);
+                  } else if (taxAmountType === 'fixed') {
+                    subtotal += taxAmount;
+                  }
+                  
+                  // Apply discount
+                  if (discountAmountType === 'percentage') {
+                    subtotal -= subtotal * (discountAmount / 100);
+                  } else if (discountAmountType === 'fixed') {
+                    subtotal -= discountAmount;
+                  }
+                  
+                  const itemTotal = subtotal;
                   
                   return (
                     <tr key={item.id || `item-${index}`} className="border-b">
@@ -509,10 +550,10 @@ export default function ViewInvoicePage() {
                         {invoice.details?.currency} {price.toFixed(2)}
                       </td>
                       <td className="text-right p-2 border print:border-black">
-                        {(typeof item.taxRate === 'string' ? parseFloat(item.taxRate) : (item.taxRate || 0))}%
+                        {taxAmountType === 'percentage' ? `${taxAmount}%` : `${invoice.details?.currency} ${taxAmount.toFixed(2)}`}
                       </td>
                       <td className="text-right p-2 border print:border-black">
-                        {discount}%
+                        {discountAmountType === 'percentage' ? `${discountAmount}%` : `${invoice.details?.currency} ${discountAmount.toFixed(2)}`}
                       </td>
                       <td className="text-right p-2 border print:border-black">
                         {invoice.details?.currency} {itemTotal.toFixed(2)}
@@ -522,7 +563,7 @@ export default function ViewInvoicePage() {
                 })
               ) : (
                 <tr>
-                  <td colSpan={6} className="p-2 text-center border print:border-black">No items found</td>
+                  <td colSpan={6} className="p-4 text-center">No items found</td>
                 </tr>
               )}
             </tbody>

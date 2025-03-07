@@ -1,14 +1,14 @@
 ---
-description: 
+description: Dependency rules
 globs: 
 alwaysApply: false
 ---
 
-# Your rule content
+# Dependency rules
 
 - Do not use Next Auth, use email based existing auth mechanism
-- Always check for existing depencencies and reuse what is availble before installing something with similar functionality
+- Always check for existing depencencies, versions and usages in [package.json](mdc:package.json) and reuse what is availble before installing something with similar functionality
 - Before implementing something that wasn't specifically asked for check if it is okay to proceed
 - in Next.js 15, the params and searchParams props are now Promises. 
 - Current version of is "next-intl": "^3.26.5" that has different structure and API to older versions, please ensure any translations work is following current version
-- All fields in create invoice need to be optional
+- Check the documentation that matches dependencies version

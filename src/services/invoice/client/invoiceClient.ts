@@ -1,4 +1,4 @@
-import { InvoiceType } from "@/types";
+import { InvoiceType } from "@/types-optional";
 
 /**
  * Fetch all invoices from the API

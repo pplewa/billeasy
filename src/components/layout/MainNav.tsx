@@ -54,14 +54,6 @@ export default function MainNav() {
             >
               {t("createInvoice")}
             </Link>
-            <Link
-              href={{ pathname: "/drafts" }}
-              className={`text-sm ${
-                pathname.includes("/drafts") ? "font-medium" : ""
-              }`}
-            >
-              {t("drafts")}
-            </Link>
             {user && (
               <Link
                 href={{ pathname: "/invoices" }}

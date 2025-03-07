@@ -1,6 +1,6 @@
 import connectToDatabase from "@/lib/db";
-import { Invoice, InvoiceDocument } from "@/models/Invoice";
-import { InvoiceType } from "@/types";
+import { Invoice, InvoiceDocument } from "@/models/Invoice-optional";
+import { InvoiceType } from "@/types-optional";
 
 /**
  * Get all invoices from the database
