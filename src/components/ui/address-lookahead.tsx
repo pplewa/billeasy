@@ -23,7 +23,11 @@ interface AddressDetails {
 
 type AddressMode = "lookahead" | "manual";
 
-interface AddressLookaheadProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'defaultValue'> {
+interface AddressLookaheadProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "onChange" | "value" | "defaultValue"
+  > {
   label?: string;
   error?: string;
   onAddressSelect?: (address: AddressDetails) => void;
@@ -37,6 +41,8 @@ interface AddressLookaheadProps extends Omit<React.InputHTMLAttributes<HTMLInput
   onCityChange?: (value: string) => void;
   onZipCodeChange?: (value: string) => void;
   onCountryChange?: (value: string) => void;
+  // Explicit mode control
+  forceManualMode?: boolean;
 }
 
 /**
@@ -44,83 +50,84 @@ interface AddressLookaheadProps extends Omit<React.InputHTMLAttributes<HTMLInput
  * This version supports two modes: lookahead and manual input
  */
 const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
-  ({ 
-    label, 
-    error, 
-    className, 
-    onAddressSelect, 
-    onChange,
-    value,
-    defaultValue,
-    cityValue = "",
-    zipCodeValue = "",
-    countryValue = "",
-    onCityChange,
-    onZipCodeChange,
-    onCountryChange,
-    ...props 
-  }, ref) => {
+  (
+    {
+      label,
+      error,
+      className,
+      onAddressSelect,
+      onChange,
+      value,
+      defaultValue,
+      cityValue = "",
+      zipCodeValue = "",
+      countryValue = "",
+      onCityChange,
+      onZipCodeChange,
+      onCountryChange,
+      forceManualMode = false,
+      ...props
+    },
+    ref
+  ) => {
     // Mode state
     const [mode, setMode] = useState<AddressMode>(() => {
-      // Start in manual mode if address values are already populated
-      if ((value || defaultValue) && (cityValue || zipCodeValue || countryValue)) {
+      // Start in manual mode if forced or if address values are already populated
+      if (forceManualMode || ((value || defaultValue) && (cityValue || zipCodeValue || countryValue))) {
         return "manual";
       }
       return "lookahead";
     });
-    
+
+    // Update mode when forceManualMode changes
+    useEffect(() => {
+      if (forceManualMode) {
+        setMode("manual");
+      }
+    }, [forceManualMode]);
+
     // Input state
-    const [inputValue, setInputValue] = useState<string>(value || defaultValue || "");
-    
+    const [inputValue, setInputValue] = useState<string>(
+      value || defaultValue || ""
+    );
+
     // Dropdown state
     const [open, setOpen] = useState(false);
     const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
     const [loading, setLoading] = useState(false);
     const [apiError, setApiError] = useState<string | null>(null);
-    
+
     // Focus tracking
     const [isFocused, setIsFocused] = useState(false);
-    
+
     // References
     const inputRef = useRef<HTMLInputElement>(null);
     const activeIndexRef = useRef(-1);
-    
+
     // Selected address details
     const [addressDetails, setAddressDetails] = useState<AddressDetails>({
-      address: inputValue,
-      city: cityValue,
-      zipCode: zipCodeValue,
-      country: countryValue
+      address: value || "",
+      city: cityValue || "",
+      zipCode: zipCodeValue || "",
+      country: countryValue || "",
     });
 
-    // Update input value when value prop changes
+    // Update local state when props change
     useEffect(() => {
-      if (value !== undefined && value !== inputValue) {
-        setInputValue(value);
-      }
-    }, [value]);
-
-    // Update address details when form values change
-    useEffect(() => {
-      setAddressDetails(prev => ({
-        ...prev,
-        city: cityValue,
-        zipCode: zipCodeValue,
-        country: countryValue
-      }));
-      
-      // Switch to manual mode if we have populated address values
-      if (inputValue && (cityValue || zipCodeValue || countryValue)) {
-        setMode("manual");
-      }
-    }, [cityValue, zipCodeValue, countryValue, inputValue]);
+      setAddressDetails({
+        address: value || "",
+        city: cityValue || "",
+        zipCode: zipCodeValue || "",
+        country: countryValue || "",
+      });
+    }, [value, cityValue, zipCodeValue, countryValue]);
 
     // Handle input change
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setInputValue(value);
-      setAddressDetails(prev => ({ ...prev, address: value }));
-      
+      setAddressDetails((prev) => ({ ...prev, address: value }));
+
       if (onChange) {
         onChange(e);
       }
@@ -140,7 +147,7 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
       setOpen(true);
       setLoading(true);
       activeIndexRef.current = -1;
-      
+
       // Use our backend API instead of calling Google Maps directly
       fetchSuggestions(value);
     };
@@ -148,13 +155,15 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
     // Fetch address suggestions from our backend API
     const fetchSuggestions = async (input: string) => {
       try {
-        const response = await fetch(`/api/places/autocomplete?input=${encodeURIComponent(input)}`);
-        
+        const response = await fetch(
+          `/api/places/autocomplete?input=${encodeURIComponent(input)}`
+        );
+
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to fetch suggestions');
+          throw new Error(errorData.error || "Failed to fetch suggestions");
         }
-        
+
         const data = await response.json();
         setSuggestions(data.suggestions || []);
         // Keep dropdown open if we have suggestions and input is focused
@@ -163,7 +172,9 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
         }
       } catch (error) {
         console.error("Error fetching address suggestions:", error);
-        setApiError(error instanceof Error ? error.message : 'Failed to fetch suggestions');
+        setApiError(
+          error instanceof Error ? error.message : "Failed to fetch suggestions"
+        );
         setSuggestions([]);
       } finally {
         setLoading(false);
@@ -174,21 +185,23 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
     const handleAddressSelect = async (suggestion: AddressSuggestion) => {
       // Update input value immediately for better UX
       setInputValue(suggestion.description);
-      
+
       // For UX improvement, close dropdown after selection
       setOpen(false);
       setLoading(true);
 
       try {
-        const response = await fetch(`/api/places/details?placeId=${encodeURIComponent(suggestion.placeId)}`);
-        
+        const response = await fetch(
+          `/api/places/details?placeId=${encodeURIComponent(suggestion.placeId)}`
+        );
+
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to fetch address details');
+          throw new Error(errorData.error || "Failed to fetch address details");
         }
-        
+
         const data = await response.json();
-        
+
         if (data.addressDetails) {
           // Clean up the address by removing duplicate information
           const cleanedAddress = cleanAddressField(
@@ -197,24 +210,24 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
             data.addressDetails.zipCode,
             data.addressDetails.country
           );
-          
+
           // Update local state with cleaned address
           setAddressDetails({
             ...data.addressDetails,
-            address: cleanedAddress
+            address: cleanedAddress,
           });
-          
+
           // Switch to manual mode to show all fields
           setMode("manual");
-          
+
           // Call the callback with cleaned address
           if (onAddressSelect) {
             onAddressSelect({
               ...data.addressDetails,
-              address: cleanedAddress
+              address: cleanedAddress,
             });
           }
-          
+
           // Update parent form values if callbacks exist
           if (onCityChange) onCityChange(data.addressDetails.city);
           if (onZipCodeChange) onZipCodeChange(data.addressDetails.zipCode);
@@ -222,7 +235,11 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
         }
       } catch (error) {
         console.error("Error fetching address details:", error);
-        setApiError(error instanceof Error ? error.message : 'Failed to fetch address details');
+        setApiError(
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch address details"
+        );
       } finally {
         setLoading(false);
       }
@@ -236,11 +253,11 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
       country: string
     ): string => {
       let cleanedAddress = fullAddress;
-      
+
       // First, try to identify and extract the street address portion
       // This is typically the first part before state/province, postal code, country
-      const parts = fullAddress.split(',').map(part => part.trim());
-      
+      const parts = fullAddress.split(",").map((part) => part.trim());
+
       if (parts.length > 1) {
         // Extract what's likely to be the street address
         // This is usually the first component, sometimes with the second if it contains building info
@@ -248,42 +265,59 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
           // Try to identify if we need just the first part or the first two parts
           // Check if second part contains apartment/suite/unit info
           const firstPartOnly = !parts[1].match(/apt|suite|unit|floor|#/i);
-          cleanedAddress = firstPartOnly ? parts[0] : `${parts[0]}, ${parts[1]}`;
+          cleanedAddress = firstPartOnly
+            ? parts[0]
+            : `${parts[0]}, ${parts[1]}`;
         } else {
           // If we only have two parts, take the first one as the street address
           cleanedAddress = parts[0];
         }
       }
-      
+
       // Fallback: If the above approach doesn't work well, apply regex replacements
       if (cleanedAddress === fullAddress) {
         // Create regex patterns to match city, zip code, and country in the address
-        if (city && city.trim() !== '') {
+        if (city && city.trim() !== "") {
           // Match city followed by state/country
-          cleanedAddress = cleanedAddress.replace(new RegExp(`${city}[,\\s]+(?:[A-Z]{2,}|[^,]+)[,\\s]+${country}`, 'i'), '');
+          cleanedAddress = cleanedAddress.replace(
+            new RegExp(
+              `${city}[,\\s]+(?:[A-Z]{2,}|[^,]+)[,\\s]+${country}`,
+              "i"
+            ),
+            ""
+          );
           // Match city at the end or followed by comma
-          cleanedAddress = cleanedAddress.replace(new RegExp(`,?\\s*${city}(?:,|$)`, 'i'), '');
+          cleanedAddress = cleanedAddress.replace(
+            new RegExp(`,?\\s*${city}(?:,|$)`, "i"),
+            ""
+          );
         }
-        
-        if (zipCode && zipCode.trim() !== '') {
+
+        if (zipCode && zipCode.trim() !== "") {
           // Match postal/zip codes in various formats
-          cleanedAddress = cleanedAddress.replace(new RegExp(`\\b${zipCode}\\b`, 'i'), '');
+          cleanedAddress = cleanedAddress.replace(
+            new RegExp(`\\b${zipCode}\\b`, "i"),
+            ""
+          );
         }
-        
-        if (country && country.trim() !== '') {
+
+        if (country && country.trim() !== "") {
           // Match country at the end of the address
-          cleanedAddress = cleanedAddress.replace(new RegExp(`,?\\s*${country}$`, 'i'), '');
+          cleanedAddress = cleanedAddress.replace(
+            new RegExp(`,?\\s*${country}$`, "i"),
+            ""
+          );
         }
-        
+
         // Look for state/province codes (e.g., NY, CA, NSW, VIC)
-        cleanedAddress = cleanedAddress.replace(/,\s*[A-Z]{2,3}(?:,|$)/g, '');
+        cleanedAddress = cleanedAddress.replace(/,\s*[A-Z]{2,3}(?:,|$)/g, "");
       }
-      
+
       // Remove multiple commas, extra spaces, and clean up trailing commas
-      cleanedAddress = cleanedAddress.replace(/,\s*,/g, ',');
-      cleanedAddress = cleanedAddress.replace(/,\s*$/g, '');
-      cleanedAddress = cleanedAddress.replace(/\s{2,}/g, ' ');
-      
+      cleanedAddress = cleanedAddress.replace(/,\s*,/g, ",");
+      cleanedAddress = cleanedAddress.replace(/,\s*$/g, "");
+      cleanedAddress = cleanedAddress.replace(/\s{2,}/g, " ");
+
       return cleanedAddress.trim();
     };
 
@@ -293,26 +327,29 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
     };
 
     // Handle manual field changes
-    const handleManualFieldChange = (field: keyof AddressDetails, value: string) => {
-      setAddressDetails(prev => ({ ...prev, [field]: value }));
-      
+    const handleManualFieldChange = (
+      field: keyof AddressDetails,
+      value: string
+    ) => {
+      setAddressDetails((prev) => ({ ...prev, [field]: value }));
+
       // Update parent form if callbacks exist
-      if (field === 'city' && onCityChange) onCityChange(value);
-      if (field === 'zipCode' && onZipCodeChange) onZipCodeChange(value);
-      if (field === 'country' && onCountryChange) onCountryChange(value);
+      if (field === "city" && onCityChange) onCityChange(value);
+      if (field === "zipCode" && onZipCodeChange) onZipCodeChange(value);
+      if (field === "country" && onCountryChange) onCountryChange(value);
     };
 
     // Handle keyboard navigation
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       // Close dropdown on escape
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setOpen(false);
         return;
       }
-      
+
       if (!open || suggestions.length === 0) {
         // Open dropdown on arrow down even if we don't have suggestions yet
-        if (e.key === 'ArrowDown' && inputValue.length >= 3) {
+        if (e.key === "ArrowDown" && inputValue.length >= 3) {
           e.preventDefault();
           setOpen(true);
           return;
@@ -321,25 +358,30 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
       }
 
       // Handle keyboard navigation for suggestions
-      if (e.key === 'ArrowDown') {
+      if (e.key === "ArrowDown") {
         e.preventDefault();
-        activeIndexRef.current = Math.min(activeIndexRef.current + 1, suggestions.length - 1);
-        const elements = document.querySelectorAll('.address-suggestion-item');
+        activeIndexRef.current = Math.min(
+          activeIndexRef.current + 1,
+          suggestions.length - 1
+        );
+        const elements = document.querySelectorAll(".address-suggestion-item");
         if (elements[activeIndexRef.current]) {
           (elements[activeIndexRef.current] as HTMLElement).focus();
         }
-      } else if (e.key === 'ArrowUp') {
+      } else if (e.key === "ArrowUp") {
         e.preventDefault();
         activeIndexRef.current = Math.max(activeIndexRef.current - 1, -1);
         if (activeIndexRef.current === -1) {
           inputRef.current?.focus();
         } else {
-          const elements = document.querySelectorAll('.address-suggestion-item');
+          const elements = document.querySelectorAll(
+            ".address-suggestion-item"
+          );
           if (elements[activeIndexRef.current]) {
             (elements[activeIndexRef.current] as HTMLElement).focus();
           }
         }
-      } else if (e.key === 'Enter' && activeIndexRef.current >= 0) {
+      } else if (e.key === "Enter" && activeIndexRef.current >= 0) {
         e.preventDefault();
         handleAddressSelect(suggestions[activeIndexRef.current]);
       }
@@ -349,10 +391,10 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           {label && <Label htmlFor={props.id}>{label}</Label>}
-          <Button 
-            type="button" 
-            variant="outline" 
-            size="sm" 
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
             onClick={toggleMode}
             className="h-8 gap-1"
           >
@@ -386,7 +428,7 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
               <Input
                 ref={(node) => {
                   // Handle both the forwarded ref and our local ref
-                  if (typeof ref === 'function') {
+                  if (typeof ref === "function") {
                     ref(node);
                   } else if (ref) {
                     ref.current = node;
@@ -404,7 +446,10 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
                 }}
                 onBlur={(e) => {
                   // Don't blur when clicking on a suggestion item
-                  if (e.relatedTarget && e.relatedTarget.closest('.address-suggestion-item')) {
+                  if (
+                    e.relatedTarget &&
+                    e.relatedTarget.closest(".address-suggestion-item")
+                  ) {
                     return;
                   }
                   setIsFocused(false);
@@ -429,51 +474,52 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
                 {...props}
               />
             </div>
-            
+
             {open && suggestions.length > 0 && (
               <div className="relative mt-1 w-full z-10">
                 <div className="border border-input rounded-md shadow-md bg-popover">
-                  <ul 
-                    id="address-suggestions" 
-                    role="listbox" 
+                  <ul
+                    id="address-suggestions"
+                    role="listbox"
                     aria-label="Address suggestions"
                     className="py-2 overflow-auto max-h-60"
                   >
-                    {!loading && suggestions.map((suggestion, index) => (
-                      <li
-                        key={suggestion.placeId}
-                        id={`address-suggestion-${index}`}
-                        role="option"
-                        aria-selected={activeIndexRef.current === index}
-                        tabIndex={0}
-                        className={cn(
-                          'px-2 py-2 text-sm cursor-pointer flex items-center justify-between address-suggestion-item',
-                          'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none'
-                        )}
-                        onClick={() => handleAddressSelect(suggestion)}
-                        onMouseDown={(e) => {
-                          // Prevent input blur
-                          e.preventDefault();
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
+                    {!loading &&
+                      suggestions.map((suggestion, index) => (
+                        <li
+                          key={suggestion.placeId}
+                          id={`address-suggestion-${index}`}
+                          role="option"
+                          aria-selected={activeIndexRef.current === index}
+                          tabIndex={0}
+                          className={cn(
+                            "px-2 py-2 text-sm cursor-pointer flex items-center justify-between address-suggestion-item",
+                            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                          )}
+                          onClick={() => handleAddressSelect(suggestion)}
+                          onMouseDown={(e) => {
+                            // Prevent input blur
                             e.preventDefault();
-                            handleAddressSelect(suggestion);
-                          }
-                        }}
-                        onMouseEnter={() => {
-                          activeIndexRef.current = index;
-                        }}
-                        onFocus={() => {
-                          activeIndexRef.current = index;
-                        }}
-                      >
-                        <span>{suggestion.description}</span>
-                        {inputValue === suggestion.description && (
-                          <Check className="h-4 w-4 ml-2" />
-                        )}
-                      </li>
-                    ))}
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              handleAddressSelect(suggestion);
+                            }
+                          }}
+                          onMouseEnter={() => {
+                            activeIndexRef.current = index;
+                          }}
+                          onFocus={() => {
+                            activeIndexRef.current = index;
+                          }}
+                        >
+                          <span>{suggestion.description}</span>
+                          {inputValue === suggestion.description && (
+                            <Check className="h-4 w-4 ml-2" />
+                          )}
+                        </li>
+                      ))}
                   </ul>
                   {apiError && (
                     <div className="p-2 text-sm text-destructive">
@@ -483,9 +529,14 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
                 </div>
               </div>
             )}
-            
+
             {error && (
-              <p id="address-error" className="text-sm font-medium text-destructive">{error}</p>
+              <p
+                id="address-error"
+                className="text-sm font-medium text-destructive"
+              >
+                {error}
+              </p>
             )}
           </div>
         ) : (
@@ -495,36 +546,44 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
               <Label>Street Address</Label>
               <Input
                 value={addressDetails.address}
-                onChange={(e) => handleManualFieldChange('address', e.target.value)}
+                onChange={(e) =>
+                  handleManualFieldChange("address", e.target.value)
+                }
                 className={cn(error && "border-destructive")}
               />
               {error && (
                 <p className="text-sm font-medium text-destructive">{error}</p>
               )}
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label>City</Label>
                 <Input
                   value={addressDetails.city}
-                  onChange={(e) => handleManualFieldChange('city', e.target.value)}
+                  onChange={(e) =>
+                    handleManualFieldChange("city", e.target.value)
+                  }
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label>Zip/Postal Code</Label>
                 <Input
                   value={addressDetails.zipCode}
-                  onChange={(e) => handleManualFieldChange('zipCode', e.target.value)}
+                  onChange={(e) =>
+                    handleManualFieldChange("zipCode", e.target.value)
+                  }
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label>Country</Label>
                 <Input
                   value={addressDetails.country}
-                  onChange={(e) => handleManualFieldChange('country', e.target.value)}
+                  onChange={(e) =>
+                    handleManualFieldChange("country", e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -537,4 +596,4 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
 
 AddressLookahead.displayName = "AddressLookahead";
 
-export { AddressLookahead, type AddressDetails }; 
+export { AddressLookahead, type AddressDetails };

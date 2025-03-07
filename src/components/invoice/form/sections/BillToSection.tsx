@@ -14,6 +14,31 @@ import {
 
 import { InvoiceType } from "@/types";
 
+interface CustomInput {
+  key?: string;
+  value?: string;
+}
+
+interface CustomInputError {
+  key?: { message?: string };
+  value?: { message?: string };
+}
+
+interface ReceiverErrors {
+  name?: { message?: string };
+  address?: { message?: string };
+  city?: { message?: string };
+  zipCode?: { message?: string };
+  country?: { message?: string };
+  email?: { message?: string };
+  phone?: { message?: string };
+  customInputs?: Array<CustomInputError>;
+}
+
+interface FormErrors {
+  receiver?: ReceiverErrors;
+}
+
 export function BillToSection() {
   const [showCustomInputs, setShowCustomInputs] = useState(false);
   const {
@@ -23,6 +48,9 @@ export function BillToSection() {
     getValues,
     watch,
   } = useFormContext<InvoiceType>();
+
+  // Cast errors to our known type
+  const typedErrors = errors as FormErrors;
 
   // Handle address selection from the lookahead component
   const handleAddressSelect = (addressDetails: AddressDetails) => {
@@ -38,6 +66,16 @@ export function BillToSection() {
     });
   };
 
+  // Convert potentially null values to undefined for the AddressLookahead component
+  const addressValue = watch("receiver.address") || undefined;
+  const cityValue = watch("receiver.city") || undefined;
+  const zipCodeValue = watch("receiver.zipCode") || undefined;
+  const countryValue = watch("receiver.country") || undefined;
+
+  // Safely handle custom inputs array
+  const customInputs = getValues("receiver.customInputs") || [];
+  const customInputsArray = Array.isArray(customInputs) ? customInputs : [];
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -47,37 +85,48 @@ export function BillToSection() {
         <FormInput
           label="Name"
           {...register("receiver.name")}
-          error={errors.receiver?.name?.message}
+          error={typedErrors.receiver?.name?.message}
           placeholder="Client name or business name"
         />
 
         <AddressLookahead
           label="Address"
           onAddressSelect={handleAddressSelect}
-          error={errors.receiver?.address?.message}
-          value={watch("receiver.address")}
-          cityValue={watch("receiver.city")}
-          zipCodeValue={watch("receiver.zipCode")}
-          countryValue={watch("receiver.country")}
-          onCityChange={(value) => setValue("receiver.city", value, { shouldValidate: true })}
-          onZipCodeChange={(value) => setValue("receiver.zipCode", value, { shouldValidate: true })}
-          onCountryChange={(value) => setValue("receiver.country", value, { shouldValidate: true })}
-          onChange={(e) => setValue("receiver.address", e.target.value, { shouldValidate: true })}
+          error={typedErrors.receiver?.address?.message}
+          value={addressValue}
+          cityValue={cityValue}
+          zipCodeValue={zipCodeValue}
+          countryValue={countryValue}
+          onCityChange={(value) =>
+            setValue("receiver.city", value, { shouldValidate: true })
+          }
+          onZipCodeChange={(value) =>
+            setValue("receiver.zipCode", value, { shouldValidate: true })
+          }
+          onCountryChange={(value) => {
+            setValue("receiver.country", value, { shouldValidate: true });
+          }}
+          onChange={(e) => {
+            setValue("receiver.address", e.target.value, {
+              shouldValidate: true,
+            })
+          }}
           id="receiver-address"
+          forceManualMode={!!(addressValue || cityValue || zipCodeValue || countryValue)}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormInput
             label="Email"
             {...register("receiver.email")}
-            error={errors.receiver?.email?.message}
+            error={typedErrors.receiver?.email?.message}
             placeholder="Email address"
           />
 
           <FormInput
             label="Phone"
             {...register("receiver.phone")}
-            error={errors.receiver?.phone?.message}
+            error={typedErrors.receiver?.phone?.message}
             placeholder="Phone number"
           />
         </div>
@@ -106,37 +155,45 @@ export function BillToSection() {
 
           {showCustomInputs && (
             <div className="mt-4 space-y-4">
-              {getValues("receiver.customInputs")?.map((customInput: {key?: string, value?: string}, index: number) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
-                >
-                  <FormInput
-                    label={`Field ${index + 1} Name`}
-                    {...register(`receiver.customInputs.${index}.key`)}
-                    error={errors.receiver?.customInputs?.[index]?.key?.message}
-                    placeholder="Field name"
-                  />
-                  <FormInput
-                    label={`Field ${index + 1} Value`}
-                    {...register(`receiver.customInputs.${index}.value`)}
-                    error={
-                      errors.receiver?.customInputs?.[index]?.value?.message
-                    }
-                    placeholder="Field value"
-                  />
-                </div>
-              ))}
+              {customInputsArray.map(
+                (customInput: CustomInput, index: number) => (
+                  <div
+                    key={index}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                  >
+                    <FormInput
+                      label={`Field ${index + 1} Name`}
+                      {...register(
+                        `receiver.customInputs.${index}.key` as const
+                      )}
+                      error={
+                        typedErrors.receiver?.customInputs?.[index]?.key
+                          ?.message
+                      }
+                      placeholder="Field name"
+                    />
+                    <FormInput
+                      label={`Field ${index + 1} Value`}
+                      {...register(
+                        `receiver.customInputs.${index}.value` as const
+                      )}
+                      error={
+                        typedErrors.receiver?.customInputs?.[index]?.value
+                          ?.message
+                      }
+                      placeholder="Field value"
+                    />
+                  </div>
+                )
+              )}
 
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  const currentInputs =
-                    getValues("receiver.customInputs") || [];
                   setValue("receiver.customInputs", [
-                    ...currentInputs,
+                    ...customInputsArray,
                     { key: "", value: "" },
                   ]);
                 }}
