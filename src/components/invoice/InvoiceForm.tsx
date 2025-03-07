@@ -20,12 +20,20 @@ import { useInvoiceContext } from "@/contexts/InvoiceContext";
 function Step1() {
   return (
     <WizardStep>
-      <div className="flex flex-col space-y-6">
-        <AddressSwapButton />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <BillFromSection />
-          <BillToSection />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 relative">
+        <BillFromSection />
+        
+        {/* Centered swap button between the sections */}
+        <div className="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+          <AddressSwapButton />
         </div>
+        
+        {/* Mobile swap button */}
+        <div className="flex md:hidden justify-center my-2">
+          <AddressSwapButton />
+        </div>
+        
+        <BillToSection />
       </div>
     </WizardStep>
   );

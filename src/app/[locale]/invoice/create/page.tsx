@@ -668,8 +668,10 @@ export default function CreateInvoicePage({
 
       <ItemsUpdater parsedInvoice={parsedInvoice} />
 
-      {/* Add ParserDataSwapButton before the form */}
-      {parsedInvoice && <ParserDataSwapButton />}
+      {/* Position ParserDataSwapButton in create form properly */}
+      <div className="flex justify-center my-4">
+        {parsedInvoice && <ParserDataSwapButton />}
+      </div>
 
       <InvoiceContextProvider
         form={form}

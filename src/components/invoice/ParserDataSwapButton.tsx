@@ -3,11 +3,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import useInvoiceParserStore from "@/store/invoice-parser-store";
-import { InvoiceType } from "@/types";
 
 /**
  * A button component for swapping sender and receiver in parsed invoice data
- * before form initialization
  */
 export function ParserDataSwapButton() {
   const { toast } = useToast();
@@ -20,13 +18,35 @@ export function ParserDataSwapButton() {
 
   const handleSwapAddresses = () => {
     if (!parsedInvoice) return;
+    
+    // Create a deep clone of the invoice to avoid reference issues
+    const updatedInvoice = JSON.parse(JSON.stringify(parsedInvoice));
 
-    // Create a new parsedInvoice object with swapped addresses
-    const updatedInvoice: Partial<InvoiceType> = {
-      ...parsedInvoice,
-      sender: parsedInvoice.receiver,
-      receiver: parsedInvoice.sender
-    };
+    // Explicitly save all address-related fields
+    const senderAddress = updatedInvoice.sender.address;
+    const senderCity = updatedInvoice.sender.city;
+    const senderZipCode = updatedInvoice.sender.zipCode;
+    const senderCountry = updatedInvoice.sender.country;
+    
+    const receiverAddress = updatedInvoice.receiver.address;
+    const receiverCity = updatedInvoice.receiver.city;
+    const receiverZipCode = updatedInvoice.receiver.zipCode;
+    const receiverCountry = updatedInvoice.receiver.country;
+
+    // Swap the entire objects
+    updatedInvoice.sender = parsedInvoice.receiver;
+    updatedInvoice.receiver = parsedInvoice.sender;
+
+    // Explicitly set all address fields to ensure they get swapped correctly
+    updatedInvoice.sender.address = receiverAddress;
+    updatedInvoice.sender.city = receiverCity;
+    updatedInvoice.sender.zipCode = receiverZipCode;
+    updatedInvoice.sender.country = receiverCountry;
+    
+    updatedInvoice.receiver.address = senderAddress;
+    updatedInvoice.receiver.city = senderCity;
+    updatedInvoice.receiver.zipCode = senderZipCode;
+    updatedInvoice.receiver.country = senderCountry;
 
     // Update the parsed invoice in the store
     setParsedInvoice(updatedInvoice);
@@ -34,30 +54,19 @@ export function ParserDataSwapButton() {
     // Notify the user
     toast({
       title: "Addresses Swapped",
-      description: "The 'Bill From' and 'Bill To' information has been switched.",
+      description: "The Bill From and Bill To information has been switched.",
     });
   };
 
   return (
-    <div className="bg-amber-50 p-3 rounded-md border border-amber-200 flex flex-col items-center md:flex-row md:justify-between mb-6">
-      <div className="mb-2 md:mb-0">
-        <p className="text-sm text-amber-700 font-medium">
-          Did the parsing get the sender and receiver wrong?
-        </p>
-        <p className="text-xs text-amber-600">
-          You can swap the Bill From and Bill To information before starting the form.
-        </p>
-      </div>
-      <Button
-        type="button"
-        variant="outline"
-        onClick={handleSwapAddresses}
-        className="flex items-center gap-2 bg-white border-amber-300 hover:bg-amber-100"
-        title="Swap Bill From and Bill To information"
-      >
-        <ArrowUpDown className="h-4 w-4" />
-        Swap Addresses
-      </Button>
-    </div>
+    <Button
+      type="button"
+      variant="outline"
+      onClick={handleSwapAddresses}
+      className="flex items-center justify-center rounded-full h-10 w-10 p-0 border-gray-300 hover:bg-gray-100"
+      title="Swap Bill From and Bill To information"
+    >
+      <ArrowUpDown className="h-5 w-5" />
+    </Button>
   );
 } 
