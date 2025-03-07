@@ -21,7 +21,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Download, AlertCircle, Zap, Mail, Printer, ArrowUpDown, Loader2 } from "lucide-react";
+import { Download, AlertCircle, Zap, Mail, Printer } from "lucide-react";
 import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
 import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
 import { ParserDataSwapButton } from "@/components/invoice/ParserDataSwapButton";

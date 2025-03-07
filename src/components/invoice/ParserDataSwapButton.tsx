@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import useInvoiceParserStore from "@/store/invoice-parser-store";
 
@@ -66,7 +66,7 @@ export function ParserDataSwapButton() {
       className="flex items-center justify-center rounded-full h-10 w-10 p-0 border-gray-300 hover:bg-gray-100"
       title="Swap Bill From and Bill To information"
     >
-      <ArrowUpDown className="h-5 w-5" />
+      <ArrowLeftRight className="h-5 w-5" />
     </Button>
   );
 } 

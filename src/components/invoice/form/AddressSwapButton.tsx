@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { InvoiceType } from "@/types";
 import { useToast } from "@/components/ui/use-toast";
@@ -58,7 +58,7 @@ export function AddressSwapButton() {
       className="flex items-center justify-center rounded-full h-10 w-10 p-0 border-gray-300 hover:bg-gray-100"
       title="Swap Bill From and Bill To information"
     >
-      <ArrowUpDown className="h-5 w-5" />
+      <ArrowLeftRight className="h-5 w-5" />
     </Button>
   );
 } 
