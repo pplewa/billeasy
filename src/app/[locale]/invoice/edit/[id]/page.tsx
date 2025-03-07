@@ -1,6 +1,7 @@
 "use client";
 
 import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
+import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
 import { InvoiceForm } from "@/components/invoice/InvoiceForm";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -12,7 +13,7 @@ import {
 } from "@/services/invoice/client/invoiceClient";
 import { InvoiceType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Download, Loader2 } from "lucide-react";
+import { Download, Loader2, Mail, Printer } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -95,7 +96,7 @@ export default function EditInvoicePage({
         title: "Success",
         description: "Invoice updated successfully",
       });
-      router.push(`/${locale}/invoices`);
+      router.push(`/${locale}/invoice/view/${invoiceId}`);
     } catch (error) {
       console.error("Error updating invoice:", error);
       toast({
@@ -108,6 +109,14 @@ export default function EditInvoicePage({
     }
   };
 
+  // Handle print functionality
+  const handlePrint = () => {
+    // Add a small delay to ensure styles are applied
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
+
   if (loading) {
     return (
       <div className="container mx-auto py-8 flex justify-center items-center h-64">
@@ -118,10 +127,55 @@ export default function EditInvoicePage({
 
   return (
     <main className="container py-6 space-y-8 p-4">
-      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      {/* Add print-specific styles */}
+      <style jsx global>{`
+        @media print {
+          body {
+            font-family: Arial, sans-serif;
+            color: #000;
+            background: #fff;
+            margin: 0;
+            padding: 0;
+          }
+          
+          .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;
+            margin: 0;
+          }
+          
+          .print-hidden {
+            display: none !important;
+          }
+        }
+      `}</style>
+
+      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
         <h1 className="text-3xl font-bold tracking-tight">Edit Invoice</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
-          <InvoiceExportModal form={form} isLoading={isSubmitting}>
+          <Button
+            variant="outline"
+            className="w-full md:w-auto"
+            onClick={handlePrint}
+            disabled={isSubmitting}
+          >
+            <Printer className="w-4 h-4 mr-2" />
+            Print
+          </Button>
+          
+          <InvoiceEmailModal invoice={invoice}>
+            <Button
+              variant="outline"
+              className="w-full md:w-auto"
+              disabled={isSubmitting}
+            >
+              <Mail className="w-4 h-4 mr-2" />
+              Email
+            </Button>
+          </InvoiceEmailModal>
+          
+          <InvoiceExportModal invoice={invoice}>
             <Button
               variant="outline"
               className="w-full md:w-auto"
@@ -131,9 +185,10 @@ export default function EditInvoicePage({
               Export
             </Button>
           </InvoiceExportModal>
+          
           <Button
             className="w-full md:w-auto"
-            onClick={handleSubmit}
+            onClick={form.handleSubmit(handleSubmit)}
             disabled={isSubmitting}
           >
             {isSubmitting ? <>Saving...</> : <>Save Invoice</>}

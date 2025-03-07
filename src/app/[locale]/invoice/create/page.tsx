@@ -21,8 +21,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Download, AlertCircle, Zap } from "lucide-react";
+import { Download, AlertCircle, Zap, Mail, Printer } from "lucide-react";
 import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
+import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
 
 // Define ParsedInvoice type at the top of the file
 type ParsedInvoiceItem = {
@@ -354,11 +355,11 @@ export default function CreateInvoicePage({
 
   // Get locale from params
   useEffect(() => {
-    const getLocale = async () => {
+    const getParams = async () => {
       const resolvedParams = await params;
       setLocale(resolvedParams.locale);
     };
-    getLocale();
+    getParams();
   }, [params]);
 
   // Create form with minimal initial values
@@ -512,14 +513,14 @@ export default function CreateInvoicePage({
       const formData = form.getValues();
 
       // Submit the raw form data
-      await createInvoice(formData);
+      const data = await createInvoice(formData);
 
       toast({
         title: "Success",
         description: "Invoice created successfully",
       });
 
-      router.push(`/${locale}/invoices`);
+      router.push(`/${locale}/invoice/view/${data._id}`);
     } catch (error) {
       console.error("Error creating invoice:", error);
 
@@ -553,12 +554,73 @@ export default function CreateInvoicePage({
     router.push(`/${locale}/signin?redirect=/invoice/create`);
   };
 
+  // Handle print functionality
+  const handlePrint = () => {
+    // Add a small delay to ensure styles are applied
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
+
+  // Get current form data for email/export
+  const getCurrentFormData = () => {
+    return form.getValues();
+  };
+
   return (
     <main className="container py-6 space-y-8 p-4">
-      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      {/* Add print-specific styles */}
+      <style jsx global>{`
+        @media print {
+          body {
+            font-family: Arial, sans-serif;
+            color: #000;
+            background: #fff;
+            margin: 0;
+            padding: 0;
+          }
+          
+          .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;
+            margin: 0;
+          }
+          
+          .print-hidden {
+            display: none !important;
+          }
+        }
+      `}</style>
+
+      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
         <h1 className="text-3xl font-bold tracking-tight">Create Invoice</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
-          <InvoiceExportModal form={form} isLoading={isSubmitting}>
+          <Button
+            variant="outline"
+            className="w-full md:w-auto"
+            onClick={handlePrint}
+            disabled={isSubmitting}
+          >
+            <Printer className="w-4 h-4 mr-2" />
+            Print
+          </Button>
+          
+          {/* Email button - only show when user is logged in */}
+          {user && (
+            <InvoiceEmailModal form={form}>
+              <Button
+                variant="outline"
+                className="w-full md:w-auto"
+                disabled={isSubmitting}
+              >
+                <Mail className="w-4 h-4 mr-2" />
+                Email
+              </Button>
+            </InvoiceEmailModal>
+          )}
+          
+          <InvoiceExportModal form={form}>
             <Button
               variant="outline"
               className="w-full md:w-auto"
@@ -568,6 +630,7 @@ export default function CreateInvoicePage({
               Export
             </Button>
           </InvoiceExportModal>
+          
           <Button
             className="w-full md:w-auto"
             onClick={handleAuthenticatedSave}
