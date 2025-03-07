@@ -10,9 +10,6 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 
-// Types
-import { InvoiceType } from "@/types";
-
 /**
  * Available invoice templates
  */
@@ -27,6 +24,16 @@ const TEMPLATES = [
         name: "Modern Minimalist",
         description: "A sleek, modern template with a dark accent color",
     },
+    {
+        id: 3,
+        name: "Creative Professional",
+        description: "A stylish template with a green accent color",
+    },
+    {
+        id: 4,
+        name: "Premium Corporate",
+        description: "An elegant template with a purple accent color",
+    },
 ];
 
 /**
@@ -34,7 +41,8 @@ const TEMPLATES = [
  * Allows users to select from available invoice templates
  */
 export function TemplateSelector() {
-    const { watch, setValue } = useFormContext<InvoiceType>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { watch, setValue } = useFormContext<any>();
     const selectedTemplate = watch("details.pdfTemplate") || 1;
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 

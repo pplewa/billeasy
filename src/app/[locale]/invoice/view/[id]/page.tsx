@@ -25,11 +25,11 @@ import { fetchInvoiceById } from "@/services/invoice/client/invoiceClient";
 // Invoice Components
 import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
 import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
+import { TemplateViewSelector } from "@/components/invoice/TemplateViewSelector";
+import DynamicInvoiceView from "@/components/invoice/DynamicInvoiceView";
 
 // Types
 import { InvoiceType } from "@/types";
-
-import { formatDate } from "@/lib/utils";
 
 // Define interfaces for the invoice structure as used in the view
 interface InvoiceItem {
@@ -102,6 +102,8 @@ interface ViewInvoiceDocument {
  * @returns An object in InvoiceType format
  */
 const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
+  if (!doc) return {} as InvoiceType;
+  
   // Calculate subtotal and total amount from items
   const items = doc.items || [];
   
@@ -111,11 +113,23 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
     const unitPrice = typeof item.unitPrice !== 'undefined'
       ? (typeof item.unitPrice === 'string' ? parseFloat(item.unitPrice as unknown as string) : item.unitPrice)
       : (typeof item.price === 'string' ? parseFloat(item.price as unknown as string) : (item.price || 0));
-    const discount = typeof item.discount === 'string' ? parseFloat(item.discount as unknown as string) : (item.discount || 0);
+    
+    // Handle discount properly based on type
+    let discount = 0;
+    if (typeof item.discount === 'object' && item.discount !== null && 'amount' in item.discount) {
+      discount = typeof item.discount.amount === 'string' 
+        ? parseFloat(item.discount.amount) 
+        : (item.discount.amount || 0);
+    } else if (typeof item.discount === 'number') {
+      discount = item.discount;
+    } else if (typeof item.discount === 'string') {
+      discount = parseFloat(item.discount) || 0;
+    }
     
     // Calculate item total
     const subtotal = quantity * unitPrice;
-    const discountAmount = subtotal * (discount / 100);
+    // Apply a percentage discount by default (safely convert to number)
+    const discountAmount = subtotal * (Number(discount) / 100);
     const total = subtotal - discountAmount;
     
     return {
@@ -131,7 +145,7 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
   
   // Calculate subtotal and total
   const subTotal = processedItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-  const totalAmount = processedItems.reduce((sum, item) => sum + item.total, 0);
+  const totalAmount = processedItems.reduce((sum, item) => sum + (item.total || 0), 0);
   
   // Process signature data
   let signature;
@@ -152,6 +166,9 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
     }
   }
   
+  // Convert template string to number
+  const templateId = doc.settings?.template ? parseInt(doc.settings.template, 10) : 1;
+  
   return {
     sender: doc.sender,
     receiver: doc.receiver,
@@ -167,7 +184,7 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
       signature: signature,
       subTotal: subTotal,
       totalAmount: totalAmount,
-      pdfTemplate: doc.settings?.template ? parseInt(doc.settings.template, 10) : 1
+      pdfTemplate: templateId
     }
   };
 };
@@ -180,6 +197,7 @@ export default function ViewInvoicePage() {
 
   const [invoice, setInvoice] = useState<ViewInvoiceDocument | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedTemplate, setSelectedTemplate] = useState<number>(1);
 
   useEffect(() => {
     const loadInvoice = async () => {
@@ -263,6 +281,22 @@ export default function ViewInvoicePage() {
     }, 100);
   };
 
+  // Add a handler for template changes
+  const handleTemplateChange = (templateId: number) => {
+    setSelectedTemplate(templateId);
+    
+    // If we have an invoice, update its settings in memory
+    if (invoice) {
+      setInvoice({
+        ...invoice,
+        settings: {
+          ...invoice.settings,
+          template: templateId.toString()
+        }
+      });
+    }
+  };
+
   if (loading || !invoice) {
     return (
       <div className="container mx-auto py-8 flex justify-center items-center h-64">
@@ -271,33 +305,8 @@ export default function ViewInvoicePage() {
     );
   }
 
-  // Get the items from the correct location
-  const invoiceItems = invoice.items || invoice.details?.items || [];
-
-  // Calculate total amount with discounts applied
-  const totalAmount = Array.isArray(invoiceItems) && invoiceItems.length > 0
-    ? invoiceItems.reduce(
-        (sum: number, item: InvoiceItem) => {
-          const quantity = typeof item.quantity === 'string' ? parseFloat(item.quantity) : (item.quantity || 0);
-          
-          // Handle both price and unitPrice fields
-          const price = typeof item.unitPrice !== 'undefined'
-            ? (typeof item.unitPrice === 'string' ? parseFloat(item.unitPrice as unknown as string) : item.unitPrice)
-            : (typeof item.price === 'string' ? parseFloat(item.price as unknown as string) : (item.price || 0));
-          
-          const discount = typeof item.discount === 'string' ? parseFloat(item.discount as unknown as string) : (item.discount || 0);
-          
-          const subtotal = quantity * price;
-          const discountAmount = subtotal * (discount / 100);
-          const itemTotal = subtotal - discountAmount;
-          
-          return sum + itemTotal;
-        },
-        0
-      )
-    : (typeof invoice.details?.totalAmount === 'string' 
-        ? parseFloat(invoice.details.totalAmount) 
-        : (invoice.details?.totalAmount || 0));
+  // The invoice data is now processed by the DynamicInvoiceView component
+  // No need to extract or process items here
 
   return (
     <div className="container mx-auto py-8">
@@ -386,7 +395,11 @@ export default function ViewInvoicePage() {
             Back to Invoices
           </Link>
         </Button>
-        <div className="flex space-x-2">
+        <div className="flex items-center space-x-2">
+          <TemplateViewSelector 
+            initialTemplate={parseInt(invoice?.settings?.template || '1', 10)} 
+            onTemplateChange={handleTemplateChange}
+          />
           <Button variant="outline" onClick={handlePrint}>
             <Printer className="mr-2 h-4 w-4" />
             Print
@@ -413,227 +426,12 @@ export default function ViewInvoicePage() {
         </div>
       </div>
 
-      <div className="bg-white p-8 rounded-lg shadow-md print:shadow-none print:p-0 print:border-0">
-        <div className="flex justify-between items-start mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 print:text-black">INVOICE</h1>
-            <p className="text-gray-600 print:text-black">#{invoice.details?.invoiceNumber}</p>
-          </div>
-          {invoice.settings?.logo && (
-            <img
-              src={invoice.settings.logo}
-              alt="Company Logo"
-              className="h-16 object-contain print:h-12"
-            />
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 gap-8 mb-8 print:gap-4">
-          <div>
-            <h2 className="text-lg font-semibold mb-2 text-gray-700 print:text-black">From:</h2>
-            <div className="text-gray-600 print:text-black">
-              <p className="font-semibold">{invoice.sender?.name}</p>
-              <p>{invoice.sender?.address}</p>
-              <p>
-                {invoice.sender?.zipCode}, {invoice.sender?.city}
-              </p>
-              <p>{invoice.sender?.country}</p>
-              <p>Email: {invoice.sender?.email}</p>
-              <p>Phone: {invoice.sender?.phone}</p>
-            </div>
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold mb-2 text-gray-700 print:text-black">To:</h2>
-            <div className="text-gray-600 print:text-black">
-              <p className="font-semibold">{invoice.receiver?.name}</p>
-              <p>{invoice.receiver?.address}</p>
-              <p>
-                {invoice.receiver?.zipCode}, {invoice.receiver?.city}
-              </p>
-              <p>{invoice.receiver?.country}</p>
-              <p>Email: {invoice.receiver?.email}</p>
-              <p>Phone: {invoice.receiver?.phone}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-8 mb-8 print:gap-4">
-          <div>
-            <h2 className="text-lg font-semibold mb-2 text-gray-700 print:text-black">
-              Invoice Details:
-            </h2>
-            <div className="text-gray-600 print:text-black">
-              <div className="grid grid-cols-2 gap-2">
-                <p>Invoice Date:</p>
-                <p>{invoice.details?.invoiceDate && formatDate(new Date(invoice.details.invoiceDate))}</p>
-                <p>Due Date:</p>
-                <p>{invoice.details?.dueDate && formatDate(new Date(invoice.details.dueDate))}</p>
-                <p>Currency:</p>
-                <p>{invoice.details?.currency}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-4 text-gray-700 print:text-black">
-            Invoice Items:
-          </h2>
-          <table className="w-full border-collapse print:border print:border-black">
-            <thead>
-              <tr className="bg-gray-100 print:bg-gray-200">
-                <th className="text-left p-2 border print:border-black print:font-bold">Item</th>
-                <th className="text-right p-2 border print:border-black print:font-bold">Quantity</th>
-                <th className="text-right p-2 border print:border-black print:font-bold">Price</th>
-                <th className="text-right p-2 border print:border-black print:font-bold">Tax</th>
-                <th className="text-right p-2 border print:border-black print:font-bold">Discount</th>
-                <th className="text-right p-2 border print:border-black print:font-bold">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(invoiceItems) && invoiceItems.length > 0 ? (
-                invoiceItems.map((item, index) => {
-                  // Ensure numeric values for calculation
-                  const quantity = typeof item.quantity === 'string' ? parseFloat(item.quantity) : (item.quantity || 0);
-                  
-                  // Handle both price and unitPrice fields
-                  const price = typeof item.unitPrice !== 'undefined'
-                    ? (typeof item.unitPrice === 'string' ? parseFloat(item.unitPrice as unknown as string) : item.unitPrice)
-                    : (typeof item.price === 'string' ? parseFloat(item.price as unknown as string) : (item.price || 0));
-                  
-                  // Get tax amount based on new structure first, fallback to legacy taxRate
-                  let taxAmount = 0;
-                  let taxAmountType = 'percentage';
-                  if (item.tax && typeof item.tax.amount !== 'undefined') {
-                    taxAmount = typeof item.tax.amount === 'string' ? parseFloat(item.tax.amount) : item.tax.amount;
-                    taxAmountType = item.tax.amountType || 'percentage';
-                  } else if (typeof item.taxRate !== 'undefined') {
-                    taxAmount = typeof item.taxRate === 'string' ? parseFloat(item.taxRate) : item.taxRate;
-                    taxAmountType = 'percentage';
-                  }
-                  
-                  // Get discount amount based on new structure first, fallback to legacy discount
-                  let discountAmount = 0;
-                  let discountAmountType = 'percentage';
-                  if (item.discount && typeof item.discount.amount !== 'undefined') {
-                    discountAmount = typeof item.discount.amount === 'string' ? parseFloat(item.discount.amount) : item.discount.amount;
-                    discountAmountType = item.discount.amountType || 'percentage';
-                  } else if (typeof item.discount !== 'undefined' && typeof item.discount === 'number') {
-                    discountAmount = item.discount;
-                    discountAmountType = 'percentage';
-                  }
-                  
-                  // Calculate item total with tax and discount applied
-                  let subtotal = quantity * price;
-                  
-                  // Apply tax
-                  if (taxAmountType === 'percentage') {
-                    subtotal += subtotal * (taxAmount / 100);
-                  } else if (taxAmountType === 'fixed') {
-                    subtotal += taxAmount;
-                  }
-                  
-                  // Apply discount
-                  if (discountAmountType === 'percentage') {
-                    subtotal -= subtotal * (discountAmount / 100);
-                  } else if (discountAmountType === 'fixed') {
-                    subtotal -= discountAmount;
-                  }
-                  
-                  const itemTotal = subtotal;
-                  
-                  return (
-                    <tr key={item.id || `item-${index}`} className="border-b">
-                      <td className="p-2 border print:border-black">{item.name}</td>
-                      <td className="text-right p-2 border print:border-black">{quantity}</td>
-                      <td className="text-right p-2 border print:border-black">
-                        {invoice.details?.currency} {price.toFixed(2)}
-                      </td>
-                      <td className="text-right p-2 border print:border-black">
-                        {taxAmountType === 'percentage' ? `${taxAmount}%` : `${invoice.details?.currency} ${taxAmount.toFixed(2)}`}
-                      </td>
-                      <td className="text-right p-2 border print:border-black">
-                        {discountAmountType === 'percentage' ? `${discountAmount}%` : `${invoice.details?.currency} ${discountAmount.toFixed(2)}`}
-                      </td>
-                      <td className="text-right p-2 border print:border-black">
-                        {invoice.details?.currency} {itemTotal.toFixed(2)}
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan={6} className="p-4 text-center">No items found</td>
-                </tr>
-              )}
-            </tbody>
-            <tfoot>
-              <tr className="font-semibold">
-                <td
-                  colSpan={5}
-                  className="text-right p-2 border print:border-black print:font-bold"
-                >
-                  Total:
-                </td>
-                <td className="text-right p-2 border print:border-black print:font-bold">
-                  {invoice.details?.currency} {totalAmount.toFixed(2)}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-
-        {(invoice.details?.notes || invoice.details?.terms) && (
-          <div className="grid grid-cols-2 gap-8 mb-8 print:gap-4">
-            {invoice.details?.notes && (
-              <div>
-                <h2 className="text-lg font-semibold mb-2 text-gray-700 print:text-black">
-                  Notes:
-                </h2>
-                <p className="text-gray-600 whitespace-pre-line print:text-black">
-                  {invoice.details.notes}
-                </p>
-              </div>
-            )}
-            {invoice.details?.terms && (
-              <div>
-                <h2 className="text-lg font-semibold mb-2 text-gray-700 print:text-black">
-                  Terms and Conditions:
-                </h2>
-                <p className="text-gray-600 whitespace-pre-line print:text-black">
-                  {invoice.details.terms}
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Signature */}
-        {invoice.details?.signature?.data && (
-          <div className="mt-8 border-t border-gray-200 print:border-t-black pt-4">
-            <div className="flex flex-col items-end">
-              {invoice.details.signature.data.startsWith('data:image') ? (
-                <div className="max-w-xs">
-                  <img 
-                    src={invoice.details.signature.data} 
-                    alt="Signature" 
-                    className="h-16 print:h-12 object-contain" 
-                  />
-                </div>
-              ) : (
-                <div 
-                  className="max-w-xs" 
-                  style={{ fontFamily: invoice.details.signature.fontFamily }}
-                >
-                  <p className="text-xl text-gray-800 print:text-black">
-                    {invoice.details.signature.data}
-                  </p>
-                </div>
-              )}
-              <p className="mt-2 text-sm text-gray-500 print:text-black">Authorized Signature</p>
-            </div>
-          </div>
-        )}
+      {/* Replace the existing invoice content with the dynamic template */}
+      <div className="print:shadow-none print:p-0 print:border-0">
+        <DynamicInvoiceView 
+          invoice={adaptToInvoiceType(invoice)} 
+          templateId={selectedTemplate} 
+        />
       </div>
     </div>
   );

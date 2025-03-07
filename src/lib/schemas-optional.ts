@@ -98,6 +98,32 @@ const InvoiceDetailsSchema = z.object({
   status: fieldValidators.stringOptional,
   additionalNotes: fieldValidators.stringOptional,
   paymentTerms: fieldValidators.stringOptional,
+  // Template fields
+  pdfTemplate: fieldValidators.numberOptional,
+  invoiceLogo: fieldValidators.stringOptional,
+  // Tax and discount fields
+  tax: z.preprocess(
+    (val) => val ?? {},
+    z.object({
+      amount: fieldValidators.numberOptional,
+      amountType: fieldValidators.stringOptional,
+    }).passthrough().optional().nullable()
+  ),
+  discount: z.preprocess(
+    (val) => val ?? {},
+    z.object({
+      amount: fieldValidators.numberOptional,
+      amountType: fieldValidators.stringOptional,
+    }).passthrough().optional().nullable()
+  ),
+  // Signature field
+  signature: z.preprocess(
+    (val) => val ?? {},
+    z.object({
+      data: fieldValidators.stringOptional,
+      fontFamily: fieldValidators.stringOptional,
+    }).passthrough().optional().nullable()
+  ),
 });
 
 // Super permissive Invoice Schema with no requirements
