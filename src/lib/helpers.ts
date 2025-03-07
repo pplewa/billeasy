@@ -174,7 +174,7 @@ export const getInvoiceTemplate = async (templateId: number) => {
     try {
         // Using dynamic import
         const importedModule = await import(
-            `@/app/components/templates/invoice/${componentName}`
+            `@/app/components/templates/invoice/${componentName}Unified`
         );
         
         // Get the original template component

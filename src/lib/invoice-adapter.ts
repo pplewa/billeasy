@@ -73,25 +73,37 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
   // Synchronize tax/taxDetails
   if (invoice.details.tax && !invoice.details.taxDetails) {
     invoice.details.taxDetails = invoice.details.tax;
-  }
-  if (invoice.details.taxDetails && !invoice.details.tax) {
+  } else if (invoice.details.taxDetails && !invoice.details.tax) {
     invoice.details.tax = invoice.details.taxDetails;
+  } else if (!invoice.details.tax && !invoice.details.taxDetails) {
+    // Set default values if both are missing
+    const defaultTax = { amount: 0, amountType: 'percentage' };
+    invoice.details.tax = defaultTax;
+    invoice.details.taxDetails = defaultTax;
   }
   
   // Synchronize discount/discountDetails
   if (invoice.details.discount && !invoice.details.discountDetails) {
     invoice.details.discountDetails = invoice.details.discount;
-  }
-  if (invoice.details.discountDetails && !invoice.details.discount) {
+  } else if (invoice.details.discountDetails && !invoice.details.discount) {
     invoice.details.discount = invoice.details.discountDetails;
+  } else if (!invoice.details.discount && !invoice.details.discountDetails) {
+    // Set default values if both are missing
+    const defaultDiscount = { amount: 0, amountType: 'percentage' };
+    invoice.details.discount = defaultDiscount;
+    invoice.details.discountDetails = defaultDiscount;
   }
   
   // Synchronize shipping/shippingDetails
   if (invoice.details.shipping && !invoice.details.shippingDetails) {
     invoice.details.shippingDetails = invoice.details.shipping;
-  }
-  if (invoice.details.shippingDetails && !invoice.details.shipping) {
+  } else if (invoice.details.shippingDetails && !invoice.details.shipping) {
     invoice.details.shipping = invoice.details.shippingDetails;
+  } else if (!invoice.details.shipping && !invoice.details.shippingDetails) {
+    // Set default values if both are missing
+    const defaultShipping = { cost: 0, costType: 'fixed' };
+    invoice.details.shipping = defaultShipping;
+    invoice.details.shippingDetails = defaultShipping;
   }
   
   // Ensure pdfTemplate is a number
@@ -112,6 +124,30 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
     if (!invoice.details.totalAmount) {
       invoice.details.totalAmount = totalAmount;
     }
+  }
+  
+  // Ensure tax object exists
+  if (!invoice.details.tax) {
+    invoice.details.tax = {
+      amount: 0,
+      amountType: 'percentage'
+    } as any;
+  }
+  
+  // Ensure discount object exists
+  if (!invoice.details.discount) {
+    invoice.details.discount = {
+      amount: 0,
+      amountType: 'percentage'
+    } as any;
+  }
+  
+  // Ensure shipping object exists
+  if (!invoice.details.shipping) {
+    invoice.details.shipping = {
+      cost: 0,
+      costType: 'fixed'
+    } as any;
   }
   
   return invoice;

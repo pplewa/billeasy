@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Wizard } from "react-use-wizard";
 
@@ -14,15 +13,19 @@ import { Items } from "@/components/invoice/form/sections/Items";
 import { PaymentInformationSection } from "@/components/invoice/form/sections/PaymentInformationSection";
 import { SignatureSection } from "@/components/invoice/form/sections/SignatureSection";
 import { AdditionalNotesSection } from "@/components/invoice/form/sections/AdditionalNotesSection";
+import { AddressSwapButton } from "@/components/invoice/form/AddressSwapButton";
 
 import { useInvoiceContext } from "@/contexts/InvoiceContext";
 
 function Step1() {
   return (
     <WizardStep>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <BillFromSection />
-        <BillToSection />
+      <div className="flex flex-col space-y-6">
+        <AddressSwapButton />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <BillFromSection />
+          <BillToSection />
+        </div>
       </div>
     </WizardStep>
   );
@@ -59,7 +62,7 @@ function Step4() {
 }
 
 export function InvoiceForm() {
-  const { form, isLoading, isSubmitting, onSubmit } = useInvoiceContext();
+  const { form, isLoading, onSubmit } = useInvoiceContext();
 
   // Handle form submission without validation
   const handleSubmit = (e: React.FormEvent) => {

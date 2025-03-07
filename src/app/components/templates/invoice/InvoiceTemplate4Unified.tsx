@@ -5,26 +5,17 @@ import InvoiceLayout from "./InvoiceLayout";
 
 // Helpers
 import { formatCurrency } from "@/lib/utils";
+import { formatDate, parseNumber } from "@/lib/format-utils";
 
 // Types
 import { InvoiceType, ItemType } from "@/types-optional";
 
 /**
- * Invoice Template 1 - Classic business style
- * A clean, professional template with a blue accent color
+ * Invoice Template 4 - Premium Corporate
+ * An elegant template with a purple accent color and sophisticated layout
  */
-const InvoiceTemplate1 = (data: InvoiceType) => {
+const InvoiceTemplate4 = (data: InvoiceType) => {
   const { sender, receiver, details } = data;
-
-  // Parse numeric values to ensure they're numbers, not strings
-  const parseNumber = (value: unknown): number => {
-    if (value === undefined || value === null) return 0;
-    return typeof value === "string"
-      ? parseFloat(value) || 0
-      : typeof value === "number"
-        ? value
-        : 0;
-  };
 
   // Get the items from the correct location
   const invoiceItems = details?.items || [];
@@ -35,99 +26,129 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
 
   return (
     <InvoiceLayout data={data}>
-      <div className="flex justify-between">
-        <div>
-          {details?.invoiceLogo && (
-            <img
-              src={details.invoiceLogo}
-              width={140}
-              height={100}
-              alt={`Logo of ${sender?.name || "Company"}`}
-              className="object-contain"
-            />
-          )}
-          <h1 className="mt-2 text-lg md:text-xl font-semibold text-blue-600">
-            {sender?.name}
-          </h1>
-        </div>
-        <div className="text-right">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
-            Invoice #
-          </h2>
-          <span className="mt-1 block text-gray-500">
-            {details?.invoiceNumber}
-          </span>
-          <address className="mt-4 not-italic text-gray-800">
-            {sender?.address}
-            <br />
-            {sender?.zipCode}, {sender?.city}
-            <br />
-            {sender?.country}
-            <br />
-          </address>
-        </div>
-      </div>
-
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <div>
-          <h3 className="text-lg font-medium text-gray-800">Bill To:</h3>
-          <div className="mt-2 text-gray-600">
-            {receiver?.name && <p className="font-medium">{receiver?.name}</p>}
-            {receiver?.address && <p>{receiver?.address}</p>}
-            {receiver?.zipCode && (
-              <p>
-                {receiver?.zipCode}, {receiver?.city}
-              </p>
+      <div className="relative">
+        {/* Decorative element */}
+        <div className="absolute top-0 right-0 w-1/4 h-32 bg-purple-200 rounded-bl-full opacity-50"></div>
+        
+        {/* Header with logo and invoice title */}
+        <div className="flex justify-between items-start mb-12 relative">
+          <div>
+            {details?.invoiceLogo && (
+              <img
+                src={details.invoiceLogo}
+                width={150}
+                height={100}
+                alt={`Logo of ${sender?.name || 'Company'}`}
+                className="object-contain mb-2"
+              />
             )}
-            {receiver?.country && <p>{receiver?.country}</p>}
-            {receiver?.email && <p>Email: {receiver?.email}</p>}
-            {receiver?.phone && <p>Phone: {receiver?.phone}</p>}
+            <h1 className="text-xl font-semibold text-gray-800">{sender?.name}</h1>
+          </div>
+          <div className="text-right">
+            <h2 className="text-4xl font-bold text-purple-700">INVOICE</h2>
+            <div className="mt-1 inline-block px-4 py-1 bg-purple-100 rounded-full text-purple-800 font-medium">
+              # {details?.invoiceNumber}
+            </div>
           </div>
         </div>
-        <div className="sm:text-right">
-          <h3 className="text-lg font-medium text-gray-800">
-            Invoice Details:
-          </h3>
-          <div className="mt-2 text-gray-600">
-            <p>
-              <span className="font-medium">Invoice Date: </span>
-              {details?.invoiceDate instanceof Date
-                ? details.invoiceDate.toLocaleDateString()
-                : details?.invoiceDate}
-            </p>
-            <p>
-              <span className="font-medium">Due Date: </span>
-              {details?.dueDate instanceof Date
-                ? details.dueDate.toLocaleDateString()
-                : details?.dueDate}
-            </p>
-            {details?.purchaseOrderNumber && (
-              <p>
-                <span className="font-medium">PO Number: </span>
-                {details.purchaseOrderNumber}
+        
+        {/* Main grid for addresses and details */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+          {/* From section */}
+          <div>
+            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">From</h3>
+            <div className="text-gray-700">
+              <p className="font-medium">{sender?.name}</p>
+              <p>{sender?.address}</p>
+              <p>{sender?.zipCode}, {sender?.city}</p>
+              <p>{sender?.country}</p>
+            </div>
+            <div className="mt-3 text-gray-600">
+              <p>Email: {sender?.email}</p>
+              <p>Phone: {sender?.phone}</p>
+            </div>
+          </div>
+          
+          {/* To section */}
+          <div>
+            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">To</h3>
+            <div className="text-gray-700">
+              <p className="font-medium">{receiver?.name}</p>
+              <p>{receiver?.address}</p>
+              <p>{receiver?.zipCode}, {receiver?.city}</p>
+              <p>{receiver?.country}</p>
+            </div>
+            <div className="mt-3 text-gray-600">
+              <p>Email: {receiver?.email}</p>
+              <p>Phone: {receiver?.phone}</p>
+            </div>
+          </div>
+          
+          {/* Details section */}
+          <div>
+            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">Invoice Details</h3>
+            <div className="grid grid-cols-2 gap-1">
+              <p className="text-gray-600">Invoice Date:</p>
+              <p className="text-gray-800 font-medium">
+                {formatDate(details?.invoiceDate)}
               </p>
-            )}
+              
+              <p className="text-gray-600">Due Date:</p>
+              <p className="text-gray-800 font-medium">
+                {formatDate(details?.dueDate)}
+              </p>
+              
+              <p className="text-gray-600">Currency:</p>
+              <p className="text-gray-800 font-medium">{details?.currency || 'USD'}</p>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="mt-8">
-        <h3 className="text-lg font-medium text-gray-800 mb-4">Items</h3>
+      
+      {/* Items table */}
+      <div className="mb-10">
+        <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-2 mb-4">Items</h3>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-200 text-gray-700">
-                <th className="text-left py-3 px-4">Description</th>
-                <th className="text-right py-3 px-4">Quantity</th>
-                <th className="text-right py-3 px-4">Price</th>
-                <th className="text-right py-3 px-4">Amount</th>
+              <tr className="bg-purple-50">
+                <th className="py-3 px-4 text-left text-gray-700">Item Description</th>
+                <th className="py-3 px-4 text-right text-gray-700">Quantity</th>
+                <th className="py-3 px-4 text-right text-gray-700">Price</th>
+                <th className="py-3 px-4 text-right text-gray-700">Discount</th>
+                <th className="py-3 px-4 text-right text-gray-700">Tax</th>
+                <th className="py-3 px-4 text-right text-gray-700">Total</th>
               </tr>
             </thead>
             <tbody>
               {invoiceItems.map((item: ItemType, index: number) => {
                 const quantity = parseNumber(item.quantity);
                 const unitPrice = parseNumber(item.unitPrice || item.price);
-                const itemTotal = parseNumber(item.total);
+                const itemSubtotal = quantity * unitPrice;
+                
+                // Calculate discount
+                let discountAmount = 0;
+                if (item.discount) {
+                  if (item.discount.amountType === 'percentage') {
+                    discountAmount = itemSubtotal * (parseNumber(item.discount.amount) / 100);
+                  } else {
+                    discountAmount = parseNumber(item.discount.amount);
+                  }
+                }
+                
+                // Calculate tax
+                let taxAmount = 0;
+                if (item.tax) {
+                  const taxableAmount = itemSubtotal - discountAmount;
+                  if (item.tax.amountType === 'percentage') {
+                    taxAmount = taxableAmount * (parseNumber(item.tax.amount) / 100);
+                  } else {
+                    taxAmount = parseNumber(item.tax.amount);
+                  }
+                }
+                
+                // Calculate final total
+                const itemTotal = itemSubtotal - discountAmount + taxAmount;
                 
                 return (
                   <tr key={item.id || index} className="border-b border-gray-100">
@@ -137,11 +158,25 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
                         <div className="text-sm text-gray-500">{item.description}</div>
                       )}
                     </td>
-                    <td className="text-right py-3 px-4">{quantity}</td>
-                    <td className="text-right py-3 px-4">
+                    <td className="py-3 px-4 text-right">{quantity}</td>
+                    <td className="py-3 px-4 text-right">
                       {formatCurrency(unitPrice, details?.currency || "USD")}
                     </td>
-                    <td className="text-right py-3 px-4">
+                    <td className="py-3 px-4 text-right">
+                      {item.discount ? (
+                        item.discount.amountType === 'percentage' 
+                          ? `${parseNumber(item.discount.amount)}%` 
+                          : formatCurrency(parseNumber(item.discount.amount), details?.currency || "USD")
+                      ) : '-'}
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      {item.tax ? (
+                        item.tax.amountType === 'percentage' 
+                          ? `${parseNumber(item.tax.amount)}%` 
+                          : formatCurrency(parseNumber(item.tax.amount), details?.currency || "USD")
+                      ) : '-'}
+                    </td>
+                    <td className="py-3 px-4 text-right font-medium">
                       {formatCurrency(itemTotal, details?.currency || "USD")}
                     </td>
                   </tr>
@@ -151,151 +186,83 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
           </table>
         </div>
       </div>
-
-      <div className="mt-8 flex justify-end">
-        <div className="w-full md:w-1/3">
-          <table className="w-full">
-            <tbody>
-              <tr>
-                <td className="font-medium text-gray-800 py-1">Subtotal:</td>
-                <td className="text-gray-600 text-right py-1">
-                  {formatCurrency(subTotal, details?.currency || "USD")}
-                </td>
-              </tr>
-
-              {/* Tax row */}
-              {details?.tax?.amount != undefined &&
-                parseNumber(details?.tax?.amount) > 0 && (
-                  <tr>
-                    <td className="font-medium text-gray-800 py-1">Tax:</td>
-                    <td className="text-gray-600 text-right py-1">
-                      {details.tax.amountType === "amount"
-                        ? formatCurrency(
-                            parseNumber(details.tax.amount),
-                            details?.currency || "USD"
-                          )
-                        : `${parseNumber(details.tax.amount)}%`}
-                    </td>
-                  </tr>
-                )}
-
-              {/* Discount row */}
-              {details?.discount?.amount != undefined &&
-                parseNumber(details?.discount?.amount) > 0 && (
-                  <tr>
-                    <td className="font-medium text-gray-800 py-1">
-                      Discount:
-                    </td>
-                    <td className="text-gray-600 text-right py-1">
-                      {details.discount.amountType === "amount"
-                        ? formatCurrency(
-                            parseNumber(details.discount.amount),
-                            details?.currency || "USD"
-                          )
-                        : `${parseNumber(details.discount.amount)}%`}
-                    </td>
-                  </tr>
-                )}
-
-              {/* Shipping row */}
-              {details?.shipping?.cost != undefined &&
-                parseNumber(details?.shipping?.cost) > 0 && (
-                  <tr>
-                    <td className="font-medium text-gray-800 py-1">
-                      Shipping:
-                    </td>
-                    <td className="text-gray-600 text-right py-1">
-                      {details.shipping.costType === "amount"
-                        ? formatCurrency(
-                            parseNumber(details.shipping.cost),
-                            details?.currency || "USD"
-                          )
-                        : `${parseNumber(details.shipping.cost)}%`}
-                    </td>
-                  </tr>
-                )}
-
-              <tr className="border-t border-gray-200">
-                <td className="font-semibold text-gray-800 py-2">Total:</td>
-                <td className="font-semibold text-gray-800 text-right py-2">
-                  {formatCurrency(totalAmount, details?.currency || "USD")}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {details?.paymentInformation && (
-        <div className="mt-8 border-t border-gray-200 pt-4">
-          <h3 className="text-lg font-medium text-gray-800">
-            Payment Information
-          </h3>
-          <div className="mt-2 text-gray-600">
-            {details.paymentInformation.bankName && (
-              <p>
-                <span className="font-medium">Bank: </span>
-                {details.paymentInformation.bankName}
-              </p>
-            )}
-            {details.paymentInformation.accountName && (
-              <p>
-                <span className="font-medium">Account Name: </span>
-                {details.paymentInformation.accountName}
-              </p>
-            )}
-            {details.paymentInformation.accountNumber && (
-              <p>
-                <span className="font-medium">Account Number: </span>
-                {details.paymentInformation.accountNumber}
-              </p>
+      
+      {/* Totals section with purple gradient background */}
+      <div className="mb-10 flex justify-end">
+        <div className="w-full md:w-1/3 bg-gradient-to-br from-purple-50 to-white p-6 rounded-lg shadow-sm">
+          <div className="border-b border-purple-100 pb-2 mb-2">
+            <div className="flex justify-between mb-1">
+              <span className="text-gray-600">Subtotal:</span>
+              <span className="text-gray-800">
+                {formatCurrency(subTotal, details?.currency || "USD")}
+              </span>
+            </div>
+            
+            {/* Shipping row */}
+            {details?.shipping && (
+              <div className="flex justify-between mb-1">
+                <span className="text-gray-600">Shipping:</span>
+                <span className="text-gray-800">
+                  {details.shipping.costType === "amount"
+                    ? formatCurrency(
+                        parseNumber(details.shipping.cost),
+                        details?.currency || "USD"
+                      )
+                    : `${parseNumber(details.shipping.cost)}%`}
+                </span>
+              </div>
             )}
           </div>
+          
+          <div className="flex justify-between mt-2">
+            <span className="text-lg font-bold text-gray-800">Total:</span>
+            <span className="text-lg font-bold text-purple-700">
+              {formatCurrency(totalAmount, details?.currency || "USD")}
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      {/* Notes and terms in two-column layout */}
+      {(details?.additionalNotes || details?.paymentTerms) && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+          {details?.additionalNotes && (
+            <div>
+              <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-2">Notes</h3>
+              <p className="text-gray-700 whitespace-pre-line">{details.additionalNotes}</p>
+            </div>
+          )}
+          
+          {details?.paymentTerms && (
+            <div>
+              <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-2">Terms & Conditions</h3>
+              <p className="text-gray-700 whitespace-pre-line">{details.paymentTerms}</p>
+            </div>
+          )}
         </div>
       )}
-
-      {details?.additionalNotes && (
-        <div className="mt-8 border-t border-gray-200 pt-4">
-          <h3 className="text-lg font-medium text-gray-800">Notes</h3>
-          <p className="mt-2 text-gray-600 whitespace-pre-line">
-            {details.additionalNotes}
-          </p>
-        </div>
-      )}
-
-      {details?.paymentTerms && (
-        <div className="mt-8 border-t border-gray-200 pt-4">
-          <h3 className="text-lg font-medium text-gray-800">Terms</h3>
-          <p className="mt-2 text-gray-600 whitespace-pre-line">
-            {details.paymentTerms}
-          </p>
-        </div>
-      )}
-
+      
+      {/* Signature section */}
       {details?.signature?.data && (
-        <div className="mt-8 border-t border-gray-200 pt-4">
-          <div className="flex flex-col items-end">
-            <div
-              className="max-w-xs"
-              style={{
-                fontFamily: details.signature.fontFamily
-                  ? `${details.signature.fontFamily}, cursive`
-                  : "cursive",
-              }}
-            >
+        <div className="mt-8 text-right border-t border-gray-200 pt-4">
+          <div className="inline-block">
+            <div className="max-w-xs">
               {details.signature.data.startsWith("data:image") ? (
                 <img
                   src={details.signature.data}
                   alt="Signature"
-                  className="h-16 object-contain"
+                  className="h-16 object-contain mr-0 ml-auto"
                 />
               ) : (
-                <p className="text-xl text-gray-800">
+                <p
+                  className="text-xl text-gray-800 text-right"
+                  style={{ fontFamily: details.signature.fontFamily || undefined }}
+                >
                   {details.signature.data}
                 </p>
               )}
             </div>
-            <p className="mt-2 text-sm text-gray-500">Authorized Signature</p>
+            <div className="mt-1 text-sm text-gray-500">Authorized Signature</div>
           </div>
         </div>
       )}
@@ -303,4 +270,4 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
   );
 };
 
-export default InvoiceTemplate1; 
+export default InvoiceTemplate4; 

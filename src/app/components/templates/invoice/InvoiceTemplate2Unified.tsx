@@ -5,6 +5,7 @@ import InvoiceLayout from "./InvoiceLayout";
 
 // Helpers
 import { formatCurrency } from "@/lib/utils";
+import { formatDate, parseNumber } from "@/lib/format-utils";
 
 // Types
 import { InvoiceType, ItemType } from "@/types-optional";
@@ -15,16 +16,6 @@ import { InvoiceType, ItemType } from "@/types-optional";
  */
 const InvoiceTemplate2 = (data: InvoiceType) => {
   const { sender, receiver, details } = data;
-
-  // Parse numeric values to ensure they're numbers, not strings
-  const parseNumber = (value: unknown): number => {
-    if (value === undefined || value === null) return 0;
-    return typeof value === "string"
-      ? parseFloat(value) || 0
-      : typeof value === "number"
-        ? value
-        : 0;
-  };
 
   // Get the items from the correct location
   const invoiceItems = details?.items || [];
@@ -100,15 +91,11 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
           <div className="grid grid-cols-2 gap-4 text-gray-700">
             <div>
               <p className="text-sm text-gray-500">Invoice Date</p>
-              <p>{details?.invoiceDate instanceof Date
-                ? details.invoiceDate.toLocaleDateString()
-                : details?.invoiceDate}</p>
+              <p>{formatDate(details?.invoiceDate)}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Due Date</p>
-              <p>{details?.dueDate instanceof Date
-                ? details.dueDate.toLocaleDateString()
-                : details?.dueDate}</p>
+              <p>{formatDate(details?.dueDate)}</p>
             </div>
             {details?.purchaseOrderNumber && (
               <div className="col-span-2">
@@ -130,14 +117,40 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                 <th className="text-left py-3 px-4">Description</th>
                 <th className="text-right py-3 px-4">Quantity</th>
                 <th className="text-right py-3 px-4">Price</th>
-                <th className="text-right py-3 px-4">Amount</th>
+                <th className="text-right py-3 px-4">Discount</th>
+                <th className="text-right py-3 px-4">Tax</th>
+                <th className="text-right py-3 px-4">Total</th>
               </tr>
             </thead>
             <tbody>
               {invoiceItems.map((item: ItemType, index: number) => {
                 const quantity = parseNumber(item.quantity);
                 const unitPrice = parseNumber(item.unitPrice || item.price);
-                const itemTotal = parseNumber(item.total);
+                const itemSubtotal = quantity * unitPrice;
+                
+                // Calculate discount
+                let discountAmount = 0;
+                if (item.discount) {
+                  if (item.discount.amountType === 'percentage') {
+                    discountAmount = itemSubtotal * (parseNumber(item.discount.amount) / 100);
+                  } else {
+                    discountAmount = parseNumber(item.discount.amount);
+                  }
+                }
+                
+                // Calculate tax
+                let taxAmount = 0;
+                if (item.tax) {
+                  const taxableAmount = itemSubtotal - discountAmount;
+                  if (item.tax.amountType === 'percentage') {
+                    taxAmount = taxableAmount * (parseNumber(item.tax.amount) / 100);
+                  } else {
+                    taxAmount = parseNumber(item.tax.amount);
+                  }
+                }
+                
+                // Calculate final total
+                const itemTotal = itemSubtotal - discountAmount + taxAmount;
                 
                 return (
                   <tr key={item.id || index} className="border-b border-gray-100">
@@ -150,6 +163,20 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                     <td className="text-right py-3 px-4">{quantity}</td>
                     <td className="text-right py-3 px-4">
                       {formatCurrency(unitPrice, details?.currency || "USD")}
+                    </td>
+                    <td className="text-right py-3 px-4">
+                      {item.discount ? (
+                        item.discount.amountType === 'percentage' 
+                          ? `${parseNumber(item.discount.amount)}%` 
+                          : formatCurrency(parseNumber(item.discount.amount), details?.currency || "USD")
+                      ) : '-'}
+                    </td>
+                    <td className="text-right py-3 px-4">
+                      {item.tax ? (
+                        item.tax.amountType === 'percentage' 
+                          ? `${parseNumber(item.tax.amount)}%` 
+                          : formatCurrency(parseNumber(item.tax.amount), details?.currency || "USD")
+                      ) : '-'}
                     </td>
                     <td className="text-right py-3 px-4">
                       {formatCurrency(itemTotal, details?.currency || "USD")}
@@ -173,53 +200,20 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
               </span>
             </div>
 
-            {/* Tax row */}
-            {details?.tax?.amount != undefined &&
-              parseNumber(details?.tax?.amount) > 0 && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Tax:</span>
-                  <span className="text-gray-800">
-                    {details.tax.amountType === "amount"
-                      ? formatCurrency(
-                          parseNumber(details.tax.amount),
-                          details?.currency || "USD"
-                        )
-                      : `${parseNumber(details.tax.amount)}%`}
-                  </span>
-                </div>
-              )}
-
-            {/* Discount row */}
-            {details?.discount?.amount != undefined &&
-              parseNumber(details?.discount?.amount) > 0 && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Discount:</span>
-                  <span className="text-gray-800">
-                    {details.discount.amountType === "amount"
-                      ? formatCurrency(
-                          parseNumber(details.discount.amount),
-                          details?.currency || "USD"
-                        )
-                      : `${parseNumber(details.discount.amount)}%`}
-                  </span>
-                </div>
-              )}
-
             {/* Shipping row */}
-            {details?.shipping?.cost != undefined &&
-              parseNumber(details?.shipping?.cost) > 0 && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping:</span>
-                  <span className="text-gray-800">
-                    {details.shipping.costType === "amount"
-                      ? formatCurrency(
-                          parseNumber(details.shipping.cost),
-                          details?.currency || "USD"
-                        )
-                      : `${parseNumber(details.shipping.cost)}%`}
-                  </span>
-                </div>
-              )}
+            {details?.shipping && (
+              <div className="flex justify-between">
+                <span className="text-gray-600">Shipping:</span>
+                <span className="text-gray-800">
+                  {details.shipping.costType === "amount"
+                    ? formatCurrency(
+                        parseNumber(details.shipping.cost),
+                        details?.currency || "USD"
+                      )
+                    : `${parseNumber(details.shipping.cost)}%`}
+                </span>
+              </div>
+            )}
 
             <div className="flex justify-between pt-2 border-t border-gray-200 mt-2">
               <span className="font-bold text-gray-800">Total:</span>
