@@ -13,7 +13,7 @@ import { Items } from "@/components/invoice/form/sections/Items";
 import { PaymentInformationSection } from "@/components/invoice/form/sections/PaymentInformationSection";
 import { SignatureSection } from "@/components/invoice/form/sections/SignatureSection";
 import { AdditionalNotesSection } from "@/components/invoice/form/sections/AdditionalNotesSection";
-import { AddressSwapButton } from "@/components/invoice/form/AddressSwapButton";
+import { AddressSwapButton } from "@/components/invoice/AddressSwapButton";
 
 import { useInvoiceContext } from "@/contexts/InvoiceContext";
 
@@ -25,12 +25,12 @@ function Step1() {
         
         {/* Centered swap button between the sections */}
         <div className="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-          <AddressSwapButton />
+          <AddressSwapButton mode="form" />
         </div>
         
         {/* Mobile swap button */}
         <div className="flex md:hidden justify-center my-2">
-          <AddressSwapButton />
+          <AddressSwapButton mode="form" />
         </div>
         
         <BillToSection />

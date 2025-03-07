@@ -24,7 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Download, AlertCircle, Zap, Mail, Printer } from "lucide-react";
 import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
 import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
-import { ParserDataSwapButton } from "@/components/invoice/ParserDataSwapButton";
+import { AddressSwapButton } from "@/components/invoice/AddressSwapButton";
 
 // Define ParsedInvoice type at the top of the file
 type ParsedInvoiceItem = {
@@ -668,9 +668,9 @@ export default function CreateInvoicePage({
 
       <ItemsUpdater parsedInvoice={parsedInvoice} />
 
-      {/* Position ParserDataSwapButton in create form properly */}
+      {/* Position AddressSwapButton in create form properly */}
       <div className="flex justify-center my-4">
-        {parsedInvoice && <ParserDataSwapButton />}
+        {parsedInvoice && <AddressSwapButton mode="parser" />}
       </div>
 
       <InvoiceContextProvider
