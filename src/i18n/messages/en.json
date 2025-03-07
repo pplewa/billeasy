@@ -4,10 +4,8 @@
     "description": "A modern, full-stack starter template"
   },
   "navigation": {
-    "home": "Home",
     "dashboard": "Dashboard",
     "invoices": "Invoices",
-    "createInvoice": "Create Invoice",
     "profile": "Profile",
     "signIn": "Sign In",
     "signOut": "Sign Out"

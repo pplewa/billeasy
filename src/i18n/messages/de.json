@@ -4,10 +4,8 @@
     "description": "Eine moderne Full-Stack-Vorlage"
   },
   "navigation": {
-    "home": "Startseite",
     "dashboard": "Dashboard",
     "invoices": "Rechnungen",
-    "createInvoice": "Rechnung erstellen",
     "profile": "Profil",
     "signIn": "Anmelden",
     "signOut": "Abmelden"

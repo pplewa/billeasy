@@ -4,10 +4,8 @@
     "description": "Un modèle moderne full-stack"
   },
   "navigation": {
-    "home": "Accueil",
     "dashboard": "Tableau de bord",
     "invoices": "Factures",
-    "createInvoice": "Créer une facture",
     "profile": "Profil",
     "signIn": "Se connecter",
     "signOut": "Se déconnecter"

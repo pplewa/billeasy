@@ -4,10 +4,8 @@
     "description": "Una plantilla moderna de pila completa"
   },
   "navigation": {
-    "home": "Inicio",
     "dashboard": "Panel",
     "invoices": "Facturas",
-    "createInvoice": "Crear Factura",
     "profile": "Perfil",
     "signIn": "Iniciar Sesión",
     "signOut": "Cerrar Sesión"
