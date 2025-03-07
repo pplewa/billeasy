@@ -10,22 +10,30 @@ import { FormInput } from "@/components/ui/form-input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { cn } from "@/lib/utils";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 
 import { InvoiceType } from "@/types";
 
-// Currency type definition
-type Currency = {
-  code: string;
-  name: string;
-};
+// Remove unused Currency type
 
 type CurrencyDetails = {
   currency: string;
   decimals: number;
   beforeDecimal: string;
   afterDecimal: string | null;
+};
+
+type CurrencyOption = {
+  value: string;
+  label: string;
 };
 
 export function InvoiceDetailsSection() {
@@ -36,45 +44,57 @@ export function InvoiceDetailsSection() {
   const selectedCurrency = watch("details.currency");
   
   const [open, setOpen] = useState(false);
-  const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [currencies, setCurrencies] = useState<CurrencyOption[]>([]);
   
   // Load currencies from JSON file
   useEffect(() => {
     const loadCurrencies = async () => {
       try {
-        // In Next.js, files in the public directory are served at the root path
+        // Fix path to load from the correct public location
         const response = await fetch('/assets/data/currencies.json');
         if (!response.ok) {
-          throw new Error(`Failed to fetch currencies: ${response.status}`);
+          // If the fetch fails, try the alternative path
+          const altResponse = await fetch('/public/assets/data/currencies.json');
+          if (!altResponse.ok) {
+            throw new Error(`Failed to fetch currencies: ${response.status}`);
+          }
+          return altResponse.json();
         }
-        const data = await response.json();
-        
-        // Transform the data into the format we need and sort alphabetically
-        const formattedCurrencies = Object.entries(data)
-          .map(([code, details]) => ({
-            code,
-            name: (details as CurrencyDetails).currency
-          }))
-          .sort((a, b) => a.name.localeCompare(b.name));
-        
-        setCurrencies(formattedCurrencies);
+        return response.json();
       } catch (error) {
         console.error("Failed to load currencies:", error);
-        // Fallback to default currencies if loading fails
-        setCurrencies([
-          { code: "USD", name: "United States Dollar" },
-          { code: "EUR", name: "Euro" },
-          { code: "GBP", name: "British Pound" },
-          { code: "JPY", name: "Japanese Yen" },
-          { code: "CAD", name: "Canadian Dollar" },
-          { code: "AUD", name: "Australian Dollar" },
-          { code: "INR", name: "Indian Rupee" },
-        ]);
+        // Return null to trigger the fallback
+        return null;
       }
     };
     
-    loadCurrencies();
+    loadCurrencies().then(data => {
+      if (data) {
+        // Transform the data into the format needed for the Combobox
+        const formattedOptions = Object.entries(data)
+          .map(([code, details]) => ({
+            value: code,
+            label: `${code} - ${(details as CurrencyDetails).currency}`
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+        
+        setCurrencies(formattedOptions);
+      } else {
+        // Fallback to default currencies if loading fails
+        setCurrencies([
+          { value: "USD", label: "USD - United States Dollar" },
+          { value: "EUR", label: "EUR - Euro" },
+          { value: "GBP", label: "GBP - British Pound" },
+          { value: "JPY", label: "JPY - Japanese Yen" },
+          { value: "CAD", label: "CAD - Canadian Dollar" },
+          { value: "AUD", label: "AUD - Australian Dollar" },
+          { value: "INR", label: "INR - Indian Rupee" },
+        ]);
+      }
+    });
   }, []);
+
+  // Remove unused handleSelectCurrency function
 
   return (
     <Card className="w-full">
@@ -166,37 +186,43 @@ export function InvoiceDetailsSection() {
                 aria-expanded={open}
                 className="w-full justify-between"
               >
-                {selectedCurrency ? 
-                  currencies.find(c => c.code === selectedCurrency)?.code + " - " + 
-                  currencies.find(c => c.code === selectedCurrency)?.name : 
-                  "Select currency"}
+                <span className="truncate text-left">
+                  {selectedCurrency
+                    ? currencies.find((currency) => currency.value === selectedCurrency)?.label
+                    : "Select currency..."}
+                </span>
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[300px] p-0">
+            <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
               <Command>
-                <CommandInput placeholder="Search currency..." className="h-9" />
-                <CommandEmpty>No currency found.</CommandEmpty>
-                <CommandGroup className="max-h-[300px] overflow-auto">
-                  {currencies.map((currency) => (
-                    <CommandItem
-                      key={currency.code}
-                      value={currency.code}
-                      onSelect={(currentValue) => {
-                        setValue("details.currency", currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          selectedCurrency === currency.code ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                      {currency.code} - {currency.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
+                <CommandInput placeholder="Search currency..." />
+                <CommandList>
+                  <CommandEmpty>No currency found.</CommandEmpty>
+                  <CommandGroup>
+                    {currencies.map((currency) => (
+                      <CommandItem
+                        key={currency.value}
+                        value={currency.value}
+                        onSelect={(value) => {
+                          setValue(
+                            "details.currency",
+                            value === selectedCurrency ? "" : value
+                          );
+                          setOpen(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedCurrency === currency.value ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        {currency.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
               </Command>
             </PopoverContent>
           </Popover>
