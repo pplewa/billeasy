@@ -21,7 +21,8 @@ import { exportInvoice } from "@/services/invoice/client/exportInvoice";
 
 interface InvoiceExportModalProps {
     children: React.ReactNode;
-    invoice: InvoiceType;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    form: any; // Using any to avoid complex form typing issues across different form implementations
     isLoading?: boolean;
 }
 
@@ -30,7 +31,7 @@ interface InvoiceExportModalProps {
  */
 export function InvoiceExportModal({ 
     children, 
-    invoice, 
+    form, 
     isLoading = false 
 }: InvoiceExportModalProps) {
     const [open, setOpen] = useState(false);
@@ -39,7 +40,9 @@ export function InvoiceExportModal({
      * Export the invoice in the specified format
      */
     const handleExport = (exportType: ExportTypes) => {
-        exportInvoice(exportType, invoice);
+        // Cast the form values to InvoiceType to ensure compatibility
+        const formValues = form.getValues() as unknown as InvoiceType;
+        exportInvoice(exportType, formValues);
         setOpen(false);
     };
 
