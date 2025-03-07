@@ -55,7 +55,11 @@ const ItemSchema = new Schema(
     name: { type: String, required: true },
     quantity: { type: Number, required: true },
     price: { type: Number, required: true },
-    taxRate: { type: Number, required: true },
+    taxRate: { type: Number, default: 0 },
+    tax: {
+      amount: { type: Number, default: 0 },
+      amountType: { type: String, enum: ['percentage', 'fixed'], default: 'fixed' }
+    },
     discount: { type: Number, required: false, default: 0 },
   },
   { _id: false }
@@ -99,6 +103,18 @@ const InvoiceSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Check for any pre-save hooks that might be modifying tax values
+InvoiceSchema.pre('save', function(next) {
+  // ⚠️ Look for any code here that might be modifying tax values
+  // Example of problematic code:
+  // if (this.details && this.details.items) {
+  //   this.details.items.forEach(item => {
+  //     if (item.tax) item.tax.amount = 0; // This would reset all tax amounts
+  //   });
+  // }
+  next();
+});
 
 // Create and export the Invoice model
 export const Invoice = mongoose.models.Invoice || mongoose.model<InvoiceDocument>("Invoice", InvoiceSchema); 

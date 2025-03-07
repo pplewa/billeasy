@@ -114,8 +114,38 @@ export async function updateInvoice(
   id: string,
   invoiceData: InvoiceType
 ): Promise<InvoiceDocument | null> {
-  await connectToDatabase();
-  return Invoice.findByIdAndUpdate(id, invoiceData, { new: true });
+  try {
+    // CRITICAL: Log the data just before database update
+    console.log("About to update invoice in DB with tax data:", 
+      invoiceData.details?.items?.map((item: any) => ({
+        name: item.name,
+        tax: item.tax
+      }))
+    );
+    
+    // FIX: Make sure we're using a proper update method that won't strip our data
+    // For MongoDB/Mongoose (example):
+    const updatedInvoice = await Invoice.findByIdAndUpdate(
+      id,
+      // Use $set to ensure we replace the entire document structure
+      { $set: invoiceData },
+      // Important: Return the new document and run validators
+      { new: true, runValidators: true }
+    );
+    
+    // Log the updated document from the database
+    console.log("Database returned updated invoice with tax:", 
+      updatedInvoice.details?.items?.map((item: any) => ({
+        name: item.name,
+        tax: item.tax
+      }))
+    );
+    
+    return updatedInvoice;
+  } catch (error) {
+    console.error("Error updating invoice:", error);
+    throw error;
+  }
 }
 
 /**

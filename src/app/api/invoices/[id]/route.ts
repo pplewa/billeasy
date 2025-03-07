@@ -52,60 +52,59 @@ export async function PUT(
     const { id } = await params;
     const body = await req.json();
 
-    // Transform any legacy format items to new format
-    if (body.details?.items?.length) {
-      console.log("[API] Transforming legacy item formats");
-      body.details.items = body.details.items.map((item: { 
-        discount?: number | { amount: number; amountType: string } | null;
-        taxRate?: number | null;
-        tax?: { amount: number; amountType: string } | null;
-        [key: string]: unknown; 
-      }) => {
-        console.log(`[API] Processing item: ${JSON.stringify(item)}`);
-        
-        // Convert legacy number discount to object format
-        if (typeof item.discount === 'number') {
-          console.log(`[API] Converting legacy discount: ${item.discount} to object format`);
-          item.discount = {
-            amount: item.discount,
-            amountType: 'fixed'
-          };
-        } else if (item.discount === null || item.discount === undefined) {
-          // Set default discount object for null/undefined values
-          item.discount = {
-            amount: 0,
-            amountType: 'fixed'
-          };
-        }
-        
-        // Convert legacy taxRate to tax object format
-        if (typeof item.taxRate === 'number') {
-          console.log(`[API] Converting legacy taxRate: ${item.taxRate} to tax object`);
+    // CRITICAL: Log the received data before any processing
+    console.log("API received update with tax data:", 
+      body.details?.items?.map((item: any) => ({
+        name: item.name,
+        tax: item.tax,
+        taxRate: item.taxRate
+      }))
+    );
+    
+    // ⚠️ ISSUE: The tax amount is being lost here - let's fix this
+    
+    // FIX: Preserve tax values explicitly during update
+    if (body.details?.items) {
+      // Process each item to ensure tax data is preserved
+      body.details.items = body.details.items.map((item: any) => {
+        // If no tax object exists but taxRate does, create it
+        if (!item.tax && item.taxRate) {
           item.tax = {
             amount: item.taxRate,
             amountType: 'percentage'
           };
-          // Keep taxRate for backward compatibility
-        } else if (item.tax === null || item.tax === undefined) {
-          // Set default tax object if not present
-          console.log(`[API] Setting default tax object`);
-          item.tax = {
-            amount: 0,
-            amountType: 'percentage'
-          };
-        } else if (item.tax) {
-          // Ensure the tax object has proper amount and amountType
-          console.log(`[API] Ensuring tax object has proper fields`);
-          item.tax = {
-            amount: typeof item.tax.amount === 'number' ? item.tax.amount : 0,
-            amountType: item.tax.amountType || 'percentage'
-          };
         }
         
-        console.log(`[API] Transformed item: ${JSON.stringify(item)}`);
+        // If tax object exists, ensure values are explicitly converted to numbers
+        if (item.tax) {
+          // Convert amount to number and ensure it's not reset
+          if (item.tax.amount !== undefined) {
+            item.tax.amount = Number(item.tax.amount);
+          }
+          
+          // Ensure amountType exists
+          if (!item.tax.amountType) {
+            item.tax.amountType = 'percentage';
+          }
+          
+          // Sync taxRate with tax.amount when using percentage
+          if (item.tax.amountType === 'percentage') {
+            item.taxRate = item.tax.amount;
+          }
+        }
+        
         return item;
       });
     }
+    
+    // Log the data after our fixes to verify it's correct
+    console.log("Processed data before saving:", 
+      body.details?.items?.map((item: any) => ({
+        name: item.name,
+        tax: item.tax,
+        taxRate: item.taxRate
+      }))
+    );
 
     // Validate the request body against the schema
     const result = InvoiceSchema.safeParse(body);
