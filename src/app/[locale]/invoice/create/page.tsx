@@ -413,16 +413,16 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
       <AlertDialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Authentication Required</AlertDialogTitle>
+            <AlertDialogTitle>{t('invoice.authRequired')}</AlertDialogTitle>
             <AlertDialogDescription>
-              You need to be signed in to {actionType === 'save' ? 'save' : 'export'} an invoice.
+              {t('invoice.authRequiredDescription', { action: actionType === 'save' ? t('common.save') : t('common.export') })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <Button variant="outline" onClick={() => setIsAuthDialogOpen(false)}>
-              Cancel
+              {t('common.cancel')}
             </Button>
-            <Button onClick={handleNavigateToSignIn}>Sign In</Button>
+            <Button onClick={handleNavigateToSignIn}>{t('common.signIn')}</Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

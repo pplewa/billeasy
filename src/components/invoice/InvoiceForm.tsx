@@ -3,6 +3,7 @@
 import { Form } from '@/components/ui/form';
 import { Loader2 } from 'lucide-react';
 import { Wizard } from 'react-use-wizard';
+import { useTranslations } from 'next-intl';
 
 import { WizardStep } from '@/components/invoice/form/wizard/WizardStep';
 import { BillFromSection } from '@/components/invoice/form/sections/BillFromSection';
@@ -17,10 +18,12 @@ import { AddressSwapButton } from '@/components/invoice/AddressSwapButton';
 import { useInvoiceContext } from '@/contexts/InvoiceContext';
 
 function Step1() {
+  const t = useTranslations('form.wizard.steps.senderReceiver');
+
   return (
     <WizardStep
-      title="Billing Information"
-      description="Enter the billing addresses for both parties"
+      title={t('title')}
+      description={t('description')}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 relative">
         <BillFromSection />
@@ -42,8 +45,13 @@ function Step1() {
 }
 
 function Step2() {
+  const t = useTranslations('form.wizard.steps.invoiceDetails');
+
   return (
-    <WizardStep title="Invoice Details" description="Enter invoice and payment information">
+    <WizardStep 
+      title={t('title')} 
+      description={t('description')}
+    >
       <div className="space-y-8">
         <InvoiceDetailsSection />
         <PaymentInformationSection />
@@ -53,16 +61,26 @@ function Step2() {
 }
 
 function Step3() {
+  const t = useTranslations('form.wizard.steps.items');
+
   return (
-    <WizardStep title="Items" description="Add items to your invoice">
+    <WizardStep 
+      title={t('title')} 
+      description={t('description')}
+    >
       <Items />
     </WizardStep>
   );
 }
 
 function Step4() {
+  const t = useTranslations('form.wizard.steps.signature');
+
   return (
-    <WizardStep title="Additional Information" description="Add signature and notes">
+    <WizardStep 
+      title={t('title')} 
+      description={t('description')}
+    >
       <div className="space-y-8">
         <SignatureSection />
         <AdditionalNotesSection />

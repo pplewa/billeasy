@@ -11,11 +11,12 @@ import { fetchInvoiceById, updateInvoice } from '@/services/invoice/client/invoi
 import { FormInvoiceType } from '@/lib/types/invoice';
 import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, Loader2, Mail, Printer } from 'lucide-react';
+import { Download, Loader2, Mail, Printer, ArrowLeft, Edit } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 export default function EditInvoicePage({
   params,
@@ -159,13 +160,15 @@ export default function EditInvoicePage({
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
         <h1 className="text-3xl font-bold tracking-tight">{invoiceT('edit')}</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
-          <Button
-            variant="outline"
-            className="w-full md:w-auto"
-            onClick={handlePrint}
-            disabled={isSubmitting}
-          >
-            <Printer className="w-4 h-4 mr-2" />
+          <Button variant="outline" asChild>
+            <Link href={`/${locale}/invoice/edit/${invoiceId}`}>
+              <Edit className="mr-2 h-4 w-4" />
+              {t('common.edit')}
+            </Link>
+          </Button>
+
+          <Button variant="outline" onClick={handlePrint}>
+            <Printer className="mr-2 h-4 w-4" />
             {t('common.print')}
           </Button>
 

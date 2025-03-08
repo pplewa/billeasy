@@ -27,6 +27,9 @@ import { FormInvoiceType, BaseAmount } from '@/lib/types/invoice';
 // Add the import for our new adapter
 import { normalizeInvoice } from '@/lib/invoice-adapter';
 
+// Add translation hook near the top of the component
+import { useTranslations } from 'use-intl';
+
 // Define interfaces for the invoice structure as used in the view
 interface InvoiceItem {
   id: string;
@@ -209,6 +212,9 @@ export default function ViewInvoicePage() {
   const params = useParams();
   const { id, locale } = params as { id: string; locale: string };
   const { toast } = useToast();
+
+  // Add translation hook near the top of the component
+  const t = useTranslations('common');
 
   const [invoice, setInvoice] = useState<ViewInvoiceDocument | null>(null);
   const [loading, setLoading] = useState(true);
@@ -413,7 +419,7 @@ export default function ViewInvoicePage() {
         <Button variant="outline" asChild>
           <Link href={`/${locale}/invoices`}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Invoices
+            {t('common.backToInvoices')}
           </Link>
         </Button>
         <div className="flex items-center space-x-2">
@@ -423,24 +429,24 @@ export default function ViewInvoicePage() {
           />
           <Button variant="outline" onClick={handlePrint}>
             <Printer className="mr-2 h-4 w-4" />
-            Print
+            {t('common.print')}
           </Button>
           <Button variant="outline" asChild>
             <Link href={`/${locale}/invoice/edit/${id}`}>
               <Edit className="mr-2 h-4 w-4" />
-              Edit
+              {t('common.edit')}
             </Link>
           </Button>
           <InvoiceEmailModal invoice={adaptToInvoiceType(invoice)}>
             <Button variant="outline">
               <Mail className="mr-2 h-4 w-4" />
-              Email
+              {t('common.email')}
             </Button>
           </InvoiceEmailModal>
           <InvoiceExportModal invoice={adaptToInvoiceType(invoice)}>
             <Button>
               <Download className="mr-2 h-4 w-4" />
-              Export
+              {t('common.export')}
               <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </InvoiceExportModal>

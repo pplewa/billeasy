@@ -118,22 +118,25 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
+    "view": "View",
     "create": "Create",
     "submit": "Submit",
     "print": "Print",
     "email": "Email",
     "export": "Export",
     "saving": "Saving...",
+    "deleting": "Deleting...",
     "saveInvoice": "Save Invoice",
-    "itemsLoaded": "items have been loaded from your invoice.",
-    "itemsNotVisible": "If you don't see the items in Step 3, click the button below.",
+    "itemsLoaded": "items loaded",
+    "itemsNotVisible": "Some items may not be visible in the form. Use the 'Force Update' button to add them.",
     "close": "Close",
     "morePages": "More pages",
     "clearSearch": "Clear search",
     "verifying": "Verifying...",
     "actions": "Actions",
     "openMenu": "Open menu",
-    "language": "Language"
+    "language": "Language",
+    "backToInvoices": "Back to Invoices"
   },
   "footer": {
     "allRightsReserved": "All rights reserved",
@@ -248,7 +251,7 @@
     },
     "create": "Create Invoice",
     "edit": "Edit Invoice",
-    "itemsDetected": "Items Detected",
+    "itemsDetected": "Detected Invoice Items",
     "noDraftsFound": "No drafts found",
     "startCreatingDraft": "Start creating an invoice to save drafts automatically.",
     "draftInvoices": "Draft Invoices",
@@ -287,7 +290,9 @@
     "description": "Description",
     "quantity": "Quantity",
     "itemDescription": "Item Description",
-    "thankYou": "Thanks for using BillEasy!"
+    "thankYou": "Thanks for using BillEasy!",
+    "authRequired": "Authentication Required",
+    "authRequiredDescription": "You need to be signed in to {action} an invoice."
   },
   "drafts": {
     "draftName": "Draft Name",

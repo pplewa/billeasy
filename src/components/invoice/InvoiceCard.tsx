@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { InvoiceStatusSelector } from './InvoiceStatusSelector';
 import { InvoiceStatus } from '@/types';
+import { useTranslations } from 'next-intl';
 
 interface InvoiceCardProps {
   invoice: InvoiceDocument;
@@ -26,6 +27,8 @@ export function InvoiceCard({
   onStatusChange,
 }: InvoiceCardProps) {
   const { toast } = useToast();
+  const t = useTranslations('invoice');
+  const tCommon = useTranslations('common');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDuplicating, setIsDuplicating] = useState(false);
 
@@ -52,14 +55,14 @@ export function InvoiceCard({
       await deleteInvoice(invoiceId);
       onDelete(invoiceId);
       toast({
-        title: 'Success',
-        description: 'Invoice deleted successfully',
+        title: t('deleteDialog.successTitle'),
+        description: t('deleteDialog.successDescription'),
       });
     } catch (error) {
       console.error('Error deleting invoice:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to delete invoice',
+        title: t('deleteDialog.errorTitle'),
+        description: t('deleteDialog.errorDescription'),
         variant: 'destructive',
       });
     } finally {
@@ -74,14 +77,14 @@ export function InvoiceCard({
       const duplicatedInvoice = await duplicateInvoice(invoiceId);
       onDuplicate(duplicatedInvoice);
       toast({
-        title: 'Success',
-        description: 'Invoice duplicated successfully',
+        title: tCommon('success'),
+        description: t('actions.duplicating'),
       });
     } catch (error) {
       console.error('Error duplicating invoice:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to duplicate invoice',
+        title: tCommon('error'),
+        description: t('actions.duplicate'),
         variant: 'destructive',
       });
     } finally {
@@ -92,7 +95,7 @@ export function InvoiceCard({
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-lg">Invoice #{invoice.details?.invoiceNumber}</CardTitle>
+        <CardTitle className="text-lg">{t('table.number')} #{invoice.details?.invoiceNumber}</CardTitle>
         <InvoiceStatusSelector
           invoiceId={invoiceId}
           currentStatus={status}
@@ -102,15 +105,15 @@ export function InvoiceCard({
       <CardContent>
         <div className="space-y-2">
           <div className="flex justify-between">
-            <span className="text-sm font-medium">Client:</span>
+            <span className="text-sm font-medium">{t('table.client')}:</span>
             <span className="text-sm">{invoice.receiver?.name}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm font-medium">Date:</span>
+            <span className="text-sm font-medium">{t('table.date')}:</span>
             <span className="text-sm">{formattedDate}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm font-medium">Amount:</span>
+            <span className="text-sm font-medium">{t('table.amount')}:</span>
             <span className="text-sm">
               {invoice.details?.currency}{' '}
               {Array.isArray(invoice.details?.items) ? invoice.details?.items
@@ -125,34 +128,34 @@ export function InvoiceCard({
           <Button variant="outline" size="sm" asChild>
             <Link href={`/${locale}/invoice/view/${invoiceId}`}>
               <Eye className="mr-1 h-4 w-4" />
-              View
+              {tCommon('view')}
             </Link>
           </Button>
           <Button variant="outline" size="sm" asChild>
             <Link href={`/${locale}/invoice/edit/${invoiceId}`}>
               <Pencil className="mr-1 h-4 w-4" />
-              Edit
+              {tCommon('edit')}
             </Link>
           </Button>
         </div>
         <div className="flex space-x-2">
           <Button variant="outline" size="sm" onClick={handleDuplicate} disabled={isDuplicating}>
             {isDuplicating ? (
-              <>Duplicating...</>
+              <>{t('actions.duplicating')}</>
             ) : (
               <>
                 <Copy className="mr-1 h-4 w-4" />
-                Duplicate
+                {t('actions.duplicate')}
               </>
             )}
           </Button>
           <Button variant="destructive" size="sm" onClick={handleDelete} disabled={isDeleting}>
             {isDeleting ? (
-              <>Deleting...</>
+              <>{tCommon('deleting')}</>
             ) : (
               <>
                 <Trash className="mr-1 h-4 w-4" />
-                Delete
+                {tCommon('delete')}
               </>
             )}
           </Button>
