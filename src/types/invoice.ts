@@ -7,4 +7,4 @@ export interface InvoiceFormData {
   dueDate: Date | null;
   currency: string;
   status: InvoiceStatus;
-} 
+}

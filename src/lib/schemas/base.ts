@@ -2,7 +2,7 @@
  * Base schema utilities for Zod validations
  * This file defines common transformation and validation utilities
  */
-import { z } from "zod";
+import { z } from 'zod';
 
 /**
  * Common field validators with consistent transformation logic
@@ -12,31 +12,35 @@ export const fieldValidators = {
    * Optional string field that accepts string, null, or empty string
    */
   stringOptional: z.string().optional().or(z.null()).or(z.literal('')),
-  
+
   /**
    * Optional number field with transformation from string
    * Handles empty strings, nulls, and undefined values
    */
-  numberOptional: z.union([
-    z.number(),
-    z.string().transform((val) => val === '' ? undefined : Number(val)),
-    z.undefined(),
-    z.null(),
-    z.literal(''),
-  ]).optional(),
-  
+  numberOptional: z
+    .union([
+      z.number(),
+      z.string().transform((val) => (val === '' ? undefined : Number(val))),
+      z.undefined(),
+      z.null(),
+      z.literal(''),
+    ])
+    .optional(),
+
   /**
    * Optional date field with transformation from string
    * Handles date objects, date strings, and undefined/null values
    */
-  dateOptional: z.union([
-    z.date(),
-    z.string().transform((val) => val ? new Date(val) : undefined),
-    z.undefined(),
-    z.null(),
-    z.literal(''),
-  ]).optional(),
-  
+  dateOptional: z
+    .union([
+      z.date(),
+      z.string().transform((val) => (val ? new Date(val) : undefined)),
+      z.undefined(),
+      z.null(),
+      z.literal(''),
+    ])
+    .optional(),
+
   /**
    * Optional array field that can be an array, null, or empty string
    * @param schema The Zod schema for array elements
@@ -50,24 +54,31 @@ export const fieldValidators = {
  * @param defaultType Default amount type if null or undefined
  * @returns A Zod schema for amount-type objects
  */
-export function createAmountTypeSchema(defaultAmount: number = 0, defaultType: string = 'percentage') {
+export function createAmountTypeSchema(
+  defaultAmount: number = 0,
+  defaultType: string = 'percentage'
+) {
   return z.preprocess(
     (val) => {
       if (val === null || val === undefined) {
         return { amount: defaultAmount, amountType: defaultType };
       }
-      
+
       // Handle legacy format where amount was just a number (percentage)
       if (typeof val === 'number') {
         return { amount: val, amountType: defaultType };
       }
-      
+
       return val;
     },
-    z.object({
-      amount: fieldValidators.numberOptional,
-      amountType: fieldValidators.stringOptional,
-    }).passthrough().optional().nullable()
+    z
+      .object({
+        amount: fieldValidators.numberOptional,
+        amountType: fieldValidators.stringOptional,
+      })
+      .passthrough()
+      .optional()
+      .nullable()
   );
 }
 
@@ -82,12 +93,12 @@ export function safeTransform<T, S extends z.ZodType<T>>(schema: S, value: unkno
   if (result.success) {
     return result.data;
   }
-  
+
   // Log validation errors in development
   if (process.env.NODE_ENV !== 'production') {
     console.warn('Schema validation failed:', result.error);
   }
-  
+
   // Return default value based on schema type
   return {} as T;
-} 
+}

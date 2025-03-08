@@ -128,6 +128,7 @@ The application includes an address autocomplete feature that uses the Google Ma
 3. Can be enabled/disabled via the `FEATURES.addressLookahead` flag in `src/lib/config.ts`
 
 To use this feature:
+
 1. Obtain a Google Maps API key with Places API enabled:
    - Go to the [Google Cloud Console](https://console.cloud.google.com/)
    - Create a new project or select an existing one
@@ -138,6 +139,7 @@ To use this feature:
 2. Restart your development server
 
 **Troubleshooting:**
+
 - If you see a spinner that doesn't stop, check your browser console for errors
 - Ensure your API key has the Places API enabled
 - Verify that your API key doesn't have any restrictions that would block your local development environment
@@ -170,6 +172,7 @@ GOOGLE_MAPS_API_KEY=your-google-maps-api-key
 ### Using the Address Lookahead:
 
 The address input has two modes:
+
 1. **Lookahead Mode**: Type to search for addresses and select from suggestions
 2. **Manual Mode**: Edit all address fields individually
 

@@ -1,9 +1,9 @@
 /**
  * Mongoose model for invoices with improved type safety
  */
-import mongoose, { Document, Schema } from "mongoose";
-import type { Invoice as InvoiceType } from "@/lib/schemas/invoice";
-import { processInvoice } from "@/lib/schemas/invoice";
+import mongoose, { Document, Schema } from 'mongoose';
+import type { Invoice as InvoiceType } from '@/lib/schemas/invoice';
+import { processInvoice } from '@/lib/schemas/invoice';
 
 /**
  * Extended Invoice interface with Mongoose Document properties
@@ -24,11 +24,11 @@ const InvoiceSchema = new Schema(
     receiver: { type: Schema.Types.Mixed },
     details: { type: Schema.Types.Mixed },
   },
-  { 
-    timestamps: true, 
+  {
+    timestamps: true,
     strict: false, // Don't enforce schema structure at Mongoose level
     _id: true,
-    validateBeforeSave: false // Disable Mongoose validation
+    validateBeforeSave: false, // Disable Mongoose validation
   }
 );
 
@@ -36,16 +36,16 @@ const InvoiceSchema = new Schema(
  * Pre-save hook to process invoice data
  * This ensures invoice data is consistent before saving to the database
  */
-InvoiceSchema.pre('save', function(next) {
+InvoiceSchema.pre('save', function (next) {
   try {
     // Transform this document using our processInvoice function
     const processedData = processInvoice(this);
-    
+
     // Apply processed data to this document
     this.sender = processedData.sender;
     this.receiver = processedData.receiver;
     this.details = processedData.details;
-    
+
     next();
   } catch (error) {
     next(error instanceof Error ? error : new Error(String(error)));
@@ -56,12 +56,13 @@ InvoiceSchema.pre('save', function(next) {
  * Custom method to validate an invoice
  * This validates the invoice against the Zod schema
  */
-InvoiceSchema.methods.validate = function() {
+InvoiceSchema.methods.validate = function () {
   return processInvoice(this);
 };
 
 /**
  * Export the Mongoose model
  */
-export const Invoice = (mongoose.models.Invoice as mongoose.Model<InvoiceDocument>) || 
-  mongoose.model<InvoiceDocument>("Invoice", InvoiceSchema); 
+export const Invoice =
+  (mongoose.models.Invoice as mongoose.Model<InvoiceDocument>) ||
+  mongoose.model<InvoiceDocument>('Invoice', InvoiceSchema);

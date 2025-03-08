@@ -11,11 +11,14 @@ export const config = {
 
 export async function POST(request: NextRequest) {
   // Skip actual processing during build time
-  if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.NEXT_PHASE === 'phase-production-build'
+  ) {
     console.log('Skipping invoice text parsing during build time');
     return NextResponse.json({ invoice: {} });
   }
-  
+
   try {
     // Authentication is not required for parsing
     // Parse request body
@@ -23,10 +26,7 @@ export async function POST(request: NextRequest) {
     const { text } = body;
 
     if (!text || typeof text !== 'string') {
-      return NextResponse.json(
-        { error: 'Text is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Text is required' }, { status: 400 });
     }
 
     // Parse the invoice text
@@ -35,9 +35,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ invoice: invoiceData });
   } catch (error) {
     console.error('Error parsing invoice text:', error);
-    return NextResponse.json(
-      { error: 'Failed to parse invoice text' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to parse invoice text' }, { status: 500 });
   }
-} 
+}

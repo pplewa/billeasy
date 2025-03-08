@@ -1,7 +1,7 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // Get Google Maps API key from environment variables - use the server-side key
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || "";
+const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || '';
 
 // Validation schema for autocomplete request
 export const autocompleteRequestSchema = z.object({
@@ -64,18 +64,18 @@ interface GooglePlaceDetailsResponse {
  */
 export async function getAddressSuggestions({
   input,
-  types = ["address"],
+  types = ['address'],
 }: AutocompleteRequest): Promise<AddressSuggestion[]> {
   if (!GOOGLE_MAPS_API_KEY) {
-    throw new Error("Google Maps API key is not configured");
+    throw new Error('Google Maps API key is not configured');
   }
 
-  console.log({ GOOGLE_MAPS_API_KEY })
+  console.log({ GOOGLE_MAPS_API_KEY });
 
   try {
     const params = new URLSearchParams({
       input,
-      types: types.join("|"),
+      types: types.join('|'),
       key: GOOGLE_MAPS_API_KEY,
     });
 
@@ -88,10 +88,10 @@ export async function getAddressSuggestions({
       throw new Error(`Google Maps API error: ${errorData.error_message || response.statusText}`);
     }
 
-    const data = await response.json() as GooglePlacesAutoCompleteResponse;
+    const data = (await response.json()) as GooglePlacesAutoCompleteResponse;
 
     // Handle API error responses
-    if (data.status !== "OK" && data.status !== "ZERO_RESULTS") {
+    if (data.status !== 'OK' && data.status !== 'ZERO_RESULTS') {
       throw new Error(`Google Maps API error: ${data.error_message || data.status}`);
     }
 
@@ -101,7 +101,7 @@ export async function getAddressSuggestions({
       description: prediction.description,
     }));
   } catch (error) {
-    console.error("Error fetching address suggestions:", error);
+    console.error('Error fetching address suggestions:', error);
     throw error;
   }
 }
@@ -109,17 +109,15 @@ export async function getAddressSuggestions({
 /**
  * Get address details from Google Maps Places API
  */
-export async function getAddressDetails({
-  placeId,
-}: PlaceDetailsRequest): Promise<AddressDetails> {
+export async function getAddressDetails({ placeId }: PlaceDetailsRequest): Promise<AddressDetails> {
   if (!GOOGLE_MAPS_API_KEY) {
-    throw new Error("Google Maps API key is not configured");
+    throw new Error('Google Maps API key is not configured');
   }
 
   try {
     const params = new URLSearchParams({
       place_id: placeId,
-      fields: "address_component,formatted_address",
+      fields: 'address_component,formatted_address',
       key: GOOGLE_MAPS_API_KEY,
     });
 
@@ -132,39 +130,39 @@ export async function getAddressDetails({
       throw new Error(`Google Maps API error: ${errorData.error_message || response.statusText}`);
     }
 
-    const data = await response.json() as GooglePlaceDetailsResponse;
+    const data = (await response.json()) as GooglePlaceDetailsResponse;
 
     // Handle API error responses
-    if (data.status !== "OK") {
+    if (data.status !== 'OK') {
       throw new Error(`Google Maps API error: ${data.error_message || data.status}`);
     }
 
     const result = data.result;
-    
+
     // Default address details
     const addressDetails: AddressDetails = {
-      address: result.formatted_address || "",
-      city: "",
-      zipCode: "",
-      country: "",
+      address: result.formatted_address || '',
+      city: '',
+      zipCode: '',
+      country: '',
     };
 
     // Extract address components
     result.address_components?.forEach((component: GoogleAddressComponent) => {
       const types = component.types;
-      
-      if (types.includes("locality")) {
+
+      if (types.includes('locality')) {
         addressDetails.city = component.long_name;
-      } else if (types.includes("postal_code")) {
+      } else if (types.includes('postal_code')) {
         addressDetails.zipCode = component.long_name;
-      } else if (types.includes("country")) {
+      } else if (types.includes('country')) {
         addressDetails.country = component.long_name;
       }
     });
 
     return addressDetails;
   } catch (error) {
-    console.error("Error fetching address details:", error);
+    console.error('Error fetching address details:', error);
     throw error;
   }
-} 
+}

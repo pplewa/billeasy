@@ -1,16 +1,13 @@
-import { useInvoiceContext } from "@/contexts/InvoiceContext";
-import { WizardStep } from "../wizard/WizardStep";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { useInvoiceContext } from '@/contexts/InvoiceContext';
+import { WizardStep } from '../wizard/WizardStep';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 export function Step1() {
   const { form } = useInvoiceContext();
 
   return (
-    <WizardStep
-      title="Sender Information"
-      description="Enter your business details"
-    >
+    <WizardStep title="Sender Information" description="Enter your business details">
       <div className="grid gap-4">
         <FormField
           control={form.control}
@@ -19,7 +16,7 @@ export function Step1() {
             <FormItem>
               <FormLabel>Business Name</FormLabel>
               <FormControl>
-                <Input {...field} value={field.value || ""} />
+                <Input {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -32,7 +29,7 @@ export function Step1() {
             <FormItem>
               <FormLabel>Address</FormLabel>
               <FormControl>
-                <Input {...field} value={field.value || ""} />
+                <Input {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -46,7 +43,7 @@ export function Step1() {
               <FormItem>
                 <FormLabel>City</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ""} />
+                  <Input {...field} value={field.value || ''} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -59,7 +56,7 @@ export function Step1() {
               <FormItem>
                 <FormLabel>ZIP Code</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ""} />
+                  <Input {...field} value={field.value || ''} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -73,7 +70,7 @@ export function Step1() {
             <FormItem>
               <FormLabel>Country</FormLabel>
               <FormControl>
-                <Input {...field} value={field.value || ""} />
+                <Input {...field} value={field.value || ''} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -87,7 +84,7 @@ export function Step1() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input {...field} type="email" value={field.value || ""} />
+                  <Input {...field} type="email" value={field.value || ''} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -100,7 +97,7 @@ export function Step1() {
               <FormItem>
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <Input {...field} type="tel" value={field.value || ""} />
+                  <Input {...field} type="tel" value={field.value || ''} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,4 +107,4 @@ export function Step1() {
       </div>
     </WizardStep>
   );
-} 
+}

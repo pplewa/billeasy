@@ -1,18 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
-import { FormInput } from "@/components/ui/form-input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { PlusCircle, X, Trash } from "lucide-react";
-import {
-  AddressLookahead,
-  AddressDetails,
-} from "@/components/ui/address-lookahead";
+import { FormInput } from '@/components/ui/form-input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { PlusCircle, X, Trash } from 'lucide-react';
+import { AddressLookahead, AddressDetails } from '@/components/ui/address-lookahead';
 
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types';
 
 interface CustomInput {
   key?: string;
@@ -54,26 +51,26 @@ export function BillFromSection() {
 
   // Handle address selection from the lookahead component
   const handleAddressSelect = (addressDetails: AddressDetails) => {
-    setValue("sender.address", addressDetails.address, {
+    setValue('sender.address', addressDetails.address, {
       shouldValidate: true,
     });
-    setValue("sender.city", addressDetails.city, { shouldValidate: true });
-    setValue("sender.zipCode", addressDetails.zipCode, {
+    setValue('sender.city', addressDetails.city, { shouldValidate: true });
+    setValue('sender.zipCode', addressDetails.zipCode, {
       shouldValidate: true,
     });
-    setValue("sender.country", addressDetails.country, {
+    setValue('sender.country', addressDetails.country, {
       shouldValidate: true,
     });
   };
 
   // Convert potentially null values to undefined for the AddressLookahead component
-  const addressValue = watch("sender.address") || undefined;
-  const cityValue = watch("sender.city") || undefined;
-  const zipCodeValue = watch("sender.zipCode") || undefined;
-  const countryValue = watch("sender.country") || undefined;
+  const addressValue = watch('sender.address') || undefined;
+  const cityValue = watch('sender.city') || undefined;
+  const zipCodeValue = watch('sender.zipCode') || undefined;
+  const countryValue = watch('sender.country') || undefined;
 
   // Safely handle custom inputs array
-  const customInputs = getValues("sender.customInputs") || [];
+  const customInputs = getValues('sender.customInputs') || [];
   const customInputsArray = Array.isArray(customInputs) ? customInputs : [];
 
   return (
@@ -84,7 +81,7 @@ export function BillFromSection() {
       <CardContent className="space-y-4">
         <FormInput
           label="Name"
-          {...register("sender.name")}
+          {...register('sender.name')}
           error={typedErrors.sender?.name?.message}
           placeholder="Your name or business name"
         />
@@ -96,32 +93,24 @@ export function BillFromSection() {
           cityValue={cityValue}
           zipCodeValue={zipCodeValue}
           countryValue={countryValue}
-          onCityChange={(value) =>
-            setValue("sender.city", value, { shouldValidate: true })
-          }
-          onZipCodeChange={(value) =>
-            setValue("sender.zipCode", value, { shouldValidate: true })
-          }
-          onCountryChange={(value) =>
-            setValue("sender.country", value, { shouldValidate: true })
-          }
-          onChange={(e) =>
-            setValue("sender.address", e.target.value, { shouldValidate: true })
-          }
+          onCityChange={(value) => setValue('sender.city', value, { shouldValidate: true })}
+          onZipCodeChange={(value) => setValue('sender.zipCode', value, { shouldValidate: true })}
+          onCountryChange={(value) => setValue('sender.country', value, { shouldValidate: true })}
+          onChange={(e) => setValue('sender.address', e.target.value, { shouldValidate: true })}
           id="sender-address"
           forceManualMode={!!(addressValue || cityValue || zipCodeValue || countryValue)}
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormInput
             label="Email"
-            {...register("sender.email")}
+            {...register('sender.email')}
             error={typedErrors.sender?.email?.message}
             placeholder="Email address"
           />
 
           <FormInput
             label="Phone"
-            {...register("sender.phone")}
+            {...register('sender.phone')}
             error={typedErrors.sender?.phone?.message}
             placeholder="Phone number"
           />
@@ -150,59 +139,44 @@ export function BillFromSection() {
 
           {showCustomInputs && (
             <div className="mt-4 space-y-4">
-              {customInputsArray.map(
-                (customInput: CustomInput, index: number) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-4"
-                  >
+              {customInputsArray.map((customInput: CustomInput, index: number) => (
+                <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormInput
+                    label={`Field ${index + 1}`}
+                    {...register(`sender.customInputs.${index}.key` as const)}
+                    error={typedErrors.sender?.customInputs?.[index]?.key?.message}
+                    placeholder="Field name"
+                  />
+                  <div className="relative">
                     <FormInput
-                      label={`Field ${index + 1}`}
-                      {...register(`sender.customInputs.${index}.key` as const)}
-                      error={
-                        typedErrors.sender?.customInputs?.[index]?.key?.message
-                      }
-                      placeholder="Field name"
+                      label="Value"
+                      {...register(`sender.customInputs.${index}.value` as const)}
+                      error={typedErrors.sender?.customInputs?.[index]?.value?.message}
+                      placeholder="Field value"
                     />
-                    <div className="relative">
-                      <FormInput
-                        label="Value"
-                        {...register(
-                          `sender.customInputs.${index}.value` as const
-                        )}
-                        error={
-                          typedErrors.sender?.customInputs?.[index]?.value
-                            ?.message
-                        }
-                        placeholder="Field value"
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute top-8 right-2 h-8 w-8"
-                        onClick={() => {
-                          const updatedInputs = [...customInputsArray];
-                          updatedInputs.splice(index, 1);
-                          setValue("sender.customInputs", updatedInputs);
-                        }}
-                      >
-                        <Trash className="h-4 w-4" />
-                      </Button>
-                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute top-8 right-2 h-8 w-8"
+                      onClick={() => {
+                        const updatedInputs = [...customInputsArray];
+                        updatedInputs.splice(index, 1);
+                        setValue('sender.customInputs', updatedInputs);
+                      }}
+                    >
+                      <Trash className="h-4 w-4" />
+                    </Button>
                   </div>
-                )
-              )}
+                </div>
+              ))}
 
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  setValue("sender.customInputs", [
-                    ...customInputsArray,
-                    { key: "", value: "" },
-                  ]);
+                  setValue('sender.customInputs', [...customInputsArray, { key: '', value: '' }]);
                 }}
                 className="flex items-center"
               >

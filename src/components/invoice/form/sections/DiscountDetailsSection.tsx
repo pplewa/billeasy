@@ -1,17 +1,28 @@
-"use client";
+'use client';
 
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from 'react-hook-form';
 
-import { FormInput } from "@/components/ui/form-input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { FormInput } from '@/components/ui/form-input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types';
 
 export function DiscountDetailsSection() {
-  const { register, setValue, watch, formState: { errors } } = useFormContext<InvoiceType>();
+  const {
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<InvoiceType>();
 
-  const discountAmountType = watch("details.discountDetails.amountType");
+  const discountAmountType = watch('details.discountDetails.amountType');
 
   return (
     <Card className="w-full">
@@ -24,18 +35,18 @@ export function DiscountDetailsSection() {
             label="Discount Amount"
             type="number"
             step="0.01"
-            {...register("details.discountDetails.amount", {
+            {...register('details.discountDetails.amount', {
               valueAsNumber: true,
             })}
             error={errors.details?.discountDetails?.amount?.message}
             placeholder="0.00"
           />
-          
+
           <div className="space-y-2">
             <label className="text-sm font-medium">Amount Type</label>
             <Select
               value={discountAmountType}
-              onValueChange={(value) => setValue("details.discountDetails.amountType", value)}
+              onValueChange={(value) => setValue('details.discountDetails.amountType', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select amount type" />
@@ -55,4 +66,4 @@ export function DiscountDetailsSection() {
       </CardContent>
     </Card>
   );
-} 
+}

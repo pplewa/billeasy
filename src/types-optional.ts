@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { InvoiceSchema, ItemSchema } from "@/lib/schemas-unified";
-import { FieldValues } from "react-hook-form";
+import { z } from 'zod';
+import { InvoiceSchema, ItemSchema } from '@/lib/schemas-unified';
+import { FieldValues } from 'react-hook-form';
 
 // Form types with relaxed validation
 export type InvoiceType = z.infer<typeof InvoiceSchema>;
@@ -112,4 +112,4 @@ export interface FormInvoiceType extends FieldValues {
   }> | null;
   createdAt?: Date | string | null;
   updatedAt?: Date | string | null;
-} 
+}

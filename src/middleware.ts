@@ -1,15 +1,20 @@
-import createMiddleware from "next-intl/middleware";
-import { NextRequest, NextResponse } from "next/server";
-import { defaultLocale, routing } from "./i18n/routing";
+import createMiddleware from 'next-intl/middleware';
+import { NextRequest, NextResponse } from 'next/server';
+import { defaultLocale, routing } from './i18n/routing';
 
 // Define the paths that don't require authentication
-const publicPaths = ["/", "/signin", "/verify", "/invoice/create", "/api/invoice/parse/text", "/api/invoice/parse/file"];
+const publicPaths = [
+  '/',
+  '/signin',
+  '/verify',
+  '/invoice/create',
+  '/api/invoice/parse/text',
+  '/api/invoice/parse/file',
+];
 
 // Check if the given path is a public path
 const isPublicPath = (path: string): boolean => {
-  return publicPaths.some(
-    (publicPath) => path === publicPath || path.startsWith(`${publicPath}/`)
-  );
+  return publicPaths.some((publicPath) => path === publicPath || path.startsWith(`${publicPath}/`));
 };
 
 // Create the next-intl middleware
@@ -22,25 +27,23 @@ export default async function middleware(request: NextRequest) {
   const pathnameWithoutLocale = routing.locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
-    ? pathname.replace(/^\/[^\/]+/, "") || "/"
+    ? pathname.replace(/^\/[^\/]+/, '') || '/'
     : pathname;
 
   // Handle authentication
-  const authToken = request.cookies.get("authToken")?.value;
+  const authToken = request.cookies.get('authToken')?.value;
   const isAuthenticated = !!authToken; // Simple check for auth token presence
 
   // If the path requires authentication and the user is not authenticated, redirect to sign in
   if (!isPublicPath(pathnameWithoutLocale) && !isAuthenticated) {
     const signInUrl = new URL(`/${defaultLocale}/signin`, request.url);
-    signInUrl.searchParams.set("callbackUrl", pathname);
+    signInUrl.searchParams.set('callbackUrl', pathname);
     return NextResponse.redirect(signInUrl);
   }
 
   // If the path is sign-in related and the user is authenticated, redirect to dashboard
-  if (pathnameWithoutLocale === "/signin" && isAuthenticated) {
-    return NextResponse.redirect(
-      new URL(`/${defaultLocale}/invoices`, request.url)
-    );
+  if (pathnameWithoutLocale === '/signin' && isAuthenticated) {
+    return NextResponse.redirect(new URL(`/${defaultLocale}/invoices`, request.url));
   }
 
   // Otherwise, apply the intl middleware
@@ -52,5 +55,5 @@ export const config = {
   // - API routes
   // - Static files
   // - _next
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 };

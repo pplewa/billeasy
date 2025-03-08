@@ -1,17 +1,28 @@
-"use client";
+'use client';
 
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from 'react-hook-form';
 
-import { FormInput } from "@/components/ui/form-input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { FormInput } from '@/components/ui/form-input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types';
 
 export function ShippingDetailsSection() {
-  const { register, setValue, watch, formState: { errors } } = useFormContext<InvoiceType>();
+  const {
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<InvoiceType>();
 
-  const shippingCostType = watch("details.shippingDetails.costType");
+  const shippingCostType = watch('details.shippingDetails.costType');
 
   return (
     <Card className="w-full">
@@ -24,18 +35,18 @@ export function ShippingDetailsSection() {
             label="Shipping Cost"
             type="number"
             step="0.01"
-            {...register("details.shippingDetails.cost", {
+            {...register('details.shippingDetails.cost', {
               valueAsNumber: true,
             })}
             error={errors.details?.shippingDetails?.cost?.message}
             placeholder="0.00"
           />
-          
+
           <div className="space-y-2">
             <label className="text-sm font-medium">Cost Type</label>
             <Select
               value={shippingCostType}
-              onValueChange={(value) => setValue("details.shippingDetails.costType", value)}
+              onValueChange={(value) => setValue('details.shippingDetails.costType', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select cost type" />
@@ -55,4 +66,4 @@ export function ShippingDetailsSection() {
       </CardContent>
     </Card>
   );
-} 
+}

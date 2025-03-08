@@ -1,40 +1,40 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { Form } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
-import { Wizard } from "react-use-wizard";
-import { Button } from "@/components/ui/button";
+import { useEffect } from 'react';
+import { Form } from '@/components/ui/form';
+import { Loader2 } from 'lucide-react';
+import { Wizard } from 'react-use-wizard';
+import { Button } from '@/components/ui/button';
 
-import { WizardStep } from "@/components/invoice/form/wizard/WizardStep";
-import { BillFromSection } from "@/components/invoice/form/sections/BillFromSection";
-import { BillToSection } from "@/components/invoice/form/sections/BillToSection";
-import { InvoiceDetailsSection } from "@/components/invoice/form/sections/InvoiceDetailsSection";
-import { Items } from "@/components/invoice/form/sections/Items";
-import { PaymentInformationSection } from "@/components/invoice/form/sections/PaymentInformationSection";
-import { SignatureSection } from "@/components/invoice/form/sections/SignatureSection";
-import { AdditionalNotesSection } from "@/components/invoice/form/sections/AdditionalNotesSection";
-import { AddressSwapButton } from "@/components/invoice/AddressSwapButton";
+import { WizardStep } from '@/components/invoice/form/wizard/WizardStep';
+import { BillFromSection } from '@/components/invoice/form/sections/BillFromSection';
+import { BillToSection } from '@/components/invoice/form/sections/BillToSection';
+import { InvoiceDetailsSection } from '@/components/invoice/form/sections/InvoiceDetailsSection';
+import { Items } from '@/components/invoice/form/sections/Items';
+import { PaymentInformationSection } from '@/components/invoice/form/sections/PaymentInformationSection';
+import { SignatureSection } from '@/components/invoice/form/sections/SignatureSection';
+import { AdditionalNotesSection } from '@/components/invoice/form/sections/AdditionalNotesSection';
+import { AddressSwapButton } from '@/components/invoice/AddressSwapButton';
 
-import { useInvoiceContext } from "@/contexts/InvoiceContext";
-import { FormInvoiceType } from "@/lib/types/invoice";
+import { useInvoiceContext } from '@/contexts/InvoiceContext';
+import { FormInvoiceType } from '@/lib/types/invoice';
 
 function Step1() {
   return (
     <WizardStep>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 relative">
         <BillFromSection />
-        
+
         {/* Centered swap button between the sections */}
         <div className="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
           <AddressSwapButton mode="form" />
         </div>
-        
+
         {/* Mobile swap button */}
         <div className="flex md:hidden justify-center my-2">
           <AddressSwapButton mode="form" />
         </div>
-        
+
         <BillToSection />
       </div>
     </WizardStep>
@@ -94,4 +94,4 @@ export function InvoiceForm() {
       </form>
     </Form>
   );
-} 
+}

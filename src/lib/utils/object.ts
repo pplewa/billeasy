@@ -1,14 +1,11 @@
 /**
  * Deep merge two objects
- * 
+ *
  * @param target Target object
  * @param source Source object
  * @returns Merged object
  */
-export function deepMerge<T extends Record<string, unknown>>(
-  target: T,
-  source: Partial<T>
-): T {
+export function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial<T>): T {
   const output = { ...target };
 
   if (!source) return output;
@@ -55,25 +52,19 @@ export function deepMerge<T extends Record<string, unknown>>(
  */
 
 /**
- * Flattens a nested object. Used for xlsx export and other cases where 
+ * Flattens a nested object. Used for xlsx export and other cases where
  * a flat structure is required.
  *
  * @param {Record<string, T>} obj - A nested object to flatten
  * @param {string} parentKey - The parent key prefix for nested properties
  * @returns {Record<string, T>} A flattened object with concatenated key paths
  */
-export const flattenObject = <T>(
-  obj: Record<string, T>,
-  parentKey = ""
-): Record<string, T> => {
+export const flattenObject = <T>(obj: Record<string, T>, parentKey = ''): Record<string, T> => {
   const result: Record<string, T> = {};
 
   for (const key in obj) {
-    if (typeof obj[key] === "object" && !Array.isArray(obj[key])) {
-      const flattened = flattenObject(
-        obj[key] as Record<string, T>,
-        parentKey + key + "_"
-      );
+    if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+      const flattened = flattenObject(obj[key] as Record<string, T>, parentKey + key + '_');
       for (const subKey in flattened) {
         result[parentKey + subKey] = flattened[subKey];
       }
@@ -83,4 +74,4 @@ export const flattenObject = <T>(
   }
 
   return result;
-}; 
+};

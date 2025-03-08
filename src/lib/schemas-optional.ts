@@ -1,28 +1,32 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // Field Validators with all requirements stripped out
 const fieldValidators = {
   // All string fields are optional with no requirements
   stringOptional: z.string().optional().or(z.null()).or(z.literal('')),
-  
+
   // Number fields allow any number or are optional
-  numberOptional: z.union([
-    z.number(),
-    z.string().transform((val) => val === '' ? undefined : Number(val)),
-    z.undefined(),
-    z.null(),
-    z.literal(''),
-  ]).optional(),
-  
+  numberOptional: z
+    .union([
+      z.number(),
+      z.string().transform((val) => (val === '' ? undefined : Number(val))),
+      z.undefined(),
+      z.null(),
+      z.literal(''),
+    ])
+    .optional(),
+
   // Dates accept any date or are optional
-  dateOptional: z.union([
-    z.date(),
-    z.string().transform((val) => val ? new Date(val) : undefined),
-    z.undefined(),
-    z.null(),
-    z.literal(''),
-  ]).optional(),
-  
+  dateOptional: z
+    .union([
+      z.date(),
+      z.string().transform((val) => (val ? new Date(val) : undefined)),
+      z.undefined(),
+      z.null(),
+      z.literal(''),
+    ])
+    .optional(),
+
   // Arrays are always optional
   arrayOptional: (schema: z.ZodType) => z.array(schema).optional().or(z.null()).or(z.literal('')),
 };
@@ -34,32 +38,44 @@ const CustomInputSchema = z.object({
 });
 
 // Item Schema with no requirements
-export const ItemSchema = z.object({
-  id: fieldValidators.stringOptional,
-  name: fieldValidators.stringOptional,
-  description: fieldValidators.stringOptional,
-  quantity: fieldValidators.numberOptional,
-  unitPrice: fieldValidators.numberOptional,
-  total: fieldValidators.numberOptional,
-  // Backward compatibility fields
-  taxRate: fieldValidators.numberOptional,
-  discountRate: fieldValidators.numberOptional,
-  // New structure
-  tax: z.preprocess(
-    (val) => val ?? {},
-    z.object({
-      amount: fieldValidators.numberOptional,
-      amountType: fieldValidators.stringOptional,
-    }).passthrough().optional().nullable()
-  ),
-  discount: z.preprocess(
-    (val) => val ?? {},
-    z.object({
-      amount: fieldValidators.numberOptional,
-      amountType: fieldValidators.stringOptional,
-    }).passthrough().optional().nullable()
-  ),
-}).passthrough().optional().nullable();
+export const ItemSchema = z
+  .object({
+    id: fieldValidators.stringOptional,
+    name: fieldValidators.stringOptional,
+    description: fieldValidators.stringOptional,
+    quantity: fieldValidators.numberOptional,
+    unitPrice: fieldValidators.numberOptional,
+    total: fieldValidators.numberOptional,
+    // Backward compatibility fields
+    taxRate: fieldValidators.numberOptional,
+    discountRate: fieldValidators.numberOptional,
+    // New structure
+    tax: z.preprocess(
+      (val) => val ?? {},
+      z
+        .object({
+          amount: fieldValidators.numberOptional,
+          amountType: fieldValidators.stringOptional,
+        })
+        .passthrough()
+        .optional()
+        .nullable()
+    ),
+    discount: z.preprocess(
+      (val) => val ?? {},
+      z
+        .object({
+          amount: fieldValidators.numberOptional,
+          amountType: fieldValidators.stringOptional,
+        })
+        .passthrough()
+        .optional()
+        .nullable()
+    ),
+  })
+  .passthrough()
+  .optional()
+  .nullable();
 
 // Invoice Sender Schema with no requirements
 const InvoiceSenderSchema = z.object({
@@ -103,31 +119,47 @@ const InvoiceDetailsSchema = z.object({
   // Tax and discount fields
   tax: z.preprocess(
     (val) => val ?? {},
-    z.object({
-      amount: fieldValidators.numberOptional,
-      amountType: fieldValidators.stringOptional,
-    }).passthrough().optional().nullable()
+    z
+      .object({
+        amount: fieldValidators.numberOptional,
+        amountType: fieldValidators.stringOptional,
+      })
+      .passthrough()
+      .optional()
+      .nullable()
   ),
   discount: z.preprocess(
     (val) => val ?? {},
-    z.object({
-      amount: fieldValidators.numberOptional,
-      amountType: fieldValidators.stringOptional,
-    }).passthrough().optional().nullable()
+    z
+      .object({
+        amount: fieldValidators.numberOptional,
+        amountType: fieldValidators.stringOptional,
+      })
+      .passthrough()
+      .optional()
+      .nullable()
   ),
   // Signature field
   signature: z.preprocess(
     (val) => val ?? {},
-    z.object({
-      data: fieldValidators.stringOptional,
-      fontFamily: fieldValidators.stringOptional,
-    }).passthrough().optional().nullable()
+    z
+      .object({
+        data: fieldValidators.stringOptional,
+        fontFamily: fieldValidators.stringOptional,
+      })
+      .passthrough()
+      .optional()
+      .nullable()
   ),
 });
 
 // Super permissive Invoice Schema with no requirements
-export const InvoiceSchema = z.object({
-  sender: InvoiceSenderSchema.optional().nullable(),
-  receiver: InvoiceReceiverSchema.optional().nullable(),
-  details: InvoiceDetailsSchema.optional().nullable(),
-}).passthrough().optional().nullable(); 
+export const InvoiceSchema = z
+  .object({
+    sender: InvoiceSenderSchema.optional().nullable(),
+    receiver: InvoiceReceiverSchema.optional().nullable(),
+    details: InvoiceDetailsSchema.optional().nullable(),
+  })
+  .passthrough()
+  .optional()
+  .nullable();

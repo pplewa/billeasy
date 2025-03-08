@@ -2,9 +2,9 @@
  * Consolidated types file that exports all types and interfaces
  * used throughout the application
  */
-import { FieldPath, FieldValues, UseFormReturn } from "react-hook-form";
-import { Invoice } from "./schemas/invoice";
-import { InvoiceItem } from "./schemas/item";
+import { FieldPath, FieldValues, UseFormReturn } from 'react-hook-form';
+import { Invoice } from './schemas/invoice';
+import { InvoiceItem } from './schemas/item';
 
 /**
  * Core type definitions
@@ -28,10 +28,10 @@ export type CurrencyType = string;
 
 // Invoice status types
 export enum InvoiceStatus {
-  DRAFT = "draft",
-  SENT = "sent",
-  PAID = "paid",
-  OVERDUE = "overdue"
+  DRAFT = 'draft',
+  SENT = 'sent',
+  PAID = 'paid',
+  OVERDUE = 'overdue',
 }
 
 // Currency details type
@@ -55,9 +55,9 @@ export type SignatureFont = {
 };
 
 export enum SignatureTabs {
-  DRAW = "draw",
-  TYPE = "type",
-  UPLOAD = "upload",
+  DRAW = 'draw',
+  TYPE = 'type',
+  UPLOAD = 'upload',
 }
 
 // UI related types
@@ -70,11 +70,11 @@ export type WizardStepType = {
 
 // Export types
 export enum ExportTypes {
-  PDF = "pdf",
-  XLSX = "xlsx",
-  CSV = "csv",
-  JSON = "json",
-  XML = "xml",
+  PDF = 'pdf',
+  XLSX = 'xlsx',
+  CSV = 'csv',
+  JSON = 'json',
+  XML = 'xml',
 }
 
 // Custom input type
@@ -86,4 +86,4 @@ export type CustomInputType = {
 /**
  * Re-export everything from the schemas for convenience
  */
-export * from "./schemas"; 
+export * from './schemas';

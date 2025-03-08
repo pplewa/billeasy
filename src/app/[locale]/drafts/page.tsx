@@ -1,31 +1,25 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { format } from "date-fns";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
-import { 
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { format } from 'date-fns';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import { 
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -33,28 +27,17 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from "@/components/ui/alert-dialog";
-import { useToast } from "@/components/ui/use-toast";
-import { 
-  Edit, 
-  MoreVertical, 
-  Trash, 
-  FileText, 
-  Plus,
-  Download
-} from "lucide-react";
-import useInvoiceParserStore from "@/store/invoice-parser-store";
-import useAuthStore from "@/store/auth-store";
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { useToast } from '@/components/ui/use-toast';
+import { Edit, MoreVertical, Trash, FileText, Plus, Download } from 'lucide-react';
+import useInvoiceParserStore from '@/store/invoice-parser-store';
+import useAuthStore from '@/store/auth-store';
 
-export default function DraftsPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default function DraftsPage({ params }: { params: Promise<{ locale: string }> }) {
   const router = useRouter();
   const { toast } = useToast();
-  const [locale, setLocale] = useState<string>("");
+  const [locale, setLocale] = useState<string>('');
   const { draftInvoices, removeDraftInvoice, setParsedInvoice } = useInvoiceParserStore();
   const { user } = useAuthStore();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -71,7 +54,7 @@ export default function DraftsPage({
 
   // Handle editing a draft
   const handleEditDraft = (draftId: string) => {
-    const draft = draftInvoices.find(d => d.id === draftId);
+    const draft = draftInvoices.find((d) => d.id === draftId);
     if (draft) {
       setParsedInvoice(draft);
       router.push(`/${locale}/invoice/create`);
@@ -89,8 +72,8 @@ export default function DraftsPage({
     if (selectedDraftId) {
       removeDraftInvoice(selectedDraftId);
       toast({
-        title: "Draft deleted",
-        description: "The draft invoice has been deleted.",
+        title: 'Draft deleted',
+        description: 'The draft invoice has been deleted.',
       });
       setDeleteDialogOpen(false);
       setSelectedDraftId(null);
@@ -100,9 +83,9 @@ export default function DraftsPage({
   // Format date for display
   const formatDate = (dateString: string) => {
     try {
-      return format(new Date(dateString), "MMM d, yyyy");
+      return format(new Date(dateString), 'MMM d, yyyy');
     } catch {
-      return "Invalid date";
+      return 'Invalid date';
     }
   };
 
@@ -116,19 +99,19 @@ export default function DraftsPage({
     if (draft.details?.invoiceNumber) {
       return draft.details.invoiceNumber;
     }
-    
+
     if (draft.sender?.name && draft.receiver?.name) {
       return `${draft.sender.name} → ${draft.receiver.name}`;
     }
-    
+
     if (draft.sender?.name) {
       return `From: ${draft.sender.name}`;
     }
-    
+
     if (draft.receiver?.name) {
       return `To: ${draft.receiver.name}`;
     }
-    
+
     return `Draft ${formatDate(draft.createdAt)}`;
   };
 
@@ -137,9 +120,7 @@ export default function DraftsPage({
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Draft Invoices</h1>
-          <p className="text-muted-foreground">
-            Manage your locally saved invoice drafts
-          </p>
+          <p className="text-muted-foreground">Manage your locally saved invoice drafts</p>
         </div>
         <Button onClick={() => router.push(`/${locale}/invoice/create`)}>
           <Plus className="mr-2 h-4 w-4" />
@@ -151,8 +132,8 @@ export default function DraftsPage({
         <CardHeader>
           <CardTitle>Your Drafts</CardTitle>
           <CardDescription>
-            {draftInvoices.length === 0 
-              ? "You don't have any draft invoices yet." 
+            {draftInvoices.length === 0
+              ? "You don't have any draft invoices yet."
               : `You have ${draftInvoices.length} draft invoice${draftInvoices.length !== 1 ? 's' : ''}.`}
           </CardDescription>
         </CardHeader>
@@ -181,9 +162,7 @@ export default function DraftsPage({
               <TableBody>
                 {draftInvoices.map((draft) => (
                   <TableRow key={draft.id}>
-                    <TableCell className="font-medium">
-                      {getDraftName(draft)}
-                    </TableCell>
+                    <TableCell className="font-medium">{getDraftName(draft)}</TableCell>
                     <TableCell>{formatDate(draft.createdAt)}</TableCell>
                     <TableCell>{formatDate(draft.updatedAt)}</TableCell>
                     <TableCell className="text-right">
@@ -200,11 +179,11 @@ export default function DraftsPage({
                             Edit
                           </DropdownMenuItem>
                           {user && (
-                            <DropdownMenuItem 
+                            <DropdownMenuItem
                               onClick={() => {
                                 toast({
-                                  title: "Coming soon",
-                                  description: "This feature will be available soon.",
+                                  title: 'Coming soon',
+                                  description: 'This feature will be available soon.',
                                 });
                               }}
                             >
@@ -212,7 +191,7 @@ export default function DraftsPage({
                               Export
                             </DropdownMenuItem>
                           )}
-                          <DropdownMenuItem 
+                          <DropdownMenuItem
                             onClick={() => handleDeleteDraft(draft.id)}
                             className="text-destructive focus:text-destructive"
                           >
@@ -241,7 +220,10 @@ export default function DraftsPage({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDeleteDraft} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+            <AlertDialogAction
+              onClick={confirmDeleteDraft}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -249,4 +231,4 @@ export default function DraftsPage({
       </AlertDialog>
     </div>
   );
-} 
+}

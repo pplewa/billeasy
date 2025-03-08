@@ -16,4 +16,4 @@ export const isValidEmail = (email: string): boolean => {
  * @param str - String to check
  * @returns Boolean indicating if the string is a data URL
  */
-export const isDataUrl = (str: string): boolean => str.startsWith("data:"); 
+export const isDataUrl = (str: string): boolean => str.startsWith('data:');

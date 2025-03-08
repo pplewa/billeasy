@@ -1,11 +1,11 @@
-import { 
+import {
   FormInvoiceType,
   ParsedInvoiceType,
   ParsedItemType,
   FormItemType,
   CustomInput,
   AddressInfo,
-  isValidItemsArray
+  isValidItemsArray,
 } from '../types/invoice';
 
 /**
@@ -18,8 +18,8 @@ export class InvoiceTransformer {
   private static transformParsedItemToFormItem(item: ParsedItemType): FormItemType {
     return {
       id: item.id || crypto.randomUUID(),
-      name: item.name || "Item",
-      description: item.description || "",
+      name: item.name || 'Item',
+      description: item.description || '',
       quantity: item.quantity || 1,
       unitPrice: item.unitPrice || 0,
       total: (item.quantity || 1) * (item.unitPrice || 0),
@@ -27,14 +27,14 @@ export class InvoiceTransformer {
         amount: 0,
         amountType: 'percentage',
         taxId: undefined,
-        taxName: undefined
+        taxName: undefined,
       },
       discount: {
         amount: 0,
         amountType: 'percentage',
         discountCode: undefined,
-        discountName: undefined
-      }
+        discountName: undefined,
+      },
     };
   }
 
@@ -65,15 +65,15 @@ export class InvoiceTransformer {
   private static transformCustomInputs(inputs: unknown): CustomInput[] | null {
     if (!inputs) return null;
     if (Array.isArray(inputs)) {
-      return inputs.map(input => ({
+      return inputs.map((input) => ({
         key: typeof input.key === 'string' ? input.key : null,
-        value: typeof input.value === 'string' ? input.value : null
+        value: typeof input.value === 'string' ? input.value : null,
       }));
     }
     if (typeof inputs === 'object' && inputs !== null) {
       return Object.entries(inputs).map(([key, value]) => ({
         key,
-        value: value?.toString() || null
+        value: value?.toString() || null,
       }));
     }
     return null;
@@ -93,7 +93,7 @@ export class InvoiceTransformer {
       country: typeof addr.country === 'string' ? addr.country : null,
       email: typeof addr.email === 'string' ? addr.email : null,
       phone: typeof addr.phone === 'string' ? addr.phone : null,
-      customInputs: this.transformCustomInputs(addr.customInputs)
+      customInputs: this.transformCustomInputs(addr.customInputs),
     };
   }
 
@@ -111,8 +111,8 @@ export class InvoiceTransformer {
         dueDate: null,
         currency: null,
         subTotal: null,
-        totalAmount: null
-      }
+        totalAmount: null,
+      },
     };
 
     if (parsedInvoice.details) {
@@ -131,13 +131,13 @@ export class InvoiceTransformer {
         signature: parsedInvoice.details.signature,
         additionalNotes: parsedInvoice.details.additionalNotes,
         paymentTerms: parsedInvoice.details.paymentTerms,
-        invoiceLogo: parsedInvoice.details.invoiceLogo
+        invoiceLogo: parsedInvoice.details.invoiceLogo,
       };
 
       // Transform items if they exist and are valid
       if (parsedInvoice.details.items && isValidItemsArray(parsedInvoice.details.items)) {
-        formInvoice.details.items = parsedInvoice.details.items.map(
-          item => this.transformParsedItemToFormItem(item)
+        formInvoice.details.items = parsedInvoice.details.items.map((item) =>
+          this.transformParsedItemToFormItem(item)
         );
       }
     }
@@ -152,14 +152,15 @@ export class InvoiceTransformer {
     return (
       formData.details !== undefined &&
       Array.isArray(formData.details.items) &&
-      formData.details.items.every(item =>
-        item.id &&
-        item.name &&
-        typeof item.quantity === 'number' &&
-        typeof item.unitPrice === 'number' &&
-        item.tax &&
-        item.discount
+      formData.details.items.every(
+        (item) =>
+          item.id &&
+          item.name &&
+          typeof item.quantity === 'number' &&
+          typeof item.unitPrice === 'number' &&
+          item.tax &&
+          item.discount
       )
     );
   }
-} 
+}

@@ -1,4 +1,4 @@
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types';
 
 /**
  * Parse invoice data from natural language text
@@ -44,4 +44,4 @@ export async function parseInvoiceFile(file: File): Promise<{ invoice: Partial<I
 
   const data = await response.json();
   return data;
-} 
+}

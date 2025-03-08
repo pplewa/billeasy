@@ -1,23 +1,23 @@
-import { Locale } from "@/i18n/routing";
-import nodemailer, { TransportOptions } from "nodemailer";
+import { Locale } from '@/i18n/routing';
+import nodemailer, { TransportOptions } from 'nodemailer';
 
 // Get email configuration from environment variables
 const SMTP_HOST = process.env.SMTP_HOST;
-const SMTP_PORT = parseInt(process.env.SMTP_PORT || "587", 10);
+const SMTP_PORT = parseInt(process.env.SMTP_PORT || '587', 10);
 const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
-const EMAIL_FROM = process.env.EMAIL_FROM || "noreply@example.com";
+const EMAIL_FROM = process.env.EMAIL_FROM || 'noreply@example.com';
 
 // Validate SMTP configuration
 function validateSmtpConfig(): void {
   if (!SMTP_HOST) {
-    throw new Error("SMTP_HOST environment variable is not defined");
+    throw new Error('SMTP_HOST environment variable is not defined');
   }
   if (!SMTP_USER) {
-    throw new Error("SMTP_USER environment variable is not defined");
+    throw new Error('SMTP_USER environment variable is not defined');
   }
   if (!SMTP_PASS) {
-    throw new Error("SMTP_PASS environment variable is not defined");
+    throw new Error('SMTP_PASS environment variable is not defined');
   }
 }
 
@@ -43,19 +43,15 @@ type EmailContent = {
 /**
  * Send a magic link email to the user
  */
-export async function sendMagicLinkEmail(
-  to: string,
-  url: string,
-  locale: Locale = "en"
-) {
+export async function sendMagicLinkEmail(to: string, url: string, locale: Locale = 'en') {
   const transporter = createTransporter();
 
   // Get subject and text based on locale
   const subjects: EmailContent = {
-    en: "Your Sign-In Link for Bill Easy",
-    es: "Tu Enlace de Inicio de Sesión para Bill Easy",
-    fr: "Votre Lien de Connexion pour Bill Easy",
-    de: "Ihr Anmeldelink für Bill Easy",
+    en: 'Your Sign-In Link for Bill Easy',
+    es: 'Tu Enlace de Inicio de Sesión para Bill Easy',
+    fr: 'Votre Lien de Connexion pour Bill Easy',
+    de: 'Ihr Anmeldelink für Bill Easy',
   };
 
   const texts: EmailContent = {

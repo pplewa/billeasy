@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
 // Components
-import InvoiceLayout from "./InvoiceLayout";
+import InvoiceLayout from './InvoiceLayout';
 
 // Helpers
-import { formatCurrency, formatDate, parseNumber } from "@/lib/utils/formatting";
+import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting';
 
 // Types
-import { InvoiceType, ItemType } from "@/lib/types";
+import { InvoiceType, ItemType } from '@/lib/types';
 
 /**
  * Invoice Template 3 - Creative Professional
@@ -40,9 +40,7 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
                 className="object-contain mb-4 md:mb-0"
               />
             )}
-            <h1 className="text-xl md:text-2xl font-bold text-green-700 mt-2">
-              {sender?.name}
-            </h1>
+            <h1 className="text-xl md:text-2xl font-bold text-green-700 mt-2">{sender?.name}</h1>
           </div>
           <div className="mt-4 md:mt-0 text-right">
             <h2 className="text-3xl md:text-4xl font-bold text-green-700">INVOICE</h2>
@@ -53,7 +51,9 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
 
       <div className="mt-8 flex flex-col md:flex-row justify-between gap-8">
         <div className="flex-1 bg-gray-50 p-5 rounded-lg">
-          <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">FROM</h3>
+          <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">
+            FROM
+          </h3>
           <div className="text-gray-600">
             <p className="font-medium">{sender?.name}</p>
             <p>{sender?.address}</p>
@@ -67,7 +67,9 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
         </div>
 
         <div className="flex-1 bg-gray-50 p-5 rounded-lg">
-          <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">TO</h3>
+          <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">
+            TO
+          </h3>
           <div className="text-gray-600">
             <p className="font-medium">{receiver?.name}</p>
             <p>{receiver?.address}</p>
@@ -82,19 +84,17 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
       </div>
 
       <div className="mt-8 bg-gray-50 p-5 rounded-lg">
-        <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">DETAILS</h3>
+        <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">
+          DETAILS
+        </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div>
             <p className="text-sm text-gray-500">Invoice Date</p>
-            <p className="font-medium text-gray-700">
-              {formatDate(details?.invoiceDate)}
-            </p>
+            <p className="font-medium text-gray-700">{formatDate(details?.invoiceDate)}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Due Date</p>
-            <p className="font-medium text-gray-700">
-              {formatDate(details?.dueDate)}
-            </p>
+            <p className="font-medium text-gray-700">{formatDate(details?.dueDate)}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Currency</p>
@@ -122,7 +122,7 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
                 const quantity = parseNumber(item.quantity);
                 const unitPrice = parseNumber(item.unitPrice || item.price);
                 const itemSubtotal = quantity * unitPrice;
-                
+
                 // Calculate discount
                 let discountAmount = 0;
                 if (item.discount) {
@@ -132,7 +132,7 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
                     discountAmount = parseNumber(item.discount.amount);
                   }
                 }
-                
+
                 // Calculate tax
                 let taxAmount = 0;
                 if (item.tax) {
@@ -143,10 +143,10 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
                     taxAmount = parseNumber(item.tax.amount);
                   }
                 }
-                
+
                 // Calculate final total
                 const itemTotal = itemSubtotal - discountAmount + taxAmount;
-                
+
                 return (
                   <tr key={item.id || index} className="border-b border-gray-200">
                     <td className="py-3 px-4">
@@ -157,24 +157,27 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
                     </td>
                     <td className="text-right py-3 px-4">{quantity}</td>
                     <td className="text-right py-3 px-4">
-                      {formatCurrency(unitPrice, details?.currency || "USD")}
+                      {formatCurrency(unitPrice, details?.currency || 'USD')}
                     </td>
                     <td className="text-right py-3 px-4">
-                      {item.discount ? (
-                        item.discount.amountType === 'percentage' 
-                          ? `${parseNumber(item.discount.amount)}%` 
-                          : formatCurrency(parseNumber(item.discount.amount), details?.currency || "USD")
-                      ) : '-'}
+                      {item.discount
+                        ? item.discount.amountType === 'percentage'
+                          ? `${parseNumber(item.discount.amount)}%`
+                          : formatCurrency(
+                              parseNumber(item.discount.amount),
+                              details?.currency || 'USD'
+                            )
+                        : '-'}
                     </td>
                     <td className="text-right py-3 px-4">
-                      {item.tax ? (
-                        item.tax.amountType === 'percentage' 
-                          ? `${parseNumber(item.tax.amount)}%` 
-                          : formatCurrency(parseNumber(item.tax.amount), details?.currency || "USD")
-                      ) : '-'}
+                      {item.tax
+                        ? item.tax.amountType === 'percentage'
+                          ? `${parseNumber(item.tax.amount)}%`
+                          : formatCurrency(parseNumber(item.tax.amount), details?.currency || 'USD')
+                        : '-'}
                     </td>
                     <td className="text-right py-3 px-4">
-                      {formatCurrency(itemTotal, details?.currency || "USD")}
+                      {formatCurrency(itemTotal, details?.currency || 'USD')}
                     </td>
                   </tr>
                 );
@@ -190,7 +193,7 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
             <div className="flex justify-between py-2">
               <span className="font-medium text-gray-600">Subtotal:</span>
               <span className="text-gray-800">
-                {formatCurrency(subTotal, details?.currency || "USD")}
+                {formatCurrency(subTotal, details?.currency || 'USD')}
               </span>
             </div>
 
@@ -199,11 +202,8 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
               <div className="flex justify-between py-2">
                 <span className="font-medium text-gray-600">Shipping:</span>
                 <span className="text-gray-800">
-                  {details.shipping.costType === "amount"
-                    ? formatCurrency(
-                        parseNumber(details.shipping.cost),
-                        details?.currency || "USD"
-                      )
+                  {details.shipping.costType === 'amount'
+                    ? formatCurrency(parseNumber(details.shipping.cost), details?.currency || 'USD')
                     : `${parseNumber(details.shipping.cost)}%`}
                 </span>
               </div>
@@ -212,7 +212,7 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
             <div className="flex justify-between py-2 border-t border-gray-300 mt-2">
               <span className="font-bold text-gray-700">Total:</span>
               <span className="font-bold text-green-700">
-                {formatCurrency(totalAmount, details?.currency || "USD")}
+                {formatCurrency(totalAmount, details?.currency || 'USD')}
               </span>
             </div>
           </div>
@@ -237,11 +237,7 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
         <div className="mt-8 border-t border-gray-200 pt-4 text-right">
           <div className="inline-block max-w-xs">
             {details.signature.data.startsWith('data:image') ? (
-              <img
-                src={details.signature.data}
-                alt="Signature"
-                className="h-16 object-contain"
-              />
+              <img src={details.signature.data} alt="Signature" className="h-16 object-contain" />
             ) : (
               <p
                 className="text-xl text-gray-800"
@@ -258,4 +254,4 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
   );
 };
 
-export default InvoiceTemplate3; 
+export default InvoiceTemplate3;

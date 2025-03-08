@@ -13,26 +13,28 @@ export const getInvoiceTemplate = async (templateId: number) => {
     const importedModule = await import(
       `@/app/components/templates/invoice/${componentName}Unified`
     );
-    
+
     // Get the original template component
     const OriginalTemplate = importedModule.default;
-    
+
     // Return a wrapper function that processes the props before passing to the original template
     return (props: Record<string, unknown>) => {
       // Create a deep copy of the props to avoid mutating the original
       const processedProps = JSON.parse(JSON.stringify(props));
-      
+
       // Process signature font family if it exists
       if (
-        processedProps.signature?.fontFamily && 
-        typeof processedProps.signature.fontFamily === 'string' && 
+        processedProps.signature?.fontFamily &&
+        typeof processedProps.signature.fontFamily === 'string' &&
         processedProps.signature.fontFamily.startsWith('var(--font-')
       ) {
         // Extract the font name from the CSS variable
-        processedProps.signature.fontFamily = processedProps.signature.fontFamily
-          .replace(/var\(--font-([^)]+)\)/, '$1');
+        processedProps.signature.fontFamily = processedProps.signature.fontFamily.replace(
+          /var\(--font-([^)]+)\)/,
+          '$1'
+        );
       }
-      
+
       // Return the original template with processed props
       return OriginalTemplate(processedProps);
     };
@@ -45,7 +47,7 @@ export const getInvoiceTemplate = async (templateId: number) => {
 
 /**
  * Convert a file to a buffer. Used for sending invoice as email attachment.
- * 
+ *
  * @param file - The file to convert to a buffer.
  * @returns Promise that resolves to a buffer.
  */
@@ -55,4 +57,4 @@ export const fileToBuffer = async (file: File): Promise<Buffer> => {
 
   // Convert ArrayBuffer to Buffer
   return Buffer.from(arrayBuffer);
-}; 
+};

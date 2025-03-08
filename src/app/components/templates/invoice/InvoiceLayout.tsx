@@ -1,11 +1,11 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 // Types
-import { InvoiceType } from "@/lib/types";
+import { InvoiceType } from '@/lib/types';
 
 type InvoiceLayoutProps = {
-    data: InvoiceType;
-    children: ReactNode;
+  data: InvoiceType;
+  children: ReactNode;
 };
 
 /**
@@ -13,33 +13,32 @@ type InvoiceLayoutProps = {
  * Provides common structure and styling for all invoice templates
  */
 export default function InvoiceLayout({ data, children }: InvoiceLayoutProps) {
-    // Use fallbacks for type safety
-    const details = data.details || {};
+  // Use fallbacks for type safety
+  const details = data.details || {};
 
-    // Get the specific font family user selected for signature
-    const fontHref = details.signature?.fontFamily
-        ? `https://fonts.googleapis.com/css2?family=${details.signature.fontFamily}&display=swap`
-        : "";
+  // Get the specific font family user selected for signature
+  const fontHref = details.signature?.fontFamily
+    ? `https://fonts.googleapis.com/css2?family=${details.signature.fontFamily}&display=swap`
+    : '';
 
-    const head = (
+  const head = (
+    <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      {/* Load common signature fonts */}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Satisfy&family=Caveat&family=Homemade+Apple&display=swap"
+        rel="stylesheet"
+      />
+
+      {/* Load specific signature font if provided */}
+      {details?.signature?.fontFamily && (
         <>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link
-                rel="preconnect"
-                href="https://fonts.gstatic.com"
-                crossOrigin="anonymous"
-            />
-            {/* Load common signature fonts */}
-            <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Satisfy&family=Caveat&family=Homemade+Apple&display=swap" rel="stylesheet" />
-            
-            {/* Load specific signature font if provided */}
-            {details?.signature?.fontFamily && (
-                <>
-                    <link href={fontHref} rel="stylesheet" />
-                </>
-            )}
-            <style>
-                {`
+          <link href={fontHref} rel="stylesheet" />
+        </>
+      )}
+      <style>
+        {`
                 @page {
                     size: A4;
                     margin: 0;
@@ -63,18 +62,18 @@ export default function InvoiceLayout({ data, children }: InvoiceLayoutProps) {
                     font-weight: 600;
                 }
                 `}
-            </style>
-        </>
-    );
+      </style>
+    </>
+  );
 
-    return (
-        <>
-            {head}
-            <section style={{ fontFamily: "'Outfit', sans-serif" }}>
-                <div className="flex flex-col p-4 sm:p-10 bg-white rounded-xl min-h-[60rem]">
-                    {children}
-                </div>
-            </section>
-        </>
-    );
-} 
+  return (
+    <>
+      {head}
+      <section style={{ fontFamily: "'Outfit', sans-serif" }}>
+        <div className="flex flex-col p-4 sm:p-10 bg-white rounded-xl min-h-[60rem]">
+          {children}
+        </div>
+      </section>
+    </>
+  );
+}

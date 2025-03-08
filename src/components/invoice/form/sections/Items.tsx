@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
-import { Plus, Trash2, GripVertical, Copy } from "lucide-react";
+import * as React from 'react';
+import { useFormContext, useFieldArray } from 'react-hook-form';
+import { Plus, Trash2, GripVertical, Copy } from 'lucide-react';
 import {
   DndContext,
   closestCenter,
@@ -11,20 +11,20 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
-} from "@dnd-kit/core";
+} from '@dnd-kit/core';
 import {
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-import { Button } from "@/components/ui/button";
-import { FormInput } from "@/components/ui/form-input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import { FormInput } from '@/components/ui/form-input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { FormInvoiceType } from "@/types-optional";
+import { FormInvoiceType } from '@/types-optional';
 
 interface SortableItemProps {
   id: string;
@@ -35,14 +35,9 @@ interface SortableItemProps {
 
 function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
   const { register, watch, setValue, getValues } = useFormContext<FormInvoiceType>();
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -64,12 +59,11 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
   React.useEffect(() => {
     // For tax object - only initialize if completely missing or not an object
     if (!taxObj || typeof taxObj !== 'object') {
-      setValue(`details.items.${index}.tax`, { 
-        amount: 0, 
-        amountType: 'fixed' 
+      setValue(`details.items.${index}.tax`, {
+        amount: 0,
+        amountType: 'fixed',
       });
-    } 
-    else {
+    } else {
       // Only set amount if completely missing (don't overwrite valid zeros)
       if (taxObj.amount === undefined || taxObj.amount === null) {
         setValue(`details.items.${index}.tax.amount`, 0);
@@ -79,22 +73,20 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
         setValue(`details.items.${index}.tax.amountType`, 'fixed');
       }
     }
-    
+
     // For discount - similar approach
     if (discountObj === undefined || discountObj === null) {
-      setValue(`details.items.${index}.discount`, { 
-        amount: 0, 
-        amountType: 'fixed' 
+      setValue(`details.items.${index}.discount`, {
+        amount: 0,
+        amountType: 'fixed',
       });
-    }
-    else if (typeof discountObj === 'number') {
+    } else if (typeof discountObj === 'number') {
       // Convert legacy format to object
-      setValue(`details.items.${index}.discount`, { 
-        amount: discountObj, 
-        amountType: 'fixed' 
+      setValue(`details.items.${index}.discount`, {
+        amount: discountObj,
+        amountType: 'fixed',
       });
-    }
-    else if (typeof discountObj === 'object') {
+    } else if (typeof discountObj === 'object') {
       // Only set if completely missing
       if (discountObj.amount === undefined || discountObj.amount === null) {
         setValue(`details.items.${index}.discount.amount`, 0);
@@ -114,43 +106,49 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
       const currentPrice = getValues(`details.items.${index}.unitPrice`);
       const currentTaxObj = getValues(`details.items.${index}.tax`);
       const currentDiscountObj = getValues(`details.items.${index}.discount`);
-      
+
       // More permissive handling of values
       const qty = !currentQuantity || isNaN(Number(currentQuantity)) ? 0 : Number(currentQuantity);
       const price = !currentPrice || isNaN(Number(currentPrice)) ? 0 : Number(currentPrice);
-      
+
       // Calculate base amount
       let total = qty * price;
 
       // Process tax with proper type checking
       if (currentTaxObj && typeof currentTaxObj === 'object') {
-        const taxAmount = currentTaxObj.amount === undefined || currentTaxObj.amount === null || isNaN(Number(currentTaxObj.amount)) 
-          ? 0 
-          : Number(currentTaxObj.amount);
-          
+        const taxAmount =
+          currentTaxObj.amount === undefined ||
+          currentTaxObj.amount === null ||
+          isNaN(Number(currentTaxObj.amount))
+            ? 0
+            : Number(currentTaxObj.amount);
+
         const taxType = currentTaxObj.amountType || 'fixed';
-        
+
         if (taxType === 'percentage') {
           total += (total * taxAmount) / 100;
         } else {
           total += taxAmount;
         }
       }
-      
+
       // Process discount with proper type checking
       if (currentDiscountObj) {
         // Handle legacy numeric format
         if (typeof currentDiscountObj === 'number') {
           total -= currentDiscountObj;
-        } 
+        }
         // Handle object format
         else if (typeof currentDiscountObj === 'object') {
-          const discountAmount = currentDiscountObj.amount === undefined || currentDiscountObj.amount === null || isNaN(Number(currentDiscountObj.amount))
-            ? 0
-            : Number(currentDiscountObj.amount);
-            
+          const discountAmount =
+            currentDiscountObj.amount === undefined ||
+            currentDiscountObj.amount === null ||
+            isNaN(Number(currentDiscountObj.amount))
+              ? 0
+              : Number(currentDiscountObj.amount);
+
           const discountType = currentDiscountObj.amountType || 'fixed';
-          
+
           if (discountType === 'percentage') {
             total -= (total * discountAmount) / 100;
           } else {
@@ -158,13 +156,12 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
           }
         }
       }
-      
+
       // Ensure total is never negative and rounded properly
       total = Math.max(0, Math.round(total * 100) / 100);
       setValue(`details.items.${index}.total`, total);
-      
     } catch (error) {
-      console.error("Error calculating total:", error);
+      console.error('Error calculating total:', error);
       setValue(`details.items.${index}.total`, 0);
     }
   }, [index, setValue, getValues]);
@@ -182,7 +179,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
     register(`details.items.${index}.discount.amount`);
     register(`details.items.${index}.discount.amountType`);
   }, [index, register]);
-  
+
   // Watch fields and calculate total
   React.useEffect(() => {
     calculateTotal();
@@ -194,12 +191,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
       style={style}
       className="flex items-center gap-2 p-3 bg-background rounded-lg border mb-3 hover:border-primary/50 transition-colors"
     >
-      <button
-        type="button"
-        className="cursor-grab touch-none"
-        {...attributes}
-        {...listeners}
-      >
+      <button type="button" className="cursor-grab touch-none" {...attributes} {...listeners}>
         <GripVertical className="h-5 w-5 text-muted-foreground" />
       </button>
 
@@ -218,7 +210,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
           <FormInput
             type="number"
             {...register(`details.items.${index}.quantity`, {
-              setValueAs: (v) => (v === '' || v === null || v === undefined) ? 0 : Number(v),
+              setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             placeholder="Qty"
             className="h-9"
@@ -232,7 +224,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             type="number"
             step="0.01"
             {...register(`details.items.${index}.unitPrice`, {
-              setValueAs: (v) => (v === '' || v === null || v === undefined) ? 0 : Number(v),
+              setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             placeholder="Price"
             className="h-9"
@@ -246,7 +238,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             type="number"
             step="0.01"
             {...register(`details.items.${index}.discount.amount`, {
-              setValueAs: (v) => (v === '' || v === null || v === undefined) ? 0 : Number(v),
+              setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             placeholder="Discount"
             className="h-9"
@@ -258,7 +250,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
               calculateTotal();
             }}
           />
-          
+
           <select
             {...register(`details.items.${index}.discount.amountType`)}
             className="h-9 w-10 rounded-md border text-xs"
@@ -266,35 +258,35 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
               // Set the value directly and then calculate
               const newAmountType = e.target.value;
               setValue(`details.items.${index}.discount.amountType`, newAmountType);
-              
+
               // Force immediate recalculation with the new type
               const currentAmount = getValues(`details.items.${index}.discount.amount`) || 0;
               const currentQuantity = getValues(`details.items.${index}.quantity`) || 0;
               const currentPrice = getValues(`details.items.${index}.unitPrice`) || 0;
-              
+
               // Calculate base amount
               let total = currentQuantity * currentPrice;
-              
+
               // Apply any existing tax
               const taxObj = getValues(`details.items.${index}.tax`);
               if (taxObj && typeof taxObj === 'object') {
                 const taxAmount = taxObj.amount || 0;
                 const taxType = taxObj.amountType || 'fixed';
-                
+
                 if (taxType === 'percentage') {
                   total += (total * taxAmount) / 100;
                 } else {
                   total += taxAmount;
                 }
               }
-              
+
               // Apply discount with new amountType
               if (newAmountType === 'percentage') {
                 total -= (total * currentAmount) / 100;
               } else {
                 total -= Number(currentAmount);
               }
-              
+
               // Update total immediately
               setValue(`details.items.${index}.total`, Math.max(0, Math.round(total * 100) / 100));
             }}
@@ -310,7 +302,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             type="number"
             step="0.01"
             {...register(`details.items.${index}.tax.amount`, {
-              setValueAs: (v) => (v === '' || v === null || v === undefined) ? 0 : Number(v),
+              setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             placeholder="Tax"
             className="h-9"
@@ -321,7 +313,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
               calculateTotal();
             }}
           />
-          
+
           <select
             {...register(`details.items.${index}.tax.amountType`)}
             className="h-9 w-10 rounded-md border text-xs"
@@ -329,35 +321,35 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
               // Set the value directly and then calculate
               const newAmountType = e.target.value;
               setValue(`details.items.${index}.tax.amountType`, newAmountType);
-              
+
               // Force immediate recalculation with the new type
               const currentAmount = getValues(`details.items.${index}.tax.amount`) || 0;
               const currentQuantity = getValues(`details.items.${index}.quantity`) || 0;
               const currentPrice = getValues(`details.items.${index}.unitPrice`) || 0;
-              
+
               // Calculate base amount
               let total = currentQuantity * currentPrice;
-              
+
               // Apply tax with new amountType
               if (newAmountType === 'percentage') {
                 total += (total * currentAmount) / 100;
               } else {
                 total += Number(currentAmount);
               }
-              
+
               // Apply any existing discount
               const discountObj = getValues(`details.items.${index}.discount`);
               if (discountObj && typeof discountObj === 'object') {
                 const discountAmount = discountObj.amount || 0;
                 const discountType = discountObj.amountType || 'fixed';
-                
+
                 if (discountType === 'percentage') {
                   total -= (total * discountAmount) / 100;
                 } else {
                   total -= discountAmount;
                 }
               }
-              
+
               // Update total immediately
               setValue(`details.items.${index}.total`, Math.max(0, Math.round(total * 100) / 100));
             }}
@@ -373,7 +365,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             type="number"
             step="0.01"
             {...register(`details.items.${index}.total`, {
-              setValueAs: (v) => (v === '' || v === null || v === undefined) ? 0 : Number(v),
+              setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             readOnly
             placeholder="0.00"
@@ -414,7 +406,7 @@ export function Items() {
   const { control, getValues } = useFormContext<FormInvoiceType>();
   const { fields, append, remove, move } = useFieldArray({
     control,
-    name: "details.items",
+    name: 'details.items',
   });
 
   const sensors = useSensors(
@@ -441,10 +433,12 @@ export function Items() {
   const duplicateItem = (index: number) => {
     const itemToDuplicate = getValues(`details.items.${index}`);
     // Deep clone to ensure we don't share object references
-    const newItem = JSON.parse(JSON.stringify({
-      ...itemToDuplicate,
-      id: crypto.randomUUID(),
-    }));
+    const newItem = JSON.parse(
+      JSON.stringify({
+        ...itemToDuplicate,
+        id: crypto.randomUUID(),
+      })
+    );
     append(newItem);
   };
 
@@ -464,15 +458,8 @@ export function Items() {
           <div className="col-span-2">Total</div>
         </div>
 
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext
-            items={itemIds}
-            strategy={verticalListSortingStrategy}
-          >
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
             {fields.map((field, index) => (
               <SortableItem
                 key={field.id?.toString() || index.toString()}
@@ -493,12 +480,12 @@ export function Items() {
             onClick={() => {
               const newItem = {
                 id: crypto.randomUUID(),
-                name: "",
+                name: '',
                 quantity: 1,
                 unitPrice: 0,
                 total: 0,
                 tax: { amount: 0, amountType: 'fixed' },
-                discount: { amount: 0, amountType: 'fixed' }
+                discount: { amount: 0, amountType: 'fixed' },
               };
               append(newItem);
             }}

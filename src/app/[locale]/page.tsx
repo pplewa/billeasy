@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
 import {
   ArrowUpRight,
   FileText,
@@ -17,29 +17,18 @@ import {
   CreditCard,
   Zap,
   BarChart,
-} from "lucide-react";
-import {
-  parseInvoiceText,
-  parseInvoiceFile,
-} from "@/services/invoice/client/invoiceParserClient";
-import useInvoiceParserStore from "@/store/invoice-parser-store";
-import { useToast } from "@/components/ui/use-toast";
+} from 'lucide-react';
+import { parseInvoiceText, parseInvoiceFile } from '@/services/invoice/client/invoiceParserClient';
+import useInvoiceParserStore from '@/store/invoice-parser-store';
+import { useToast } from '@/components/ui/use-toast';
 
-export default function Home({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const [locale, setLocale] = useState<string>("");
-  const [text, setText] = useState("");
+export default function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const [locale, setLocale] = useState<string>('');
+  const [text, setText] = useState('');
   const [isTextFocused, setIsTextFocused] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const {
-    setParsedInvoice,
-    setParserLoading,
-    setParserError,
-    isParserLoading,
-  } = useInvoiceParserStore();
+  const { setParsedInvoice, setParserLoading, setParserError, isParserLoading } =
+    useInvoiceParserStore();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -74,31 +63,26 @@ export default function Home({
       // Check file size (max 1MB)
       if (file.size > 1024 * 1024) {
         toast({
-          title: "File too large",
-          description: "Please select a file smaller than 1MB",
-          variant: "destructive",
+          title: 'File too large',
+          description: 'Please select a file smaller than 1MB',
+          variant: 'destructive',
         });
         if (fileInputRef.current) {
-          fileInputRef.current.value = "";
+          fileInputRef.current.value = '';
         }
         return;
       }
 
       // Check file type
-      const allowedTypes = [
-        "application/pdf",
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-      ];
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
       if (!allowedTypes.includes(file.type)) {
         toast({
-          title: "Invalid file type",
-          description: "Only PDF and image files (JPEG, PNG, WebP) are allowed",
-          variant: "destructive",
+          title: 'Invalid file type',
+          description: 'Only PDF and image files (JPEG, PNG, WebP) are allowed',
+          variant: 'destructive',
         });
         if (fileInputRef.current) {
-          fileInputRef.current.value = "";
+          fileInputRef.current.value = '';
         }
         return;
       }
@@ -122,7 +106,7 @@ export default function Home({
       const { invoice } = await parseInvoiceText(text);
 
       if (Object.keys(invoice).length === 0) {
-        throw new Error("Could not extract any invoice data from the text");
+        throw new Error('Could not extract any invoice data from the text');
       }
 
       // Create proper interface for our invoice structure
@@ -147,32 +131,34 @@ export default function Home({
       }
 
       // Restructure invoice to ensure it's properly formatted
-      const restructuredInvoice: ParsedInvoice = { ...invoice as ParsedInvoice };
-      
+      const restructuredInvoice: ParsedInvoice = { ...(invoice as ParsedInvoice) };
+
       // Initialize details object if it doesn't exist
       restructuredInvoice.details = restructuredInvoice.details || {};
-      
+
       // If items exist at the top level, move them to details.items
       if ((invoice as ParsedInvoice).items && Array.isArray((invoice as ParsedInvoice).items)) {
         restructuredInvoice.details.items = (invoice as ParsedInvoice).items || [];
         delete restructuredInvoice.items; // Remove from top level
       }
-      
+
       // Make sure we have an items array
       restructuredInvoice.details.items = restructuredInvoice.details.items || [];
-      
+
       // Ensure each item is properly structured with all required fields
       if (restructuredInvoice.details.items.length > 0) {
-        restructuredInvoice.details.items = restructuredInvoice.details.items.map((item: Partial<InvoiceItem>) => ({
-          id: item.id || crypto.randomUUID(),
-          name: item.name || item.description || 'Item',
-          description: item.description || '',
-          quantity: typeof item.quantity === 'number' ? item.quantity : 1,
-          unitPrice: typeof item.unitPrice === 'number' ? item.unitPrice : 0,
-          total: typeof item.total === 'number' ? item.total : 0
-        }));
+        restructuredInvoice.details.items = restructuredInvoice.details.items.map(
+          (item: Partial<InvoiceItem>) => ({
+            id: item.id || crypto.randomUUID(),
+            name: item.name || item.description || 'Item',
+            description: item.description || '',
+            quantity: typeof item.quantity === 'number' ? item.quantity : 1,
+            unitPrice: typeof item.unitPrice === 'number' ? item.unitPrice : 0,
+            total: typeof item.total === 'number' ? item.total : 0,
+          })
+        );
       }
-      
+
       // Ensure the invoice has sender and receiver sections
       restructuredInvoice.sender = restructuredInvoice.sender || {};
       restructuredInvoice.receiver = restructuredInvoice.receiver || {};
@@ -183,17 +169,12 @@ export default function Home({
       // Redirect to invoice creation page
       router.push(`/${locale}/invoice/create`);
     } catch (error) {
-      console.error("Error parsing invoice text:", error);
-      setParserError(
-        error instanceof Error ? error.message : "Failed to parse invoice text"
-      );
+      console.error('Error parsing invoice text:', error);
+      setParserError(error instanceof Error ? error.message : 'Failed to parse invoice text');
       toast({
-        title: "Parsing failed",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Failed to parse invoice text",
-        variant: "destructive",
+        title: 'Parsing failed',
+        description: error instanceof Error ? error.message : 'Failed to parse invoice text',
+        variant: 'destructive',
       });
 
       // Still navigate to create page even on error
@@ -217,7 +198,7 @@ export default function Home({
       const { invoice } = await parseInvoiceFile(file);
 
       if (Object.keys(invoice).length === 0) {
-        throw new Error("Could not extract any invoice data from the file");
+        throw new Error('Could not extract any invoice data from the file');
       }
 
       setParsedInvoice(invoice);
@@ -225,17 +206,12 @@ export default function Home({
       // Redirect to invoice creation page
       router.push(`/${locale}/invoice/create`);
     } catch (error) {
-      console.error("Error parsing invoice file:", error);
-      setParserError(
-        error instanceof Error ? error.message : "Failed to parse invoice file"
-      );
+      console.error('Error parsing invoice file:', error);
+      setParserError(error instanceof Error ? error.message : 'Failed to parse invoice file');
       toast({
-        title: "Parsing failed",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Failed to parse invoice file",
-        variant: "destructive",
+        title: 'Parsing failed',
+        description: error instanceof Error ? error.message : 'Failed to parse invoice file',
+        variant: 'destructive',
       });
 
       // Still navigate to create page even on error
@@ -267,11 +243,11 @@ export default function Home({
           <Card className="w-full max-w-3xl mx-auto shadow-lg border-muted/50 bg-card/80 backdrop-blur-sm">
             <CardContent className="p-6">
               <div
-                className={`relative transition-all duration-200 ${isTextFocused ? "ring-2 ring-primary/50 rounded-lg" : ""}`}
+                className={`relative transition-all duration-200 ${isTextFocused ? 'ring-2 ring-primary/50 rounded-lg' : ''}`}
               >
                 <Textarea
                   placeholder="Describe your invoice details or upload an existing one (PDF, JPEG, PNG, WebP)"
-                  className={`transition-all duration-200 text-lg resize-none pb-20 ${isTextFocused ? "border-primary" : ""}`}
+                  className={`transition-all duration-200 text-lg resize-none pb-20 ${isTextFocused ? 'border-primary' : ''}`}
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   onFocus={() => setIsTextFocused(true)}
@@ -315,11 +291,7 @@ export default function Home({
                       ) : (
                         <>
                           <ArrowUpRight className="h-5 w-5" />
-                          <span>
-                            {text.trim()
-                              ? "Parse & Create"
-                              : "Create New Invoice"}
-                          </span>
+                          <span>{text.trim() ? 'Parse & Create' : 'Create New Invoice'}</span>
                         </>
                       )}
                     </Button>
@@ -367,9 +339,7 @@ export default function Home({
         <section className="py-16 md:py-24 border-t border-muted/30">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                How It Works
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Create professional invoices in three simple steps
               </p>
@@ -382,8 +352,8 @@ export default function Home({
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Create</h3>
                 <p className="text-muted-foreground">
-                  Type a description or upload an existing invoice. Our AI will
-                  extract all relevant details automatically.
+                  Type a description or upload an existing invoice. Our AI will extract all relevant
+                  details automatically.
                 </p>
               </div>
 
@@ -393,8 +363,8 @@ export default function Home({
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Customize</h3>
                 <p className="text-muted-foreground">
-                  Review and edit your invoice details in our user-friendly
-                  editor. Add your branding, adjust line items, and more.
+                  Review and edit your invoice details in our user-friendly editor. Add your
+                  branding, adjust line items, and more.
                 </p>
               </div>
 
@@ -404,8 +374,8 @@ export default function Home({
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Download or Save</h3>
                 <p className="text-muted-foreground">
-                  Export your invoice as a professional PDF, or sign in to save
-                  it to your account for future reference and tracking.
+                  Export your invoice as a professional PDF, or sign in to save it to your account
+                  for future reference and tracking.
                 </p>
               </div>
             </div>
@@ -427,9 +397,7 @@ export default function Home({
         <section className="py-16 md:py-24 bg-muted/30 -mx-4 px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Powerful Features
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Powerful Features</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Everything you need to create professional invoices quickly
               </p>
@@ -442,13 +410,10 @@ export default function Home({
                     <Sparkles className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      AI-Powered Extraction
-                    </h3>
+                    <h3 className="text-xl font-semibold mb-2">AI-Powered Extraction</h3>
                     <p className="text-muted-foreground">
-                      Our advanced AI analyzes text and documents to
-                      automatically fill in invoice details, saving you time and
-                      reducing errors.
+                      Our advanced AI analyzes text and documents to automatically fill in invoice
+                      details, saving you time and reducing errors.
                     </p>
                   </div>
                 </div>
@@ -460,13 +425,10 @@ export default function Home({
                     <Shield className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      No Account Required
-                    </h3>
+                    <h3 className="text-xl font-semibold mb-2">No Account Required</h3>
                     <p className="text-muted-foreground">
-                      Create and download invoices without signing up. Sign in
-                      only when you want to save invoices for later or track
-                      payments.
+                      Create and download invoices without signing up. Sign in only when you want to
+                      save invoices for later or track payments.
                     </p>
                   </div>
                 </div>
@@ -478,12 +440,10 @@ export default function Home({
                     <CreditCard className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      Professional Templates
-                    </h3>
+                    <h3 className="text-xl font-semibold mb-2">Professional Templates</h3>
                     <p className="text-muted-foreground">
-                      Choose from a variety of professionally designed invoice
-                      templates to make your business look its best.
+                      Choose from a variety of professionally designed invoice templates to make
+                      your business look its best.
                     </p>
                   </div>
                 </div>
@@ -495,13 +455,10 @@ export default function Home({
                     <BarChart className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      Automatic Calculations
-                    </h3>
+                    <h3 className="text-xl font-semibold mb-2">Automatic Calculations</h3>
                     <p className="text-muted-foreground">
-                      Let our system handle all calculations including
-                      subtotals, taxes, discounts, and totals with perfect
-                      accuracy.
+                      Let our system handle all calculations including subtotals, taxes, discounts,
+                      and totals with perfect accuracy.
                     </p>
                   </div>
                 </div>
@@ -513,12 +470,10 @@ export default function Home({
                     <FileText className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      Multi-format Export
-                    </h3>
+                    <h3 className="text-xl font-semibold mb-2">Multi-format Export</h3>
                     <p className="text-muted-foreground">
-                      Download your invoices in multiple formats including PDF,
-                      ready to send to clients or for your records.
+                      Download your invoices in multiple formats including PDF, ready to send to
+                      clients or for your records.
                     </p>
                   </div>
                 </div>
@@ -530,12 +485,10 @@ export default function Home({
                     <Star className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      Custom Branding
-                    </h3>
+                    <h3 className="text-xl font-semibold mb-2">Custom Branding</h3>
                     <p className="text-muted-foreground">
-                      Add your logo, custom colors, and personalize every aspect
-                      of your invoice to match your brand identity.
+                      Add your logo, custom colors, and personalize every aspect of your invoice to
+                      match your brand identity.
                     </p>
                   </div>
                 </div>
@@ -564,8 +517,7 @@ export default function Home({
               Ready to create professional invoices?
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Start creating beautifully designed, legally compliant invoices in
-              just seconds.
+              Start creating beautifully designed, legally compliant invoices in just seconds.
             </p>
             <Button
               size="lg"

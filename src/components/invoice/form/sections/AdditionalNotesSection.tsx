@@ -1,14 +1,17 @@
-"use client";
+'use client';
 
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from 'react-hook-form';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
 
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types';
 
 export function AdditionalNotesSection() {
-  const { register, formState: { errors } } = useFormContext<InvoiceType>();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<InvoiceType>();
 
   return (
     <Card className="w-full">
@@ -18,7 +21,7 @@ export function AdditionalNotesSection() {
       <CardContent>
         <div className="space-y-2">
           <Textarea
-            {...register("details.additionalNotes")}
+            {...register('details.additionalNotes')}
             placeholder="Add any additional notes or terms and conditions..."
             className="min-h-[100px]"
           />
@@ -31,4 +34,4 @@ export function AdditionalNotesSection() {
       </CardContent>
     </Card>
   );
-} 
+}

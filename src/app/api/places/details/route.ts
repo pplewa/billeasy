@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getAddressDetails, placeDetailsRequestSchema } from "@/lib/services/google-maps";
+import { NextRequest, NextResponse } from 'next/server';
+import { getAddressDetails, placeDetailsRequestSchema } from '@/lib/services/google-maps';
 
 /**
  * API endpoint for getting address details
@@ -8,13 +8,10 @@ import { getAddressDetails, placeDetailsRequestSchema } from "@/lib/services/goo
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const placeId = searchParams.get("placeId");
-    
+    const placeId = searchParams.get('placeId');
+
     if (!placeId) {
-      return NextResponse.json(
-        { error: "placeId parameter is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'placeId parameter is required' }, { status: 400 });
     }
 
     // Validate input
@@ -24,7 +21,7 @@ export async function GET(request: NextRequest) {
 
     if (!parseResult.success) {
       return NextResponse.json(
-        { error: "Invalid request parameters", details: parseResult.error.format() },
+        { error: 'Invalid request parameters', details: parseResult.error.format() },
         { status: 400 }
       );
     }
@@ -32,13 +29,9 @@ export async function GET(request: NextRequest) {
     // Get address details
     const addressDetails = await getAddressDetails(parseResult.data);
     return NextResponse.json({ addressDetails });
-    
   } catch (error) {
-    console.error("Error in place details API route:", error);
-    const errorMessage = error instanceof Error ? error.message : "Failed to get address details";
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
-    );
+    console.error('Error in place details API route:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to get address details';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
-} 
+}

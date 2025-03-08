@@ -80,20 +80,20 @@ For each item, ALWAYS include:
 Only include fields where you have information. If you're uncertain about any field, omit it entirely.
 For dates, use ISO format (YYYY-MM-DD). If no date is specified, DO NOT include the field.
 For numeric fields, use numbers without currency symbols. If a price is given per unit, calculate total = quantity * unitPrice.
-Generate a random UUID for each item id. If no specific invoice number is provided, DO NOT include it.`
+Generate a random UUID for each item id. If no specific invoice number is provided, DO NOT include it.`,
         },
         {
           role: 'user',
-          content: text
-        }
+          content: text,
+        },
       ],
       temperature: 0.1,
-      response_format: { type: 'json_object' }
+      response_format: { type: 'json_object' },
     });
 
     const resultContent = response.choices[0]?.message?.content || '{}';
     const parsedData = JSON.parse(resultContent) as Partial<InvoiceType>;
-    
+
     return parsedData;
   } catch (error) {
     console.error('Error parsing invoice with OpenAI:', error);
@@ -110,7 +110,7 @@ export async function parseInvoiceFromImage(base64Image: string): Promise<Partia
   try {
     // Determine the image format - default to PNG if unsure
     const imageFormat = base64Image.startsWith('/9j/') ? 'jpeg' : 'png';
-    
+
     const response = await openai.chat.completions.create({
       model: 'gpt-4o',
       messages: [
@@ -178,26 +178,29 @@ For each item, ALWAYS include:
 Only include fields where you have information. If you're uncertain about any field, omit it entirely.
 For dates, use ISO format (YYYY-MM-DD). If no date is specified, DO NOT include the field.
 For numeric fields, use numbers without currency symbols. If a price is given per unit, calculate total = quantity * unitPrice.
-Generate a random UUID for each item id. If no specific invoice number is provided, DO NOT include it.`
+Generate a random UUID for each item id. If no specific invoice number is provided, DO NOT include it.`,
         },
         {
           role: 'user',
           content: [
             { type: 'text', text: 'Extract all invoice information from this image:' },
-            { type: 'image_url', image_url: { url: `data:image/${imageFormat};base64,${base64Image}` } }
-          ]
-        }
+            {
+              type: 'image_url',
+              image_url: { url: `data:image/${imageFormat};base64,${base64Image}` },
+            },
+          ],
+        },
       ],
       temperature: 0.1,
-      response_format: { type: 'json_object' }
+      response_format: { type: 'json_object' },
     });
 
     const resultContent = response.choices[0]?.message?.content || '{}';
     const parsedData = JSON.parse(resultContent) as Partial<InvoiceType>;
-    
+
     return parsedData;
   } catch (error) {
     console.error('Error parsing invoice image with OpenAI:', error);
     throw new Error('Failed to parse invoice data from image');
   }
-} 
+}

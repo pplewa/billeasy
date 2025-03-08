@@ -1,17 +1,17 @@
-import { Locale } from "@/i18n/routing";
-import crypto from "crypto";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
-import AuthToken from "../db/models/AuthToken";
-import User, { IUser } from "../db/models/User";
-import connectToDatabase from "../db/mongodb";
-import { sendMagicLinkEmail } from "../email/email";
-import { NextResponse, NextRequest } from "next/server";
+import { Locale } from '@/i18n/routing';
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers';
+import AuthToken from '../db/models/AuthToken';
+import User, { IUser } from '../db/models/User';
+import connectToDatabase from '../db/mongodb';
+import { sendMagicLinkEmail } from '../email/email';
+import { NextResponse, NextRequest } from 'next/server';
 
-const JWT_SECRET = process.env.JWT_SECRET || "";
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "7d";
+const JWT_SECRET = process.env.JWT_SECRET || '';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 const TOKEN_EXPIRY_TIME = 30 * 60 * 1000; // 30 minutes in milliseconds
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 interface JwtPayload {
   sub: string;
@@ -40,7 +40,7 @@ export interface UserInfo {
  * Generate a secure random token for magic link authentication
  */
 export function generateToken(): string {
-  return crypto.randomBytes(32).toString("hex");
+  return crypto.randomBytes(32).toString('hex');
 }
 
 /**
@@ -65,10 +65,7 @@ export async function createAuthToken(email: string): Promise<string> {
 /**
  * Send a magic link to the user's email
  */
-export async function sendAuthEmail(
-  email: string,
-  locale: Locale = "en"
-): Promise<boolean> {
+export async function sendAuthEmail(email: string, locale: Locale = 'en'): Promise<boolean> {
   const token = await createAuthToken(email);
   const url = `${APP_URL}/${locale}/verify?token=${token}`;
 
@@ -91,7 +88,7 @@ export async function verifyAuthToken(token: string): Promise<AuthResult> {
   });
 
   if (!tokenDoc) {
-    return { success: false, message: "Invalid or expired token" };
+    return { success: false, message: 'Invalid or expired token' };
   }
 
   // Mark the token as used
@@ -112,7 +109,7 @@ export async function verifyAuthToken(token: string): Promise<AuthResult> {
   )) as IUser;
 
   if (!JWT_SECRET) {
-    throw new Error("JWT_SECRET environment variable is not defined");
+    throw new Error('JWT_SECRET environment variable is not defined');
   }
 
   // Generate a JWT for the authenticated session
@@ -143,14 +140,14 @@ export async function verifyAuthToken(token: string): Promise<AuthResult> {
  * Set the authentication token in a cookie
  */
 export function setAuthCookie(response: NextResponse, authToken: string): NextResponse {
-  response.cookies.set("authToken", authToken, {
+  response.cookies.set('authToken', authToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24 * 7, // 1 week
-    path: "/",
-    sameSite: "lax",
+    path: '/',
+    sameSite: 'lax',
   });
-  
+
   return response;
 }
 
@@ -158,7 +155,7 @@ export function setAuthCookie(response: NextResponse, authToken: string): NextRe
  * Remove the authentication cookie
  */
 export function removeAuthCookie(response: NextResponse): NextResponse {
-  response.cookies.delete("authToken");
+  response.cookies.delete('authToken');
   return response;
 }
 
@@ -167,14 +164,14 @@ export function removeAuthCookie(response: NextResponse): NextResponse {
  */
 export async function getCurrentUser(request?: NextRequest): Promise<UserInfo | null> {
   let authToken: string | undefined;
-  
+
   if (request) {
     // Get the token from the request cookies
-    authToken = request.cookies.get("authToken")?.value;
+    authToken = request.cookies.get('authToken')?.value;
   } else {
     // Get the token from the server-side cookies
     const cookieStore = await cookies();
-    authToken = cookieStore.get("authToken")?.value;
+    authToken = cookieStore.get('authToken')?.value;
   }
 
   if (!authToken || !JWT_SECRET) {
@@ -199,7 +196,7 @@ export async function getCurrentUser(request?: NextRequest): Promise<UserInfo | 
       role: user.role,
     };
   } catch (error) {
-    console.error("Error getting current user:", error);
+    console.error('Error getting current user:', error);
     return null;
   }
 }

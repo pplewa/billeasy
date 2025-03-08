@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useRef } from "react";
-import { Check, Eraser, Upload } from "lucide-react";
+import { useRef } from 'react';
+import { Check, Eraser, Upload } from 'lucide-react';
 
-import { Card, CardContent } from "@/components/ui/card";
-import { TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from '@/components/ui/card';
+import { TabsContent } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 
-import { useSignatureContext } from "@/contexts/SignatureContext";
-import { SignatureTabs } from "@/types";
+import { useSignatureContext } from '@/contexts/SignatureContext';
+import { SignatureTabs } from '@/types';
 
 interface UploadSignatureProps {
   handleSaveSignature: () => void;
@@ -16,8 +16,7 @@ interface UploadSignatureProps {
 
 export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { uploadedSignature, setUploadedSignature, clearUploadedSignature } =
-    useSignatureContext();
+  const { uploadedSignature, setUploadedSignature, clearUploadedSignature } = useSignatureContext();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -26,7 +25,7 @@ export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
     const reader = new FileReader();
     reader.onload = (event) => {
       const result = event.target?.result;
-      if (typeof result === "string") {
+      if (typeof result === 'string') {
         setUploadedSignature(result);
       }
     };
@@ -58,17 +57,11 @@ export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
               />
             </div>
           ) : (
-            <Button
-              variant="outline"
-              className="h-32 w-full"
-              onClick={handleUploadClick}
-            >
+            <Button variant="outline" className="h-32 w-full" onClick={handleUploadClick}>
               <div className="flex flex-col items-center gap-2">
                 <Upload className="h-6 w-6" />
                 <span>Click to upload signature</span>
-                <span className="text-xs text-muted-foreground">
-                  Supports PNG, JPG or GIF
-                </span>
+                <span className="text-xs text-muted-foreground">Supports PNG, JPG or GIF</span>
               </div>
             </Button>
           )}

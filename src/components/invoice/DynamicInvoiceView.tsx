@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import dynamic from "next/dynamic";
+import { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 
 // UI Components
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton';
 
 // Types
-import { InvoiceType } from "@/types-optional";
+import { InvoiceType } from '@/types-optional';
 
 // Helpers
-import { normalizeInvoice } from "@/lib/invoice-adapter";
+import { normalizeInvoice } from '@/lib/invoice-adapter';
 
 /**
  * Skeleton component shown while the invoice template is loading
@@ -28,20 +28,17 @@ interface DynamicInvoiceViewProps {
  * Dynamically loads and renders an invoice template based on the selected template ID
  * Used in the invoice view page to preview the invoice with different templates
  */
-const DynamicInvoiceView = ({
-  invoice,
-  templateId = 1,
-}: DynamicInvoiceViewProps) => {
+const DynamicInvoiceView = ({ invoice, templateId = 1 }: DynamicInvoiceViewProps) => {
   // Process the invoice data to ensure compatibility with templates
   const processedInvoice = useMemo(() => {
     // Normalize the invoice to ensure consistent structure
     const normalized = normalizeInvoice(invoice);
-    
+
     // Always set the template ID to match the selected template
     if (normalized.details) {
       normalized.details.pdfTemplate = templateId;
     }
-    
+
     return normalized;
   }, [invoice, templateId]);
 

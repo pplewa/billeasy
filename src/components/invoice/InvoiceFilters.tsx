@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { InvoiceStatus } from "@/types";
-import { Search, X } from "lucide-react";
+} from '@/components/ui/select';
+import { InvoiceStatus } from '@/types';
+import { Search, X } from 'lucide-react';
 
 interface InvoiceFiltersProps {
   onFilterChange: (filters: { status: string; search: string }) => void;
@@ -24,7 +24,7 @@ interface InvoiceFiltersProps {
  */
 export function InvoiceFilters({
   onFilterChange,
-  initialFilters = { status: "", search: "" },
+  initialFilters = { status: '', search: '' },
 }: InvoiceFiltersProps) {
   const [status, setStatus] = useState<string>(initialFilters.status);
   const [search, setSearch] = useState<string>(initialFilters.search);
@@ -43,9 +43,9 @@ export function InvoiceFilters({
 
   // Clear all filters
   const handleClearFilters = () => {
-    setStatus("");
-    setSearch("");
-    onFilterChange({ status: "", search: "" });
+    setStatus('');
+    setSearch('');
+    onFilterChange({ status: '', search: '' });
   };
 
   // Debounce search input
@@ -60,7 +60,8 @@ export function InvoiceFilters({
   // Apply debounced search filter
   useEffect(() => {
     // Skip initial render to avoid infinite loop
-    const isInitialRender = status === initialFilters.status && debouncedSearch === initialFilters.search;
+    const isInitialRender =
+      status === initialFilters.status && debouncedSearch === initialFilters.search;
     if (!isInitialRender) {
       onFilterChange({ status, search: debouncedSearch });
     }
@@ -71,10 +72,7 @@ export function InvoiceFilters({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2">
           <Label htmlFor="status">Status</Label>
-          <Select
-            value={status}
-            onValueChange={handleStatusChange}
-          >
+          <Select value={status} onValueChange={handleStatusChange}>
             <SelectTrigger id="status">
               <SelectValue placeholder="All Statuses" />
             </SelectTrigger>
@@ -105,7 +103,7 @@ export function InvoiceFilters({
                 size="sm"
                 className="absolute right-1 top-1.5 h-7 w-7 p-0"
                 onClick={() => {
-                  setSearch("");
+                  setSearch('');
                 }}
               >
                 <X className="h-4 w-4" />
@@ -118,15 +116,11 @@ export function InvoiceFilters({
 
       {(status || search) && (
         <div className="flex justify-end mt-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleClearFilters}
-          >
+          <Button variant="outline" size="sm" onClick={handleClearFilters}>
             Clear Filters
           </Button>
         </div>
       )}
     </div>
   );
-} 
+}

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { createContext, useContext, ReactNode } from "react";
-import { UseFormReturn } from "react-hook-form";
-import { FormInvoiceType } from "@/lib/types/invoice";
+import { createContext, useContext, ReactNode } from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import { FormInvoiceType } from '@/lib/types/invoice';
 
 interface InvoiceContextType {
   form: UseFormReturn<FormInvoiceType>;
@@ -49,7 +49,7 @@ export function InvoiceContextProvider({
 export function useInvoiceContext() {
   const context = useContext(InvoiceContext);
   if (!context) {
-    throw new Error("useInvoiceContext must be used within an InvoiceContextProvider");
+    throw new Error('useInvoiceContext must be used within an InvoiceContextProvider');
   }
   return context;
-} 
+}

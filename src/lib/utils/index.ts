@@ -3,4 +3,4 @@ export * from './ui';
 export * from './formatting';
 export * from './object';
 export * from './validation';
-export * from './file'; 
+export * from './file';

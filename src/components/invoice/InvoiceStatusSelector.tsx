@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { InvoiceStatusBadge } from "./InvoiceStatusBadge";
-import { InvoiceStatus } from "@/types";
-import { updateInvoice } from "@/services/invoice/client/invoiceClient";
-import { useToast } from "@/components/ui/use-toast";
-import { ChevronDown } from "lucide-react";
+} from '@/components/ui/dropdown-menu';
+import { InvoiceStatusBadge } from './InvoiceStatusBadge';
+import { InvoiceStatus } from '@/types';
+import { updateInvoice } from '@/services/invoice/client/invoiceClient';
+import { useToast } from '@/components/ui/use-toast';
+import { ChevronDown } from 'lucide-react';
 
 interface InvoiceStatusSelectorProps {
   invoiceId: string;
@@ -35,30 +35,30 @@ export function InvoiceStatusSelector({
    */
   const handleStatusChange = async (newStatus: string) => {
     if (newStatus === status) return;
-    
+
     setUpdating(true);
     try {
       // Update the invoice status in the database
       await updateInvoice(invoiceId, { details: { status: newStatus } });
-      
+
       // Update local state
       setStatus(newStatus);
-      
+
       // Call the callback if provided
       if (onStatusChange) {
         onStatusChange(invoiceId, newStatus);
       }
-      
+
       toast({
-        title: "Status updated",
+        title: 'Status updated',
         description: `Invoice status changed to ${newStatus}`,
       });
     } catch (error) {
-      console.error("Error updating invoice status:", error);
+      console.error('Error updating invoice status:', error);
       toast({
-        title: "Error",
-        description: "Failed to update invoice status",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update invoice status',
+        variant: 'destructive',
       });
     } finally {
       setUpdating(false);
@@ -89,4 +89,4 @@ export function InvoiceStatusSelector({
       </DropdownMenuContent>
     </DropdownMenu>
   );
-} 
+}

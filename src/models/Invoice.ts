@@ -1,5 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-import { InvoiceType } from "@/types";
+import mongoose, { Document, Schema } from 'mongoose';
+import { InvoiceType } from '@/types';
 
 export interface InvoiceDocument extends InvoiceType, Document {
   createdAt: Date;
@@ -57,17 +57,17 @@ const ItemSchema = new Schema(
     tax: {
       type: {
         amount: { type: Number },
-        amountType: { type: String }
+        amountType: { type: String },
       },
-      required: false
+      required: false,
     },
     discount: {
       type: {
         amount: { type: Number },
-        amountType: { type: String }
+        amountType: { type: String },
       },
-      required: false
-    }
+      required: false,
+    },
   },
   { _id: false, strict: false }
 );
@@ -152,12 +152,13 @@ const InvoiceSchema = new Schema(
     receiver: { type: InvoiceReceiverSchema },
     details: { type: InvoiceDetailsSchema },
   },
-  { 
-    timestamps: true, 
+  {
+    timestamps: true,
     strict: false,
     _id: true,
-    validateBeforeSave: false // Disable validation before save
+    validateBeforeSave: false, // Disable validation before save
   }
 );
 
-export const Invoice = mongoose.models.Invoice || mongoose.model<InvoiceDocument>("Invoice", InvoiceSchema); 
+export const Invoice =
+  mongoose.models.Invoice || mongoose.model<InvoiceDocument>('Invoice', InvoiceSchema);

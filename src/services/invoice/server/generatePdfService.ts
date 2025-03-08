@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
 // Helpers
-import { getInvoiceTemplate } from "@/lib/utils/file";
+import { getInvoiceTemplate } from '@/lib/utils/file';
 
 // Variables
-import { ENV } from "@/lib/variables";
+import { ENV } from '@/lib/variables';
 
 // Types
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types';
 
 /**
  * Generate a PDF document of an invoice based on the provided data.
@@ -18,26 +18,24 @@ import { InvoiceType } from "@/types";
  * @returns {Promise<NextResponse>} A promise that resolves to a NextResponse object containing the generated PDF.
  */
 export async function generatePdfService(req: NextRequest) {
-    try {
-        const body: InvoiceType = await req.json();
+  try {
+    const body: InvoiceType = await req.json();
 
-        const ReactDOMServer = (await import("react-dom/server")).default;
+    const ReactDOMServer = (await import('react-dom/server')).default;
 
-        // Get the selected invoice template
-        const templateId = body.details?.pdfTemplate || 1; // Default to template 1 if undefined
-        const InvoiceTemplate = await getInvoiceTemplate(templateId);
+    // Get the selected invoice template
+    const templateId = body.details?.pdfTemplate || 1; // Default to template 1 if undefined
+    const InvoiceTemplate = await getInvoiceTemplate(templateId);
 
-        if (!InvoiceTemplate) {
-            throw new Error(`Template with ID ${templateId} not found`);
-        }
+    if (!InvoiceTemplate) {
+      throw new Error(`Template with ID ${templateId} not found`);
+    }
 
-        // Generate HTML content from the React component
-        const htmlContent = ReactDOMServer.renderToStaticMarkup(
-            InvoiceTemplate(body)
-        );
+    // Generate HTML content from the React component
+    const htmlContent = ReactDOMServer.renderToStaticMarkup(InvoiceTemplate(body));
 
-        // Add HTML wrapper with styles
-        const fullHtml = `
+    // Add HTML wrapper with styles
+    const fullHtml = `
             <!DOCTYPE html>
             <html>
             <head>
@@ -69,120 +67,124 @@ export async function generatePdfService(req: NextRequest) {
             </html>
         `;
 
-        // Launch the browser in production or development mode depending on the environment
-        if (ENV === "production") {
-            // For production, we would use a serverless solution or a PDF API
-            // This is a simplified implementation using Puppeteer
-            const puppeteer = await import('puppeteer');
-            
-            // Log environment for debugging
-            console.log('Launching Puppeteer in production mode');
-            console.log('Node environment:', process.env.NODE_ENV);
-            
-            try {
-                // Launch a headless browser with improved error handling
-                const browser = await puppeteer.default.launch({
-                    headless: true,
-                    // Don't specify executablePath to let Puppeteer find Chrome automatically
-                    args: ['--no-sandbox', '--disable-setuid-sandbox']
-                });
-                
-                try {
-                    // Create a new page
-                    const page = await browser.newPage();
-                    
-                    // Set content to our HTML
-                    await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
-                    
-                    // Generate PDF
-                    const pdfBuffer = await page.pdf({
-                        format: 'A4',
-                        printBackground: true,
-                        margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' }
-                    });
-                    
-                    // Close the browser
-                    await browser.close();
-                    
-                    // Return the PDF
-                    return new NextResponse(pdfBuffer, {
-                        headers: {
-                            'Content-Type': 'application/pdf',
-                            'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`
-                        }
-                    });
-                } catch (error) {
-                    // Make sure to close the browser in case of error
-                    await browser.close();
-                    throw error;
-                }
-            } catch (error: unknown) {
-                console.error('Error launching browser:', error);
-                throw new Error(`Failed to launch browser: ${error instanceof Error ? error.message : String(error)}`);
-            }
-        } else {
-            // For development, we use the same approach but with more detailed logging
-            console.log('Generating PDF in development mode');
-            
-            const puppeteer = await import('puppeteer');
-            
-            try {
-                // Launch a headless browser with more verbose options for development
-                const browser = await puppeteer.default.launch({
-                    headless: true,
-                    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                    // Uncomment for debugging if needed
-                    // devtools: true,
-                });
-                
-                try {
-                    // Create a new page
-                    const page = await browser.newPage();
-                    
-                    // Enable console logging from the browser
-                    page.on('console', (msg) => console.log('Browser console:', msg.text()));
-                    
-                    // Set content to our HTML
-                    await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
-                    
-                    console.log('HTML content loaded in browser');
-                    
-                    // Generate PDF
-                    const pdfBuffer = await page.pdf({
-                        format: 'A4',
-                        printBackground: true,
-                        margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' }
-                    });
-                    
-                    console.log('PDF generated successfully');
-                    
-                    // Close the browser
-                    await browser.close();
-                    
-                    // Return the PDF
-                    return new NextResponse(pdfBuffer, {
-                        headers: {
-                            'Content-Type': 'application/pdf',
-                            'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`
-                        }
-                    });
-                } catch (error) {
-                    // Make sure to close the browser in case of error
-                    await browser.close();
-                    console.error('Error in PDF generation:', error);
-                    throw error;
-                }
-            } catch (error) {
-                console.error('Error launching browser:', error);
-                throw new Error(`Failed to launch browser: ${error instanceof Error ? error.message : String(error)}`);
-            }
-        }
-    } catch (error) {
-        console.error(error);
+    // Launch the browser in production or development mode depending on the environment
+    if (ENV === 'production') {
+      // For production, we would use a serverless solution or a PDF API
+      // This is a simplified implementation using Puppeteer
+      const puppeteer = await import('puppeteer');
 
-        // Return an error response
-        return new NextResponse(`Error generating PDF: \n${error}`, {
-            status: 500,
+      // Log environment for debugging
+      console.log('Launching Puppeteer in production mode');
+      console.log('Node environment:', process.env.NODE_ENV);
+
+      try {
+        // Launch a headless browser with improved error handling
+        const browser = await puppeteer.default.launch({
+          headless: true,
+          // Don't specify executablePath to let Puppeteer find Chrome automatically
+          args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
+
+        try {
+          // Create a new page
+          const page = await browser.newPage();
+
+          // Set content to our HTML
+          await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
+
+          // Generate PDF
+          const pdfBuffer = await page.pdf({
+            format: 'A4',
+            printBackground: true,
+            margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' },
+          });
+
+          // Close the browser
+          await browser.close();
+
+          // Return the PDF
+          return new NextResponse(pdfBuffer, {
+            headers: {
+              'Content-Type': 'application/pdf',
+              'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`,
+            },
+          });
+        } catch (error) {
+          // Make sure to close the browser in case of error
+          await browser.close();
+          throw error;
+        }
+      } catch (error: unknown) {
+        console.error('Error launching browser:', error);
+        throw new Error(
+          `Failed to launch browser: ${error instanceof Error ? error.message : String(error)}`
+        );
+      }
+    } else {
+      // For development, we use the same approach but with more detailed logging
+      console.log('Generating PDF in development mode');
+
+      const puppeteer = await import('puppeteer');
+
+      try {
+        // Launch a headless browser with more verbose options for development
+        const browser = await puppeteer.default.launch({
+          headless: true,
+          args: ['--no-sandbox', '--disable-setuid-sandbox'],
+          // Uncomment for debugging if needed
+          // devtools: true,
+        });
+
+        try {
+          // Create a new page
+          const page = await browser.newPage();
+
+          // Enable console logging from the browser
+          page.on('console', (msg) => console.log('Browser console:', msg.text()));
+
+          // Set content to our HTML
+          await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
+
+          console.log('HTML content loaded in browser');
+
+          // Generate PDF
+          const pdfBuffer = await page.pdf({
+            format: 'A4',
+            printBackground: true,
+            margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' },
+          });
+
+          console.log('PDF generated successfully');
+
+          // Close the browser
+          await browser.close();
+
+          // Return the PDF
+          return new NextResponse(pdfBuffer, {
+            headers: {
+              'Content-Type': 'application/pdf',
+              'Content-Disposition': `attachment; filename="invoice-${body.details?.invoiceNumber || 'download'}.pdf"`,
+            },
+          });
+        } catch (error) {
+          // Make sure to close the browser in case of error
+          await browser.close();
+          console.error('Error in PDF generation:', error);
+          throw error;
+        }
+      } catch (error) {
+        console.error('Error launching browser:', error);
+        throw new Error(
+          `Failed to launch browser: ${error instanceof Error ? error.message : String(error)}`
+        );
+      }
     }
+  } catch (error) {
+    console.error(error);
+
+    // Return an error response
+    return new NextResponse(`Error generating PDF: \n${error}`, {
+      status: 500,
+    });
+  }
 }

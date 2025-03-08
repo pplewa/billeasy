@@ -1,22 +1,19 @@
-"use client";
+'use client';
 
-import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
-import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
-import { InvoiceForm } from "@/components/invoice/InvoiceForm";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import { InvoiceContextProvider } from "@/contexts/InvoiceContext";
-import { InvoiceSchema } from "@/lib/schemas-optional";
-import {
-  fetchInvoiceById,
-  updateInvoice,
-} from "@/services/invoice/client/invoiceClient";
-import { InvoiceType } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Download, Loader2, Mail, Printer } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
+import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
+import { InvoiceForm } from '@/components/invoice/InvoiceForm';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+import { InvoiceContextProvider } from '@/contexts/InvoiceContext';
+import { InvoiceSchema } from '@/lib/schemas-optional';
+import { fetchInvoiceById, updateInvoice } from '@/services/invoice/client/invoiceClient';
+import { InvoiceType } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Download, Loader2, Mail, Printer } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 export default function EditInvoicePage({
   params,
@@ -28,8 +25,8 @@ export default function EditInvoicePage({
   const [invoice, setInvoice] = useState<InvoiceType | null>(null);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [locale, setLocale] = useState<string>("");
-  const [invoiceId, setInvoiceId] = useState<string>("");
+  const [locale, setLocale] = useState<string>('');
+  const [invoiceId, setInvoiceId] = useState<string>('');
 
   // Get locale and id from params
   useEffect(() => {
@@ -44,9 +41,9 @@ export default function EditInvoicePage({
   // Create form methods
   const form = useForm<InvoiceType>({
     resolver: zodResolver(InvoiceSchema),
-    mode: "onSubmit",
-    reValidateMode: "onSubmit",
-    criteriaMode: "all",
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+    criteriaMode: 'all',
     shouldFocusError: false,
     shouldUseNativeValidation: false,
     delayError: 500,
@@ -64,11 +61,11 @@ export default function EditInvoicePage({
         // Reset form with the loaded invoice data
         form.reset(data);
       } catch (error) {
-        console.error("Error loading invoice:", error);
+        console.error('Error loading invoice:', error);
         toast({
-          title: "Error",
-          description: "Failed to load invoice. Please try again.",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to load invoice. Please try again.',
+          variant: 'destructive',
         });
         if (locale) {
           router.push(`/${locale}/invoices`);
@@ -93,16 +90,16 @@ export default function EditInvoicePage({
 
       await updateInvoice(invoiceId, formData);
       toast({
-        title: "Success",
-        description: "Invoice updated successfully",
+        title: 'Success',
+        description: 'Invoice updated successfully',
       });
       router.push(`/${locale}/invoice/view/${invoiceId}`);
     } catch (error) {
-      console.error("Error updating invoice:", error);
+      console.error('Error updating invoice:', error);
       toast({
-        title: "Error",
-        description: "Failed to update invoice. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update invoice. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -137,14 +134,14 @@ export default function EditInvoicePage({
             margin: 0;
             padding: 0;
           }
-          
+
           .container {
             width: 100%;
             max-width: 100%;
             padding: 20px;
             margin: 0;
           }
-          
+
           .print-hidden {
             display: none !important;
           }
@@ -163,29 +160,21 @@ export default function EditInvoicePage({
             <Printer className="w-4 h-4 mr-2" />
             Print
           </Button>
-          
+
           <InvoiceEmailModal invoice={invoice}>
-            <Button
-              variant="outline"
-              className="w-full md:w-auto"
-              disabled={isSubmitting}
-            >
+            <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Mail className="w-4 h-4 mr-2" />
               Email
             </Button>
           </InvoiceEmailModal>
-          
+
           <InvoiceExportModal invoice={invoice}>
-            <Button
-              variant="outline"
-              className="w-full md:w-auto"
-              disabled={isSubmitting}
-            >
+            <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
           </InvoiceExportModal>
-          
+
           <Button
             className="w-full md:w-auto"
             onClick={form.handleSubmit(handleSubmit)}

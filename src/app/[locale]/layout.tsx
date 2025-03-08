@@ -1,17 +1,17 @@
-import AuthProvider from "@/components/auth/AuthProvider";
-import MainNav from "@/components/layout/MainNav";
-import { Locale, locales } from "@/i18n/routing";
-import { NextIntlClientProvider } from "next-intl";
-import { Link } from "@/i18n/routing";
-import { getMessages, setRequestLocale } from "next-intl/server";
-import { Inter } from "next/font/google";
-import { notFound } from "next/navigation";
-import { ReactNode } from "react";
-import { Toaster } from "sonner";
+import AuthProvider from '@/components/auth/AuthProvider';
+import MainNav from '@/components/layout/MainNav';
+import { Locale, locales } from '@/i18n/routing';
+import { NextIntlClientProvider } from 'next-intl';
+import { Link } from '@/i18n/routing';
+import { getMessages, setRequestLocale } from 'next-intl/server';
+import { Inter } from 'next/font/google';
+import { notFound } from 'next/navigation';
+import { ReactNode } from 'react';
+import { Toaster } from 'sonner';
 
-import { dancingScript, greatVibes, pacifico, outfit } from "@/lib/fonts";
+import { dancingScript, greatVibes, pacifico, outfit } from '@/lib/fonts';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -49,19 +49,10 @@ export default async function LocaleLayout({ children, params }: Props) {
               <main className="flex-1 container mx-auto">{children}</main>
               <footer className="border-t py-4 text-center text-sm text-gray-500">
                 <div className="container mx-auto px-4">
-                  &copy; {new Date().getFullYear()} Bill Easy {" · "} All rights
-                  reserved {" · "}
-                  <Link
-                    href={{ pathname: "/privacy-policy" }}
-                  >
-                    Privacy Policy
-                  </Link>
-                  {" · "}
-                  <Link
-                    href={{ pathname: "/terms-of-service" }}
-                  >
-                    Terms of Service
-                  </Link>
+                  &copy; {new Date().getFullYear()} Bill Easy {' · '} All rights reserved {' · '}
+                  <Link href={{ pathname: '/privacy-policy' }}>Privacy Policy</Link>
+                  {' · '}
+                  <Link href={{ pathname: '/terms-of-service' }}>Terms of Service</Link>
                 </div>
               </footer>
             </div>

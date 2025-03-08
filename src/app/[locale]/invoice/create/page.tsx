@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { InvoiceForm } from "@/components/invoice/InvoiceForm";
-import { useToast } from "@/components/ui/use-toast";
-import { InvoiceContextProvider } from "@/contexts/InvoiceContext";
-import { InvoiceSchemaForm } from "@/lib/schemas/invoice";
-import { createInvoice } from "@/services/invoice/client/invoiceClient";
-import { FormInvoiceType, ParsedInvoiceType } from "@/lib/types/invoice";
-import { InvoiceTransformer } from "@/lib/transformers/invoice";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
-import { useForm, useFormContext, SubmitHandler } from "react-hook-form";
-import useInvoiceParserStore from "@/store/invoice-parser-store";
-import useAuthStore from "@/store/auth-store";
+import { InvoiceForm } from '@/components/invoice/InvoiceForm';
+import { useToast } from '@/components/ui/use-toast';
+import { InvoiceContextProvider } from '@/contexts/InvoiceContext';
+import { InvoiceSchemaForm } from '@/lib/schemas/invoice';
+import { createInvoice } from '@/services/invoice/client/invoiceClient';
+import { FormInvoiceType, ParsedInvoiceType } from '@/lib/types/invoice';
+import { InvoiceTransformer } from '@/lib/transformers/invoice';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect, useMemo } from 'react';
+import { useForm, useFormContext, SubmitHandler } from 'react-hook-form';
+import useInvoiceParserStore from '@/store/invoice-parser-store';
+import useAuthStore from '@/store/auth-store';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -20,12 +20,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Download, AlertCircle, Zap, Mail, Printer } from "lucide-react";
-import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
-import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
-import { AddressSwapButton } from "@/components/invoice/AddressSwapButton";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Download, AlertCircle, Zap, Mail, Printer } from 'lucide-react';
+import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
+import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
+import { AddressSwapButton } from '@/components/invoice/AddressSwapButton';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -80,38 +80,36 @@ type ParsedInvoice = {
 
 // Type guard for ParsedInvoiceItem array
 function isValidItemsArray(items: unknown): items is Array<ParsedInvoiceItem> {
-  return Array.isArray(items) && items.length > 0 && items.every(item => 
-    typeof item === 'object' && item !== null && 'id' in item
+  return (
+    Array.isArray(items) &&
+    items.length > 0 &&
+    items.every((item) => typeof item === 'object' && item !== null && 'id' in item)
   );
 }
 
 // Component to force update items when user clicks a button
-function ForceUpdateButton({
-  parsedInvoice,
-}: {
-  parsedInvoice: ParsedInvoiceType;
-}) {
+function ForceUpdateButton({ parsedInvoice }: { parsedInvoice: ParsedInvoiceType }) {
   const { toast } = useToast();
   const formMethods = useFormContext<FormInvoiceType>();
 
   const handleForceUpdate = () => {
     if (!formMethods || !parsedInvoice) {
       toast({
-        title: "Form Not Ready",
-        description: "Please wait for the form to initialize.",
-        variant: "destructive",
+        title: 'Form Not Ready',
+        description: 'Please wait for the form to initialize.',
+        variant: 'destructive',
       });
       return;
     }
 
     try {
       const formData = InvoiceTransformer.transformParsedToForm(parsedInvoice);
-      
+
       if (!InvoiceTransformer.isValidFormData(formData)) {
         toast({
-          title: "Invalid Data",
-          description: "The parsed invoice data is not valid.",
-          variant: "destructive",
+          title: 'Invalid Data',
+          description: 'The parsed invoice data is not valid.',
+          variant: 'destructive',
         });
         return;
       }
@@ -122,26 +120,26 @@ function ForceUpdateButton({
       });
 
       // Verify update was successful
-      const updatedItems = formMethods.getValues("details.items");
-      
+      const updatedItems = formMethods.getValues('details.items');
+
       if (updatedItems && updatedItems.length > 0) {
         toast({
-          title: "Invoice Data Updated",
+          title: 'Invoice Data Updated',
           description: `Updated invoice details and ${updatedItems.length} items. Please check all sections.`,
         });
       } else {
         toast({
-          title: "Update Failed",
-          description: "Failed to add items. Please try again or add items manually.",
-          variant: "destructive",
+          title: 'Update Failed',
+          description: 'Failed to add items. Please try again or add items manually.',
+          variant: 'destructive',
         });
       }
     } catch (error) {
-      console.error("Error updating invoice data:", error);
+      console.error('Error updating invoice data:', error);
       toast({
-        title: "Error",
-        description: "Failed to update invoice data. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update invoice data. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -171,7 +169,7 @@ function ItemsUpdater({ parsedInvoice }: { parsedInvoice: ParsedInvoiceType | nu
 
     try {
       const formData = InvoiceTransformer.transformParsedToForm(parsedInvoice);
-      
+
       if (!InvoiceTransformer.isValidFormData(formData)) {
         return;
       }
@@ -182,34 +180,30 @@ function ItemsUpdater({ parsedInvoice }: { parsedInvoice: ParsedInvoiceType | nu
       });
 
       // Show success toast
-      const updatedItems = formMethods.getValues("details.items");
+      const updatedItems = formMethods.getValues('details.items');
       if (updatedItems && updatedItems.length > 0) {
         toast({
-          title: "Invoice Data Added",
+          title: 'Invoice Data Added',
           description: `Added invoice details and ${updatedItems.length} items. Please check all sections.`,
         });
       }
     } catch (error) {
-      console.error("Error updating invoice data:", error);
+      console.error('Error updating invoice data:', error);
     }
   }, [parsedInvoice, formMethods, toast]);
 
   return null;
 }
 
-export default function CreateInvoicePage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default function CreateInvoicePage({ params }: { params: Promise<{ locale: string }> }) {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [locale, setLocale] = useState<string>("");
+  const [locale, setLocale] = useState<string>('');
   const { parsedInvoice, resetParserState, saveDraftInvoice } = useInvoiceParserStore();
   const { user, isLoading: authLoading } = useAuthStore();
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
-  const [actionType, setActionType] = useState<"save" | "export">("save");
+  const [actionType, setActionType] = useState<'save' | 'export'>('save');
 
   // Get locale from params
   useEffect(() => {
@@ -231,10 +225,10 @@ export default function CreateInvoicePage({
           dueDate: null,
           currency: null,
           subTotal: null,
-          totalAmount: null
+          totalAmount: null,
         },
         sender: null,
-        receiver: null
+        receiver: null,
       } as FormInvoiceType;
     }
 
@@ -245,8 +239,8 @@ export default function CreateInvoicePage({
   const form = useForm<FormInvoiceType>({
     resolver: zodResolver(InvoiceSchemaForm),
     defaultValues: initialValues,
-    mode: "onSubmit",
-    reValidateMode: "onSubmit"
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   // Cleanup effect
@@ -275,17 +269,17 @@ export default function CreateInvoicePage({
       const data = await createInvoice(formData);
 
       toast({
-        title: "Success",
-        description: "Invoice created successfully",
+        title: 'Success',
+        description: 'Invoice created successfully',
       });
 
       router.push(`/${locale}/invoice/view/${data._id}`);
     } catch (error) {
-      console.error("Error creating invoice:", error);
+      console.error('Error creating invoice:', error);
       toast({
-        title: "Error",
-        description: "Failed to create invoice. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create invoice. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -295,7 +289,7 @@ export default function CreateInvoicePage({
   // Handle authentication for saving
   const handleAuthenticatedSave = () => {
     if (!user && !authLoading) {
-      setActionType("save");
+      setActionType('save');
       setIsAuthDialogOpen(true);
     } else {
       form.handleSubmit(onSubmit)();
@@ -328,14 +322,14 @@ export default function CreateInvoicePage({
             margin: 0;
             padding: 0;
           }
-          
+
           .container {
             width: 100%;
             max-width: 100%;
             padding: 20px;
             margin: 0;
           }
-          
+
           .print-hidden {
             display: none !important;
           }
@@ -354,31 +348,23 @@ export default function CreateInvoicePage({
             <Printer className="w-4 h-4 mr-2" />
             Print
           </Button>
-          
+
           {user && (
             <InvoiceEmailModal form={form}>
-              <Button
-                variant="outline"
-                className="w-full md:w-auto"
-                disabled={isSubmitting}
-              >
+              <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
                 <Mail className="w-4 h-4 mr-2" />
                 Email
               </Button>
             </InvoiceEmailModal>
           )}
-          
+
           <InvoiceExportModal form={form}>
-            <Button
-              variant="outline"
-              className="w-full md:w-auto"
-              disabled={isSubmitting}
-            >
+            <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
           </InvoiceExportModal>
-          
+
           <Button
             className="w-full md:w-auto"
             onClick={handleAuthenticatedSave}
@@ -395,13 +381,9 @@ export default function CreateInvoicePage({
             <AlertCircle className="h-5 w-5 text-yellow-500 mt-0.5" />
             <div>
               <h3 className="font-medium">Items Detected</h3>
-              <p>
-                {parsedInvoice.details.items.length} items have been loaded
-                from your invoice.
-              </p>
+              <p>{parsedInvoice.details.items.length} items have been loaded from your invoice.</p>
               <p className="text-sm text-muted-foreground">
-                If you don&apos;t see the items in Step 3, click the button
-                below.
+                If you don&apos;t see the items in Step 3, click the button below.
               </p>
               <div className="mt-2">
                 <ForceUpdateButton parsedInvoice={parsedInvoice} />
@@ -432,15 +414,11 @@ export default function CreateInvoicePage({
           <AlertDialogHeader>
             <AlertDialogTitle>Authentication Required</AlertDialogTitle>
             <AlertDialogDescription>
-              You need to be signed in to{" "}
-              {actionType === "save" ? "save" : "export"} an invoice.
+              You need to be signed in to {actionType === 'save' ? 'save' : 'export'} an invoice.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsAuthDialogOpen(false)}
-            >
+            <Button variant="outline" onClick={() => setIsAuthDialogOpen(false)}>
               Cancel
             </Button>
             <Button onClick={handleNavigateToSignIn}>Sign In</Button>

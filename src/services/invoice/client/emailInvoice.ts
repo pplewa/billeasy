@@ -1,4 +1,4 @@
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types';
 
 interface EmailInvoiceParams {
   invoice: InvoiceType;
@@ -14,16 +14,16 @@ interface EmailInvoiceParams {
  */
 export async function sendInvoiceEmail(params: EmailInvoiceParams): Promise<void> {
   const { invoice, recipient, subject, message } = params;
-  
+
   try {
     // Prepare request body
     const requestBody = {
       invoice,
       recipient,
       subject,
-      message
+      message,
     };
-    
+
     // Send POST request to email API endpoint
     const response = await fetch('/api/invoice/email', {
       method: 'POST',
@@ -32,17 +32,17 @@ export async function sendInvoiceEmail(params: EmailInvoiceParams): Promise<void
       },
       body: JSON.stringify(requestBody),
     });
-    
+
     // Handle error responses
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Failed to send email');
     }
-    
+
     // Return successfully
     return;
   } catch (error) {
     console.error('Error sending invoice email:', error);
     throw error;
   }
-} 
+}

@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import { InvoiceStatus } from "@/types";
-import { cn } from "@/lib/utils/ui";
+import { Badge } from '@/components/ui/badge';
+import { InvoiceStatus } from '@/types';
+import { cn } from '@/lib/utils/ui';
 
 interface InvoiceStatusBadgeProps {
   status: string;
@@ -15,14 +15,14 @@ export function InvoiceStatusBadge({ status, className }: InvoiceStatusBadgeProp
   const getVariant = () => {
     switch (status) {
       case InvoiceStatus.PAID:
-        return "success";
+        return 'success';
       case InvoiceStatus.SENT:
-        return "default"; // Using default as info
+        return 'default'; // Using default as info
       case InvoiceStatus.OVERDUE:
-        return "destructive";
+        return 'destructive';
       case InvoiceStatus.DRAFT:
       default:
-        return "secondary";
+        return 'secondary';
     }
   };
 
@@ -30,24 +30,21 @@ export function InvoiceStatusBadge({ status, className }: InvoiceStatusBadgeProp
   const getLabel = () => {
     switch (status) {
       case InvoiceStatus.PAID:
-        return "Paid";
+        return 'Paid';
       case InvoiceStatus.SENT:
-        return "Sent";
+        return 'Sent';
       case InvoiceStatus.OVERDUE:
-        return "Overdue";
+        return 'Overdue';
       case InvoiceStatus.DRAFT:
-        return "Draft";
+        return 'Draft';
       default:
         return status;
     }
   };
 
   return (
-    <Badge 
-      variant={getVariant()} 
-      className={cn("capitalize", className)}
-    >
+    <Badge variant={getVariant()} className={cn('capitalize', className)}>
       {getLabel()}
     </Badge>
   );
-} 
+}

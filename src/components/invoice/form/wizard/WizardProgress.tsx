@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
 // RHF
-import { useFormContext } from "react-hook-form";
-import { ReceiptText, FileText, Receipt, UserSquare2 } from "lucide-react";
+import { useFormContext } from 'react-hook-form';
+import { ReceiptText, FileText, Receipt, UserSquare2 } from 'lucide-react';
 
 // React Wizard
-import { useWizard } from "react-use-wizard";
+import { useWizard } from 'react-use-wizard';
 
 // Utils
-import { cn } from "@/lib/utils/ui";
+import { cn } from '@/lib/utils/ui';
 
 // Types
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types';
 
 interface WizardProgressProps {
   wizard: {
@@ -22,37 +22,45 @@ interface WizardProgressProps {
 
 const steps = [
   {
-    id: "sender-receiver",
-    title: "Sender & Receiver",
-    description: "Add sender and receiver details",
+    id: 'sender-receiver',
+    title: 'Sender & Receiver',
+    description: 'Add sender and receiver details',
     icon: UserSquare2,
-    fields: ["sender", "receiver"],
+    fields: ['sender', 'receiver'],
   },
   {
-    id: "invoice-details",
-    title: "Invoice Details",
-    description: "Add invoice details and payment information",
+    id: 'invoice-details',
+    title: 'Invoice Details',
+    description: 'Add invoice details and payment information',
     icon: ReceiptText,
-    fields: ["details.invoiceNumber", "details.invoiceDate", "details.dueDate", "details.currency", "details.paymentInformation"],
+    fields: [
+      'details.invoiceNumber',
+      'details.invoiceDate',
+      'details.dueDate',
+      'details.currency',
+      'details.paymentInformation',
+    ],
   },
   {
-    id: "items",
-    title: "Items",
-    description: "Add invoice items with tax and discount",
+    id: 'items',
+    title: 'Items',
+    description: 'Add invoice items with tax and discount',
     icon: Receipt,
-    fields: ["details.items"],
+    fields: ['details.items'],
   },
   {
-    id: "signature",
-    title: "Signature & Notes",
-    description: "Add signature and additional notes",
+    id: 'signature',
+    title: 'Signature & Notes',
+    description: 'Add signature and additional notes',
     icon: FileText,
-    fields: ["details.signature", "details.additionalNotes"],
+    fields: ['details.signature', 'details.additionalNotes'],
   },
 ];
 
 export function WizardProgress({ wizard }: WizardProgressProps) {
-  const { formState: { errors } } = useFormContext<InvoiceType>();
+  const {
+    formState: { errors },
+  } = useFormContext<InvoiceType>();
   const { goToStep } = useWizard();
 
   return (
@@ -65,7 +73,7 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
 
           // Check if any fields in this step have errors
           const hasErrors = step.fields.some((field) => {
-            const fieldParts = field.split(".");
+            const fieldParts = field.split('.');
             let currentErrors: Record<string, unknown> = errors;
             for (const part of fieldParts) {
               if (!currentErrors || !currentErrors[part]) {
@@ -82,30 +90,24 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
                 type="button"
                 onClick={() => goToStep(index)}
                 className={cn(
-                  "group text-left flex w-full flex-col border-l-4 py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4 transition-colors hover:border-primary/70",
-                  isActive
-                    ? "border-primary"
-                    : isCompleted
-                    ? "border-primary"
-                    : "border-border",
+                  'group text-left flex w-full flex-col border-l-4 py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4 transition-colors hover:border-primary/70',
+                  isActive ? 'border-primary' : isCompleted ? 'border-primary' : 'border-border'
                 )}
               >
                 <span className="text-sm font-medium">
                   <Icon
                     className={cn(
-                      "mr-2 inline-block h-5 w-5",
+                      'mr-2 inline-block h-5 w-5',
                       isActive
-                        ? "text-primary"
+                        ? 'text-primary'
                         : isCompleted
-                        ? "text-primary"
-                        : "text-muted-foreground",
+                          ? 'text-primary'
+                          : 'text-muted-foreground'
                     )}
                   />
                   {step.title}
                 </span>
-                <span className="text-sm text-muted-foreground">
-                  {step.description}
-                </span>
+                <span className="text-sm text-muted-foreground">{step.description}</span>
                 {hasErrors && (
                   <span className="text-sm text-destructive">
                     Please fix the errors in this step
@@ -118,4 +120,4 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
       </ol>
     </nav>
   );
-} 
+}

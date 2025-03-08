@@ -8,11 +8,14 @@ import pdfParse from 'pdf-parse';
  */
 export async function extractTextFromPDF(buffer: Buffer): Promise<string> {
   // Skip during build time
-  if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.NEXT_PHASE === 'phase-production-build'
+  ) {
     console.log('Skipping PDF extraction during build time');
     return 'Mock PDF content for build';
   }
-  
+
   try {
     // Parse PDF using pdf-parse
     const data = await pdfParse(buffer);
@@ -31,10 +34,8 @@ export async function extractTextFromPDF(buffer: Buffer): Promise<string> {
 export async function imageToBase64(buffer: Buffer): Promise<string> {
   try {
     // Optimize image using sharp
-    const optimizedBuffer = await sharp(buffer)
-      .resize(1200, null, { fit: 'inside' })
-      .toBuffer();
-    
+    const optimizedBuffer = await sharp(buffer).resize(1200, null, { fit: 'inside' }).toBuffer();
+
     // Convert to base64
     return optimizedBuffer.toString('base64');
   } catch (error) {

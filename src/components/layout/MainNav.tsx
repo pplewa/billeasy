@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Link, Locale, usePathname } from "@/i18n/routing";
-import useAuthStore from "@/store/auth-store";
-import { useLocale, useTranslations } from "next-intl";
+import { Button } from '@/components/ui/button';
+import { Link, Locale, usePathname } from '@/i18n/routing';
+import useAuthStore from '@/store/auth-store';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function MainNav() {
-  const t = useTranslations("navigation");
+  const t = useTranslations('navigation');
   const locale = useLocale() as Locale;
   const pathname = usePathname();
 
@@ -17,9 +17,9 @@ export default function MainNav() {
   const handleSignOut = async () => {
     try {
       const response = await fetch(`/api/auth/signout`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -28,7 +28,7 @@ export default function MainNav() {
         window.location.href = `/${locale}`;
       }
     } catch (error) {
-      console.error("Error signing out:", error);
+      console.error('Error signing out:', error);
     }
   };
 
@@ -42,12 +42,10 @@ export default function MainNav() {
           <nav className="hidden md:flex gap-6">
             {user && (
               <Link
-                href={{ pathname: "/invoices" }}
-                className={`text-sm ${
-                  pathname.includes("/invoices") ? "font-medium" : ""
-                }`}
+                href={{ pathname: '/invoices' }}
+                className={`text-sm ${pathname.includes('/invoices') ? 'font-medium' : ''}`}
               >
-                {t("invoices")}
+                {t('invoices')}
               </Link>
             )}
           </nav>
@@ -55,16 +53,14 @@ export default function MainNav() {
         <div className="flex items-center gap-4">
           {user ? (
             <div className="flex items-center gap-4">
-              <span className="text-sm hidden md:inline-block">
-                {user.email}
-              </span>
+              <span className="text-sm hidden md:inline-block">{user.email}</span>
               <Button variant="outline" size="sm" onClick={handleSignOut}>
-                {t("signOut")}
+                {t('signOut')}
               </Button>
             </div>
           ) : (
             <Button variant="outline" size="sm" asChild>
-              <Link href="/signin">{t("signIn")}</Link>
+              <Link href="/signin">{t('signIn')}</Link>
             </Button>
           )}
           <LanguageSwitcher />
@@ -79,10 +75,10 @@ function LanguageSwitcher() {
   const pathname = usePathname();
 
   const languages: Record<Locale, { name: string; flag: string }> = {
-    en: { name: "English", flag: "🇺🇸" },
-    es: { name: "Español", flag: "🇪🇸" },
-    fr: { name: "Français", flag: "🇫🇷" },
-    de: { name: "Deutsch", flag: "🇩🇪" },
+    en: { name: 'English', flag: '🇺🇸' },
+    es: { name: 'Español', flag: '🇪🇸' },
+    fr: { name: 'Français', flag: '🇫🇷' },
+    de: { name: 'Deutsch', flag: '🇩🇪' },
   };
 
   return (
@@ -93,7 +89,7 @@ function LanguageSwitcher() {
           href={pathname}
           locale={lang as Locale}
           className={`text-xs px-2 py-1 rounded-md ${
-            locale === lang ? "bg-gray-100 font-medium" : "hover:bg-gray-50"
+            locale === lang ? 'bg-gray-100 font-medium' : 'hover:bg-gray-50'
           }`}
           title={name}
         >

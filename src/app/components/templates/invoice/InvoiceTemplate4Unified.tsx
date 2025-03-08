@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
 // Components
-import InvoiceLayout from "./InvoiceLayout";
+import InvoiceLayout from './InvoiceLayout';
 
 // Helpers
-import { formatCurrency, formatDate, parseNumber } from "@/lib/utils/formatting";
+import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting';
 
 // Types
-import { InvoiceType, ItemType } from "@/lib/types";
+import { InvoiceType, ItemType } from '@/lib/types';
 
 /**
  * Invoice Template 4 - Premium Corporate
@@ -31,7 +31,7 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
       <div className="relative">
         {/* Decorative element */}
         <div className="absolute top-0 right-0 w-1/4 h-32 bg-purple-200 rounded-bl-full opacity-50"></div>
-        
+
         {/* Header with logo and invoice title */}
         <div className="flex justify-between items-start mb-12 relative">
           <div>
@@ -53,16 +53,20 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
             </div>
           </div>
         </div>
-        
+
         {/* Main grid for addresses and details */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
           {/* From section */}
           <div>
-            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">From</h3>
+            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">
+              From
+            </h3>
             <div className="text-gray-700">
               <p className="font-medium">{sender?.name}</p>
               <p>{sender?.address}</p>
-              <p>{sender?.zipCode}, {sender?.city}</p>
+              <p>
+                {sender?.zipCode}, {sender?.city}
+              </p>
               <p>{sender?.country}</p>
             </div>
             <div className="mt-3 text-gray-600">
@@ -70,14 +74,18 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
               <p>Phone: {sender?.phone}</p>
             </div>
           </div>
-          
+
           {/* To section */}
           <div>
-            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">To</h3>
+            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">
+              To
+            </h3>
             <div className="text-gray-700">
               <p className="font-medium">{receiver?.name}</p>
               <p>{receiver?.address}</p>
-              <p>{receiver?.zipCode}, {receiver?.city}</p>
+              <p>
+                {receiver?.zipCode}, {receiver?.city}
+              </p>
               <p>{receiver?.country}</p>
             </div>
             <div className="mt-3 text-gray-600">
@@ -85,31 +93,31 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
               <p>Phone: {receiver?.phone}</p>
             </div>
           </div>
-          
+
           {/* Details section */}
           <div>
-            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">Invoice Details</h3>
+            <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-3">
+              Invoice Details
+            </h3>
             <div className="grid grid-cols-2 gap-1">
               <p className="text-gray-600">Invoice Date:</p>
-              <p className="text-gray-800 font-medium">
-                {formatDate(details?.invoiceDate)}
-              </p>
-              
+              <p className="text-gray-800 font-medium">{formatDate(details?.invoiceDate)}</p>
+
               <p className="text-gray-600">Due Date:</p>
-              <p className="text-gray-800 font-medium">
-                {formatDate(details?.dueDate)}
-              </p>
-              
+              <p className="text-gray-800 font-medium">{formatDate(details?.dueDate)}</p>
+
               <p className="text-gray-600">Currency:</p>
               <p className="text-gray-800 font-medium">{details?.currency || 'USD'}</p>
             </div>
           </div>
         </div>
       </div>
-      
+
       {/* Items table */}
       <div className="mb-10">
-        <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-2 mb-4">Items</h3>
+        <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-2 mb-4">
+          Items
+        </h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -127,7 +135,7 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
                 const quantity = parseNumber(item.quantity);
                 const unitPrice = parseNumber(item.unitPrice || item.price);
                 const itemSubtotal = quantity * unitPrice;
-                
+
                 // Calculate discount
                 let discountAmount = 0;
                 if (item.discount) {
@@ -137,7 +145,7 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
                     discountAmount = parseNumber(item.discount.amount);
                   }
                 }
-                
+
                 // Calculate tax
                 let taxAmount = 0;
                 if (item.tax) {
@@ -148,10 +156,10 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
                     taxAmount = parseNumber(item.tax.amount);
                   }
                 }
-                
+
                 // Calculate final total
                 const itemTotal = itemSubtotal - discountAmount + taxAmount;
-                
+
                 return (
                   <tr key={item.id || index} className="border-b border-gray-100">
                     <td className="py-3 px-4">
@@ -162,24 +170,27 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
                     </td>
                     <td className="py-3 px-4 text-right">{quantity}</td>
                     <td className="py-3 px-4 text-right">
-                      {formatCurrency(unitPrice, details?.currency || "USD")}
+                      {formatCurrency(unitPrice, details?.currency || 'USD')}
                     </td>
                     <td className="py-3 px-4 text-right">
-                      {item.discount ? (
-                        item.discount.amountType === 'percentage' 
-                          ? `${parseNumber(item.discount.amount)}%` 
-                          : formatCurrency(parseNumber(item.discount.amount), details?.currency || "USD")
-                      ) : '-'}
+                      {item.discount
+                        ? item.discount.amountType === 'percentage'
+                          ? `${parseNumber(item.discount.amount)}%`
+                          : formatCurrency(
+                              parseNumber(item.discount.amount),
+                              details?.currency || 'USD'
+                            )
+                        : '-'}
                     </td>
                     <td className="py-3 px-4 text-right">
-                      {item.tax ? (
-                        item.tax.amountType === 'percentage' 
-                          ? `${parseNumber(item.tax.amount)}%` 
-                          : formatCurrency(parseNumber(item.tax.amount), details?.currency || "USD")
-                      ) : '-'}
+                      {item.tax
+                        ? item.tax.amountType === 'percentage'
+                          ? `${parseNumber(item.tax.amount)}%`
+                          : formatCurrency(parseNumber(item.tax.amount), details?.currency || 'USD')
+                        : '-'}
                     </td>
                     <td className="py-3 px-4 text-right font-medium">
-                      {formatCurrency(itemTotal, details?.currency || "USD")}
+                      {formatCurrency(itemTotal, details?.currency || 'USD')}
                     </td>
                   </tr>
                 );
@@ -188,7 +199,7 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
           </table>
         </div>
       </div>
-      
+
       {/* Totals section with purple gradient background */}
       <div className="mb-10 flex justify-end">
         <div className="w-full md:w-1/3 bg-gradient-to-br from-purple-50 to-white p-6 rounded-lg shadow-sm">
@@ -196,60 +207,61 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
             <div className="flex justify-between mb-1">
               <span className="text-gray-600">Subtotal:</span>
               <span className="text-gray-800">
-                {formatCurrency(subTotal, details?.currency || "USD")}
+                {formatCurrency(subTotal, details?.currency || 'USD')}
               </span>
             </div>
-            
+
             {/* Shipping row */}
             {details?.shipping && (
               <div className="flex justify-between mb-1">
                 <span className="text-gray-600">Shipping:</span>
                 <span className="text-gray-800">
-                  {details.shipping.costType === "amount"
-                    ? formatCurrency(
-                        parseNumber(details.shipping.cost),
-                        details?.currency || "USD"
-                      )
+                  {details.shipping.costType === 'amount'
+                    ? formatCurrency(parseNumber(details.shipping.cost), details?.currency || 'USD')
                     : `${parseNumber(details.shipping.cost)}%`}
                 </span>
               </div>
             )}
           </div>
-          
+
           <div className="flex justify-between mt-2">
             <span className="text-lg font-bold text-gray-800">Total:</span>
             <span className="text-lg font-bold text-purple-700">
-              {formatCurrency(totalAmount, details?.currency || "USD")}
+              {formatCurrency(totalAmount, details?.currency || 'USD')}
             </span>
           </div>
         </div>
       </div>
-      
+
       {/* Notes and terms in two-column layout */}
       {(details?.additionalNotes || details?.paymentTerms) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           {details?.additionalNotes && (
             <div>
-              <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-2">Notes</h3>
+              <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-2">
+                Notes
+              </h3>
               <p className="text-gray-700 whitespace-pre-line">{details.additionalNotes}</p>
             </div>
           )}
-          
+
           {details?.paymentTerms && (
             <div>
-              <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-2">Terms & Conditions</h3>
+              <h3 className="text-sm font-semibold text-purple-600 uppercase tracking-wider border-b border-purple-200 pb-1 mb-2">
+                Terms & Conditions
+              </h3>
               <p className="text-gray-700 whitespace-pre-line">{details.paymentTerms}</p>
             </div>
           )}
         </div>
       )}
-      
+
       {/* Signature section */}
       {details.signature && details.signature.data && (
         <div className="mt-8 text-right border-t border-gray-200 pt-4">
           <div className="inline-block">
             <div className="max-w-xs">
-              {details.signature.data.startsWith("data:image") ? (
+              {details.signature.data.startsWith('data:image') ? (
                 <img
                   src={details.signature.data}
                   alt="Signature"
@@ -272,4 +284,4 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
   );
 };
 
-export default InvoiceTemplate4; 
+export default InvoiceTemplate4;

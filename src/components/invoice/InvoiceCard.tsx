@@ -1,14 +1,14 @@
-import { InvoiceDocument } from "@/lib/db/models/Invoice";
-import { deleteInvoice, duplicateInvoice } from "@/services/invoice/client/invoiceClient";
-import { formatDate } from "@/lib/utils/formatting";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Pencil, Trash, Copy, Eye } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { InvoiceStatusSelector } from "./InvoiceStatusSelector";
-import { InvoiceStatus } from "@/types";
+import { InvoiceDocument } from '@/lib/db/models/Invoice';
+import { deleteInvoice, duplicateInvoice } from '@/services/invoice/client/invoiceClient';
+import { formatDate } from '@/lib/utils/formatting';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Pencil, Trash, Copy, Eye } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useToast } from '@/components/ui/use-toast';
+import { InvoiceStatusSelector } from './InvoiceStatusSelector';
+import { InvoiceStatus } from '@/types';
 
 interface InvoiceCardProps {
   invoice: InvoiceDocument;
@@ -18,12 +18,12 @@ interface InvoiceCardProps {
   onStatusChange?: (id: string, status: string) => void;
 }
 
-export function InvoiceCard({ 
-  invoice, 
-  locale, 
-  onDelete, 
+export function InvoiceCard({
+  invoice,
+  locale,
+  onDelete,
   onDuplicate,
-  onStatusChange 
+  onStatusChange,
 }: InvoiceCardProps) {
   const { toast } = useToast();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -31,7 +31,7 @@ export function InvoiceCard({
 
   // Format the invoice date
   const formattedDate = formatDate(new Date(invoice.details?.invoiceDate || new Date()));
-  
+
   // Get the invoice ID as string
   const invoiceId = invoice._id.toString();
 
@@ -52,15 +52,15 @@ export function InvoiceCard({
       await deleteInvoice(invoiceId);
       onDelete(invoiceId);
       toast({
-        title: "Success",
-        description: "Invoice deleted successfully",
+        title: 'Success',
+        description: 'Invoice deleted successfully',
       });
     } catch (error) {
-      console.error("Error deleting invoice:", error);
+      console.error('Error deleting invoice:', error);
       toast({
-        title: "Error",
-        description: "Failed to delete invoice",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to delete invoice',
+        variant: 'destructive',
       });
     } finally {
       setIsDeleting(false);
@@ -74,15 +74,15 @@ export function InvoiceCard({
       const duplicatedInvoice = await duplicateInvoice(invoiceId);
       onDuplicate(duplicatedInvoice);
       toast({
-        title: "Success",
-        description: "Invoice duplicated successfully",
+        title: 'Success',
+        description: 'Invoice duplicated successfully',
       });
     } catch (error) {
-      console.error("Error duplicating invoice:", error);
+      console.error('Error duplicating invoice:', error);
       toast({
-        title: "Error",
-        description: "Failed to duplicate invoice",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to duplicate invoice',
+        variant: 'destructive',
       });
     } finally {
       setIsDuplicating(false);
@@ -93,10 +93,10 @@ export function InvoiceCard({
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-lg">Invoice #{invoice.details?.invoiceNumber}</CardTitle>
-        <InvoiceStatusSelector 
-          invoiceId={invoiceId} 
-          currentStatus={status} 
-          onStatusChange={handleStatusChange} 
+        <InvoiceStatusSelector
+          invoiceId={invoiceId}
+          currentStatus={status}
+          onStatusChange={handleStatusChange}
         />
       </CardHeader>
       <CardContent>
@@ -112,7 +112,10 @@ export function InvoiceCard({
           <div className="flex justify-between">
             <span className="text-sm font-medium">Amount:</span>
             <span className="text-sm">
-              {invoice.details?.currency} {invoice.details?.items?.reduce((sum, item) => sum + (item?.unitPrice ?? 0) * (item?.quantity ?? 0), 0).toFixed(2)}
+              {invoice.details?.currency}{' '}
+              {invoice.details?.items
+                ?.reduce((sum, item) => sum + (item?.unitPrice ?? 0) * (item?.quantity ?? 0), 0)
+                .toFixed(2)}
             </span>
           </div>
         </div>
@@ -133,12 +136,7 @@ export function InvoiceCard({
           </Button>
         </div>
         <div className="flex space-x-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={handleDuplicate}
-            disabled={isDuplicating}
-          >
+          <Button variant="outline" size="sm" onClick={handleDuplicate} disabled={isDuplicating}>
             {isDuplicating ? (
               <>Duplicating...</>
             ) : (
@@ -148,12 +146,7 @@ export function InvoiceCard({
               </>
             )}
           </Button>
-          <Button 
-            variant="destructive" 
-            size="sm" 
-            onClick={handleDelete}
-            disabled={isDeleting}
-          >
+          <Button variant="destructive" size="sm" onClick={handleDelete} disabled={isDeleting}>
             {isDeleting ? (
               <>Deleting...</>
             ) : (
@@ -167,4 +160,4 @@ export function InvoiceCard({
       </CardFooter>
     </Card>
   );
-} 
+}

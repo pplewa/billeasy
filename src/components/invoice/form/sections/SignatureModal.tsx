@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { SignatureProvider, useSignatureContext } from "@/contexts/SignatureContext";
-import { SignatureTabs } from "@/types";
-import { DrawSignature } from "./signature/DrawSignature";
-import { TypeSignature } from "./signature/TypeSignature";
-import { UploadSignature } from "./signature/UploadSignature";
+import { SignatureProvider, useSignatureContext } from '@/contexts/SignatureContext';
+import { SignatureTabs } from '@/types';
+import { DrawSignature } from './signature/DrawSignature';
+import { TypeSignature } from './signature/TypeSignature';
+import { UploadSignature } from './signature/UploadSignature';
 
 interface SignatureModalProps {
   open: boolean;
@@ -17,21 +17,16 @@ interface SignatureModalProps {
   onSave: (signature: string, fontFamily?: string) => void;
 }
 
-function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProps, "open">) {
+function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProps, 'open'>) {
   const [activeTab, setActiveTab] = useState<SignatureTabs>(SignatureTabs.DRAW);
-  const {
-    signatureRef,
-    typedSignature,
-    selectedFont,
-    uploadedSignature,
-  } = useSignatureContext();
+  const { signatureRef, typedSignature, selectedFont, uploadedSignature } = useSignatureContext();
 
   const handleSaveSignature = () => {
-    let signatureData = "";
+    let signatureData = '';
     let fontFamily: string | undefined;
 
     if (activeTab === SignatureTabs.DRAW) {
-      signatureData = signatureRef.current?.toDataURL("image/png") ?? "";
+      signatureData = signatureRef.current?.toDataURL('image/png') ?? '';
     } else if (activeTab === SignatureTabs.TYPE) {
       // For typed signatures, just use the text directly
       signatureData = typedSignature;
@@ -71,4 +66,4 @@ export function SignatureModal({ open, onOpenChange, onSave }: SignatureModalPro
       </DialogContent>
     </Dialog>
   );
-} 
+}

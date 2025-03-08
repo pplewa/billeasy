@@ -91,10 +91,7 @@ export interface ParsedInvoiceType {
 export function isFormInvoiceType(invoice: unknown): invoice is FormInvoiceType {
   const inv = invoice as FormInvoiceType;
   return (
-    inv !== null &&
-    typeof inv === 'object' &&
-    'details' in inv &&
-    Array.isArray(inv.details?.items)
+    inv !== null && typeof inv === 'object' && 'details' in inv && Array.isArray(inv.details?.items)
   );
 }
 
@@ -111,11 +108,6 @@ export function isValidItemsArray(items: unknown): items is ParsedItemType[] {
   return (
     Array.isArray(items) &&
     items.length > 0 &&
-    items.every(
-      (item) =>
-        typeof item === 'object' &&
-        item !== null &&
-        'id' in item
-    )
+    items.every((item) => typeof item === 'object' && item !== null && 'id' in item)
   );
-} 
+}

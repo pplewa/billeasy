@@ -15,20 +15,12 @@ export * from './item';
 export * from './invoice';
 
 // For backward compatibility with code that uses the old schemas
-export {
-  InvoiceSchema as InvoiceSchemaUnified
-} from './invoice';
+export { InvoiceSchema as InvoiceSchemaUnified } from './invoice';
 
-export {
-  ItemSchema as ItemSchemaUnified
-} from './item';
+export { ItemSchema as ItemSchemaUnified } from './item';
 
 // Optional schemas (less strict) for backward compatibility
 // These are aliased to the main schemas since we've made them permissive by default
-export {
-  InvoiceSchema as InvoiceSchemaOptional
-} from './invoice';
+export { InvoiceSchema as InvoiceSchemaOptional } from './invoice';
 
-export {
-  ItemSchema as ItemSchemaOptional
-} from './item'; 
+export { ItemSchema as ItemSchemaOptional } from './item';

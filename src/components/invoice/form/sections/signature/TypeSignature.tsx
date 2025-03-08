@@ -1,15 +1,21 @@
-"use client";
+'use client';
 
-import { Check, Eraser } from "lucide-react";
+import { Check, Eraser } from 'lucide-react';
 
-import { Card, CardContent } from "@/components/ui/card";
-import { TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent } from '@/components/ui/card';
+import { TabsContent } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-import { useSignatureContext } from "@/contexts/SignatureContext";
-import { SignatureTabs } from "@/types";
+import { useSignatureContext } from '@/contexts/SignatureContext';
+import { SignatureTabs } from '@/types';
 
 interface TypeSignatureProps {
   handleSaveSignature: () => void;
@@ -68,18 +74,12 @@ export function TypeSignature({ handleSaveSignature }: TypeSignatureProps) {
         </CardContent>
         <div className="flex justify-end gap-2 pt-2">
           {typedSignature && (
-            <Button
-              variant="outline"
-              onClick={clearTypedSignature}
-            >
+            <Button variant="outline" onClick={clearTypedSignature}>
               Clear
               <Eraser className="ml-2 h-4 w-4" />
             </Button>
           )}
-          <Button
-            disabled={!typedSignature}
-            onClick={handleSaveSignature}
-          >
+          <Button disabled={!typedSignature} onClick={handleSaveSignature}>
             Done
             <Check className="ml-2 h-4 w-4" />
           </Button>
@@ -87,4 +87,4 @@ export function TypeSignature({ handleSaveSignature }: TypeSignatureProps) {
       </Card>
     </TabsContent>
   );
-} 
+}
