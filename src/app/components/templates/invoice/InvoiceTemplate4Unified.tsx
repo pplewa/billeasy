@@ -27,7 +27,7 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
   const totalAmount = parseNumber(details?.totalAmount);
 
   return (
-    <InvoiceLayout data={data}>
+    <InvoiceLayout>
       <div className="relative">
         {/* Decorative element */}
         <div className="absolute top-0 right-0 w-1/4 h-32 bg-purple-200 rounded-bl-full opacity-50"></div>

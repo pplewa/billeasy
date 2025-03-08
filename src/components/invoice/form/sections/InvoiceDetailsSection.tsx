@@ -133,10 +133,8 @@ export function InvoiceDetailsSection() {
               </PopoverTrigger>
               <PopoverContent align="start" className="w-[280px] p-0">
                 <Calendar
-                  mode="single"
                   selected={invoiceDate ? new Date(invoiceDate) : undefined}
                   onSelect={(date) => setValue('details.invoiceDate', date as Date)}
-                  initialFocus
                 />
               </PopoverContent>
             </Popover>
@@ -165,10 +163,8 @@ export function InvoiceDetailsSection() {
               </PopoverTrigger>
               <PopoverContent align="start" className="w-[280px] p-0">
                 <Calendar
-                  mode="single"
                   selected={dueDate ? new Date(dueDate) : undefined}
                   onSelect={(date) => setValue('details.dueDate', date as Date)}
-                  initialFocus
                 />
               </PopoverContent>
             </Popover>

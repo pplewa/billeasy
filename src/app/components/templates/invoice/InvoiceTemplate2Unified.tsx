@@ -27,7 +27,7 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
   const totalAmount = parseNumber(details?.totalAmount);
 
   return (
-    <InvoiceLayout data={data}>
+    <InvoiceLayout>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
         <div>
           {details?.invoiceLogo && (

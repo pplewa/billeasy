@@ -35,7 +35,7 @@ const DynamicInvoiceView = ({ invoice, templateId = 1 }: DynamicInvoiceViewProps
     const normalized = normalizeInvoice(invoice);
 
     // Always set the template ID to match the selected template
-    if (normalized.details) {
+    if (normalized?.details) {
       normalized.details.pdfTemplate = templateId;
     }
 
