@@ -97,6 +97,7 @@ interface ViewInvoiceDocument {
   settings?: InvoiceSettings;
   createdAt?: Date;
   updatedAt?: Date;
+  [key: string]: unknown; // Add index signature for compatibility with SourceInvoice
 }
 
 /**
@@ -105,9 +106,9 @@ interface ViewInvoiceDocument {
  * @returns An object in InvoiceType format
  */
 const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
-  // Cast to any to avoid type mismatch with SourceInvoice
-  // This is safe since normalizeInvoice can handle any invoice-like structure
-  return normalizeInvoice(doc as any);
+  // ViewInvoiceDocument is compatible with SourceInvoice
+  // since SourceInvoice accepts any key-value pairs
+  return normalizeInvoice(doc);
 };
 
 export default function ViewInvoicePage() {
@@ -125,60 +126,53 @@ export default function ViewInvoicePage() {
       try {
         setLoading(true);
         const data = await fetchInvoiceById(id);
-        console.log('Loaded invoice data (raw):', JSON.stringify(data, null, 2)); // Log the raw data
         
-        // Ensure items array exists and is properly structured
-        let items = [];
-        
-        // Try to get items from different possible locations in the data structure
-        if (Array.isArray(data.items) && data.items.length > 0) {
+        // Determine where items are stored (could be at root or in details)
+        let items;
+        if (data.items && Array.isArray(data.items)) {
           items = data.items;
-          console.log('Using items from root level:', items);
-        } else if (data.details && Array.isArray(data.details.items) && data.details.items.length > 0) {
+        } else if (data.details?.items && Array.isArray(data.details.items)) {
           items = data.details.items;
-          console.log('Using items from details level:', items);
+        } else {
+          items = [];
         }
         
-        console.log('Raw items before processing:', JSON.stringify(items, null, 2));
-        
-        // Process each item to ensure it has all required properties and numeric values are properly parsed
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const processedItems = items.map((item: any, index: number) => {
-          console.log(`Processing item ${index}:`, item);
+        // Process items to ensure consistent structure
+        const processedItems = items.map((item, index) => {
+          // Normalize item fields
+          const price = typeof item.unitPrice === 'number' ? item.unitPrice : 
+                        typeof item.price === 'number' ? item.price : 0;
           
-          // Handle both string and number types for numeric fields
-          // For unitPrice vs price field naming
-          const price = typeof item.unitPrice !== 'undefined' 
-            ? (typeof item.unitPrice === 'string' ? parseFloat(item.unitPrice) : item.unitPrice) 
-            : (typeof item.price === 'string' ? parseFloat(item.price) : (item.price || 0));
+          const quantity = typeof item.quantity === 'number' ? item.quantity : 1;
           
-          const quantity = typeof item.quantity === 'string' ? parseFloat(item.quantity) : (item.quantity || 0);
-          const taxRate = typeof item.taxRate === 'string' ? parseFloat(item.taxRate) : (item.taxRate || 0);
-          const discount = typeof item.discount === 'string' ? parseFloat(item.discount) : (item.discount || 0);
+          // Handle tax - could be in tax object or taxRate field
+          const taxRate = item.tax?.amount ?? item.taxRate ?? 0;
           
-          console.log(`Item ${index} parsed values:`, { price, quantity, taxRate, discount });
+          // Handle discount - could be direct number or in discount object
+          const discount = typeof item.discount === 'number' ? item.discount : 
+                           item.discount?.amount ?? 0;
           
+          // Build a standardized item object
           return {
+            ...item,
             id: item.id || `item-${index}`,
-            name: item.name || '',
+            name: item.name || 'Unnamed Item',
+            description: item.description || '',
             quantity: quantity,
-            price: price,
-            taxRate: taxRate,
-            discount: discount
+            unitPrice: price,
+            tax: { amount: taxRate, amountType: item.tax?.amountType || 'percentage' },
+            discount: { amount: discount, amountType: item.discount?.amountType || 'percentage' },
+            total: item.total || (price * quantity)
           };
         });
         
-        console.log('Processed items:', processedItems);
-        
+        // Build the processed data
         const processedData = {
           ...data,
-          items: processedItems
+          items: processedItems,
         };
         
-        console.log('Processed invoice data:', processedData); // Log the processed data
-        console.log('Items array:', processedData.items); // Log the items array specifically
-        
-        setInvoice(processedData as unknown as ViewInvoiceDocument);
+        setInvoice(processedData);
       } catch (error) {
         console.error("Error loading invoice:", error);
         toast({

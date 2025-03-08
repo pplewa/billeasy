@@ -49,12 +49,12 @@ const useInvoiceParserStore = create<InvoiceParserState>()(
       }),
       saveDraftInvoice: (invoice) => {
         const now = new Date().toISOString();
-        const draftId = (invoice as any).id || `draft-${Date.now()}`;
+        const draftId = invoice.id || `draft-${Date.now()}`;
         
         const draftInvoice: DraftInvoice = {
           ...invoice,
           id: draftId,
-          createdAt: (invoice as any).createdAt || now,
+          createdAt: invoice.createdAt || now,
           updatedAt: now
         };
         

@@ -24,8 +24,6 @@ import {
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   Table,
@@ -133,7 +131,7 @@ export default function InvoicesPage() {
   // Filter and sort invoices
   const filteredAndSortedInvoices = useMemo(() => {
     // First, filter the invoices
-    let filtered = invoices.filter(invoice => {
+    const filtered = invoices.filter(invoice => {
       // Filter by status
       if (statusFilter !== "all" && invoice.details?.status !== statusFilter) {
         return false;
@@ -475,7 +473,7 @@ export default function InvoicesPage() {
               </p>
             ) : (
               <p className="text-muted-foreground text-center max-w-md mb-4">
-                You haven't created any invoices yet. Create your first invoice to get started.
+                You haven&apos;t created any invoices yet. Create your first invoice to get started.
               </p>
             )}
             

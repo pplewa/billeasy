@@ -52,9 +52,28 @@ export async function PUT(
     const { id } = await params;
     const body = await req.json();
 
+    // Define proper types for invoice items
+    interface InvoiceItem {
+      id?: string;
+      name?: string;
+      description?: string;
+      quantity?: number;
+      unitPrice?: number;
+      total?: number;
+      tax?: {
+        amount: number;
+        amountType: string;
+      };
+      taxRate?: number; // For backwards compatibility
+      discount?: {
+        amount: number;
+        amountType: string;
+      } | number; // Can be either object or number
+    }
+
     // CRITICAL: Log the received data before any processing
     console.log("API received update with tax data:", 
-      body.details?.items?.map((item: any) => ({
+      body.details?.items?.map((item: InvoiceItem) => ({
         name: item.name,
         tax: item.tax,
         taxRate: item.taxRate
@@ -66,7 +85,7 @@ export async function PUT(
     // FIX: Preserve tax values explicitly during update
     if (body.details?.items) {
       // Process each item to ensure tax data is preserved
-      body.details.items = body.details.items.map((item: any) => {
+      body.details.items = body.details.items.map((item: InvoiceItem) => {
         // If no tax object exists but taxRate does, create it
         if (!item.tax && item.taxRate) {
           item.tax = {
@@ -99,7 +118,7 @@ export async function PUT(
     
     // Log the data after our fixes to verify it's correct
     console.log("Processed data before saving:", 
-      body.details?.items?.map((item: any) => ({
+      body.details?.items?.map((item: InvoiceItem) => ({
         name: item.name,
         tax: item.tax,
         taxRate: item.taxRate

@@ -25,7 +25,6 @@ import { Download, AlertCircle, Zap, Mail, Printer } from "lucide-react";
 import { InvoiceExportModal } from "@/components/invoice/InvoiceExportModal";
 import { InvoiceEmailModal } from "@/components/invoice/InvoiceEmailModal";
 import { AddressSwapButton } from "@/components/invoice/AddressSwapButton";
-import { z } from "zod";
 
 // TODO: Known TypeScript Issues
 // 1. Complex form data types with mixed string/array values
@@ -386,8 +385,6 @@ export default function CreateInvoicePage({
 
     // If we have parsed data, merge it with the base structure
     if (parsedInvoice) {
-      console.log("[DEBUG] Parsed invoice data:", parsedInvoice);
-
       // Add sender if available
       if (parsedInvoice.sender) {
         baseInvoice.sender = parsedInvoice.sender;

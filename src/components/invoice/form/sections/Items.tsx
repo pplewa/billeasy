@@ -64,7 +64,6 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
   React.useEffect(() => {
     // For tax object - only initialize if completely missing or not an object
     if (!taxObj || typeof taxObj !== 'object') {
-      console.log(`Initializing tax for item ${index} - current value:`, taxObj);
       setValue(`details.items.${index}.tax`, { 
         amount: 0, 
         amountType: 'fixed' 
@@ -115,12 +114,6 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
       const currentPrice = getValues(`details.items.${index}.unitPrice`);
       const currentTaxObj = getValues(`details.items.${index}.tax`);
       const currentDiscountObj = getValues(`details.items.${index}.discount`);
-      
-      // Debug log to see tax values during calculation
-      console.log(`Calculating total for item ${index}:`, {
-        tax: currentTaxObj,
-        discount: currentDiscountObj,
-      });
       
       // More permissive handling of values
       const qty = !currentQuantity || isNaN(Number(currentQuantity)) ? 0 : Number(currentQuantity);
@@ -453,32 +446,6 @@ export function Items() {
       id: crypto.randomUUID(),
     }));
     append(newItem);
-  };
-
-  const handleSubmit = async () => {
-    try {
-      setIsSubmitting(true);
-
-      // Get raw values from the form
-      const formData = getValues();
-      
-      // DEBUG: Log what's about to be sent
-      console.log("About to submit invoice with items:", 
-        formData.details?.items?.map(item => ({
-          name: item.name,
-          tax: item.tax,
-          taxRate: item.taxRate,
-          // Include the relevant fields for debugging
-        }))
-      );
-
-      // Submit the form data
-      await createInvoice(formData);
-      
-      // Rest of function...
-    } catch (error) {
-      // Error handling...
-    }
   };
 
   return (

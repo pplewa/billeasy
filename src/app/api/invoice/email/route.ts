@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
-import { authOptions } from '@/lib/auth';
-import { getServerSession } from 'next-auth';
+import { getCurrentUser } from '@/lib/auth/auth';
 
 export async function POST(request: Request) {
   try {
-    // Check if user is authenticated
-    const session = await getServerSession(authOptions);
-    if (!session) {
+    // Check if user is authenticated using our custom auth system
+    const user = await getCurrentUser();
+    if (!user) {
       return NextResponse.json(
         { message: 'Unauthorized' },
         { status: 401 }

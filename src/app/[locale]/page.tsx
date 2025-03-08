@@ -125,23 +125,45 @@ export default function Home({
         throw new Error("Could not extract any invoice data from the text");
       }
 
+      // Create proper interface for our invoice structure
+      interface InvoiceItem {
+        id: string;
+        name: string;
+        description: string;
+        quantity: number;
+        unitPrice: number;
+        total: number;
+      }
+
+      interface InvoiceDetails {
+        items: InvoiceItem[];
+        [key: string]: unknown;
+      }
+
+      interface ParsedInvoice {
+        details?: Partial<InvoiceDetails>;
+        items?: InvoiceItem[];
+        [key: string]: unknown;
+      }
+
       // Restructure invoice to ensure it's properly formatted
-      const restructuredInvoice: any = { ...invoice };
+      const restructuredInvoice: ParsedInvoice = { ...invoice as ParsedInvoice };
+      
+      // Initialize details object if it doesn't exist
+      restructuredInvoice.details = restructuredInvoice.details || {};
       
       // If items exist at the top level, move them to details.items
-      if ((invoice as any).items && Array.isArray((invoice as any).items)) {
-        restructuredInvoice.details = restructuredInvoice.details || {};
-        restructuredInvoice.details.items = (invoice as any).items;
+      if ((invoice as ParsedInvoice).items && Array.isArray((invoice as ParsedInvoice).items)) {
+        restructuredInvoice.details.items = (invoice as ParsedInvoice).items || [];
         delete restructuredInvoice.items; // Remove from top level
       }
       
-      // Make sure we have a details section with an items array
-      restructuredInvoice.details = restructuredInvoice.details || {};
+      // Make sure we have an items array
       restructuredInvoice.details.items = restructuredInvoice.details.items || [];
       
       // Ensure each item is properly structured with all required fields
       if (restructuredInvoice.details.items.length > 0) {
-        restructuredInvoice.details.items = restructuredInvoice.details.items.map((item: any) => ({
+        restructuredInvoice.details.items = restructuredInvoice.details.items.map((item: Partial<InvoiceItem>) => ({
           id: item.id || crypto.randomUUID(),
           name: item.name || item.description || 'Item',
           description: item.description || '',

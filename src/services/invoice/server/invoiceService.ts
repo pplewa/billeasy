@@ -42,7 +42,7 @@ export async function getAllInvoices(options: FetchOptions = {}): Promise<Pagina
   const skip = (page - 1) * limit;
   
   // Build query filter
-  const filter: Record<string, any> = {};
+  const filter: Record<string, unknown> = {};
   
   // Add status filter if provided
   if (status) {
@@ -115,14 +115,20 @@ export async function updateInvoice(
   invoiceData: InvoiceType
 ): Promise<InvoiceDocument | null> {
   try {
-    // CRITICAL: Log the data just before database update
-    console.log("About to update invoice in DB with tax data:", 
-      invoiceData.details?.items?.map((item: any) => ({
-        name: item.name,
-        tax: item.tax
-      }))
-    );
-    
+    // Define a proper type for invoice items
+    interface InvoiceItem {
+      id?: string;
+      name?: string;
+      description?: string;
+      quantity?: number;
+      unitPrice?: number;
+      total?: number;
+      tax?: {
+        amount: number;
+        amountType: string;
+      };
+    }
+
     // FIX: Make sure we're using a proper update method that won't strip our data
     // For MongoDB/Mongoose (example):
     const updatedInvoice = await Invoice.findByIdAndUpdate(
@@ -133,13 +139,9 @@ export async function updateInvoice(
       { new: true, runValidators: true }
     );
     
-    // Log the updated document from the database
-    console.log("Database returned updated invoice with tax:", 
-      updatedInvoice.details?.items?.map((item: any) => ({
-        name: item.name,
-        tax: item.tax
-      }))
-    );
+    if (!updatedInvoice) {
+      return null;
+    }
     
     return updatedInvoice;
   } catch (error) {

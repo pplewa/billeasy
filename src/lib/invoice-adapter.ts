@@ -126,12 +126,28 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
     }
   }
   
+  // Add proper type definitions for tax, discount, and shipping
+  interface TaxDetails {
+    amount: number;
+    amountType: string;
+  }
+  
+  interface DiscountDetails {
+    amount: number;
+    amountType: string;
+  }
+  
+  interface ShippingDetails {
+    cost: number;
+    costType: string;
+  }
+
   // Ensure tax object exists
   if (!invoice.details.tax) {
     invoice.details.tax = {
       amount: 0,
       amountType: 'percentage'
-    } as any;
+    } as TaxDetails;
   }
   
   // Ensure discount object exists
@@ -139,7 +155,7 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
     invoice.details.discount = {
       amount: 0,
       amountType: 'percentage'
-    } as any;
+    } as DiscountDetails;
   }
   
   // Ensure shipping object exists
@@ -147,7 +163,7 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
     invoice.details.shipping = {
       cost: 0,
       costType: 'fixed'
-    } as any;
+    } as ShippingDetails;
   }
   
   return invoice;
