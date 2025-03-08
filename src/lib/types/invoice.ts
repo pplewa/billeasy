@@ -111,3 +111,8 @@ export function isValidItemsArray(items: unknown): items is ParsedItemType[] {
     items.every((item) => typeof item === 'object' && item !== null && 'id' in item)
   );
 }
+
+export interface DraftInvoice extends FormInvoiceType {
+  id: string;
+  createdAt: string;
+}

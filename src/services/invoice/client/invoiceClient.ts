@@ -114,35 +114,22 @@ export async function createInvoice(invoice: FormInvoiceType): Promise<InvoiceRe
 /**
  * Update an existing invoice
  * @param {string} id - The ID of the invoice to update
- * @param {InvoiceType} invoiceData - The updated invoice data
- * @returns {Promise<InvoiceType>} A promise that resolves to the updated invoice
+ * @param {FormInvoiceType} invoiceData - The updated invoice data
+ * @returns {Promise<void>} A promise that resolves when the invoice is updated
  * @throws {Error} If there is an error updating the invoice
  */
-export async function updateInvoice(id: string, invoiceData: InvoiceType) {
-  try {
-    // BEFORE MAKING THE API CALL
-    // Transform data to ensure tax is properly included
+export async function updateInvoice(id: string, invoiceData: FormInvoiceType): Promise<void> {
+  const response = await fetch(`/api/invoices/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(invoiceData),
+  });
 
-    // Make the API call
-    const response = await fetch(`/api/invoices/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(invoiceData),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to update invoice');
-    }
-
-    return response.json();
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message || 'Failed to update invoice');
-    }
-    throw new Error('Failed to update invoice');
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Failed to update invoice');
   }
 }
 

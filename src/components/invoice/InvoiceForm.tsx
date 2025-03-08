@@ -1,10 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Form } from '@/components/ui/form';
 import { Loader2 } from 'lucide-react';
 import { Wizard } from 'react-use-wizard';
-import { Button } from '@/components/ui/button';
 
 import { WizardStep } from '@/components/invoice/form/wizard/WizardStep';
 import { BillFromSection } from '@/components/invoice/form/sections/BillFromSection';
@@ -17,11 +15,13 @@ import { AdditionalNotesSection } from '@/components/invoice/form/sections/Addit
 import { AddressSwapButton } from '@/components/invoice/AddressSwapButton';
 
 import { useInvoiceContext } from '@/contexts/InvoiceContext';
-import { FormInvoiceType } from '@/lib/types/invoice';
 
 function Step1() {
   return (
-    <WizardStep>
+    <WizardStep
+      title="Billing Information"
+      description="Enter the billing addresses for both parties"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 relative">
         <BillFromSection />
 
@@ -43,7 +43,10 @@ function Step1() {
 
 function Step2() {
   return (
-    <WizardStep>
+    <WizardStep
+      title="Invoice Details"
+      description="Enter invoice and payment information"
+    >
       <div className="space-y-8">
         <InvoiceDetailsSection />
         <PaymentInformationSection />
@@ -54,7 +57,10 @@ function Step2() {
 
 function Step3() {
   return (
-    <WizardStep>
+    <WizardStep
+      title="Items"
+      description="Add items to your invoice"
+    >
       <Items />
     </WizardStep>
   );
@@ -62,7 +68,10 @@ function Step3() {
 
 function Step4() {
   return (
-    <WizardStep>
+    <WizardStep
+      title="Additional Information"
+      description="Add signature and notes"
+    >
       <div className="space-y-8">
         <SignatureSection />
         <AdditionalNotesSection />
@@ -72,7 +81,7 @@ function Step4() {
 }
 
 export function InvoiceForm() {
-  const { form, isLoading, isSubmitting, onSubmit } = useInvoiceContext();
+  const { form, isLoading, onSubmit } = useInvoiceContext();
 
   if (isLoading) {
     return (

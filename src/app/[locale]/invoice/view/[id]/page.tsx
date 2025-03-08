@@ -22,7 +22,7 @@ import { TemplateViewSelector } from '@/components/invoice/TemplateViewSelector'
 import DynamicInvoiceView from '@/components/invoice/DynamicInvoiceView';
 
 // Types
-import { InvoiceType } from '@/types';
+import { FormInvoiceType, BaseAmount } from '@/lib/types/invoice';
 
 // Add the import for our new adapter
 import { normalizeInvoice } from '@/lib/invoice-adapter';
@@ -100,10 +100,107 @@ interface ViewInvoiceDocument {
  * @param doc The ViewInvoiceDocument to convert
  * @returns An object in InvoiceType format
  */
-const adaptToInvoiceType = (doc: ViewInvoiceDocument): InvoiceType => {
+const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
   // ViewInvoiceDocument is compatible with SourceInvoice
   // since SourceInvoice accepts any key-value pairs
-  return normalizeInvoice(doc);
+  const normalized = normalizeInvoice(doc) || {};
+  
+  // Define default objects with proper types
+  const defaultTax: BaseAmount = { amount: 0, amountType: 'percentage' };
+
+  // Ensure tax and discount objects have proper structure
+  const taxObj = normalized.details?.tax ?? defaultTax;
+  const tax: BaseAmount = {
+    amount: Number((taxObj as { amount?: unknown })?.amount ?? 0),
+    amountType: String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount' ? 'amount' : 'percentage',
+  };
+
+  const discountObj = normalized.details?.discount ?? defaultTax;
+  const discount: BaseAmount = {
+    amount: Number((discountObj as { amount?: unknown })?.amount ?? 0),
+    amountType: String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount' ? 'amount' : 'percentage',
+  };
+
+  // Ensure sender and receiver are always objects
+  const senderObj = normalized.sender as Record<string, unknown> | null | undefined;
+  const sender = {
+    name: String(senderObj?.name || '') || null,
+    address: String(senderObj?.address || '') || null,
+    zipCode: String(senderObj?.zipCode || '') || null,
+    city: String(senderObj?.city || '') || null,
+    country: String(senderObj?.country || '') || null,
+    email: String(senderObj?.email || '') || null,
+    phone: String(senderObj?.phone || '') || null,
+    customInputs: Array.isArray(senderObj?.customInputs) 
+      ? senderObj.customInputs.map(input => {
+          const typedInput = input as { key?: unknown; value?: unknown };
+          return {
+            key: String(typedInput?.key || '') || null,
+            value: String(typedInput?.value || '') || null,
+          };
+        })
+      : [],
+  };
+
+  const receiverObj = normalized.receiver as Record<string, unknown> | null | undefined;
+  const receiver = {
+    name: String(receiverObj?.name || '') || null,
+    address: String(receiverObj?.address || '') || null,
+    zipCode: String(receiverObj?.zipCode || '') || null,
+    city: String(receiverObj?.city || '') || null,
+    country: String(receiverObj?.country || '') || null,
+    email: String(receiverObj?.email || '') || null,
+    phone: String(receiverObj?.phone || '') || null,
+    customInputs: Array.isArray(receiverObj?.customInputs)
+      ? receiverObj.customInputs.map(input => {
+          const typedInput = input as { key?: unknown; value?: unknown };
+          return {
+            key: String(typedInput?.key || '') || null,
+            value: String(typedInput?.value || '') || null,
+          };
+        })
+      : [],
+  };
+
+  // Create the final result with proper types
+  const result = {
+    sender,
+    receiver,
+    details: {
+      invoiceNumber: normalized.details?.invoiceNumber || null,
+      invoiceDate: normalized.details?.invoiceDate || null,
+      dueDate: normalized.details?.dueDate || null,
+      currency: normalized.details?.currency || null,
+      additionalNotes: normalized.details?.additionalNotes || null,
+      paymentTerms: normalized.details?.paymentTerms || null,
+      status: normalized.details?.status || null,
+      subTotal: normalized.details?.subTotal || null,
+      totalAmount: normalized.details?.totalAmount || null,
+      items: normalized.details?.items || [],
+      tax,
+      discount,
+      shipping: {
+        ...defaultTax,
+        cost: Number((normalized.details?.shipping as unknown as { cost?: unknown })?.cost ?? 0),
+        costType: String((normalized.details?.shipping as unknown as { costType?: unknown })?.costType ?? 'percentage') === 'amount' ? 'amount' : 'percentage',
+      },
+      paymentInformation: normalized.details?.paymentInformation || null,
+      signature: normalized.details?.signature || null,
+      purchaseOrderNumber: normalized.details?.purchaseOrderNumber || null,
+      invoiceLogo: normalized.details?.invoiceLogo || null,
+    },
+    settings: {
+      logo: normalized.settings?.logo || null,
+      template: normalized.settings?.template || null,
+      color: normalized.settings?.color || null,
+    },
+    items: normalized.items || [],
+    _id: normalized._id || '',
+    createdAt: normalized.createdAt || null,
+    updatedAt: normalized.updatedAt || null,
+  };
+
+  return result as FormInvoiceType;
 };
 
 export default function ViewInvoicePage() {
@@ -133,35 +230,40 @@ export default function ViewInvoicePage() {
         }
 
         // Process items to ensure consistent structure
-        const processedItems = items.map((item, index) => {
-          // Normalize item fields
-          const price =
-            typeof item.unitPrice === 'number'
-              ? item.unitPrice
-              : typeof item.price === 'number'
-                ? item.price
-                : 0;
-
-          const quantity = typeof item.quantity === 'number' ? item.quantity : 1;
+        const processedItems = items.map((item: Record<string, unknown>, index: number) => {
+          const id = String(item.id || `item-${index}`);
+          const name = String(item.name || '');
+          const description = item.description ? String(item.description) : '';
+          const quantity = Number(item.quantity || 0);
+          const price = Number(item.unitPrice || item.price || 0);
 
           // Handle tax - could be in tax object or taxRate field
-          const taxRate = item.tax?.amount ?? item.taxRate ?? 0;
+          const taxRate = Number(
+            (item.tax as { amount?: unknown })?.amount ?? item.taxRate ?? 0
+          );
 
           // Handle discount - could be direct number or in discount object
           const discount =
-            typeof item.discount === 'number' ? item.discount : (item.discount?.amount ?? 0);
+            typeof item.discount === 'number' 
+              ? item.discount 
+              : Number((item.discount as { amount?: unknown })?.amount ?? 0);
 
           // Build a standardized item object
           return {
-            ...item,
-            id: item.id || `item-${index}`,
-            name: item.name || 'Unnamed Item',
-            description: item.description || '',
+            id,
+            name,
+            description,
             quantity: quantity,
             unitPrice: price,
-            tax: { amount: taxRate, amountType: item.tax?.amountType || 'percentage' },
-            discount: { amount: discount, amountType: item.discount?.amountType || 'percentage' },
-            total: item.total || price * quantity,
+            tax: { 
+              amount: taxRate, 
+              amountType: String((item.tax as { amountType?: unknown })?.amountType ?? 'percentage')
+            },
+            discount: { 
+              amount: discount, 
+              amountType: String((item.discount as { amountType?: unknown })?.amountType ?? 'percentage')
+            },
+            total: Number(item.total ?? price * quantity),
           };
         });
 

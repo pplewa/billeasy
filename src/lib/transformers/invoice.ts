@@ -104,20 +104,12 @@ export class InvoiceTransformer {
     const formInvoice: FormInvoiceType = {
       sender: this.transformAddress(parsedInvoice.sender),
       receiver: this.transformAddress(parsedInvoice.receiver),
-      details: {
-        items: [],
-        invoiceNumber: null,
-        invoiceDate: null,
-        dueDate: null,
-        currency: null,
-        subTotal: null,
-        totalAmount: null,
-      },
+      details: null,
     };
 
     if (parsedInvoice.details) {
       formInvoice.details = {
-        ...formInvoice.details,
+        items: [],
         invoiceNumber: parsedInvoice.details.invoiceNumber || null,
         invoiceDate: this.safeParseDate(parsedInvoice.details.invoiceDate),
         dueDate: this.safeParseDate(parsedInvoice.details.dueDate),
@@ -148,19 +140,24 @@ export class InvoiceTransformer {
   /**
    * Validates if the transformed form data meets minimum requirements
    */
-  public static isValidFormData(formData: Partial<FormInvoiceType>): formData is FormInvoiceType {
+  public static isValidFormData(formData: FormInvoiceType): boolean {
     return (
-      formData.details !== undefined &&
-      Array.isArray(formData.details.items) &&
-      formData.details.items.every(
-        (item) =>
-          item.id &&
-          item.name &&
-          typeof item.quantity === 'number' &&
-          typeof item.unitPrice === 'number' &&
-          item.tax &&
-          item.discount
-      )
+      formData !== null &&
+      typeof formData === 'object' &&
+      (formData.sender !== null || formData.receiver !== null) &&
+      (!formData.details ||
+        (Array.isArray(formData.details.items) &&
+          formData.details.items.every(
+            (item) =>
+              item &&
+              typeof item === 'object' &&
+              item.id &&
+              item.name &&
+              typeof item.quantity === 'number' &&
+              typeof item.unitPrice === 'number' &&
+              item.tax &&
+              item.discount
+          )))
     );
   }
 }

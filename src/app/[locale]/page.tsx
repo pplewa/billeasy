@@ -21,6 +21,7 @@ import {
 import { parseInvoiceText, parseInvoiceFile } from '@/services/invoice/client/invoiceParserClient';
 import useInvoiceParserStore from '@/store/invoice-parser-store';
 import { useToast } from '@/components/ui/use-toast';
+import { ParsedInvoiceType, CustomInput } from '@/lib/types/invoice';
 
 export default function Home({ params }: { params: Promise<{ locale: string }> }) {
   const [locale, setLocale] = useState<string>('');
@@ -131,33 +132,26 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
       }
 
       // Restructure invoice to ensure it's properly formatted
-      const restructuredInvoice: ParsedInvoice = { ...(invoice as ParsedInvoice) };
-
-      // Initialize details object if it doesn't exist
-      restructuredInvoice.details = restructuredInvoice.details || {};
-
-      // If items exist at the top level, move them to details.items
-      if ((invoice as ParsedInvoice).items && Array.isArray((invoice as ParsedInvoice).items)) {
-        restructuredInvoice.details.items = (invoice as ParsedInvoice).items || [];
-        delete restructuredInvoice.items; // Remove from top level
-      }
-
-      // Make sure we have an items array
-      restructuredInvoice.details.items = restructuredInvoice.details.items || [];
-
-      // Ensure each item is properly structured with all required fields
-      if (restructuredInvoice.details.items.length > 0) {
-        restructuredInvoice.details.items = restructuredInvoice.details.items.map(
-          (item: Partial<InvoiceItem>) => ({
-            id: item.id || crypto.randomUUID(),
-            name: item.name || item.description || 'Item',
-            description: item.description || '',
-            quantity: typeof item.quantity === 'number' ? item.quantity : 1,
-            unitPrice: typeof item.unitPrice === 'number' ? item.unitPrice : 0,
-            total: typeof item.total === 'number' ? item.total : 0,
-          })
-        );
-      }
+      const restructuredInvoice: ParsedInvoiceType = {
+        sender: {
+          ...((invoice as ParsedInvoice).sender || {}),
+          customInputs: Array.isArray((invoice)?.sender?.customInputs) 
+            ? ((invoice)?.sender?.customInputs as CustomInput[]) 
+            : []
+        },
+        receiver: {
+          ...((invoice as ParsedInvoice).receiver || {}),
+          customInputs: Array.isArray((invoice )?.receiver?.customInputs) 
+            ? ((invoice)?.receiver?.customInputs as CustomInput[]) 
+            : []
+        },
+        details: {
+          ...((invoice as ParsedInvoice).details || {}),
+          items: Array.isArray((invoice )?.details?.items) 
+            ? ((invoice)?.details?.items) 
+            : []
+        }
+      };
 
       // Ensure the invoice has sender and receiver sections
       restructuredInvoice.sender = restructuredInvoice.sender || {};
@@ -201,7 +195,29 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
         throw new Error('Could not extract any invoice data from the file');
       }
 
-      setParsedInvoice(invoice);
+      // Ensure proper typing for ParsedInvoiceType
+      const typedInvoice: ParsedInvoiceType = {
+        sender: {
+          ...((invoice as Record<string, unknown>).sender || {}),
+          customInputs: Array.isArray((invoice)?.sender?.customInputs) 
+            ? ((invoice)?.sender?.customInputs as CustomInput[]) 
+            : []
+        },
+        receiver: {
+          ...((invoice).receiver || {}),
+          customInputs: Array.isArray((invoice)?.receiver?.customInputs) 
+            ? ((invoice)?.receiver?.customInputs as CustomInput[]) 
+            : []
+        },
+        details: {
+          ...((invoice as Record<string, unknown>).details || {}),
+          items: Array.isArray((invoice)?.details?.items) 
+            ? ((invoice)?.details?.items) 
+            : []
+        }
+      };
+
+      setParsedInvoice(typedInvoice);
 
       // Redirect to invoice creation page
       router.push(`/${locale}/invoice/create`);

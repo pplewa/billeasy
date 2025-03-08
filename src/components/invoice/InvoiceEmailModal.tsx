@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { InvoiceType } from '@/types';
+import { FormInvoiceType } from '@/lib/types/invoice';
 import { sendInvoiceEmail } from '@/services/invoice/client/emailInvoice';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
@@ -22,7 +22,7 @@ interface InvoiceEmailModalProps {
   children: React.ReactNode;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form?: any; // Using any to avoid complex form typing issues
-  invoice?: InvoiceType;
+  invoice?: FormInvoiceType;
   isLoading?: boolean;
 }
 
@@ -51,7 +51,7 @@ export function InvoiceEmailModal({
       // Get invoice data from form or direct invoice prop
       let invoiceData;
       if (form) {
-        invoiceData = form.getValues() as unknown as InvoiceType;
+        invoiceData = form.getValues() as unknown as FormInvoiceType;
       } else if (invoice) {
         invoiceData = invoice;
       } else {

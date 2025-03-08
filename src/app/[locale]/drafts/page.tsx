@@ -30,16 +30,15 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { Edit, MoreVertical, Trash, FileText, Plus, Download } from 'lucide-react';
+import { Edit, MoreVertical, Trash, FileText, Plus } from 'lucide-react';
 import useInvoiceParserStore from '@/store/invoice-parser-store';
-import useAuthStore from '@/store/auth-store';
+import { DraftInvoice } from '@/lib/types/invoice';
 
 export default function DraftsPage({ params }: { params: Promise<{ locale: string }> }) {
   const router = useRouter();
   const { toast } = useToast();
   const [locale, setLocale] = useState<string>('');
   const { draftInvoices, removeDraftInvoice, setParsedInvoice } = useInvoiceParserStore();
-  const { user } = useAuthStore();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null);
 
@@ -90,29 +89,28 @@ export default function DraftsPage({ params }: { params: Promise<{ locale: strin
   };
 
   // Get draft name or fallback
-  const getDraftName = (draft: {
-    details?: { invoiceNumber?: string };
-    sender?: { name?: string };
-    receiver?: { name?: string };
-    createdAt: string;
-  }) => {
-    if (draft.details?.invoiceNumber) {
-      return draft.details.invoiceNumber;
+  const getDraftName = (draft: DraftInvoice) => {
+    const invoiceNumber = draft.details?.invoiceNumber || '';
+    const senderName = draft.sender?.name || '';
+    const receiverName = draft.receiver?.name || '';
+
+    if (invoiceNumber) {
+      return `Invoice #${invoiceNumber}`;
     }
 
-    if (draft.sender?.name && draft.receiver?.name) {
-      return `${draft.sender.name} → ${draft.receiver.name}`;
+    if (senderName && receiverName) {
+      return `${senderName} → ${receiverName}`;
     }
 
-    if (draft.sender?.name) {
-      return `From: ${draft.sender.name}`;
+    if (senderName) {
+      return `From: ${senderName}`;
     }
 
-    if (draft.receiver?.name) {
-      return `To: ${draft.receiver.name}`;
+    if (receiverName) {
+      return `To: ${receiverName}`;
     }
 
-    return `Draft ${formatDate(draft.createdAt)}`;
+    return `Draft from ${format(new Date(draft.createdAt), 'MMM d, yyyy')}`;
   };
 
   return (
@@ -155,7 +153,6 @@ export default function DraftsPage({ params }: { params: Promise<{ locale: strin
                 <TableRow>
                   <TableHead>Draft Name</TableHead>
                   <TableHead>Created</TableHead>
-                  <TableHead>Last Updated</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -164,13 +161,12 @@ export default function DraftsPage({ params }: { params: Promise<{ locale: strin
                   <TableRow key={draft.id}>
                     <TableCell className="font-medium">{getDraftName(draft)}</TableCell>
                     <TableCell>{formatDate(draft.createdAt)}</TableCell>
-                    <TableCell>{formatDate(draft.updatedAt)}</TableCell>
                     <TableCell className="text-right">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon">
-                            <MoreVertical className="h-4 w-4" />
+                          <Button variant="ghost" className="h-8 w-8 p-0">
                             <span className="sr-only">Open menu</span>
+                            <MoreVertical className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -178,23 +174,7 @@ export default function DraftsPage({ params }: { params: Promise<{ locale: strin
                             <Edit className="mr-2 h-4 w-4" />
                             Edit
                           </DropdownMenuItem>
-                          {user && (
-                            <DropdownMenuItem
-                              onClick={() => {
-                                toast({
-                                  title: 'Coming soon',
-                                  description: 'This feature will be available soon.',
-                                });
-                              }}
-                            >
-                              <Download className="mr-2 h-4 w-4" />
-                              Export
-                            </DropdownMenuItem>
-                          )}
-                          <DropdownMenuItem
-                            onClick={() => handleDeleteDraft(draft.id)}
-                            className="text-destructive focus:text-destructive"
-                          >
+                          <DropdownMenuItem onClick={() => handleDeleteDraft(draft.id)}>
                             <Trash className="mr-2 h-4 w-4" />
                             Delete
                           </DropdownMenuItem>

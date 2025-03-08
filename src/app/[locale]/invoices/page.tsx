@@ -109,7 +109,7 @@ export default function InvoicesPage() {
     try {
       setLoading(true);
       const data = await fetchInvoices();
-      setInvoices(data.invoices);
+      setInvoices(data.invoices as unknown as InvoiceDocument[]);
     } catch (error) {
       console.error('Error loading invoices:', error);
       toast({
@@ -137,17 +137,17 @@ export default function InvoicesPage() {
         // Search across multiple fields
         return (
           // Sender info
-          invoice.sender?.name?.toLowerCase().includes(query) ||
-          invoice.sender?.email?.toLowerCase().includes(query) ||
+          String(invoice.sender?.name || '').toLowerCase().includes(query) ||
+          String(invoice.sender?.email || '').toLowerCase().includes(query) ||
           // Receiver info
-          invoice.receiver?.name?.toLowerCase().includes(query) ||
-          invoice.receiver?.email?.toLowerCase().includes(query) ||
+          String(invoice.receiver?.name || '').toLowerCase().includes(query) ||
+          String(invoice.receiver?.email || '').toLowerCase().includes(query) ||
           // Invoice details
-          invoice.details?.invoiceNumber?.toLowerCase().includes(query) ||
+          String(invoice.details?.invoiceNumber || '').toLowerCase().includes(query) ||
           // Convert amounts to string for searching
-          invoice.details?.totalAmount?.toString().includes(query) ||
-          // Search in notes
-          invoice.details?.notes?.toLowerCase().includes(query)
+          String(invoice.details?.totalAmount || '').includes(query) ||
+          // Search in additionalNotes only (notes may not exist in the type)
+          String(invoice.details?.additionalNotes || '').toLowerCase().includes(query)
         );
       }
 
@@ -230,7 +230,7 @@ export default function InvoicesPage() {
     );
   };
 
-  const getStatusColor = (status?: string) => {
+  const getStatusColor = (status?: string | null): string => {
     switch (status) {
       case 'paid':
         return 'bg-green-100 text-green-800 border-green-300';
@@ -274,8 +274,11 @@ export default function InvoicesPage() {
                     {invoice.details?.invoiceNumber || 'N/A'}
                   </TableCell>
                   <TableCell>
-                    {invoice.details?.invoiceDate
-                      ? formatDate(new Date(invoice.details.invoiceDate))
+                    {invoice.details?.invoiceDate 
+                      ? formatDate(new Date(
+                          invoice.details.invoiceDate !== null && invoice.details.invoiceDate !== undefined
+                            ? String(invoice.details.invoiceDate) 
+                            : Date.now()))
                       : 'N/A'}
                   </TableCell>
                   <TableCell>{invoice.receiver?.name || 'No Client'}</TableCell>

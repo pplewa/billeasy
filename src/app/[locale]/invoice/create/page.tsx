@@ -10,7 +10,7 @@ import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useMemo } from 'react';
-import { useForm, useFormContext, SubmitHandler } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import useInvoiceParserStore from '@/store/invoice-parser-store';
 import useAuthStore from '@/store/auth-store';
 import {
@@ -27,9 +27,7 @@ import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
 import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
 import { AddressSwapButton } from '@/components/invoice/AddressSwapButton';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 // TODO: Known TypeScript Issues
 // This file has several TypeScript issues related to type compatibility between
@@ -263,7 +261,7 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
   }, [form, saveDraftInvoice]);
 
   // Handle form submission
-  const onSubmit: SubmitHandler<FormInvoiceType> = async (formData) => {
+  const onSubmit = async (formData: FormInvoiceType): Promise<void> => {
     try {
       setIsSubmitting(true);
       const data = await createInvoice(formData);

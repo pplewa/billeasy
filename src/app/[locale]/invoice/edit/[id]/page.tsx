@@ -6,9 +6,10 @@ import { InvoiceForm } from '@/components/invoice/InvoiceForm';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { InvoiceContextProvider } from '@/contexts/InvoiceContext';
-import { InvoiceSchema } from '@/lib/schemas-optional';
+import { InvoiceSchemaForm } from '@/lib/schemas/invoice';
 import { fetchInvoiceById, updateInvoice } from '@/services/invoice/client/invoiceClient';
-import { InvoiceType } from '@/types';
+import { FormInvoiceType } from '@/lib/types/invoice';
+import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Download, Loader2, Mail, Printer } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -22,7 +23,11 @@ export default function EditInvoicePage({
 }) {
   const router = useRouter();
   const { toast } = useToast();
-  const [invoice, setInvoice] = useState<InvoiceType | null>(null);
+  const [invoice, setInvoice] = useState<FormInvoiceType>({
+    sender: null,
+    receiver: null,
+    details: null,
+  });
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [locale, setLocale] = useState<string>('');
@@ -39,8 +44,8 @@ export default function EditInvoicePage({
   }, [params]);
 
   // Create form methods
-  const form = useForm<InvoiceType>({
-    resolver: zodResolver(InvoiceSchema),
+  const form = useForm<FormInvoiceType>({
+    resolver: zodResolver(InvoiceSchemaForm),
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
     criteriaMode: 'all',
@@ -56,10 +61,11 @@ export default function EditInvoicePage({
       try {
         setLoading(true);
         const data = await fetchInvoiceById(invoiceId);
-        setInvoice(data);
+        const formData = InvoiceTransformer.transformParsedToForm(data);
+        setInvoice(formData);
 
-        // Reset form with the loaded invoice data
-        form.reset(data);
+        // Reset form with the transformed data
+        form.reset(formData);
       } catch (error) {
         console.error('Error loading invoice:', error);
         toast({

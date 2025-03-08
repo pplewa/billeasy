@@ -294,7 +294,7 @@ const formInvoiceDetailsSchema = z.object({
 export const InvoiceSchemaForm = z.object({
   sender: addressInfoSchema.nullable(),
   receiver: addressInfoSchema.nullable(),
-  details: formInvoiceDetailsSchema,
+  details: formInvoiceDetailsSchema.nullable(),
 });
 
 // Export type

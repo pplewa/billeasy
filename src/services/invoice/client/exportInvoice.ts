@@ -2,17 +2,18 @@
 import { EXPORT_INVOICE_API } from '@/lib/variables';
 
 // Types
-import { ExportTypes, InvoiceType } from '@/types';
+import { ExportTypes } from '@/types';
+import { FormInvoiceType } from '@/lib/types/invoice';
 
 /**
  * Export an invoice by sending a POST request to the server and initiating the download.
  *
  * @param {ExportTypes} exportAs - The format in which to export the invoice (e.g., PDF, XLSX, CSV, JSON).
- * @param {InvoiceType} formValues - The invoice form data to be exported.
+ * @param {FormInvoiceType} formValues - The invoice form data to be exported.
  * @throws {Error} If there is an error during the export process.
  * @returns {Promise<void>} A promise that resolves when the export is completed.
  */
-export const exportInvoice = async (exportAs: ExportTypes, formValues: InvoiceType) => {
+export const exportInvoice = async (exportAs: ExportTypes, formValues: FormInvoiceType) => {
   return fetch(`${EXPORT_INVOICE_API}?format=${exportAs}`, {
     method: 'POST',
     body: JSON.stringify(formValues),

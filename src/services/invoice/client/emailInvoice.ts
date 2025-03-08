@@ -1,7 +1,7 @@
-import { InvoiceType } from '@/types';
+import { FormInvoiceType } from '@/lib/types/invoice';
 
 interface EmailInvoiceParams {
-  invoice: InvoiceType;
+  invoice: FormInvoiceType;
   recipient: string;
   subject: string;
   message: string;

@@ -14,7 +14,8 @@ import {
 import { Button } from '@/components/ui/button';
 
 // Types
-import { ExportTypes, InvoiceType } from '@/types';
+import { ExportTypes } from '@/types';
+import { FormInvoiceType } from '@/lib/types/invoice';
 
 // Services
 import { exportInvoice } from '@/services/invoice/client/exportInvoice';
@@ -23,7 +24,7 @@ interface InvoiceExportModalProps {
   children: React.ReactNode;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form?: any; // Using any to avoid complex form typing issues across different form implementations
-  invoice?: InvoiceType;
+  invoice?: FormInvoiceType;
   isLoading?: boolean;
 }
 
@@ -46,8 +47,8 @@ export function InvoiceExportModal({
 
     // Use data from either the form or the direct invoice prop
     if (form) {
-      // Cast the form values to InvoiceType to ensure compatibility
-      invoiceData = form.getValues() as unknown as InvoiceType;
+      // Cast the form values to FormInvoiceType to ensure compatibility
+      invoiceData = form.getValues() as unknown as FormInvoiceType;
     } else if (invoice) {
       invoiceData = invoice;
     } else {
@@ -55,6 +56,7 @@ export function InvoiceExportModal({
       return;
     }
 
+    // Export the invoice
     exportInvoice(exportType, invoiceData);
     setOpen(false);
   };
