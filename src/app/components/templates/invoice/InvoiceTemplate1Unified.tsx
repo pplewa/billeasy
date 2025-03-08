@@ -6,21 +6,24 @@ import { formatCurrency, formatDate, parseNumber } from "@/lib/utils/formatting"
 import InvoiceLayout from "./InvoiceLayout";
 
 // Types
-import { InvoiceType, ItemType } from "@/types-optional";
+import { InvoiceType, ItemType } from "@/lib/types";
 
 /**
  * Invoice Template 1 - Classic business style
  * A clean, professional template with a blue accent color
  */
 const InvoiceTemplate1 = (data: InvoiceType) => {
-  const { sender, receiver, details } = data;
+  // Use fallbacks for type safety
+  const sender = data.sender || {};
+  const receiver = data.receiver || {};
+  const details = data.details || {};
 
   // Get the items from the correct location
-  const invoiceItems = details?.items || [];
+  const invoiceItems = Array.isArray(details.items) ? details.items : [];
 
   // Calculate totals
-  const subTotal = parseNumber(details?.subTotal);
-  const totalAmount = parseNumber(details?.totalAmount);
+  const subTotal = parseNumber(details.subTotal);
+  const totalAmount = parseNumber(details.totalAmount);
 
   return (
     <InvoiceLayout data={data}>
@@ -262,11 +265,11 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
         </div>
       )}
 
-      {details?.signature?.data && (
+      {details.signature && details.signature.data && (
         <div className="mt-8 border-t border-gray-200 pt-4">
           <div className="flex flex-col items-end">
             <div
-              className="max-w-xs"
+              className="flex justify-center border-b-2 border-gray-300 pb-2 w-56"
               style={{
                 fontFamily: details.signature.fontFamily
                   ? `${details.signature.fontFamily}, cursive`

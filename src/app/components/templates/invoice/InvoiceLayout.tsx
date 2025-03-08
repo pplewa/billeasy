@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 // Types
-import { InvoiceType } from "@/types";
+import { InvoiceType } from "@/lib/types";
 
 type InvoiceLayoutProps = {
     data: InvoiceType;
@@ -13,10 +13,11 @@ type InvoiceLayoutProps = {
  * Provides common structure and styling for all invoice templates
  */
 export default function InvoiceLayout({ data, children }: InvoiceLayoutProps) {
-    const { details } = data;
+    // Use fallbacks for type safety
+    const details = data.details || {};
 
     // Get the specific font family user selected for signature
-    const fontHref = details?.signature?.fontFamily
+    const fontHref = details.signature?.fontFamily
         ? `https://fonts.googleapis.com/css2?family=${details.signature.fontFamily}&display=swap`
         : "";
 

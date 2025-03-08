@@ -4,7 +4,10 @@ globs:
 alwaysApply: false
 ---
 
-# Your rule content
+# Code quality
 
-- Never use hacks or code shortcuts
-
+- Never use hacks or code shortcuts, I despise them, you despise them
+- Always attempt to remove all code TODOs
+- IMPORTANT!!! Never compromise on workarounds and quick fixes, always do things properly even if it requires major refactor - you are not in a rush and have all the time in the world to do things right. 
+- Everytime look for code duplicates and remove and refactor.
+- Build the system in a way as it was mission critical system as everyone's life depends on it.

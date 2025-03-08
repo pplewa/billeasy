@@ -1,4 +1,5 @@
 import { InvoiceType } from "@/types-optional";
+import { FormInvoiceType } from '@/lib/types/invoice';
 
 /**
  * Interface for pagination and filter options
@@ -83,38 +84,31 @@ export async function fetchInvoiceById(id: string) {
   return response.json();
 }
 
+interface InvoiceResponse {
+  _id: string;
+  [key: string]: unknown;
+}
+
 /**
  * Create a new invoice
- * @param {InvoiceType} invoiceData - The invoice data to create
- * @returns {Promise<InvoiceType>} A promise that resolves to the created invoice
+ * @param {FormInvoiceType} invoice - The invoice data to create
+ * @returns {Promise<InvoiceResponse>} A promise that resolves to the created invoice
  * @throws {Error} If there is an error creating the invoice
  */
-export async function createInvoice(invoiceData: InvoiceType) {
-  try {
-    // BEFORE MAKING THE API CALL
-    // Transform data to ensure tax is properly included
-    
-    // Make the API call
-    const response = await fetch("/api/invoices", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(invoiceData),
-    });
-    
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Failed to create invoice");
-    }
+export async function createInvoice(invoice: FormInvoiceType): Promise<InvoiceResponse> {
+  const response = await fetch('/api/invoices', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(invoice),
+  });
 
-    return response.json();
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message || "Failed to create invoice");
-    }
-    throw new Error("Failed to create invoice");
+  if (!response.ok) {
+    throw new Error('Failed to create invoice');
   }
+
+  return response.json();
 }
 
 /**

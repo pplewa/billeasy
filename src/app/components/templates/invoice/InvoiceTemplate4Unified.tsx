@@ -7,17 +7,20 @@ import InvoiceLayout from "./InvoiceLayout";
 import { formatCurrency, formatDate, parseNumber } from "@/lib/utils/formatting";
 
 // Types
-import { InvoiceType, ItemType } from "@/types-optional";
+import { InvoiceType, ItemType } from "@/lib/types";
 
 /**
  * Invoice Template 4 - Premium Corporate
  * An elegant template with a purple accent color and sophisticated layout
  */
 const InvoiceTemplate4 = (data: InvoiceType) => {
-  const { sender, receiver, details } = data;
+  // Use fallbacks for type safety
+  const sender = data.sender || {};
+  const receiver = data.receiver || {};
+  const details = data.details || {};
 
   // Get the items from the correct location
-  const invoiceItems = details?.items || [];
+  const invoiceItems = Array.isArray(details.items) ? details.items : [];
 
   // Calculate totals
   const subTotal = parseNumber(details?.subTotal);
@@ -242,7 +245,7 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
       )}
       
       {/* Signature section */}
-      {details?.signature?.data && (
+      {details.signature && details.signature.data && (
         <div className="mt-8 text-right border-t border-gray-200 pt-4">
           <div className="inline-block">
             <div className="max-w-xs">

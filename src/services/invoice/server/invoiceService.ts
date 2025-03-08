@@ -1,6 +1,7 @@
 import connectToDatabase from "@/lib/db";
-import { Invoice, InvoiceDocument } from "@/models/Invoice-optional";
-import { InvoiceType } from "@/types-optional";
+import { Invoice, InvoiceDocument } from "@/models/Invoice-unified";
+import { processInvoice } from "@/lib/schemas/invoice";
+import type { Invoice as InvoiceType } from "@/lib/schemas/invoice";
 
 /**
  * Interface for pagination and filter options
@@ -41,7 +42,7 @@ export async function getAllInvoices(options: FetchOptions = {}): Promise<Pagina
   // Calculate skip value for pagination
   const skip = (page - 1) * limit;
   
-  // Build query filter
+  // Build the filter object
   const filter: Record<string, unknown> = {};
   
   // Add status filter if provided
@@ -49,23 +50,26 @@ export async function getAllInvoices(options: FetchOptions = {}): Promise<Pagina
     filter["details.status"] = status;
   }
   
-  // Add search query if provided
+  // Add search filter if provided
   if (search) {
-    // Create a text search across multiple fields
+    // Create a text search filter across multiple fields
     filter["$or"] = [
-      { "receiver.name": { $regex: search, $options: "i" } },
-      { "sender.name": { $regex: search, $options: "i" } },
       { "details.invoiceNumber": { $regex: search, $options: "i" } },
+      { "sender.name": { $regex: search, $options: "i" } },
+      { "receiver.name": { $regex: search, $options: "i" } },
     ];
   }
   
-  // Execute count query for pagination
+  // Get total count
   const totalCount = await Invoice.countDocuments(filter);
   
   // Calculate total pages
   const totalPages = Math.ceil(totalCount / limit);
   
-  // Execute query with pagination and sorting
+  // Check if there are more pages
+  const hasMore = page < totalPages;
+  
+  // Get paginated invoices with sorting
   const invoices = await Invoice.find(filter)
     .sort({ createdAt: -1 })
     .skip(skip)
@@ -76,13 +80,13 @@ export async function getAllInvoices(options: FetchOptions = {}): Promise<Pagina
     totalCount,
     totalPages,
     currentPage: page,
-    hasMore: page < totalPages,
+    hasMore,
   };
 }
 
 /**
- * Get a specific invoice by ID
- * @param {string} id - The ID of the invoice to fetch
+ * Get an invoice by ID
+ * @param {string} id - The ID of the invoice to retrieve
  * @returns {Promise<InvoiceDocument | null>} A promise that resolves to the invoice document or null if not found
  */
 export async function getInvoiceById(
@@ -101,7 +105,12 @@ export async function createInvoice(
   invoiceData: InvoiceType
 ): Promise<InvoiceDocument> {
   await connectToDatabase();
-  return Invoice.create(invoiceData);
+  
+  // Process invoice data through schema validation and transformation
+  const processedData = processInvoice(invoiceData);
+  
+  // Create the invoice with processed data
+  return Invoice.create(processedData);
 }
 
 /**
@@ -115,12 +124,16 @@ export async function updateInvoice(
   invoiceData: InvoiceType
 ): Promise<InvoiceDocument | null> {
   try {
-    // FIX: Make sure we're using a proper update method that won't strip our data
-    // For MongoDB/Mongoose (example):
+    await connectToDatabase();
+    
+    // Process invoice data through schema validation and transformation
+    const processedData = processInvoice(invoiceData);
+    
+    // Perform the update with processed data
     const updatedInvoice = await Invoice.findByIdAndUpdate(
       id,
       // Use $set to ensure we replace the entire document structure
-      { $set: invoiceData },
+      { $set: processedData },
       // Important: Return the new document and run validators
       { new: true, runValidators: true }
     );
@@ -151,29 +164,39 @@ export async function deleteInvoice(
 /**
  * Duplicate an invoice
  * @param {string} id - The ID of the invoice to duplicate
- * @returns {Promise<InvoiceDocument | null>} A promise that resolves to the duplicated invoice document or null if the original was not found
+ * @returns {Promise<InvoiceDocument | null>} A promise that resolves to the duplicated invoice document or null if not found
  */
 export async function duplicateInvoice(
   id: string
 ): Promise<InvoiceDocument | null> {
   await connectToDatabase();
-
+  
   // Find the original invoice
-  const originalInvoice = await Invoice.findById(id);
-
-  if (!originalInvoice) {
+  const origInvoice = await Invoice.findById(id);
+  
+  if (!origInvoice) {
     return null;
   }
-
-  // Create a copy of the invoice data
-  const invoiceData = originalInvoice.toObject();
-
+  
+  // Convert the document to a plain JavaScript object
+  const invoiceData = origInvoice.toObject();
+  
   // Remove the _id field to create a new document
   delete invoiceData._id;
-
-  // Update the invoice number to indicate it's a copy
-  invoiceData.details.invoiceNumber = `${invoiceData.details.invoiceNumber}-COPY`;
-
-  // Create a new invoice with the copied data
-  return Invoice.create(invoiceData);
+  
+  // Optionally modify some fields
+  if (invoiceData.details) {
+    const details = invoiceData.details;
+    
+    // Append "- Copy" to invoice number
+    if (details.invoiceNumber) {
+      details.invoiceNumber = `${details.invoiceNumber} - Copy`;
+    }
+    
+    // Set status to draft
+    details.status = "draft";
+  }
+  
+  // Create a new invoice with the duplicated data
+  return createInvoice(invoiceData);
 } 

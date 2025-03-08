@@ -1,39 +1,41 @@
 "use client";
 
 import { createContext, useContext, ReactNode } from "react";
-import { useForm } from "react-hook-form";
-import { InvoiceType } from "@/types";
-import { FormInvoiceType } from "@/types-optional";
+import { UseFormReturn } from "react-hook-form";
+import { FormInvoiceType } from "@/lib/types/invoice";
 
 interface InvoiceContextType {
-  form: ReturnType<typeof useForm<FormInvoiceType>>;
+  form: UseFormReturn<FormInvoiceType>;
+  invoice: FormInvoiceType | null;
   isLoading: boolean;
   isSubmitting: boolean;
-  onSubmit: () => Promise<void>;
+  onSubmit: (data: FormInvoiceType) => Promise<void>;
 }
 
-const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
+const InvoiceContext = createContext<InvoiceContextType | null>(null);
 
 interface InvoiceContextProviderProps {
   children: ReactNode;
-  form: ReturnType<typeof useForm<FormInvoiceType>>;
-  invoice: InvoiceType | null;
+  form: UseFormReturn<FormInvoiceType>;
+  invoice: FormInvoiceType | null;
   isLoading: boolean;
   isSubmitting: boolean;
-  onSubmit: () => Promise<void>;
+  onSubmit: (data: FormInvoiceType) => Promise<void>;
 }
 
-export function InvoiceContextProvider({ 
+export function InvoiceContextProvider({
   children,
   form,
+  invoice,
   isLoading,
   isSubmitting,
-  onSubmit 
+  onSubmit,
 }: InvoiceContextProviderProps) {
   return (
     <InvoiceContext.Provider
       value={{
         form,
+        invoice,
         isLoading,
         isSubmitting,
         onSubmit,
@@ -46,7 +48,7 @@ export function InvoiceContextProvider({
 
 export function useInvoiceContext() {
   const context = useContext(InvoiceContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error("useInvoiceContext must be used within an InvoiceContextProvider");
   }
   return context;
