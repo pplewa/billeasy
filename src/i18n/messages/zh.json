@@ -208,14 +208,14 @@
     "status": {
       "all": "所有状态",
       "draft": "草稿",
-      "pending": "待处理", 
+      "pending": "待处理",
       "paid": "已付款",
       "overdue": "逾期",
       "cancelled": "已取消"
     },
     "sort": {
       "newestFirst": "最新优先",
-      "oldestFirst": "最早优先", 
+      "oldestFirst": "最早优先",
       "highestAmount": "最高金额",
       "lowestAmount": "最低金额",
       "byStatus": "按状态"
@@ -223,7 +223,7 @@
     "itemsPerPage": "每页 {count} 条",
     "table": {
       "number": "发票号",
-      "date": "日期", 
+      "date": "日期",
       "client": "客户",
       "amount": "金额",
       "status": "状态",
@@ -290,7 +290,94 @@
     "description": "描述",
     "quantity": "数量",
     "itemDescription": "项目描述",
-    "thankYou": "感谢使用 BillEasy！"
+    "thankYou": "感谢使用 BillEasy！",
+    "export": {
+      "title": "Exportar Factura",
+      "description": "Elija un formato para exportar su factura",
+      "formats": {
+        "pdf": "Exportar como PDF",
+        "json": "Exportar como JSON",
+        "csv": "Exportar como CSV",
+        "xlsx": "Exportar como XLSX",
+        "xml": "Exportar como XML"
+      }
+    },
+    "addressSwap": {
+      "toast": {
+        "title": "Direcciones Intercambiadas",
+        "description": "La información de Facturar Desde y Facturar A ha sido cambiada."
+      }
+    },
+    "email": {
+      "title": "Enviar correo electrónico de factura",
+      "description": "Envíe esta factura por correo electrónico a su cliente.",
+      "defaultSubject": "Factura de su empresa",
+      "defaultMessage": "Encuentre adjunta la factura de su compra reciente.",
+      "recipient": {
+        "label": "Correo electrónico del destinatario",
+        "placeholder": "cliente@ejemplo.com"
+      },
+      "subject": {
+        "label": "Asunto",
+        "placeholder": "Factura de su empresa"
+      },
+      "message": {
+        "label": "Mensaje",
+        "placeholder": "Escriba su mensaje aquí"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "send": "Enviar correo electrónico",
+        "sending": "Enviando..."
+      },
+      "toast": {
+        "success": {
+          "title": "Éxito",
+          "description": "Correo electrónico enviado a {recipient}"
+        },
+        "error": {
+          "title": "Error",
+          "description": "No se pudo enviar el correo electrónico. Inténtelo de nuevo."
+        }
+      }
+    },
+    "filters": {
+      "status": {
+        "label": "Estado",
+        "placeholder": "Todos los estados",
+        "options": {
+          "all": "Todos los estados",
+          "draft": "Borrador",
+          "pending": "Pendiente",
+          "paid": "Pagado",
+          "overdue": "Vencido",
+          "cancelled": "Cancelado"
+        }
+      },
+      "search": {
+        "label": "Buscar",
+        "placeholder": "Buscar por cliente, número de factura, etc.",
+        "clear": "Limpiar búsqueda"
+      },
+      "clearFilters": "Limpiar filtros"
+    },
+    "statusSelector": {
+      "statuses": {
+        "draft": "Borrador",
+        "pending": "Pendiente",
+        "paid": "Pagado",
+        "overdue": "Vencido",
+        "cancelled": "Cancelado"
+      },
+      "toast": {
+        "title": "Estado actualizado",
+        "description": "Estado de la factura cambiado a {status}",
+        "error": {
+          "title": "Error",
+          "description": "No se pudo actualizar el estado de la factura"
+        }
+      }
+    }
   },
   "drafts": {
     "draftName": "草稿名称",
@@ -494,4 +581,4 @@
       "signature": "此致，\nBillEasy 团队"
     }
   }
-} 
+}

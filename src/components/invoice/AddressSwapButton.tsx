@@ -4,6 +4,7 @@ import { ArrowLeftRight } from 'lucide-react';
 import { useFormContext } from 'react-hook-form';
 import { FormInvoiceType } from '@/types-optional';
 import { useToast } from '@/components/ui/use-toast';
+import { useTranslations } from 'next-intl';
 
 type AddressFields = {
   address: string | null;
@@ -21,6 +22,7 @@ type AddressFields = {
 export function AddressSwapButton({ mode = 'form' }: { mode?: 'form' | 'parser' }) {
   const { toast } = useToast();
   const { getValues, setValue } = useFormContext<FormInvoiceType>();
+  const t = useTranslations('invoice.addressSwap');
 
   const handleSwap = () => {
     // Log the current mode
@@ -61,8 +63,8 @@ export function AddressSwapButton({ mode = 'form' }: { mode?: 'form' | 'parser' 
     });
 
     toast({
-      title: 'Addresses Swapped',
-      description: 'The Bill From and Bill To information has been switched.',
+      title: t('toast.title'),
+      description: t('toast.description'),
     });
   };
 

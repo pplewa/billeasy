@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 // UI Components
 import {
@@ -38,6 +39,7 @@ export function InvoiceExportModal({
   isLoading = false,
 }: InvoiceExportModalProps) {
   const [open, setOpen] = useState(false);
+  const t = useTranslations('invoice.export');
 
   /**
    * Export the invoice in the specified format
@@ -66,8 +68,8 @@ export function InvoiceExportModal({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Export Invoice</DialogTitle>
-          <DialogDescription>Choose a format to export your invoice</DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-2 gap-4 mt-4">
@@ -77,7 +79,7 @@ export function InvoiceExportModal({
             onClick={() => handleExport(ExportTypes.PDF)}
             className="w-full"
           >
-            Export as PDF
+            {t('formats.pdf')}
           </Button>
           <Button
             variant="outline"
@@ -85,7 +87,7 @@ export function InvoiceExportModal({
             onClick={() => handleExport(ExportTypes.JSON)}
             className="w-full"
           >
-            Export as JSON
+            {t('formats.json')}
           </Button>
           <Button
             variant="outline"
@@ -93,7 +95,7 @@ export function InvoiceExportModal({
             onClick={() => handleExport(ExportTypes.CSV)}
             className="w-full"
           >
-            Export as CSV
+            {t('formats.csv')}
           </Button>
           <Button
             variant="outline"
@@ -101,7 +103,7 @@ export function InvoiceExportModal({
             onClick={() => handleExport(ExportTypes.XLSX)}
             className="w-full"
           >
-            Export as XLSX
+            {t('formats.xlsx')}
           </Button>
           <Button
             variant="outline"
@@ -109,7 +111,7 @@ export function InvoiceExportModal({
             onClick={() => handleExport(ExportTypes.XML)}
             className="w-full"
           >
-            Export as XML
+            {t('formats.xml')}
           </Button>
         </div>
       </DialogContent>

@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/select';
 import { InvoiceStatus } from '@/types';
 import { Search, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface InvoiceFiltersProps {
   onFilterChange: (filters: { status: string; search: string }) => void;
@@ -29,6 +30,7 @@ export function InvoiceFilters({
   const [status, setStatus] = useState<string>(initialFilters.status);
   const [search, setSearch] = useState<string>(initialFilters.search);
   const [debouncedSearch, setDebouncedSearch] = useState<string>(initialFilters.search);
+  const t = useTranslations('invoice.filters');
 
   // Handle status change
   const handleStatusChange = (value: string) => {
@@ -71,28 +73,29 @@ export function InvoiceFilters({
     <div className="bg-card rounded-lg border shadow-sm p-4 mb-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="status">Status</Label>
+          <Label htmlFor="status">{t('status.label')}</Label>
           <Select value={status} onValueChange={handleStatusChange}>
             <SelectTrigger id="status">
-              <SelectValue placeholder="All Statuses" />
+              <SelectValue placeholder={t('status.placeholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value={InvoiceStatus.DRAFT}>Draft</SelectItem>
-              <SelectItem value={InvoiceStatus.SENT}>Sent</SelectItem>
-              <SelectItem value={InvoiceStatus.PAID}>Paid</SelectItem>
-              <SelectItem value={InvoiceStatus.OVERDUE}>Overdue</SelectItem>
+              <SelectItem value="all">{t('status.options.all')}</SelectItem>
+              <SelectItem value={InvoiceStatus.DRAFT}>{t('status.options.draft')}</SelectItem>
+              <SelectItem value={InvoiceStatus.PENDING}>{t('status.options.pending')}</SelectItem>
+              <SelectItem value={InvoiceStatus.PAID}>{t('status.options.paid')}</SelectItem>
+              <SelectItem value={InvoiceStatus.OVERDUE}>{t('status.options.overdue')}</SelectItem>
+              <SelectItem value={InvoiceStatus.CANCELLED}>{t('status.options.cancelled')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="search">Search</Label>
+          <Label htmlFor="search">{t('search.label')}</Label>
           <div className="relative">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               id="search"
-              placeholder="Search by client, invoice number, etc."
+              placeholder={t('search.placeholder')}
               value={search}
               onChange={handleSearchChange}
               className="pl-8 pr-8"
@@ -107,7 +110,7 @@ export function InvoiceFilters({
                 }}
               >
                 <X className="h-4 w-4" />
-                <span className="sr-only">Clear search</span>
+                <span className="sr-only">{t('search.clear')}</span>
               </Button>
             )}
           </div>
@@ -117,7 +120,7 @@ export function InvoiceFilters({
       {(status || search) && (
         <div className="flex justify-end mt-4">
           <Button variant="outline" size="sm" onClick={handleClearFilters}>
-            Clear Filters
+            {t('clearFilters')}
           </Button>
         </div>
       )}

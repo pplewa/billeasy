@@ -17,6 +17,7 @@ import { FormInvoiceType } from '@/lib/types/invoice';
 import { sendInvoiceEmail } from '@/services/invoice/client/emailInvoice';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface InvoiceEmailModalProps {
   children: React.ReactNode;
@@ -38,10 +39,9 @@ export function InvoiceEmailModal({
   const [open, setOpen] = useState(false);
   const [sending, setSending] = useState(false);
   const [recipient, setRecipient] = useState('');
-  const [subject, setSubject] = useState('Invoice from Your Company');
-  const [message, setMessage] = useState(
-    'Please find attached the invoice for your recent purchase.'
-  );
+  const t = useTranslations('invoice.email');
+  const [subject, setSubject] = useState(t('defaultSubject'));
+  const [message, setMessage] = useState(t('defaultMessage'));
   const { toast } = useToast();
 
   const handleSendEmail = async () => {
@@ -71,16 +71,16 @@ export function InvoiceEmailModal({
       });
 
       toast({
-        title: 'Success',
-        description: `Email sent to ${recipient}`,
+        title: t('toast.success.title'),
+        description: t('toast.success.description', { recipient }),
       });
 
       setOpen(false);
     } catch (error) {
       console.error('Error sending email:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to send email. Please try again.',
+        title: t('toast.error.title'),
+        description: t('toast.error.description'),
         variant: 'destructive',
       });
     } finally {
@@ -93,40 +93,40 @@ export function InvoiceEmailModal({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Send Invoice Email</DialogTitle>
-          <DialogDescription>Send this invoice via email to your client.</DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="recipient">Recipient Email</Label>
+            <Label htmlFor="recipient">{t('recipient.label')}</Label>
             <Input
               id="recipient"
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
-              placeholder="client@example.com"
+              placeholder={t('recipient.placeholder')}
               type="email"
               required
             />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="subject">Subject</Label>
+            <Label htmlFor="subject">{t('subject.label')}</Label>
             <Input
               id="subject"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              placeholder="Invoice from Your Company"
+              placeholder={t('subject.placeholder')}
             />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message">{t('message.label')}</Label>
             <Textarea
               id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Enter your message here"
+              placeholder={t('message.placeholder')}
               rows={5}
             />
           </div>
@@ -134,16 +134,16 @@ export function InvoiceEmailModal({
 
         <div className="flex justify-end gap-2">
           <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
+            {t('buttons.cancel')}
           </Button>
           <Button onClick={handleSendEmail} disabled={!recipient || sending || isLoading}>
             {sending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Sending...
+                {t('buttons.sending')}
               </>
             ) : (
-              'Send Email'
+              t('buttons.send')
             )}
           </Button>
         </div>

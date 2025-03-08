@@ -176,7 +176,7 @@
     "howWeUseDataText": "Nous utilisons vos données exclusivement pour :",
     "howWeUseDataItems": [
       "Fournir le service de gestion de factures",
-      "Générer et gérer vos factures", 
+      "Générer et gérer vos factures",
       "Stocker votre historique de factures",
       "Améliorer les fonctionnalités de l'application",
       "Garantir la sécurité de votre compte"
@@ -189,7 +189,7 @@
     "yourRightsText": "Vous avez le droit de :",
     "yourRightsItems": [
       "Accéder à vos données stockées",
-      "Corriger toute information inexacte", 
+      "Corriger toute information inexacte",
       "Exporter vos données de factures",
       "Supprimer votre compte et les données associées",
       "Demander des informations sur le traitement de vos données"
@@ -207,7 +207,7 @@
     "serviceDescriptionText": "{appName} fournit un système de gestion de factures en ligne qui vous permet de :",
     "serviceDescriptionItems": [
       "Créer et gérer des factures professionnelles",
-      "Stocker et organiser les informations clients", 
+      "Stocker et organiser les informations clients",
       "Suivre le statut des factures et l'historique des paiements",
       "Générer des PDF de factures",
       "Gérer plusieurs modèles de factures"
@@ -226,7 +226,7 @@
     "dataAndContentText2": "Vous êtes responsable de :",
     "dataAndContentResponsibilities": [
       "La précision des informations dans vos factures",
-      "Tenir des registres appropriés à des fins fiscales", 
+      "Tenir des registres appropriés à des fins fiscales",
       "Obtenir les autorisations nécessaires pour utiliser les informations des clients",
       "Sauvegarder vos données importantes"
     ],
@@ -237,7 +237,7 @@
     "limitationOfLiabilityItems": [
       "La précision des factures générées",
       "Toute perte financière liée à l'utilisation de notre service",
-      "Respect des réglementations fiscales ou commerciales locales", 
+      "Respect des réglementations fiscales ou commerciales locales",
       "Perte de données en cas d'interruption du service"
     ],
     "changesToService": "Modifications du service",
@@ -260,14 +260,14 @@
     "status": {
       "all": "Tous les statuts",
       "draft": "Brouillon",
-      "pending": "En attente", 
+      "pending": "En attente",
       "paid": "Payé",
       "overdue": "En retard",
       "cancelled": "Annulé"
     },
     "sort": {
       "newestFirst": "Les plus récentes d'abord",
-      "oldestFirst": "Les plus anciennes d'abord", 
+      "oldestFirst": "Les plus anciennes d'abord",
       "highestAmount": "Montant le plus élevé",
       "lowestAmount": "Montant le plus bas",
       "byStatus": "Par statut"
@@ -275,7 +275,7 @@
     "itemsPerPage": "{count} par page",
     "table": {
       "number": "N° de facture",
-      "date": "Date", 
+      "date": "Date",
       "client": "Client",
       "amount": "Montant",
       "status": "Statut",
@@ -342,7 +342,94 @@
     "description": "Description",
     "quantity": "Quantité",
     "itemDescription": "Description de l'article",
-    "thankYou": "Merci d'utiliser BillEasy !"
+    "thankYou": "Merci d'utiliser BillEasy !",
+    "export": {
+      "title": "Exportar Factura",
+      "description": "Elija un formato para exportar su factura",
+      "formats": {
+        "pdf": "Exportar como PDF",
+        "json": "Exportar como JSON",
+        "csv": "Exportar como CSV",
+        "xlsx": "Exportar como XLSX",
+        "xml": "Exportar como XML"
+      }
+    },
+    "addressSwap": {
+      "toast": {
+        "title": "Direcciones Intercambiadas",
+        "description": "La información de Facturar Desde y Facturar A ha sido cambiada."
+      }
+    },
+    "email": {
+      "title": "Enviar correo electrónico de factura",
+      "description": "Envíe esta factura por correo electrónico a su cliente.",
+      "defaultSubject": "Factura de su empresa",
+      "defaultMessage": "Encuentre adjunta la factura de su compra reciente.",
+      "recipient": {
+        "label": "Correo electrónico del destinatario",
+        "placeholder": "cliente@ejemplo.com"
+      },
+      "subject": {
+        "label": "Asunto",
+        "placeholder": "Factura de su empresa"
+      },
+      "message": {
+        "label": "Mensaje",
+        "placeholder": "Escriba su mensaje aquí"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "send": "Enviar correo electrónico",
+        "sending": "Enviando..."
+      },
+      "toast": {
+        "success": {
+          "title": "Éxito",
+          "description": "Correo electrónico enviado a {recipient}"
+        },
+        "error": {
+          "title": "Error",
+          "description": "No se pudo enviar el correo electrónico. Inténtelo de nuevo."
+        }
+      }
+    },
+    "filters": {
+      "status": {
+        "label": "Estado",
+        "placeholder": "Todos los estados",
+        "options": {
+          "all": "Todos los estados",
+          "draft": "Borrador",
+          "pending": "Pendiente",
+          "paid": "Pagado",
+          "overdue": "Vencido",
+          "cancelled": "Cancelado"
+        }
+      },
+      "search": {
+        "label": "Buscar",
+        "placeholder": "Buscar por cliente, número de factura, etc.",
+        "clear": "Limpiar búsqueda"
+      },
+      "clearFilters": "Limpiar filtros"
+    },
+    "statusSelector": {
+      "statuses": {
+        "draft": "Borrador",
+        "pending": "Pendiente",
+        "paid": "Pagado",
+        "overdue": "Vencido",
+        "cancelled": "Cancelado"
+      },
+      "toast": {
+        "title": "Estado actualizado",
+        "description": "Estado de la factura cambiado a {status}",
+        "error": {
+          "title": "Error",
+          "description": "No se pudo actualizar el estado de la factura"
+        }
+      }
+    }
   },
   "drafts": {
     "draftName": "Nom du brouillon",
@@ -452,7 +539,7 @@
           "description": "Ajouter les détails de l'expéditeur et du destinataire"
         },
         "invoiceDetails": {
-          "title": "Détails de la Facture", 
+          "title": "Détails de la Facture",
           "description": "Ajouter les détails de la facture et les informations de paiement"
         },
         "items": {

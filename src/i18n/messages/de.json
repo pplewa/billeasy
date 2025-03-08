@@ -178,7 +178,7 @@
     "howWeUseDataText": "Wir verwenden Ihre Daten ausschließlich für:",
     "howWeUseDataItems": [
       "Bereitstellung des Rechnungsmanagement-Services",
-      "Generierung und Verwaltung Ihrer Rechnungen", 
+      "Generierung und Verwaltung Ihrer Rechnungen",
       "Speicherung Ihres Rechnungsverlaufs",
       "Verbesserung der Anwendungsfunktionalität",
       "Sicherstellung der Sicherheit Ihres Kontos"
@@ -191,7 +191,7 @@
     "yourRightsText": "Sie haben das Recht auf:",
     "yourRightsItems": [
       "Zugriff auf Ihre gespeicherten Daten",
-      "Korrektur ungenauer Informationen", 
+      "Korrektur ungenauer Informationen",
       "Exportieren Ihrer Rechnungsdaten",
       "Löschen Ihres Kontos und der zugehörigen Daten",
       "Anfrage von Informationen zur Verarbeitung Ihrer Daten"
@@ -209,7 +209,7 @@
     "serviceDescriptionText": "{appName} bietet ein Online-Rechnungsverwaltungssystem, das Ihnen ermöglicht:",
     "serviceDescriptionItems": [
       "Erstellen und Verwalten professioneller Rechnungen",
-      "Speichern und Organisieren von Kundeninformationen", 
+      "Speichern und Organisieren von Kundeninformationen",
       "Verfolgen des Rechnungsstatus und Zahlungsverlaufs",
       "Generieren von Rechnungs-PDFs",
       "Verwalten mehrerer Rechnungsvorlagen"
@@ -228,7 +228,7 @@
     "dataAndContentText2": "Sie sind verantwortlich für:",
     "dataAndContentResponsibilities": [
       "Die Genauigkeit der Informationen in Ihren Rechnungen",
-      "Führen angemessener Aufzeichnungen für Steuerzwecke", 
+      "Führen angemessener Aufzeichnungen für Steuerzwecke",
       "Einholen der erforderlichen Genehmigungen zur Nutzung von Kundeninformationen",
       "Sichern Ihrer wichtigen Daten"
     ],
@@ -239,7 +239,7 @@
     "limitationOfLiabilityItems": [
       "Die Genauigkeit der erstellten Rechnungen",
       "Jegliche finanziellen Verluste im Zusammenhang mit der Nutzung unseres Dienstes",
-      "Einhaltung lokaler Steuer- oder Geschäftsvorschriften", 
+      "Einhaltung lokaler Steuer- oder Geschäftsvorschriften",
       "Datenverlust im Falle einer Dienstunterbrechung"
     ],
     "changesToService": "Änderungen am Dienst",
@@ -262,14 +262,14 @@
     "status": {
       "all": "Alle Status",
       "draft": "Entwurf",
-      "pending": "Ausstehend", 
+      "pending": "Ausstehend",
       "paid": "Bezahlt",
       "overdue": "Überfällig",
       "cancelled": "Storniert"
     },
     "sort": {
       "newestFirst": "Neueste zuerst",
-      "oldestFirst": "Älteste zuerst", 
+      "oldestFirst": "Älteste zuerst",
       "highestAmount": "Höchster Betrag",
       "lowestAmount": "Niedrigster Betrag",
       "byStatus": "Nach Status"
@@ -277,7 +277,7 @@
     "itemsPerPage": "{count} pro Seite",
     "table": {
       "number": "Rechnungsnr.",
-      "date": "Datum", 
+      "date": "Datum",
       "client": "Kunde",
       "amount": "Betrag",
       "status": "Status",
@@ -344,7 +344,94 @@
     "description": "Beschreibung",
     "quantity": "Menge",
     "itemDescription": "Positionsbeschreibung",
-    "thankYou": "Vielen Dank für die Nutzung von BillEasy!"
+    "thankYou": "Vielen Dank für die Nutzung von BillEasy!",
+    "export": {
+      "title": "Exportar Factura",
+      "description": "Elija un formato para exportar su factura",
+      "formats": {
+        "pdf": "Exportar como PDF",
+        "json": "Exportar como JSON",
+        "csv": "Exportar como CSV",
+        "xlsx": "Exportar como XLSX",
+        "xml": "Exportar como XML"
+      }
+    },
+    "addressSwap": {
+      "toast": {
+        "title": "Direcciones Intercambiadas",
+        "description": "La información de Facturar Desde y Facturar A ha sido cambiada."
+      }
+    },
+    "email": {
+      "title": "Enviar correo electrónico de factura",
+      "description": "Envíe esta factura por correo electrónico a su cliente.",
+      "defaultSubject": "Factura de su empresa",
+      "defaultMessage": "Encuentre adjunta la factura de su compra reciente.",
+      "recipient": {
+        "label": "Correo electrónico del destinatario",
+        "placeholder": "cliente@ejemplo.com"
+      },
+      "subject": {
+        "label": "Asunto",
+        "placeholder": "Factura de su empresa"
+      },
+      "message": {
+        "label": "Mensaje",
+        "placeholder": "Escriba su mensaje aquí"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "send": "Enviar correo electrónico",
+        "sending": "Enviando..."
+      },
+      "toast": {
+        "success": {
+          "title": "Éxito",
+          "description": "Correo electrónico enviado a {recipient}"
+        },
+        "error": {
+          "title": "Error",
+          "description": "No se pudo enviar el correo electrónico. Inténtelo de nuevo."
+        }
+      }
+    },
+    "filters": {
+      "status": {
+        "label": "Estado",
+        "placeholder": "Todos los estados",
+        "options": {
+          "all": "Todos los estados",
+          "draft": "Borrador",
+          "pending": "Pendiente",
+          "paid": "Pagado",
+          "overdue": "Vencido",
+          "cancelled": "Cancelado"
+        }
+      },
+      "search": {
+        "label": "Buscar",
+        "placeholder": "Buscar por cliente, número de factura, etc.",
+        "clear": "Limpiar búsqueda"
+      },
+      "clearFilters": "Limpiar filtros"
+    },
+    "statusSelector": {
+      "statuses": {
+        "draft": "Borrador",
+        "pending": "Pendiente",
+        "paid": "Pagado",
+        "overdue": "Vencido",
+        "cancelled": "Cancelado"
+      },
+      "toast": {
+        "title": "Estado actualizado",
+        "description": "Estado de la factura cambiado a {status}",
+        "error": {
+          "title": "Error",
+          "description": "No se pudo actualizar el estado de la factura"
+        }
+      }
+    }
   },
   "drafts": {
     "draftName": "Entwurfsname",
@@ -454,7 +541,7 @@
           "description": "Details des Absenders und Empfängers hinzufügen"
         },
         "invoiceDetails": {
-          "title": "Rechnungsdetails", 
+          "title": "Rechnungsdetails",
           "description": "Rechnungsdetails und Zahlungsinformationen hinzufügen"
         },
         "items": {

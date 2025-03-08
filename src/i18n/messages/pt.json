@@ -208,14 +208,14 @@
     "status": {
       "all": "Todos os estados",
       "draft": "Rascunho",
-      "pending": "Pendente", 
+      "pending": "Pendente",
       "paid": "Pago",
       "overdue": "Vencido",
       "cancelled": "Cancelado"
     },
     "sort": {
       "newestFirst": "Mais Recentes Primeiro",
-      "oldestFirst": "Mais Antigos Primeiro", 
+      "oldestFirst": "Mais Antigos Primeiro",
       "highestAmount": "Maior Valor",
       "lowestAmount": "Menor Valor",
       "byStatus": "Por Status"
@@ -223,7 +223,7 @@
     "itemsPerPage": "{count} por página",
     "table": {
       "number": "Fatura nº",
-      "date": "Data", 
+      "date": "Data",
       "client": "Cliente",
       "amount": "Valor",
       "status": "Status",
@@ -290,7 +290,94 @@
     "description": "Descrição",
     "quantity": "Quantidade",
     "itemDescription": "Descrição do item",
-    "thankYou": "Obrigado por usar o BillEasy!"
+    "thankYou": "Obrigado por usar o BillEasy!",
+    "export": {
+      "title": "Exportar Factura",
+      "description": "Elija un formato para exportar su factura",
+      "formats": {
+        "pdf": "Exportar como PDF",
+        "json": "Exportar como JSON",
+        "csv": "Exportar como CSV",
+        "xlsx": "Exportar como XLSX",
+        "xml": "Exportar como XML"
+      }
+    },
+    "addressSwap": {
+      "toast": {
+        "title": "Direcciones Intercambiadas",
+        "description": "La información de Facturar Desde y Facturar A ha sido cambiada."
+      }
+    },
+    "email": {
+      "title": "Enviar correo electrónico de factura",
+      "description": "Envíe esta factura por correo electrónico a su cliente.",
+      "defaultSubject": "Factura de su empresa",
+      "defaultMessage": "Encuentre adjunta la factura de su compra reciente.",
+      "recipient": {
+        "label": "Correo electrónico del destinatario",
+        "placeholder": "cliente@ejemplo.com"
+      },
+      "subject": {
+        "label": "Asunto",
+        "placeholder": "Factura de su empresa"
+      },
+      "message": {
+        "label": "Mensaje",
+        "placeholder": "Escriba su mensaje aquí"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "send": "Enviar correo electrónico",
+        "sending": "Enviando..."
+      },
+      "toast": {
+        "success": {
+          "title": "Éxito",
+          "description": "Correo electrónico enviado a {recipient}"
+        },
+        "error": {
+          "title": "Error",
+          "description": "No se pudo enviar el correo electrónico. Inténtelo de nuevo."
+        }
+      }
+    },
+    "filters": {
+      "status": {
+        "label": "Estado",
+        "placeholder": "Todos los estados",
+        "options": {
+          "all": "Todos los estados",
+          "draft": "Borrador",
+          "pending": "Pendiente",
+          "paid": "Pagado",
+          "overdue": "Vencido",
+          "cancelled": "Cancelado"
+        }
+      },
+      "search": {
+        "label": "Buscar",
+        "placeholder": "Buscar por cliente, número de factura, etc.",
+        "clear": "Limpiar búsqueda"
+      },
+      "clearFilters": "Limpiar filtros"
+    },
+    "statusSelector": {
+      "statuses": {
+        "draft": "Borrador",
+        "pending": "Pendiente",
+        "paid": "Pagado",
+        "overdue": "Vencido",
+        "cancelled": "Cancelado"
+      },
+      "toast": {
+        "title": "Estado actualizado",
+        "description": "Estado de la factura cambiado a {status}",
+        "error": {
+          "title": "Error",
+          "description": "No se pudo actualizar el estado de la factura"
+        }
+      }
+    }
   },
   "drafts": {
     "draftName": "Nome do rascunho",
@@ -313,7 +400,7 @@
           "description": "Adicionar detalhes do remetente e destinatário"
         },
         "invoiceDetails": {
-          "title": "Detalhes da Fatura", 
+          "title": "Detalhes da Fatura",
           "description": "Adicionar detalhes da fatura e informações de pagamento"
         },
         "items": {
@@ -494,4 +581,4 @@
       "signature": "Atenciosamente,\nEquipe BillEasy"
     }
   }
-} 
+}

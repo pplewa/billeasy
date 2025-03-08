@@ -11,6 +11,7 @@ import { InvoiceStatus } from '@/types';
 import { updateInvoice } from '@/services/invoice/client/invoiceClient';
 import { useToast } from '@/components/ui/use-toast';
 import { ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface InvoiceStatusSelectorProps {
   invoiceId: string;
@@ -29,6 +30,7 @@ export function InvoiceStatusSelector({
   const { toast } = useToast();
   const [status, setStatus] = useState(currentStatus);
   const [updating, setUpdating] = useState(false);
+  const t = useTranslations('invoice.statusSelector');
 
   /**
    * Handle status change
@@ -50,14 +52,14 @@ export function InvoiceStatusSelector({
       }
 
       toast({
-        title: 'Status updated',
-        description: `Invoice status changed to ${newStatus}`,
+        title: t('toast.title'),
+        description: t('toast.description', { status: t(`statuses.${newStatus}`) }),
       });
     } catch (error) {
       console.error('Error updating invoice status:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to update invoice status',
+        title: t('toast.error.title'),
+        description: t('toast.error.description'),
         variant: 'destructive',
       });
     } finally {

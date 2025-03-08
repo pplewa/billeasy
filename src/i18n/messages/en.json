@@ -176,7 +176,7 @@
     "howWeUseDataText": "We use your data exclusively for:",
     "howWeUseDataItems": [
       "Providing the invoice management service",
-      "Generating and managing your invoices", 
+      "Generating and managing your invoices",
       "Storing your invoice history",
       "Improving the application's functionality",
       "Ensuring the security of your account"
@@ -189,7 +189,7 @@
     "yourRightsText": "You have the right to:",
     "yourRightsItems": [
       "Access your stored data",
-      "Correct any inaccurate information", 
+      "Correct any inaccurate information",
       "Export your invoice data",
       "Delete your account and associated data",
       "Request information about how your data is processed"
@@ -223,7 +223,7 @@
     "email": "Email",
     "serviceDescriptionItems": [
       "Create and manage professional invoices",
-      "Store and organize client information", 
+      "Store and organize client information",
       "Track invoice status and payment history",
       "Generate invoice PDFs",
       "Manage multiple invoice templates"
@@ -237,14 +237,14 @@
     ],
     "dataAndContentResponsibilities": [
       "The accuracy of information in your invoices",
-      "Maintaining appropriate records for tax purposes", 
+      "Maintaining appropriate records for tax purposes",
       "Obtaining necessary permissions to use client information",
       "Backing up your important data"
     ],
     "limitationOfLiabilityItems": [
       "The accuracy of generated invoices",
       "Any financial losses related to using our service",
-      "Compliance with local tax or business regulations", 
+      "Compliance with local tax or business regulations",
       "Data loss in case of service disruption"
     ]
   },
@@ -260,14 +260,14 @@
     "status": {
       "all": "All Statuses",
       "draft": "Draft",
-      "pending": "Pending", 
+      "pending": "Pending",
       "paid": "Paid",
       "overdue": "Overdue",
       "cancelled": "Cancelled"
     },
     "sort": {
       "newestFirst": "Newest First",
-      "oldestFirst": "Oldest First", 
+      "oldestFirst": "Oldest First",
       "highestAmount": "Highest Amount",
       "lowestAmount": "Lowest Amount",
       "byStatus": "By Status"
@@ -275,7 +275,7 @@
     "itemsPerPage": "{count} per page",
     "table": {
       "number": "Invoice #",
-      "date": "Date", 
+      "date": "Date",
       "client": "Client",
       "amount": "Amount",
       "status": "Status",
@@ -344,7 +344,94 @@
     "itemDescription": "Item Description",
     "thankYou": "Thanks for using BillEasy!",
     "authRequired": "Authentication Required",
-    "authRequiredDescription": "You need to be signed in to {action} an invoice."
+    "authRequiredDescription": "You need to be signed in to {action} an invoice.",
+    "export": {
+      "title": "Export Invoice",
+      "description": "Choose a format to export your invoice",
+      "formats": {
+        "pdf": "Export as PDF",
+        "json": "Export as JSON",
+        "csv": "Export as CSV",
+        "xlsx": "Export as XLSX",
+        "xml": "Export as XML"
+      }
+    },
+    "addressSwap": {
+      "toast": {
+        "title": "Addresses Swapped",
+        "description": "The Bill From and Bill To information has been switched."
+      }
+    },
+    "email": {
+      "title": "Send Invoice Email",
+      "description": "Send this invoice via email to your client.",
+      "defaultSubject": "Invoice from Your Company",
+      "defaultMessage": "Please find attached the invoice for your recent purchase.",
+      "recipient": {
+        "label": "Recipient Email",
+        "placeholder": "client@example.com"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Invoice from Your Company"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Enter your message here"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "send": "Send Email",
+        "sending": "Sending..."
+      },
+      "toast": {
+        "success": {
+          "title": "Success",
+          "description": "Email sent to {recipient}"
+        },
+        "error": {
+          "title": "Error",
+          "description": "Failed to send email. Please try again."
+        }
+      }
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "placeholder": "All Statuses",
+        "options": {
+          "all": "All Statuses",
+          "draft": "Draft",
+          "pending": "Pending",
+          "paid": "Paid",
+          "overdue": "Overdue",
+          "cancelled": "Cancelled"
+        }
+      },
+      "search": {
+        "label": "Search",
+        "placeholder": "Search by client, invoice number, etc.",
+        "clear": "Clear search"
+      },
+      "clearFilters": "Clear Filters"
+    },
+    "statusSelector": {
+      "statuses": {
+        "draft": "Draft",
+        "pending": "Pending",
+        "paid": "Paid",
+        "overdue": "Overdue",
+        "cancelled": "Cancelled"
+      },
+      "toast": {
+        "title": "Status Updated",
+        "description": "Invoice status changed to {status}",
+        "error": {
+          "title": "Error",
+          "description": "Failed to update invoice status"
+        }
+      }
+    }
   },
   "drafts": {
     "draftName": "Draft Name",
