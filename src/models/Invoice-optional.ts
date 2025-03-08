@@ -1,7 +1,12 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { InvoiceType } from '@/types-optional';
+import { FormInvoiceType } from '@/types-optional';
 
-export interface InvoiceDocument extends InvoiceType, Document {
+export interface InvoiceDocument extends Document {
+  sender?: FormInvoiceType['sender'];
+  receiver?: FormInvoiceType['receiver'];
+  details?: FormInvoiceType['details'];
+  settings?: FormInvoiceType['settings'];
+  items?: FormInvoiceType['items'];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -12,6 +17,8 @@ const InvoiceSchema = new Schema(
     sender: { type: Schema.Types.Mixed },
     receiver: { type: Schema.Types.Mixed },
     details: { type: Schema.Types.Mixed },
+    settings: { type: Schema.Types.Mixed },
+    items: [{ type: Schema.Types.Mixed }],
   },
   {
     timestamps: true,

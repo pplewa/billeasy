@@ -162,15 +162,15 @@ export async function duplicateInvoice(id: string): Promise<InvoiceDocument | nu
     return null;
   }
 
-  // Convert the document to a plain JavaScript object
-  const invoiceData = origInvoice.toObject();
+  // Convert the document to a plain JavaScript object and process it
+  const invoiceData = processInvoice(origInvoice.toObject());
 
   // Remove the _id field to create a new document
   delete invoiceData._id;
 
   // Optionally modify some fields
-  if (invoiceData.details) {
-    const details = invoiceData.details;
+  if (invoiceData.details && typeof invoiceData.details === 'object') {
+    const details = invoiceData.details as { invoiceNumber?: string; status?: string };
 
     // Append "- Copy" to invoice number
     if (details.invoiceNumber) {
