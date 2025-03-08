@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useFormContext } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 // UI Components
 import { Card, CardContent } from '@/components/ui/card';
@@ -41,6 +42,9 @@ const TEMPLATES = [
  * Allows users to select from available invoice templates
  */
 export function TemplateSelector() {
+  const t = useTranslations('form');
+  const tInvoice = useTranslations('invoice');
+  
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { watch, setValue } = useFormContext<any>();
   const selectedTemplate = watch('details.pdfTemplate') || 1;
@@ -62,12 +66,12 @@ export function TemplateSelector() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-medium">Invoice Template</h3>
+        <h3 className="text-lg font-medium">{t('invoiceTemplate.title')}</h3>
         {previewUrl && (
           <Link href={previewUrl} target="_blank" rel="noopener noreferrer">
             <Button variant="outline" size="sm" className="flex items-center gap-1">
               <Eye className="h-4 w-4" />
-              Preview
+              {t('invoiceTemplate.preview')}
             </Button>
           </Link>
         )}
@@ -79,7 +83,7 @@ export function TemplateSelector() {
             onClick={handlePreview}
           >
             <Eye className="h-4 w-4" />
-            Preview
+            {t('invoiceTemplate.preview')}
           </Button>
         )}
       </div>
@@ -108,7 +112,9 @@ export function TemplateSelector() {
                     <p className="text-sm text-gray-500">{template.description}</p>
                   </div>
                   <div className="h-40 bg-gray-100 flex items-center justify-center">
-                    <div className="text-sm text-gray-500">Template {template.id} Preview</div>
+                    <div className="text-sm text-gray-500">
+                      {tInvoice('templatePreview', { id: template.id })}
+                    </div>
                   </div>
                 </CardContent>
               </Card>

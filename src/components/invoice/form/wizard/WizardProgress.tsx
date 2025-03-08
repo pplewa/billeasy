@@ -22,49 +22,49 @@ interface WizardProgressProps {
   };
 }
 
-const steps = [
-  {
-    id: 'sender-receiver',
-    title: 'Sender & Receiver',
-    description: 'Add sender and receiver details',
-    icon: UserSquare2,
-    fields: ['sender', 'receiver'],
-  },
-  {
-    id: 'invoice-details',
-    title: 'Invoice Details',
-    description: 'Add invoice details and payment information',
-    icon: ReceiptText,
-    fields: [
-      'details.invoiceNumber',
-      'details.invoiceDate',
-      'details.dueDate',
-      'details.currency',
-      'details.paymentInformation',
-    ],
-  },
-  {
-    id: 'items',
-    title: 'Items',
-    description: 'Add invoice items with tax and discount',
-    icon: Receipt,
-    fields: ['details.items'],
-  },
-  {
-    id: 'signature',
-    title: 'Signature & Notes',
-    description: 'Add signature and additional notes',
-    icon: FileText,
-    fields: ['details.signature', 'details.additionalNotes'],
-  },
-];
-
 export function WizardProgress({ wizard }: WizardProgressProps) {
   const {
     formState: { errors },
   } = useFormContext<InvoiceType>();
   const { goToStep } = useWizard();
-  const t = useTranslations('form');
+  const t = useTranslations('form.wizard');
+
+  const steps = [
+    {
+      id: 'sender-receiver',
+      title: t('steps.senderReceiver.title'),
+      description: t('steps.senderReceiver.description'),
+      icon: UserSquare2,
+      fields: ['sender', 'receiver'],
+    },
+    {
+      id: 'invoice-details',
+      title: t('steps.invoiceDetails.title'),
+      description: t('steps.invoiceDetails.description'),
+      icon: ReceiptText,
+      fields: [
+        'details.invoiceNumber',
+        'details.invoiceDate',
+        'details.dueDate',
+        'details.currency',
+        'details.paymentInformation',
+      ],
+    },
+    {
+      id: 'items',
+      title: t('steps.items.title'),
+      description: t('steps.items.description'),
+      icon: Receipt,
+      fields: ['details.items'],
+    },
+    {
+      id: 'signature',
+      title: t('steps.signature.title'),
+      description: t('steps.signature.description'),
+      icon: FileText,
+      fields: ['details.signature', 'details.additionalNotes'],
+    },
+  ];
 
   return (
     <nav aria-label="Progress">
@@ -113,7 +113,7 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
                 <span className="text-sm text-muted-foreground">{step.description}</span>
                 {hasErrors && (
                   <span className="text-sm text-destructive">
-                    {t('wizard.stepError')}
+                    {t('stepError')}
                   </span>
                 )}
               </button>

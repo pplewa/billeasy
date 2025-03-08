@@ -341,10 +341,133 @@
       "error": "Error:"
     },
     "wizard": {
-      "stepError": "Please fix the errors in this step"
+      "stepError": "Please fix the errors in this step",
+      "steps": {
+        "senderReceiver": {
+          "title": "Sender & Receiver",
+          "description": "Add sender and receiver details"
+        },
+        "invoiceDetails": {
+          "title": "Invoice Details",
+          "description": "Add invoice details and payment information"
+        },
+        "items": {
+          "title": "Items",
+          "description": "Add invoice items with tax and discount"
+        },
+        "signature": {
+          "title": "Signature & Notes",
+          "description": "Add signature and additional notes"
+        }
+      }
     },
     "errors": {
       "formField": "useFormField should be used within <FormField>"
+    },
+    "billFrom": {
+      "title": "Bill From",
+      "name": "Name",
+      "namePlaceholder": "Your name or business name",
+      "address": "Address",
+      "email": "Email",
+      "emailPlaceholder": "Email address",
+      "phone": "Phone",
+      "phonePlaceholder": "Phone number",
+      "customFields": {
+        "show": "Add Custom Fields",
+        "hide": "Hide Custom Fields",
+        "fieldName": "Field {number}",
+        "fieldValue": "Value",
+        "fieldNamePlaceholder": "Field name",
+        "fieldValuePlaceholder": "Field value",
+        "addAnother": "Add Another Field"
+      }
+    },
+    "billTo": {
+      "title": "Bill To",
+      "name": "Name",
+      "namePlaceholder": "Client name or business name",
+      "address": "Address",
+      "email": "Email",
+      "emailPlaceholder": "Email address",
+      "phone": "Phone",
+      "phonePlaceholder": "Phone number",
+      "customFields": {
+        "show": "Add Custom Fields",
+        "hide": "Hide Custom Fields",
+        "fieldName": "Field {number} Name",
+        "fieldValue": "Field {number} Value",
+        "fieldNamePlaceholder": "Field name",
+        "fieldValuePlaceholder": "Field value",
+        "addAnother": "Add Another Field"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Invoice Details",
+      "invoiceNumber": "Invoice Number",
+      "invoiceDate": "Invoice Date",
+      "dueDate": "Due Date",
+      "poNumber": "PO Number",
+      "poNumberPlaceholder": "Purchase Order Number"
+    },
+    "paymentInfo": {
+      "title": "Payment Information",
+      "bankName": "Bank Name",
+      "bankNamePlaceholder": "Bank name",
+      "accountName": "Account Name",
+      "accountNamePlaceholder": "Account name",
+      "accountNumber": "Account Number",
+      "accountNumberPlaceholder": "Account number"
+    },
+    "items": {
+      "title": "Items",
+      "addItem": "Add Item",
+      "name": "Name",
+      "namePlaceholder": "Item name",
+      "description": "Description",
+      "descriptionPlaceholder": "Item description",
+      "quantity": "Quantity",
+      "price": "Price",
+      "tax": "Tax (%)",
+      "discount": "Discount (%)",
+      "amount": "Amount",
+      "actions": "Actions",
+      "noItems": "No items added yet. Add your first item to get started."
+    },
+    "taxDetails": {
+      "title": "Tax Details",
+      "taxId": "Tax ID",
+      "taxIdPlaceholder": "Tax ID number",
+      "taxAmount": "Tax Amount",
+      "amountType": "Amount Type",
+      "amountTypePlaceholder": "Select amount type",
+      "amountTypePercentage": "Percentage (%)",
+      "amountTypeFixed": "Fixed Amount"
+    },
+    "discountDetails": {
+      "title": "Discount Details",
+      "discountRate": "Discount Rate (%)",
+      "discountAmount": "Discount Amount"
+    },
+    "additionalNotes": {
+      "title": "Additional Notes",
+      "notesPlaceholder": "Add any additional notes or terms of service"
+    },
+    "signature": {
+      "title": "Signature",
+      "addSignature": "Add Signature",
+      "clear": "Clear",
+      "save": "Save Signature",
+      "placeholder": "Sign here"
+    },
+    "navigation": {
+      "back": "Back",
+      "next": "Next",
+      "finish": "Finish"
     }
+  },
+  "invoiceTemplate": {
+    "title": "Invoice Template",
+    "preview": "Preview"
   }
 }

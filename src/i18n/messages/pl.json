@@ -243,5 +243,155 @@
     "draftName": "Nazwa szkicu",
     "created": "Utworzono",
     "actions": "Akcje"
+  },
+  "form": {
+    "addressLookahead": {
+      "manualEntry": "Wprowadzenie ręczne",
+      "searchAddress": "Szukaj adresu",
+      "searchPlaceholder": "Wpisz, aby wyszukać adres...",
+      "suggestions": "Sugestie adresów",
+      "error": "Błąd:"
+    },
+    "wizard": {
+      "stepError": "Proszę poprawić błędy w tym kroku",
+      "steps": {
+        "senderReceiver": {
+          "title": "Nadawca i Odbiorca",
+          "description": "Dodaj szczegóły nadawcy i odbiorcy"
+        },
+        "invoiceDetails": {
+          "title": "Szczegóły Faktury", 
+          "description": "Dodaj szczegóły faktury i informacje o płatności"
+        },
+        "items": {
+          "title": "Pozycje",
+          "description": "Dodaj pozycje faktury z podatkami i rabatami"
+        },
+        "signature": {
+          "title": "Podpis i Notatki",
+          "description": "Dodaj podpis i dodatkowe notatki"
+        }
+      }
+    },
+    "errors": {
+      "formField": "useFormField musi być użyty wewnątrz <FormField>"
+    },
+    "billFrom": {
+      "title": "Faktura od",
+      "name": "Nazwa",
+      "namePlaceholder": "Twoja nazwa lub nazwa firmy",
+      "address": "Adres",
+      "email": "Email",
+      "emailPlaceholder": "Adres email",
+      "phone": "Telefon",
+      "phonePlaceholder": "Numer telefonu",
+      "customFields": {
+        "show": "Dodaj pola niestandardowe",
+        "hide": "Ukryj pola niestandardowe",
+        "fieldName": "Pole {number}",
+        "fieldValue": "Wartość",
+        "fieldNamePlaceholder": "Nazwa pola",
+        "fieldValuePlaceholder": "Wartość pola",
+        "addAnother": "Dodaj kolejne pole"
+      }
+    },
+    "billTo": {
+      "title": "Faktura dla",
+      "name": "Nazwa",
+      "namePlaceholder": "Nazwa klienta lub firmy",
+      "address": "Adres",
+      "email": "Email",
+      "emailPlaceholder": "Adres email",
+      "phone": "Telefon",
+      "phonePlaceholder": "Numer telefonu",
+      "customFields": {
+        "show": "Dodaj pola niestandardowe",
+        "hide": "Ukryj pola niestandardowe",
+        "fieldName": "Nazwa pola {number}",
+        "fieldValue": "Wartość pola {number}",
+        "fieldNamePlaceholder": "Nazwa pola",
+        "fieldValuePlaceholder": "Wartość pola",
+        "addAnother": "Dodaj kolejne pole"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Szczegóły faktury",
+      "invoiceNumber": "Numer faktury",
+      "invoiceDate": "Data faktury",
+      "dueDate": "Data płatności",
+      "poNumber": "Numer zamówienia",
+      "poNumberPlaceholder": "Numer zamówienia"
+    },
+    "paymentInfo": {
+      "title": "Informacje o płatności",
+      "bankName": "Nazwa banku",
+      "bankNamePlaceholder": "Nazwa banku",
+      "accountName": "Nazwa konta",
+      "accountNamePlaceholder": "Nazwa konta",
+      "accountNumber": "Numer konta",
+      "accountNumberPlaceholder": "Numer konta"
+    },
+    "items": {
+      "title": "Pozycje",
+      "addItem": "Dodaj pozycję",
+      "name": "Nazwa",
+      "namePlaceholder": "Nazwa pozycji",
+      "description": "Opis",
+      "descriptionPlaceholder": "Opis pozycji",
+      "quantity": "Ilość",
+      "price": "Cena",
+      "tax": "Podatek (%)",
+      "discount": "Rabat (%)",
+      "amount": "Kwota",
+      "actions": "Akcje",
+      "noItems": "Nie dodano jeszcze żadnych pozycji. Dodaj pierwszą pozycję, aby rozpocząć."
+    },
+    "taxDetails": {
+      "title": "Szczegóły Podatku",
+      "taxId": "Identyfikator Podatkowy",
+      "taxIdPlaceholder": "Numer identyfikacji podatkowej",
+      "taxAmount": "Kwota Podatku",
+      "amountType": "Typ Kwoty",
+      "amountTypePlaceholder": "Wybierz typ kwoty",
+      "amountTypePercentage": "Procent (%)",
+      "amountTypeFixed": "Kwota Stała"
+    },
+    "discountDetails": {
+      "title": "Szczegóły rabatu",
+      "discountRate": "Stopa rabatu (%)",
+      "discountAmount": "Kwota rabatu"
+    },
+    "additionalNotes": {
+      "title": "Dodatkowe notatki",
+      "notesPlaceholder": "Dodaj dodatkowe notatki lub warunki usługi"
+    },
+    "signature": {
+      "title": "Podpis",
+      "addSignature": "Dodaj podpis",
+      "clear": "Wyczyść",
+      "save": "Zapisz podpis",
+      "placeholder": "Podpisz tutaj"
+    },
+    "navigation": {
+      "back": "Wstecz",
+      "next": "Dalej",
+      "finish": "Zakończ"
+    },
+    "selectors": {
+      "template": {
+        "placeholder": "Wybierz szablon"
+      },
+      "status": {
+        "placeholder": "Wybierz status",
+        "allStatuses": "Wszystkie statusy"
+      },
+      "sort": {
+        "placeholder": "Sortuj według"
+      }
+    }
+  },
+  "invoiceTemplate": {
+    "title": "Szablon Faktury",
+    "preview": "Podgląd"
   }
 } 

@@ -254,10 +254,138 @@
       "error": "Erro:"
     },
     "wizard": {
-      "stepError": "Por favor, corrija os erros nesta etapa"
+      "stepError": "Por favor, corrija os erros nesta etapa",
+      "steps": {
+        "senderReceiver": {
+          "title": "Remetente e Destinatário",
+          "description": "Adicionar detalhes do remetente e destinatário"
+        },
+        "invoiceDetails": {
+          "title": "Detalhes da Fatura", 
+          "description": "Adicionar detalhes da fatura e informações de pagamento"
+        },
+        "items": {
+          "title": "Itens",
+          "description": "Adicionar itens da fatura com impostos e descontos"
+        },
+        "signature": {
+          "title": "Assinatura e Notas",
+          "description": "Adicionar assinatura e notas adicionais"
+        }
+      }
     },
     "errors": {
       "formField": "useFormField deve ser usado dentro de <FormField>"
+    },
+    "billFrom": {
+      "title": "Faturar de",
+      "name": "Nome",
+      "namePlaceholder": "Seu nome ou nome da empresa",
+      "address": "Endereço",
+      "email": "Email",
+      "emailPlaceholder": "Endereço de email",
+      "phone": "Telefone",
+      "phonePlaceholder": "Número de telefone",
+      "customFields": {
+        "show": "Adicionar campos personalizados",
+        "hide": "Ocultar campos personalizados",
+        "fieldName": "Campo {number}",
+        "fieldValue": "Valor",
+        "fieldNamePlaceholder": "Nome do campo",
+        "fieldValuePlaceholder": "Valor do campo",
+        "addAnother": "Adicionar outro campo"
+      }
+    },
+    "billTo": {
+      "title": "Faturar para",
+      "name": "Nome",
+      "namePlaceholder": "Nome do cliente ou empresa",
+      "address": "Endereço",
+      "email": "Email",
+      "emailPlaceholder": "Endereço de email",
+      "phone": "Telefone",
+      "phonePlaceholder": "Número de telefone",
+      "customFields": {
+        "show": "Adicionar campos personalizados",
+        "hide": "Ocultar campos personalizados",
+        "fieldName": "Nome do campo {number}",
+        "fieldValue": "Valor do campo {number}",
+        "fieldNamePlaceholder": "Nome do campo",
+        "fieldValuePlaceholder": "Valor do campo",
+        "addAnother": "Adicionar outro campo"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Detalhes da fatura",
+      "invoiceNumber": "Número da fatura",
+      "invoiceDate": "Data da fatura",
+      "dueDate": "Data de vencimento",
+      "poNumber": "Número do pedido",
+      "poNumberPlaceholder": "Número de ordem de compra"
+    },
+    "paymentInfo": {
+      "title": "Informações de pagamento",
+      "bankName": "Nome do banco",
+      "bankNamePlaceholder": "Nome do banco",
+      "accountName": "Nome da conta",
+      "accountNamePlaceholder": "Nome da conta",
+      "accountNumber": "Número da conta",
+      "accountNumberPlaceholder": "Número da conta"
+    },
+    "items": {
+      "title": "Itens",
+      "addItem": "Adicionar item",
+      "name": "Nome",
+      "namePlaceholder": "Nome do item",
+      "description": "Descrição",
+      "descriptionPlaceholder": "Descrição do item",
+      "quantity": "Quantidade",
+      "price": "Preço",
+      "tax": "Imposto (%)",
+      "discount": "Desconto (%)",
+      "amount": "Valor",
+      "actions": "Ações",
+      "noItems": "Nenhum item adicionado ainda. Adicione seu primeiro item para começar."
+    },
+    "taxDetails": {
+      "title": "Detalhes do Imposto",
+      "taxId": "ID Fiscal",
+      "taxIdPlaceholder": "Número de identificação fiscal",
+      "taxAmount": "Valor do Imposto",
+      "amountType": "Tipo de Valor",
+      "amountTypePlaceholder": "Selecionar tipo de valor",
+      "amountTypePercentage": "Porcentagem (%)",
+      "amountTypeFixed": "Valor Fixo"
+    },
+    "discountDetails": {
+      "title": "Detalhes do desconto",
+      "discountRate": "Taxa de desconto (%)",
+      "discountAmount": "Valor do desconto"
+    },
+    "additionalNotes": {
+      "title": "Notas adicionais",
+      "notesPlaceholder": "Adicione quaisquer notas adicionais ou termos de serviço"
+    },
+    "signature": {
+      "title": "Assinatura",
+      "addSignature": "Adicionar assinatura",
+      "clear": "Limpar",
+      "save": "Salvar assinatura",
+      "placeholder": "Assine aqui"
+    },
+    "navigation": {
+      "back": "Voltar",
+      "next": "Próximo",
+      "finish": "Finalizar"
+    },
+    "selectors": {
+      "template": {
+        "placeholder": "Selecionar modelo"
+      }
     }
+  },
+  "invoiceTemplate": {
+    "title": "Modelo de Fatura",
+    "preview": "Pré-visualização"
   }
 } 

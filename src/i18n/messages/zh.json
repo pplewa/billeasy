@@ -254,10 +254,138 @@
       "error": "错误："
     },
     "wizard": {
-      "stepError": "请修正此步骤中的错误"
+      "stepError": "请修正此步骤中的错误",
+      "steps": {
+        "senderReceiver": {
+          "title": "发件人和收件人",
+          "description": "添加发件人和收件人详细信息"
+        },
+        "invoiceDetails": {
+          "title": "发票详情",
+          "description": "添加发票详情和付款信息"
+        },
+        "items": {
+          "title": "项目",
+          "description": "添加带税费和折扣的发票项目"
+        },
+        "signature": {
+          "title": "签名和备注",
+          "description": "添加签名和附加备注"
+        }
+      }
     },
     "errors": {
       "formField": "useFormField 必须在 <FormField> 内使用"
+    },
+    "billFrom": {
+      "title": "发票出具方",
+      "name": "名称",
+      "namePlaceholder": "您的姓名或公司名称",
+      "address": "地址",
+      "email": "电子邮件",
+      "emailPlaceholder": "电子邮件地址",
+      "phone": "电话",
+      "phonePlaceholder": "电话号码",
+      "customFields": {
+        "show": "添加自定义字段",
+        "hide": "隐藏自定义字段",
+        "fieldName": "字段 {number}",
+        "fieldValue": "值",
+        "fieldNamePlaceholder": "字段名称",
+        "fieldValuePlaceholder": "字段值",
+        "addAnother": "添加另一个字段"
+      }
+    },
+    "billTo": {
+      "title": "发票接收方",
+      "name": "名称",
+      "namePlaceholder": "客户姓名或公司名称",
+      "address": "地址",
+      "email": "电子邮件",
+      "emailPlaceholder": "电子邮件地址",
+      "phone": "电话",
+      "phonePlaceholder": "电话号码",
+      "customFields": {
+        "show": "添加自定义字段",
+        "hide": "隐藏自定义字段",
+        "fieldName": "字段名称 {number}",
+        "fieldValue": "字段值 {number}",
+        "fieldNamePlaceholder": "字段名称",
+        "fieldValuePlaceholder": "字段值",
+        "addAnother": "添加另一个字段"
+      }
+    },
+    "invoiceDetails": {
+      "title": "发票详情",
+      "invoiceNumber": "发票编号",
+      "invoiceDate": "发票日期",
+      "dueDate": "到期日期",
+      "poNumber": "采购订单号",
+      "poNumberPlaceholder": "采购订单编号"
+    },
+    "paymentInfo": {
+      "title": "付款信息",
+      "bankName": "银行名称",
+      "bankNamePlaceholder": "银行名称",
+      "accountName": "账户名称",
+      "accountNamePlaceholder": "账户名称",
+      "accountNumber": "账号",
+      "accountNumberPlaceholder": "账号"
+    },
+    "items": {
+      "title": "项目",
+      "addItem": "添加项目",
+      "name": "名称",
+      "namePlaceholder": "项目名称",
+      "description": "描述",
+      "descriptionPlaceholder": "项目描述",
+      "quantity": "数量",
+      "price": "价格",
+      "tax": "税费 (%)",
+      "discount": "折扣 (%)",
+      "amount": "金额",
+      "actions": "操作",
+      "noItems": "尚未添加任何项目。添加您的第一个项目以开始。"
+    },
+    "taxDetails": {
+      "title": "税费详情",
+      "taxId": "税号",
+      "taxIdPlaceholder": "税务识别号",
+      "taxAmount": "税额",
+      "amountType": "金额类型",
+      "amountTypePlaceholder": "选择金额类型",
+      "amountTypePercentage": "百分比 (%)",
+      "amountTypeFixed": "固定金额"
+    },
+    "discountDetails": {
+      "title": "折扣详情",
+      "discountRate": "折扣率 (%)",
+      "discountAmount": "折扣金额"
+    },
+    "additionalNotes": {
+      "title": "附加说明",
+      "notesPlaceholder": "添加任何附加说明或服务条款"
+    },
+    "signature": {
+      "title": "签名",
+      "addSignature": "添加签名",
+      "clear": "清除",
+      "save": "保存签名",
+      "placeholder": "在此签名"
+    },
+    "navigation": {
+      "back": "返回",
+      "next": "下一步",
+      "finish": "完成"
+    },
+    "invoiceTemplate": {
+      "title": "发票模板",
+      "preview": "预览"
+    },
+    "selectors": {
+      "template": {
+        "placeholder": "选择模板"
+      }
     }
   }
 } 

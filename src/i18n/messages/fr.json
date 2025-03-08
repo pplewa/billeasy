@@ -341,10 +341,133 @@
       "error": "Erreur :"
     },
     "wizard": {
-      "stepError": "Veuillez corriger les erreurs dans cette étape"
+      "stepError": "Veuillez corriger les erreurs dans cette étape",
+      "steps": {
+        "senderReceiver": {
+          "title": "Expéditeur et Destinataire",
+          "description": "Ajouter les détails de l'expéditeur et du destinataire"
+        },
+        "invoiceDetails": {
+          "title": "Détails de la Facture", 
+          "description": "Ajouter les détails de la facture et les informations de paiement"
+        },
+        "items": {
+          "title": "Articles",
+          "description": "Ajouter des articles de facture avec taxes et remises"
+        },
+        "signature": {
+          "title": "Signature et Notes",
+          "description": "Ajouter une signature et des notes supplémentaires"
+        }
+      }
     },
     "errors": {
       "formField": "useFormField doit être utilisé dans <FormField>"
+    },
+    "billFrom": {
+      "title": "Facturé par",
+      "name": "Nom",
+      "namePlaceholder": "Votre nom ou nom d'entreprise",
+      "address": "Adresse",
+      "email": "Email",
+      "emailPlaceholder": "Adresse email",
+      "phone": "Téléphone",
+      "phonePlaceholder": "Numéro de téléphone",
+      "customFields": {
+        "show": "Ajouter des champs personnalisés",
+        "hide": "Masquer les champs personnalisés",
+        "fieldName": "Champ {number}",
+        "fieldValue": "Valeur",
+        "fieldNamePlaceholder": "Nom du champ",
+        "fieldValuePlaceholder": "Valeur du champ",
+        "addAnother": "Ajouter un autre champ"
+      }
+    },
+    "billTo": {
+      "title": "Facturé à",
+      "name": "Nom",
+      "namePlaceholder": "Nom du client ou de l'entreprise",
+      "address": "Adresse",
+      "email": "Email",
+      "emailPlaceholder": "Adresse email",
+      "phone": "Téléphone",
+      "phonePlaceholder": "Numéro de téléphone",
+      "customFields": {
+        "show": "Ajouter des champs personnalisés",
+        "hide": "Masquer les champs personnalisés",
+        "fieldName": "Nom du champ {number}",
+        "fieldValue": "Valeur du champ {number}",
+        "fieldNamePlaceholder": "Nom du champ",
+        "fieldValuePlaceholder": "Valeur du champ",
+        "addAnother": "Ajouter un autre champ"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Détails de la facture",
+      "invoiceNumber": "Numéro de facture",
+      "invoiceDate": "Date de facture",
+      "dueDate": "Date d'échéance",
+      "poNumber": "Numéro de commande",
+      "poNumberPlaceholder": "Numéro de bon de commande"
+    },
+    "paymentInfo": {
+      "title": "Informations de paiement",
+      "bankName": "Nom de la banque",
+      "bankNamePlaceholder": "Nom de la banque",
+      "accountName": "Nom du compte",
+      "accountNamePlaceholder": "Nom du compte",
+      "accountNumber": "Numéro de compte",
+      "accountNumberPlaceholder": "Numéro de compte"
+    },
+    "items": {
+      "title": "Éléments",
+      "addItem": "Ajouter un élément",
+      "name": "Nom",
+      "namePlaceholder": "Nom de l'élément",
+      "description": "Description",
+      "descriptionPlaceholder": "Description de l'élément",
+      "quantity": "Quantité",
+      "price": "Prix",
+      "tax": "Taxe (%)",
+      "discount": "Remise (%)",
+      "amount": "Montant",
+      "actions": "Actions",
+      "noItems": "Aucun élément ajouté pour l'instant. Ajoutez votre premier élément pour commencer."
+    },
+    "taxDetails": {
+      "title": "Détails de la Taxe",
+      "taxId": "Numéro de Taxe",
+      "taxIdPlaceholder": "Numéro d'identification fiscale",
+      "taxAmount": "Montant de la Taxe",
+      "amountType": "Type de Montant",
+      "amountTypePlaceholder": "Sélectionner le type de montant",
+      "amountTypePercentage": "Pourcentage (%)",
+      "amountTypeFixed": "Montant Fixe"
+    },
+    "discountDetails": {
+      "title": "Détails de la remise",
+      "discountRate": "Taux de remise (%)",
+      "discountAmount": "Montant de la remise"
+    },
+    "additionalNotes": {
+      "title": "Notes supplémentaires",
+      "notesPlaceholder": "Ajoutez des notes supplémentaires ou des conditions de service"
+    },
+    "signature": {
+      "title": "Signature",
+      "addSignature": "Ajouter une signature",
+      "clear": "Effacer",
+      "save": "Enregistrer la signature",
+      "placeholder": "Signez ici"
+    },
+    "navigation": {
+      "back": "Retour",
+      "next": "Suivant",
+      "finish": "Terminer"
     }
+  },
+  "invoiceTemplate": {
+    "title": "Modèle de Facture",
+    "preview": "Aperçu"
   }
 }

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 import { FormInput } from '@/components/ui/form-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,6 +39,7 @@ interface FormErrors {
 
 export function BillFromSection() {
   const [showCustomInputs, setShowCustomInputs] = useState(false);
+  const t = useTranslations('form');
   const {
     register,
     formState: { errors },
@@ -76,17 +78,17 @@ export function BillFromSection() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Bill From</CardTitle>
+        <CardTitle>{t('billFrom.title')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <FormInput
-          label="Name"
+          label={t('billFrom.name')}
           {...register('sender.name')}
           error={typedErrors.sender?.name?.message}
-          placeholder="Your name or business name"
+          placeholder={t('billFrom.namePlaceholder')}
         />
         <AddressLookahead
-          label="Address"
+          label={t('billFrom.address')}
           onAddressSelect={handleAddressSelect}
           error={typedErrors.sender?.address?.message}
           value={addressValue}
@@ -102,17 +104,17 @@ export function BillFromSection() {
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormInput
-            label="Email"
+            label={t('billFrom.email')}
             {...register('sender.email')}
             error={typedErrors.sender?.email?.message}
-            placeholder="Email address"
+            placeholder={t('billFrom.emailPlaceholder')}
           />
 
           <FormInput
-            label="Phone"
+            label={t('billFrom.phone')}
             {...register('sender.phone')}
             error={typedErrors.sender?.phone?.message}
-            placeholder="Phone number"
+            placeholder={t('billFrom.phonePlaceholder')}
           />
         </div>
         {/* Custom inputs section */}
@@ -127,12 +129,12 @@ export function BillFromSection() {
             {showCustomInputs ? (
               <>
                 <X className="mr-2 h-4 w-4" />
-                Hide Custom Fields
+                {t('billFrom.customFields.hide')}
               </>
             ) : (
               <>
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Add Custom Fields
+                {t('billFrom.customFields.show')}
               </>
             )}
           </Button>
@@ -142,17 +144,17 @@ export function BillFromSection() {
               {customInputsArray.map((customInput: CustomInput, index: number) => (
                 <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormInput
-                    label={`Field ${index + 1}`}
+                    label={t('billFrom.customFields.fieldName', { number: index + 1 })}
                     {...register(`sender.customInputs.${index}.key` as const)}
                     error={typedErrors.sender?.customInputs?.[index]?.key?.message}
-                    placeholder="Field name"
+                    placeholder={t('billFrom.customFields.fieldNamePlaceholder')}
                   />
                   <div className="relative">
                     <FormInput
-                      label="Value"
+                      label={t('billFrom.customFields.fieldValue')}
                       {...register(`sender.customInputs.${index}.value` as const)}
                       error={typedErrors.sender?.customInputs?.[index]?.value?.message}
-                      placeholder="Field value"
+                      placeholder={t('billFrom.customFields.fieldValuePlaceholder')}
                     />
                     <Button
                       type="button"
@@ -181,7 +183,7 @@ export function BillFromSection() {
                 className="flex items-center"
               >
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Add Another Field
+                {t('billFrom.customFields.addAnother')}
               </Button>
             </div>
           )}

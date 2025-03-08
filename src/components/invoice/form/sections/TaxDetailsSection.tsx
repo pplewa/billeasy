@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormContext } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 import { FormInput } from '@/components/ui/form-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,24 +23,26 @@ export function TaxDetailsSection() {
     formState: { errors },
   } = useFormContext<InvoiceType>();
 
+  const t = useTranslations('form.taxDetails');
+
   const taxAmountType = watch('details.taxDetails.amountType');
 
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Tax Details</CardTitle>
+        <CardTitle>{t('title')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <FormInput
-          label="Tax ID"
+          label={t('taxId')}
           {...register('details.tax.taxID')}
           error={errors.details?.tax?.taxID?.message}
-          placeholder="Tax ID number"
+          placeholder={t('taxIdPlaceholder')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormInput
-            label="Tax Amount"
+            label={t('taxAmount')}
             type="number"
             step="0.01"
             {...register('details.tax.amount', {
@@ -50,17 +53,17 @@ export function TaxDetailsSection() {
           />
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Amount Type</label>
+            <label className="text-sm font-medium">{t('amountType')}</label>
             <Select
               value={taxAmountType}
               onValueChange={(value) => setValue('details.tax.amountType', value)}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select amount type" />
+                <SelectValue placeholder={t('amountTypePlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="percentage">Percentage (%)</SelectItem>
-                <SelectItem value="fixed">Fixed Amount</SelectItem>
+                <SelectItem value="percentage">{t('amountTypePercentage')}</SelectItem>
+                <SelectItem value="fixed">{t('amountTypeFixed')}</SelectItem>
               </SelectContent>
             </Select>
             {errors.details?.tax?.amountType?.message && (

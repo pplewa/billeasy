@@ -341,10 +341,133 @@
       "error": "Fehler:"
     },
     "wizard": {
-      "stepError": "Bitte korrigieren Sie die Fehler in diesem Schritt"
+      "stepError": "Bitte korrigieren Sie die Fehler in diesem Schritt",
+      "steps": {
+        "senderReceiver": {
+          "title": "Absender & Empfänger",
+          "description": "Absender- und Empfängerdetails hinzufügen"
+        },
+        "invoiceDetails": {
+          "title": "Rechnungsdetails", 
+          "description": "Rechnungsdetails und Zahlungsinformationen hinzufügen"
+        },
+        "items": {
+          "title": "Positionen",
+          "description": "Rechnungspositionen mit Steuern und Rabatten hinzufügen"
+        },
+        "signature": {
+          "title": "Signatur & Notizen",
+          "description": "Signatur und zusätzliche Notizen hinzufügen"
+        }
+      }
     },
     "errors": {
-      "formField": "useFormField muss innerhalb von <FormField> verwendet werden"
+      "formField": "useFormField sollte innerhalb von <FormField> verwendet werden"
+    },
+    "billFrom": {
+      "title": "Rechnungssteller",
+      "name": "Name",
+      "namePlaceholder": "Ihr Name oder Firmenname",
+      "address": "Adresse",
+      "email": "E-Mail",
+      "emailPlaceholder": "E-Mail-Adresse",
+      "phone": "Telefon",
+      "phonePlaceholder": "Telefonnummer",
+      "customFields": {
+        "show": "Benutzerdefinierte Felder hinzufügen",
+        "hide": "Benutzerdefinierte Felder ausblenden",
+        "fieldName": "Feld {number}",
+        "fieldValue": "Wert",
+        "fieldNamePlaceholder": "Feldname",
+        "fieldValuePlaceholder": "Feldwert",
+        "addAnother": "Weiteres Feld hinzufügen"
+      }
+    },
+    "billTo": {
+      "title": "Rechnungsempfänger",
+      "name": "Name",
+      "namePlaceholder": "Kundenname oder Firmenname",
+      "address": "Adresse",
+      "email": "E-Mail",
+      "emailPlaceholder": "E-Mail-Adresse",
+      "phone": "Telefon",
+      "phonePlaceholder": "Telefonnummer",
+      "customFields": {
+        "show": "Benutzerdefinierte Felder hinzufügen",
+        "hide": "Benutzerdefinierte Felder ausblenden",
+        "fieldName": "Feldname {number}",
+        "fieldValue": "Feldwert {number}",
+        "fieldNamePlaceholder": "Feldname",
+        "fieldValuePlaceholder": "Feldwert",
+        "addAnother": "Weiteres Feld hinzufügen"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Rechnungsdetails",
+      "invoiceNumber": "Rechnungsnummer",
+      "invoiceDate": "Rechnungsdatum",
+      "dueDate": "Fälligkeitsdatum",
+      "poNumber": "Bestellnummer",
+      "poNumberPlaceholder": "Bestellnummer"
+    },
+    "paymentInfo": {
+      "title": "Zahlungsinformationen",
+      "bankName": "Bankname",
+      "bankNamePlaceholder": "Bankname",
+      "accountName": "Kontoinhaber",
+      "accountNamePlaceholder": "Kontoinhaber",
+      "accountNumber": "Kontonummer",
+      "accountNumberPlaceholder": "Kontonummer"
+    },
+    "items": {
+      "title": "Positionen",
+      "addItem": "Position hinzufügen",
+      "name": "Name",
+      "namePlaceholder": "Positionsname",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Positionsbeschreibung",
+      "quantity": "Menge",
+      "price": "Preis",
+      "tax": "Steuer (%)",
+      "discount": "Rabatt (%)",
+      "amount": "Betrag",
+      "actions": "Aktionen",
+      "noItems": "Noch keine Positionen hinzugefügt. Fügen Sie Ihre erste Position hinzu, um zu beginnen."
+    },
+    "taxDetails": {
+      "title": "Steuerdetails",
+      "taxId": "Steuer-ID",
+      "taxIdPlaceholder": "Steuernummer",
+      "taxAmount": "Steuerbetrag",
+      "amountType": "Betragsart",
+      "amountTypePlaceholder": "Betragsart auswählen",
+      "amountTypePercentage": "Prozentsatz (%)",
+      "amountTypeFixed": "Fester Betrag"
+    },
+    "discountDetails": {
+      "title": "Rabattdetails",
+      "discountRate": "Rabattsatz (%)",
+      "discountAmount": "Rabattbetrag"
+    },
+    "additionalNotes": {
+      "title": "Zusätzliche Hinweise",
+      "notesPlaceholder": "Fügen Sie zusätzliche Hinweise oder Geschäftsbedingungen hinzu"
+    },
+    "signature": {
+      "title": "Unterschrift",
+      "addSignature": "Unterschrift hinzufügen",
+      "clear": "Löschen",
+      "save": "Unterschrift speichern",
+      "placeholder": "Hier unterschreiben"
+    },
+    "navigation": {
+      "back": "Zurück",
+      "next": "Weiter",
+      "finish": "Fertigstellen"
     }
+  },
+  "invoiceTemplate": {
+    "title": "Rechnungsvorlage",
+    "preview": "Vorschau"
   }
 }

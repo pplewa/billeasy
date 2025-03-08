@@ -341,10 +341,133 @@
       "error": "Error:"
     },
     "wizard": {
-      "stepError": "Por favor, corrija los errores en este paso"
+      "stepError": "Por favor, corrija los errores en este paso",
+      "steps": {
+        "senderReceiver": {
+          "title": "Remitente y Destinatario",
+          "description": "Agregar detalles del remitente y destinatario"
+        },
+        "invoiceDetails": {
+          "title": "Detalles de la Factura", 
+          "description": "Agregar detalles de la factura e información de pago"
+        },
+        "items": {
+          "title": "Artículos",
+          "description": "Agregar artículos de la factura con impuestos y descuentos"
+        },
+        "signature": {
+          "title": "Firma y Notas",
+          "description": "Agregar firma y notas adicionales"
+        }
+      }
     },
     "errors": {
-      "formField": "useFormField debe usarse dentro de <FormField>"
+      "formField": "useFormField debe ser usado dentro de <FormField>"
+    },
+    "billFrom": {
+      "title": "Facturar desde",
+      "name": "Nombre",
+      "namePlaceholder": "Su nombre o nombre de empresa",
+      "address": "Dirección",
+      "email": "Email",
+      "emailPlaceholder": "Dirección de email",
+      "phone": "Teléfono",
+      "phonePlaceholder": "Número de teléfono",
+      "customFields": {
+        "show": "Añadir campos personalizados",
+        "hide": "Ocultar campos personalizados",
+        "fieldName": "Campo {number}",
+        "fieldValue": "Valor",
+        "fieldNamePlaceholder": "Nombre del campo",
+        "fieldValuePlaceholder": "Valor del campo",
+        "addAnother": "Añadir otro campo"
+      }
+    },
+    "billTo": {
+      "title": "Facturar a",
+      "name": "Nombre",
+      "namePlaceholder": "Nombre del cliente o empresa",
+      "address": "Dirección",
+      "email": "Email",
+      "emailPlaceholder": "Dirección de email",
+      "phone": "Teléfono",
+      "phonePlaceholder": "Número de teléfono",
+      "customFields": {
+        "show": "Añadir campos personalizados",
+        "hide": "Ocultar campos personalizados",
+        "fieldName": "Nombre del campo {number}",
+        "fieldValue": "Valor del campo {number}",
+        "fieldNamePlaceholder": "Nombre del campo",
+        "fieldValuePlaceholder": "Valor del campo",
+        "addAnother": "Añadir otro campo"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Detalles de la factura",
+      "invoiceNumber": "Número de factura",
+      "invoiceDate": "Fecha de emisión",
+      "dueDate": "Fecha de vencimiento",
+      "poNumber": "Número de orden",
+      "poNumberPlaceholder": "Número de orden de compra"
+    },
+    "paymentInfo": {
+      "title": "Información de pago",
+      "bankName": "Nombre del banco",
+      "bankNamePlaceholder": "Nombre del banco",
+      "accountName": "Nombre de la cuenta",
+      "accountNamePlaceholder": "Nombre de la cuenta",
+      "accountNumber": "Número de cuenta",
+      "accountNumberPlaceholder": "Número de cuenta"
+    },
+    "items": {
+      "title": "Elementos",
+      "addItem": "Añadir elemento",
+      "name": "Nombre",
+      "namePlaceholder": "Nombre del elemento",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Descripción del elemento",
+      "quantity": "Cantidad",
+      "price": "Precio",
+      "tax": "Impuesto (%)",
+      "discount": "Descuento (%)",
+      "amount": "Importe",
+      "actions": "Acciones",
+      "noItems": "Aún no se han añadido elementos. Añada su primer elemento para comenzar."
+    },
+    "taxDetails": {
+      "title": "Detalles de Impuestos",
+      "taxId": "ID Fiscal",
+      "taxIdPlaceholder": "Número de identificación fiscal",
+      "taxAmount": "Monto de Impuestos",
+      "amountType": "Tipo de Monto",
+      "amountTypePlaceholder": "Seleccionar tipo de monto",
+      "amountTypePercentage": "Porcentaje (%)",
+      "amountTypeFixed": "Monto Fijo"
+    },
+    "discountDetails": {
+      "title": "Detalles del descuento",
+      "discountRate": "Tasa de descuento (%)",
+      "discountAmount": "Importe del descuento"
+    },
+    "additionalNotes": {
+      "title": "Notas adicionales",
+      "notesPlaceholder": "Añada cualquier nota adicional o términos de servicio"
+    },
+    "signature": {
+      "title": "Firma",
+      "addSignature": "Añadir firma",
+      "clear": "Limpiar",
+      "save": "Guardar firma",
+      "placeholder": "Firme aquí"
+    },
+    "navigation": {
+      "back": "Atrás",
+      "next": "Siguiente",
+      "finish": "Finalizar"
     }
+  },
+  "invoiceTemplate": {
+    "title": "Plantilla de Factura",
+    "preview": "Vista Previa"
   }
 }
