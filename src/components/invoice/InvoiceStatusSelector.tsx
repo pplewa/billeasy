@@ -11,7 +11,6 @@ import { InvoiceStatus } from '@/types';
 import { updateInvoice } from '@/services/invoice/client/invoiceClient';
 import { useToast } from '@/components/ui/use-toast';
 import { ChevronDown } from 'lucide-react';
-import { FormInvoiceType } from '@/types-optional';
 
 interface InvoiceStatusSelectorProps {
   invoiceId: string;
