@@ -11,7 +11,7 @@ import { fetchInvoiceById, updateInvoice } from '@/services/invoice/client/invoi
 import { FormInvoiceType } from '@/lib/types/invoice';
 import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, Loader2, Mail, Printer, ArrowLeft, Edit } from 'lucide-react';
+import { Download, Loader2, Mail, Printer, Edit } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';

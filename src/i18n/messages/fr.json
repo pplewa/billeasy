@@ -157,9 +157,9 @@
     "title": "Politique de confidentialité",
     "lastUpdated": "Dernière mise à jour",
     "introduction": "Introduction",
-    "introText": "Bienvenue sur {appName}. Nous respectons votre vie privée et nous nous engageons à protéger vos données personnelles. Cette politique de confidentialité vous informera sur la façon dont nous traitons vos données lors de l'utilisation de notre système de gestion de factures et sur les droits dont vous disposez concernant vos données.",
+    "introText": "Bienvenue sur {appName}. Nous respectons votre vie privée et nous nous engageons à protéger vos données personnelles. Cette politique de confidentialité vous informera sur la façon dont nous traitons vos données lors de l'utilisation de notre système de gestion de factures et les droits que vous avez concernant vos données.",
     "dataWeCollect": "Les données que nous collectons",
-    "dataWeCollectText": "Nous collectons et traitons uniquement les données nécessaires à la fourniture de notre service de gestion de factures. Cela comprend :",
+    "dataWeCollectText": "Nous collectons et traitons uniquement les données nécessaires à la fourniture de notre service de gestion de factures. Cela inclut :",
     "dataWeCollectItems": [
       {
         "title": "Données de compte",
@@ -174,7 +174,7 @@
         "description": "Informations sur vos clients nécessaires à la création de factures (noms d'entreprises, adresses, coordonnées)."
       },
       {
-        "title": "Données de facture",
+        "title": "Données de factures",
         "description": "Informations contenues dans vos factures (articles, prix, conditions de paiement, notes)."
       },
       {
@@ -188,13 +188,13 @@
       "Fournir le service de gestion de factures",
       "Générer et gérer vos factures",
       "Stocker votre historique de factures",
-      "Améliorer les fonctionnalités de l'application",
-      "Garantir la sécurité de votre compte"
+      "Améliorer la fonctionnalité de l'application",
+      "Assurer la sécurité de votre compte"
     ],
     "dataStorage": "Stockage et sécurité des données",
-    "dataStorageText": "Toutes les données sont stockées en toute sécurité dans notre base de données. Nous mettons en œuvre des mesures de sécurité appropriées pour protéger vos données contre tout accès, modification ou suppression non autorisés. Vos factures et informations commerciales ne sont accessibles que via votre compte authentifié.",
+    "dataStorageText": "Toutes les données sont stockées de manière sécurisée dans notre base de données. Nous mettons en place des mesures de sécurité appropriées pour protéger vos données contre tout accès non autorisé, modification ou suppression. Vos factures et informations commerciales ne sont accessibles que via votre compte authentifié.",
     "dataRetention": "Conservation des données",
-    "dataRetentionText": "Nous conservons vos données tant que vous maintenez un compte actif. Les données de facturation sont conservées pour maintenir votre historique de facturation et se conformer aux exigences légales concernant la documentation commerciale. Vous pouvez demander la suppression de votre compte et des données associées à tout moment.",
+    "dataRetentionText": "Nous conservons vos données tant que vous maintenez un compte actif. Les données de factures sont conservées pour maintenir votre historique de factures et se conformer aux exigences légales relatives à la documentation commerciale. Vous pouvez demander la suppression de votre compte et des données associées à tout moment.",
     "yourRights": "Vos droits",
     "yourRightsText": "Vous avez le droit de :",
     "yourRightsItems": [
@@ -202,7 +202,7 @@
       "Corriger toute information inexacte",
       "Exporter vos données de factures",
       "Supprimer votre compte et les données associées",
-      "Demander des informations sur le traitement de vos données"
+      "Demander des informations sur la façon dont vos données sont traitées"
     ],
     "contactUs": "Contactez-nous",
     "contactUsText": "Si vous avez des questions concernant cette politique de confidentialité ou la façon dont nous traitons vos données, veuillez nous contacter à :",

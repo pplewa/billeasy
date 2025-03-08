@@ -160,24 +160,50 @@
     "introText": "Witaj w {appName}. Szanujemy Twoją prywatność i zobowiązujemy się do ochrony Twoich danych osobowych. Ta polityka prywatności poinformuje Cię o tym, jak przetwarzamy Twoje dane podczas korzystania z naszego systemu zarządzania fakturami oraz jakie prawa przysługują Ci w związku z Twoimi danymi.",
     "dataWeCollect": "Dane, które zbieramy",
     "dataWeCollectText": "Zbieramy i przetwarzamy tylko dane niezbędne do świadczenia naszej usługi zarządzania fakturami. Obejmuje to:",
-    "accountData": "Dane konta",
-    "accountDataText": "Adres e-mail i hasło do uwierzytelniania.",
-    "businessInfo": "Informacje o firmie",
-    "businessInfoText": "Dane Twojej firmy używane w fakturach (nazwa firmy, adres, dane kontaktowe).",
-    "clientData": "Dane klientów",
-    "clientDataText": "Informacje o Twoich klientach niezbędne do tworzenia faktur (nazwy firm, adresy, dane kontaktowe).",
-    "invoiceData": "Dane faktur",
-    "invoiceDataText": "Informacje zawarte w Twoich fakturach (pozycje, ceny, warunki płatności, notatki).",
-    "usageData": "Dane użytkowania",
-    "usageDataText": "Podstawowe informacje o tym, jak korzystasz z aplikacji, aby ulepszyć naszą usługę.",
+    "dataWeCollectItems": [
+      {
+        "title": "Dane konta",
+        "description": "Adres e-mail i hasło do uwierzytelniania."
+      },
+      {
+        "title": "Informacje o firmie",
+        "description": "Dane Twojej firmy używane w fakturach (nazwa firmy, adres, dane kontaktowe)."
+      },
+      {
+        "title": "Dane klientów",
+        "description": "Informacje o Twoich klientach niezbędne do tworzenia faktur (nazwy firm, adresy, dane kontaktowe)."
+      },
+      {
+        "title": "Dane faktur",
+        "description": "Informacje zawarte w Twoich fakturach (pozycje, ceny, warunki płatności, notatki)."
+      },
+      {
+        "title": "Dane użytkowania",
+        "description": "Podstawowe informacje o tym, jak korzystasz z aplikacji, aby ulepszyć naszą usługę."
+      }
+    ],
     "howWeUseData": "Jak wykorzystujemy Twoje dane",
     "howWeUseDataText": "Wykorzystujemy Twoje dane wyłącznie do:",
+    "howWeUseDataItems": [
+      "Świadczenia usługi zarządzania fakturami",
+      "Generowania i zarządzania Twoimi fakturami",
+      "Przechowywania historii Twoich faktur",
+      "Poprawy funkcjonalności aplikacji",
+      "Zapewnienia bezpieczeństwa Twojego konta"
+    ],
     "dataStorage": "Przechowywanie i bezpieczeństwo danych",
     "dataStorageText": "Wszystkie dane są bezpiecznie przechowywane w naszej bazie danych. Wdrażamy odpowiednie środki bezpieczeństwa, aby chronić Twoje dane przed nieautoryzowanym dostępem, modyfikacją lub usunięciem. Twoje faktury i informacje o firmie są dostępne tylko za pośrednictwem Twojego uwierzytelnionego konta.",
     "dataRetention": "Przechowywanie danych",
     "dataRetentionText": "Przechowujemy Twoje dane tak długo, jak utrzymujesz aktywne konto. Dane faktur są przechowywane w celu utrzymania historii faktur i spełnienia wymogów prawnych dotyczących dokumentacji biznesowej. Możesz w każdej chwili zażądać usunięcia swojego konta i powiązanych danych.",
     "yourRights": "Twoje prawa",
     "yourRightsText": "Masz prawo do:",
+    "yourRightsItems": [
+      "Dostępu do przechowywanych danych",
+      "Poprawienia wszelkich nieprawidłowych informacji",
+      "Eksportu danych z faktur",
+      "Usunięcia konta i powiązanych danych",
+      "Żądania informacji o sposobie przetwarzania Twoich danych"
+    ],
     "contactUs": "Kontakt",
     "contactUsText": "Jeśli masz jakiekolwiek pytania dotyczące tej polityki prywatności lub sposobu, w jaki przetwarzamy Twoje dane, skontaktuj się z nami pod adresem:",
     "email": "Email"

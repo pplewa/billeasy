@@ -157,9 +157,9 @@
     "title": "Datenschutzrichtlinie",
     "lastUpdated": "Zuletzt aktualisiert",
     "introduction": "Einführung",
-    "introText": "Willkommen bei {appName}. Wir respektieren Ihre Privatsphäre und verpflichten uns, Ihre persönlichen Daten zu schützen. Diese Datenschutzrichtlinie informiert Sie darüber, wie wir Ihre Daten bei der Nutzung unseres Rechnungsverwaltungssystems behandeln und welche Rechte Sie bezüglich Ihrer Daten haben.",
+    "introText": "Willkommen bei {appName}. Wir respektieren Ihre Privatsphäre und verpflichten uns, Ihre persönlichen Daten zu schützen. Diese Datenschutzrichtlinie informiert Sie darüber, wie wir Ihre Daten bei der Nutzung unseres Rechnungsmanagement-Systems verarbeiten und welche Rechte Sie in Bezug auf Ihre Daten haben.",
     "dataWeCollect": "Die Daten, die wir sammeln",
-    "dataWeCollectText": "Wir sammeln und verarbeiten nur die Daten, die für die Bereitstellung unseres Rechnungsverwaltungsdienstes notwendig sind. Dazu gehören:",
+    "dataWeCollectText": "Wir sammeln und verarbeiten nur die Daten, die für die Bereitstellung unseres Rechnungsmanagement-Services erforderlich sind. Dies umfasst:",
     "dataWeCollectItems": [
       {
         "title": "Kontodaten",
@@ -167,7 +167,7 @@
       },
       {
         "title": "Geschäftsinformationen",
-        "description": "Geschäftsdetails, die in Rechnungen verwendet werden (Firmenname, Adresse, Kontaktinformationen)."
+        "description": "Ihre Geschäftsdaten, die in Rechnungen verwendet werden (Firmenname, Adresse, Kontaktinformationen)."
       },
       {
         "title": "Kundendaten",
@@ -175,39 +175,37 @@
       },
       {
         "title": "Rechnungsdaten",
-        "description": "In Ihren Rechnungen enthaltene Informationen (Artikel, Preise, Zahlungsbedingungen, Notizen)."
+        "description": "Informationen in Ihren Rechnungen (Artikel, Preise, Zahlungsbedingungen, Notizen)."
       },
       {
         "title": "Nutzungsdaten",
         "description": "Grundlegende Informationen darüber, wie Sie die Anwendung nutzen, um unseren Service zu verbessern."
       }
     ],
-    "usageData": "Nutzungsdaten",
-    "usageDataText": "Grundlegende Informationen darüber, wie Sie die Anwendung nutzen, um unseren Service zu verbessern.",
     "howWeUseData": "Wie wir Ihre Daten verwenden",
     "howWeUseDataText": "Wir verwenden Ihre Daten ausschließlich für:",
     "howWeUseDataItems": [
       "Bereitstellung des Rechnungsmanagement-Services",
       "Generierung und Verwaltung Ihrer Rechnungen",
-      "Speicherung Ihres Rechnungsverlaufs",
+      "Speicherung Ihrer Rechnungshistorie",
       "Verbesserung der Anwendungsfunktionalität",
       "Sicherstellung der Sicherheit Ihres Kontos"
     ],
-    "dataStorage": "Datenspeicherung und Sicherheit",
+    "dataStorage": "Datenspeicherung und -sicherheit",
     "dataStorageText": "Alle Daten werden sicher in unserer Datenbank gespeichert. Wir implementieren angemessene Sicherheitsmaßnahmen, um Ihre Daten vor unbefugtem Zugriff, Änderung oder Löschung zu schützen. Ihre Rechnungen und Geschäftsinformationen sind nur über Ihr authentifiziertes Konto zugänglich.",
-    "dataRetention": "Datenspeicherung",
-    "dataRetentionText": "Wir speichern Ihre Daten, solange Sie ein aktives Konto unterhalten. Rechnungsdaten werden aufbewahrt, um Ihren Rechnungsverlauf zu erhalten und gesetzliche Anforderungen bezüglich Geschäftsdokumentation zu erfüllen. Sie können jederzeit die Löschung Ihres Kontos und der zugehörigen Daten beantragen.",
+    "dataRetention": "Datenaufbewahrung",
+    "dataRetentionText": "Wir bewahren Ihre Daten so lange auf, wie Sie ein aktives Konto haben. Rechnungsdaten werden aufbewahrt, um Ihre Rechnungshistorie zu erhalten und gesetzliche Anforderungen an Geschäftsdokumentation zu erfüllen. Sie können jederzeit die Löschung Ihres Kontos und der zugehörigen Daten beantragen.",
     "yourRights": "Ihre Rechte",
     "yourRightsText": "Sie haben das Recht auf:",
     "yourRightsItems": [
       "Zugriff auf Ihre gespeicherten Daten",
       "Korrektur ungenauer Informationen",
-      "Exportieren Ihrer Rechnungsdaten",
-      "Löschen Ihres Kontos und der zugehörigen Daten",
+      "Export Ihrer Rechnungsdaten",
+      "Löschung Ihres Kontos und der zugehörigen Daten",
       "Anfrage von Informationen zur Verarbeitung Ihrer Daten"
     ],
     "contactUs": "Kontaktieren Sie uns",
-    "contactUsText": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie oder zur Verarbeitung Ihrer Daten haben, kontaktieren Sie uns bitte unter:",
+    "contactUsText": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie oder zur Verarbeitung Ihrer Daten haben, kontaktieren Sie uns unter:",
     "email": "E-Mail"
   },
   "termsOfService": {

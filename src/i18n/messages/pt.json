@@ -160,27 +160,53 @@
     "introText": "Bem-vindo ao {appName}. Respeitamos sua privacidade e estamos comprometidos em proteger seus dados pessoais. Esta política de privacidade informará como tratamos seus dados ao usar nosso sistema de gerenciamento de faturas e quais direitos você tem em relação aos seus dados.",
     "dataWeCollect": "Os Dados que Coletamos",
     "dataWeCollectText": "Coletamos e processamos apenas os dados necessários para fornecer nosso serviço de gerenciamento de faturas. Isso inclui:",
-    "accountData": "Dados da Conta",
-    "accountDataText": "Endereço de email e senha para autenticação.",
-    "businessInfo": "Informações Comerciais",
-    "businessInfoText": "Detalhes da sua empresa usados nas faturas (nome da empresa, endereço, informações de contato).",
-    "clientData": "Dados do Cliente",
-    "clientDataText": "Informações sobre seus clientes necessárias para a criação de faturas (nomes de empresas, endereços, detalhes de contato).",
-    "invoiceData": "Dados da Fatura",
-    "invoiceDataText": "Informações contidas em suas faturas (itens, preços, condições de pagamento, notas).",
-    "usageData": "Dados de Uso",
-    "usageDataText": "Informações básicas sobre como você usa o aplicativo para melhorar nosso serviço.",
+    "dataWeCollectItems": [
+      {
+        "title": "Dados da Conta",
+        "description": "Endereço de e-mail e senha para autenticação."
+      },
+      {
+        "title": "Informações Comerciais",
+        "description": "Detalhes do seu negócio usados em faturas (nome da empresa, endereço, informações de contato)."
+      },
+      {
+        "title": "Dados de Clientes",
+        "description": "Informações sobre seus clientes necessárias para criação de faturas (nomes de empresas, endereços, detalhes de contato)."
+      },
+      {
+        "title": "Dados de Faturas",
+        "description": "Informações contidas em suas faturas (itens, preços, condições de pagamento, notas)."
+      },
+      {
+        "title": "Dados de Uso",
+        "description": "Informações básicas sobre como você usa o aplicativo para melhorar nosso serviço."
+      }
+    ],
     "howWeUseData": "Como Usamos Seus Dados",
     "howWeUseDataText": "Usamos seus dados exclusivamente para:",
+    "howWeUseDataItems": [
+      "Fornecer o serviço de gerenciamento de faturas",
+      "Gerar e gerenciar suas faturas",
+      "Armazenar seu histórico de faturas",
+      "Melhorar a funcionalidade do aplicativo",
+      "Garantir a segurança da sua conta"
+    ],
     "dataStorage": "Armazenamento e Segurança de Dados",
-    "dataStorageText": "Todos os dados são armazenados com segurança em nosso banco de dados. Implementamos medidas de segurança apropriadas para proteger seus dados contra acesso não autorizado, modificação ou exclusão. Suas faturas e informações comerciais são acessíveis apenas através da sua conta autenticada.",
+    "dataStorageText": "Todos os dados são armazenados com segurança em nosso banco de dados. Implementamos medidas de segurança apropriadas para proteger seus dados contra acesso não autorizado, modificação ou exclusão. Suas faturas e informações comerciais só são acessíveis através da sua conta autenticada.",
     "dataRetention": "Retenção de Dados",
-    "dataRetentionText": "Mantemos seus dados enquanto você mantiver uma conta ativa. Os dados da fatura são mantidos para manter seu histórico de faturas e cumprir requisitos legais relacionados à documentação comercial. Você pode solicitar a exclusão da sua conta e dados associados a qualquer momento.",
+    "dataRetentionText": "Mantemos seus dados enquanto você mantiver uma conta ativa. Os dados de faturas são mantidos para preservar seu histórico de faturas e cumprir os requisitos legais relativos à documentação comercial. Você pode solicitar a exclusão da sua conta e dos dados associados a qualquer momento.",
     "yourRights": "Seus Direitos",
     "yourRightsText": "Você tem o direito de:",
-    "contactUs": "Contate-nos",
-    "contactUsText": "Se você tiver alguma dúvida sobre esta política de privacidade ou como tratamos seus dados, entre em contato conosco em:",
-    "email": "Email"
+    "yourRightsItems": [
+      "Acessar seus dados armazenados",
+      "Corrigir qualquer informação imprecisa",
+      "Exportar seus dados de faturas",
+      "Excluir sua conta e os dados associados",
+      "Solicitar informações sobre como seus dados são processados"
+    ],
+    "contactUs": "Entre em Contato",
+    "contactUsText": "Se você tiver alguma dúvida sobre esta política de privacidade ou sobre como tratamos seus dados, entre em contato conosco em:",
+    "email": "E-mail"
   },
   "termsOfService": {
     "title": "Termos de Serviço",

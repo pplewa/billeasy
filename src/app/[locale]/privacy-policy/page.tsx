@@ -1,21 +1,20 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useMessages } from 'next-intl';
 import { Suspense } from 'react';
 
 function PrivacyPolicyContent() {
   const appT = useTranslations('app');
   const t = useTranslations('privacyPolicy');
   const appName = appT('name');
+  const messages = useMessages();
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <h1 className="text-3xl font-bold mb-8">{t('title')}</h1>
 
       <div className="prose prose-lg max-w-none">
-        <p className="text-gray-600 mb-6">
-          {t('lastUpdated')}: {new Date().toLocaleDateString()}
-        </p>
+        <p className="text-gray-600 mb-6"></p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">1. {t('introduction')}</h2>
         <p>{t('introText', { appName })}</p>
@@ -24,7 +23,8 @@ function PrivacyPolicyContent() {
         <p>{t('dataWeCollectText')}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
           {(
-            t('dataWeCollectItems', { returnObjects: true }) as Array<{
+            (messages.privacyPolicy as unknown as { dataWeCollectItems: [] })
+              .dataWeCollectItems as unknown as Array<{
               title: string;
               description: string;
             }>
@@ -38,7 +38,10 @@ function PrivacyPolicyContent() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">3. {t('howWeUseData')}</h2>
         <p>{t('howWeUseDataText')}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          {(t('howWeUseDataItems', { returnObjects: true }) as string[]).map((item: string) => (
+          {(
+            (messages.privacyPolicy as unknown as { howWeUseDataItems: [] })
+              .howWeUseDataItems as unknown as string[]
+          ).map((item: string) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
@@ -52,7 +55,10 @@ function PrivacyPolicyContent() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">6. {t('yourRights')}</h2>
         <p>{t('yourRightsText')}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          {(t('yourRightsItems', { returnObjects: true }) as string[]).map((item: string) => (
+          {(
+            (messages.privacyPolicy as unknown as { yourRightsItems: [] })
+              .yourRightsItems as unknown as string[]
+          ).map((item: string) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
