@@ -293,12 +293,12 @@ export default function InvoicesPage() {
           <Table>
             <TableHeader>
               <TableRow className="bg-secondary/30">
-                <TableHead>Invoice #</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Client</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead className="text-center">Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead>{t('invoice.table.number')}</TableHead>
+                <TableHead>{t('invoice.table.date')}</TableHead>
+                <TableHead>{t('invoice.table.client')}</TableHead>
+                <TableHead>{t('invoice.table.amount')}</TableHead>
+                <TableHead className="text-center">{t('invoice.table.status')}</TableHead>
+                <TableHead className="text-right">{t('invoice.table.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -368,7 +368,7 @@ export default function InvoicesPage() {
                           }}
                         >
                           <Pencil className="h-4 w-4 mr-1" />
-                          <span className="hidden sm:inline">Edit</span>
+                          <span className="hidden sm:inline">{t('invoice.actions.edit')}</span>
                         </Button>
                         <Button
                           variant="outline"
@@ -386,7 +386,7 @@ export default function InvoicesPage() {
                             <Copy className="h-4 w-4 mr-1" />
                           )}
                           <span className="hidden sm:inline">
-                            {isDuplicating ? 'Duplicating...' : 'Duplicate'}
+                            {isDuplicating ? t('invoice.actions.duplicating') : t('invoice.actions.duplicate')}
                           </span>
                         </Button>
                         <Button
@@ -400,7 +400,7 @@ export default function InvoicesPage() {
                           }}
                         >
                           <Trash className="h-4 w-4 mr-1" />
-                          <span className="hidden sm:inline">Delete</span>
+                          <span className="hidden sm:inline">{t('invoice.actions.delete')}</span>
                         </Button>
                       </div>
                     </TableCell>
@@ -450,16 +450,15 @@ export default function InvoicesPage() {
       {/* Page Header with Title and Create Button */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-1">Invoices</h1>
+          <h1 className="text-3xl font-bold tracking-tight mb-1">{t('invoice.pageTitle')}</h1>
           <p className="text-muted-foreground">
-            {filteredAndSortedInvoices.length} total invoice
-            {filteredAndSortedInvoices.length !== 1 ? 's' : ''}
+            {t('invoice.totalInvoices', { count: filteredAndSortedInvoices.length })}
           </p>
         </div>
         <div className="flex gap-2">
           <Button onClick={handleCreateInvoice} className="bg-primary hover:bg-primary/90">
             <PlusCircle className="mr-2 h-4 w-4" />
-            Create Invoice
+            {t('invoice.createInvoice')}
           </Button>
         </div>
       </div>
@@ -472,7 +471,7 @@ export default function InvoicesPage() {
             <div className="relative">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search invoices..."
+                placeholder={t('invoice.searchPlaceholder')}
                 className="pl-8"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -500,35 +499,35 @@ export default function InvoicesPage() {
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="all">{t('invoice.status.all')}</SelectItem>
                   <SelectItem value="draft">
                     <div className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-secondary-foreground/70 mr-2"></div>
-                      Draft
+                      {t('invoice.status.draft')}
                     </div>
                   </SelectItem>
                   <SelectItem value="pending">
                     <div className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-orange-500 mr-2"></div>
-                      Pending
+                      {t('invoice.status.pending')}
                     </div>
                   </SelectItem>
                   <SelectItem value="paid">
                     <div className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                      Paid
+                      {t('invoice.status.paid')}
                     </div>
                   </SelectItem>
                   <SelectItem value="overdue">
                     <div className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-red-500 mr-2"></div>
-                      Overdue
+                      {t('invoice.status.overdue')}
                     </div>
                   </SelectItem>
                   <SelectItem value="cancelled">
                     <div className="flex items-center">
                       <div className="w-2 h-2 rounded-full bg-gray-400 mr-2"></div>
-                      Cancelled
+                      {t('invoice.status.cancelled')}
                     </div>
                   </SelectItem>
                 </SelectContent>
@@ -542,11 +541,11 @@ export default function InvoicesPage() {
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="date_desc">Newest First</SelectItem>
-                  <SelectItem value="date_asc">Oldest First</SelectItem>
-                  <SelectItem value="amount_desc">Highest Amount</SelectItem>
-                  <SelectItem value="amount_asc">Lowest Amount</SelectItem>
-                  <SelectItem value="status">By Status</SelectItem>
+                  <SelectItem value="date_desc">{t('invoice.sort.newestFirst')}</SelectItem>
+                  <SelectItem value="date_asc">{t('invoice.sort.oldestFirst')}</SelectItem>
+                  <SelectItem value="amount_desc">{t('invoice.sort.highestAmount')}</SelectItem>
+                  <SelectItem value="amount_asc">{t('invoice.sort.lowestAmount')}</SelectItem>
+                  <SelectItem value="status">{t('invoice.sort.byStatus')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -577,10 +576,10 @@ export default function InvoicesPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="6">6 per page</SelectItem>
-                  <SelectItem value="12">12 per page</SelectItem>
-                  <SelectItem value="24">24 per page</SelectItem>
-                  <SelectItem value="48">48 per page</SelectItem>
+                  <SelectItem value="6">{t('invoice.itemsPerPage', { count: 6 })}</SelectItem>
+                  <SelectItem value="12">{t('invoice.itemsPerPage', { count: 12 })}</SelectItem>
+                  <SelectItem value="24">{t('invoice.itemsPerPage', { count: 24 })}</SelectItem>
+                  <SelectItem value="48">{t('invoice.itemsPerPage', { count: 48 })}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -619,17 +618,17 @@ export default function InvoicesPage() {
                     setStatusFilter('all');
                   }}
                 >
-                  Clear Filters
+                  {t('invoice.clearFilters')}
                 </Button>
                 <Button onClick={handleCreateInvoice}>
                   <PlusCircle className="mr-2 h-4 w-4" />
-                  Create Invoice
+                  {t('invoice.createInvoice')}
                 </Button>
               </div>
             ) : (
               <Button onClick={handleCreateInvoice}>
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Create Invoice
+                {t('invoice.createInvoice')}
               </Button>
             )}
           </CardContent>
@@ -646,9 +645,11 @@ export default function InvoicesPage() {
           {totalPages > 1 && (
             <div className="flex justify-between items-center border-t pt-4">
               <div className="text-sm text-muted-foreground">
-                Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
-                {Math.min(currentPage * itemsPerPage, filteredAndSortedInvoices.length)} of{' '}
-                {filteredAndSortedInvoices.length}
+                {t('invoice.pagination.showing', {
+                  start: (currentPage - 1) * itemsPerPage + 1,
+                  end: Math.min(currentPage * itemsPerPage, filteredAndSortedInvoices.length),
+                  total: filteredAndSortedInvoices.length
+                })}
               </div>
               <div className="flex gap-1">
                 <Button
@@ -721,13 +722,13 @@ export default function InvoicesPage() {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t('invoice.deleteDialog.title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the invoice.
+              {t('invoice.deleteDialog.description')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('invoice.deleteDialog.cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={async () => {
                 if (deleteId) {
@@ -738,14 +739,14 @@ export default function InvoicesPage() {
                       prev.filter((invoice) => invoice._id.toString() !== deleteId)
                     );
                     toast({
-                      title: 'Success',
-                      description: 'Invoice deleted successfully',
+                      title: t('invoice.deleteDialog.successTitle'),
+                      description: t('invoice.deleteDialog.successDescription'),
                     });
                   } catch (error) {
                     console.error('Error deleting invoice:', error);
                     toast({
-                      title: 'Error',
-                      description: 'Failed to delete invoice',
+                      title: t('invoice.deleteDialog.errorTitle'),
+                      description: t('invoice.deleteDialog.errorDescription'),
                       variant: 'destructive',
                     });
                   } finally {
@@ -759,10 +760,10 @@ export default function InvoicesPage() {
               {isDeleting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Deleting...
+                  {t('invoice.deleteDialog.deleting')}
                 </>
               ) : (
-                'Delete'
+                t('invoice.deleteDialog.delete')
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -194,14 +194,63 @@
     "email": "电子邮件"
   },
   "invoice": {
+    "pageTitle": "发票",
+    "totalInvoices": "{count, plural, =0 {无发票} one {# 张发票} other {# 张发票}}",
+    "createInvoice": "创建发票",
+    "searchPlaceholder": "搜索发票...",
+    "clearFilters": "清除筛选器",
+    "noInvoicesFound": "未找到发票",
+    "noMatchingInvoices": "没有符合当前筛选条件的发票。请尝试调整搜索或筛选器。",
+    "noInvoicesYet": "您还没有创建任何发票。从创建第一张发票开始吧！",
+    "status": {
+      "all": "所有状态",
+      "draft": "草稿",
+      "pending": "待处理", 
+      "paid": "已付款",
+      "overdue": "逾期",
+      "cancelled": "已取消"
+    },
+    "sort": {
+      "newestFirst": "最新优先",
+      "oldestFirst": "最早优先", 
+      "highestAmount": "最高金额",
+      "lowestAmount": "最低金额",
+      "byStatus": "按状态"
+    },
+    "itemsPerPage": "每页 {count} 条",
+    "table": {
+      "number": "发票号",
+      "date": "日期", 
+      "client": "客户",
+      "amount": "金额",
+      "status": "状态",
+      "actions": "操作"
+    },
+    "actions": {
+      "edit": "编辑",
+      "duplicate": "复制",
+      "duplicating": "正在复制...",
+      "delete": "删除"
+    },
+    "pagination": {
+      "showing": "显示 {start} 到 {end}，共 {total} 条"
+    },
+    "deleteDialog": {
+      "title": "您确定吗？",
+      "description": "此操作不可撤销。将永久删除该发票。",
+      "cancel": "取消",
+      "delete": "删除",
+      "deleting": "正在删除...",
+      "successTitle": "成功",
+      "successDescription": "发票删除成功",
+      "errorTitle": "错误",
+      "errorDescription": "删除发票失败"
+    },
     "create": "创建发票",
     "edit": "编辑发票",
     "itemsDetected": "检测到项目",
-    "noInvoicesFound": "未找到发票",
     "noDraftsFound": "未找到草稿",
-    "noMatchingInvoices": "没有符合当前筛选条件的发票。尝试调整您的搜索或筛选条件。",
-    "noInvoicesYet": "您尚未创建任何发票。创建您的第一张发票以开始使用。",
-    "startCreatingDraft": "开始创建发票以自动保存草稿。",
+    "startCreatingDraft": "开始创建发票以自动保存草稿",
     "draftInvoices": "发票草稿",
     "manageDrafts": "管理您本地保存的发票草稿",
     "invoiceNumber": "发票编号",

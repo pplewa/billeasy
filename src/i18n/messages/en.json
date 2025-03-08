@@ -194,13 +194,62 @@
     "email": "Email"
   },
   "invoice": {
+    "pageTitle": "Invoices",
+    "totalInvoices": "{count, plural, =0 {No invoices} one {# invoice} other {# invoices}}",
+    "createInvoice": "Create Invoice",
+    "searchPlaceholder": "Search invoices...",
+    "clearFilters": "Clear Filters",
+    "noInvoicesFound": "No Invoices Found",
+    "noMatchingInvoices": "No invoices match your current filters. Try adjusting your search or filters.",
+    "noInvoicesYet": "You haven't created any invoices yet. Start by creating your first invoice!",
+    "status": {
+      "all": "All Statuses",
+      "draft": "Draft",
+      "pending": "Pending", 
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "cancelled": "Cancelled"
+    },
+    "sort": {
+      "newestFirst": "Newest First",
+      "oldestFirst": "Oldest First", 
+      "highestAmount": "Highest Amount",
+      "lowestAmount": "Lowest Amount",
+      "byStatus": "By Status"
+    },
+    "itemsPerPage": "{count} per page",
+    "table": {
+      "number": "Invoice #",
+      "date": "Date", 
+      "client": "Client",
+      "amount": "Amount",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "duplicating": "Duplicating...",
+      "delete": "Delete"
+    },
+    "pagination": {
+      "showing": "Showing {start} to {end} of {total}"
+    },
+    "deleteDialog": {
+      "title": "Are you sure?",
+      "description": "This action cannot be undone. This will permanently delete the invoice.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "successTitle": "Success",
+      "successDescription": "Invoice deleted successfully",
+      "errorTitle": "Error",
+      "errorDescription": "Failed to delete invoice"
+    },
     "create": "Create Invoice",
     "edit": "Edit Invoice",
     "itemsDetected": "Items Detected",
-    "noInvoicesFound": "No invoices found",
     "noDraftsFound": "No drafts found",
-    "noMatchingInvoices": "No invoices match your current filters. Try adjusting your search or filter criteria.",
-    "noInvoicesYet": "You haven't created any invoices yet. Create your first invoice to get started.",
     "startCreatingDraft": "Start creating an invoice to save drafts automatically.",
     "draftInvoices": "Draft Invoices",
     "manageDrafts": "Manage your locally saved invoice drafts",

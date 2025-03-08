@@ -194,13 +194,62 @@
     "email": "Email"
   },
   "invoice": {
+    "pageTitle": "Facturas",
+    "totalInvoices": "{count, plural, =0 {Sin facturas} one {# factura} other {# facturas}}",
+    "createInvoice": "Crear Factura",
+    "searchPlaceholder": "Buscar facturas...",
+    "clearFilters": "Limpiar Filtros",
+    "noInvoicesFound": "No se encontraron Facturas",
+    "noMatchingInvoices": "Ninguna factura coincide con sus filtros actuales. Intente ajustar su búsqueda o filtros.",
+    "noInvoicesYet": "Aún no ha creado ninguna factura. ¡Comience creando su primera factura!",
+    "status": {
+      "all": "Todos los Estados",
+      "draft": "Borrador",
+      "pending": "Pendiente", 
+      "paid": "Pagada",
+      "overdue": "Vencida",
+      "cancelled": "Cancelada"
+    },
+    "sort": {
+      "newestFirst": "Más Recientes Primero",
+      "oldestFirst": "Más Antiguas Primero", 
+      "highestAmount": "Mayor Monto",
+      "lowestAmount": "Menor Monto",
+      "byStatus": "Por Estado"
+    },
+    "itemsPerPage": "{count} por página",
+    "table": {
+      "number": "Factura #",
+      "date": "Fecha", 
+      "client": "Cliente",
+      "amount": "Monto",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "edit": "Editar",
+      "duplicate": "Duplicar",
+      "duplicating": "Duplicando...",
+      "delete": "Eliminar"
+    },
+    "pagination": {
+      "showing": "Mostrando {start} a {end} de {total}"
+    },
+    "deleteDialog": {
+      "title": "¿Está seguro?",
+      "description": "Esta acción no se puede deshacer. Se eliminará permanentemente la factura.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "deleting": "Eliminando...",
+      "successTitle": "Éxito",
+      "successDescription": "Factura eliminada exitosamente",
+      "errorTitle": "Error",
+      "errorDescription": "No se pudo eliminar la factura"
+    },
     "create": "Crear factura",
     "edit": "Editar factura",
     "itemsDetected": "Elementos detectados",
-    "noInvoicesFound": "No se encontraron facturas",
     "noDraftsFound": "No se encontraron borradores",
-    "noMatchingInvoices": "Ninguna factura coincide con tus filtros actuales. Intenta ajustar tus criterios de búsqueda o filtrado.",
-    "noInvoicesYet": "Aún no has creado ninguna factura. Crea tu primera factura para comenzar.",
     "startCreatingDraft": "Comienza a crear una factura para guardar borradores automáticamente.",
     "draftInvoices": "Borradores de facturas",
     "manageDrafts": "Gestiona tus borradores de facturas guardados localmente",
