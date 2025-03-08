@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 import { FormInput } from '@/components/ui/form-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -45,6 +46,7 @@ export function BillToSection() {
     getValues,
     watch,
   } = useFormContext<InvoiceType>();
+  const t = useTranslations('form.billTo');
 
   // Cast errors to our known type
   const typedErrors = errors as FormErrors;
@@ -76,18 +78,18 @@ export function BillToSection() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Bill To</CardTitle>
+        <CardTitle>{t('title')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <FormInput
-          label="Name"
+          label={t('name')}
           {...register('receiver.name')}
           error={typedErrors.receiver?.name?.message}
-          placeholder="Client name or business name"
+          placeholder={t('namePlaceholder')}
         />
 
         <AddressLookahead
-          label="Address"
+          label={t('address')}
           onAddressSelect={handleAddressSelect}
           error={typedErrors.receiver?.address?.message}
           value={addressValue}
@@ -110,17 +112,17 @@ export function BillToSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormInput
-            label="Email"
+            label={t('email')}
             {...register('receiver.email')}
             error={typedErrors.receiver?.email?.message}
-            placeholder="Email address"
+            placeholder={t('emailPlaceholder')}
           />
 
           <FormInput
-            label="Phone"
+            label={t('phone')}
             {...register('receiver.phone')}
             error={typedErrors.receiver?.phone?.message}
-            placeholder="Phone number"
+            placeholder={t('phonePlaceholder')}
           />
         </div>
 
@@ -136,12 +138,12 @@ export function BillToSection() {
             {showCustomInputs ? (
               <>
                 <X className="mr-2 h-4 w-4" />
-                Hide Custom Fields
+                {t('customFields.hide')}
               </>
             ) : (
               <>
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Add Custom Fields
+                {t('customFields.show')}
               </>
             )}
           </Button>
@@ -151,16 +153,16 @@ export function BillToSection() {
               {customInputsArray.map((customInput: CustomInput, index: number) => (
                 <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormInput
-                    label={`Field ${index + 1} Name`}
+                    label={t('customFields.fieldName', { number: index + 1 })}
                     {...register(`receiver.customInputs.${index}.key` as const)}
                     error={typedErrors.receiver?.customInputs?.[index]?.key?.message}
-                    placeholder="Field name"
+                    placeholder={t('customFields.fieldNamePlaceholder')}
                   />
                   <FormInput
-                    label={`Field ${index + 1} Value`}
+                    label={t('customFields.fieldValue', { number: index + 1 })}
                     {...register(`receiver.customInputs.${index}.value` as const)}
                     error={typedErrors.receiver?.customInputs?.[index]?.value?.message}
-                    placeholder="Field value"
+                    placeholder={t('customFields.fieldValuePlaceholder')}
                   />
                 </div>
               ))}
@@ -175,7 +177,7 @@ export function BillToSection() {
                 className="flex items-center"
               >
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Add Another Field
+                {t('customFields.addAnother')}
               </Button>
             </div>
           )}

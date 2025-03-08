@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 
 interface SignatureColor {
@@ -18,6 +19,8 @@ export function SignatureColorSelector({
   selectedColor,
   handleColorButtonClick,
 }: SignatureColorSelectorProps) {
+  const t = useTranslations('form.signature');
+
   return (
     <div className="flex gap-2">
       {colors.map((color) => (
@@ -27,7 +30,10 @@ export function SignatureColorSelector({
           className="h-8 w-8 rounded-full p-0"
           style={{ backgroundColor: color.value }}
           onClick={() => handleColorButtonClick(color)}
-          aria-label={`Select ${color.name} color`}
+          aria-label={t('colorSelectAriaLabel', { 
+            defaultValue: `Select ${color.name} color`,
+            colorName: color.name 
+          })}
           data-selected={selectedColor.name === color.name}
         />
       ))}

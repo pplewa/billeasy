@@ -316,11 +316,14 @@
     },
     "invoiceDetails": {
       "title": "Szczegóły faktury",
+      "description": "Wprowadź szczegóły faktury",
       "invoiceNumber": "Numer faktury",
-      "invoiceDate": "Data faktury",
-      "dueDate": "Data płatności",
+      "invoiceNumberPlaceholder": "INV-001",
       "poNumber": "Numer zamówienia",
-      "poNumberPlaceholder": "Numer zamówienia"
+      "poNumberPlaceholder": "PO-001",
+      "invoiceDate": "Data faktury",
+      "dueDate": "Termin płatności",
+      "currency": "Waluta"
     },
     "paymentInfo": {
       "title": "Informacje o płatności",
@@ -329,7 +332,9 @@
       "accountName": "Nazwa konta",
       "accountNamePlaceholder": "Nazwa konta",
       "accountNumber": "Numer konta",
-      "accountNumberPlaceholder": "Numer konta"
+      "accountNumberPlaceholder": "Numer konta",
+      "paymentTerms": "Warunki płatności",
+      "paymentTermsPlaceholder": "np. Netto 30"
     },
     "items": {
       "title": "Pozycje",
@@ -358,8 +363,11 @@
     },
     "discountDetails": {
       "title": "Szczegóły rabatu",
-      "discountRate": "Stopa rabatu (%)",
-      "discountAmount": "Kwota rabatu"
+      "discountAmount": "Kwota rabatu",
+      "amountType": "Typ kwoty",
+      "amountTypePlaceholder": "Wybierz typ kwoty",
+      "amountTypePercentage": "Procent (%)",
+      "amountTypeFixed": "Kwota stała"
     },
     "additionalNotes": {
       "title": "Dodatkowe notatki",
@@ -370,7 +378,20 @@
       "addSignature": "Dodaj podpis",
       "clear": "Wyczyść",
       "save": "Zapisz podpis",
-      "placeholder": "Podpisz tutaj"
+      "placeholder": "Podpisz tutaj",
+      "uploadedSignatureAlt": "Przesłany podpis",
+      "uploadButtonText": "Kliknij, aby przesłać podpis",
+      "supportedFormats": "Obsługuje PNG, JPG lub GIF",
+      "clearButton": "Wyczyść",
+      "doneButton": "Gotowe",
+      "fontStyle": "Styl czcionki",
+      "fontStylePlaceholder": "Wybierz styl czcionki",
+      "colorSelectAriaLabel": "Wybierz kolor {colorName}",
+      "drawCanvasAriaLabel": "Płótno do rysowania podpisu",
+      "drawTab": "Rysuj",
+      "typeTab": "Wpisz",
+      "uploadTab": "Prześlij",
+      "signatureAlt": "Podpis"
     },
     "navigation": {
       "back": "Wstecz",

@@ -2,21 +2,23 @@ import { useInvoiceContext } from '@/contexts/InvoiceContext';
 import { WizardStep } from '../wizard/WizardStep';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useTranslations } from 'next-intl';
 
 export function Step2() {
   const { form } = useInvoiceContext();
+  const t = useTranslations('form.billTo');
 
   return (
-    <WizardStep title="Receiver Information" description="Enter your client's details">
+    <WizardStep title={t('title')} description={t('description', { defaultValue: 'Enter your client\'s details' })}>
       <div className="grid gap-4">
         <FormField
           control={form.control}
           name="receiver.name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Client Name</FormLabel>
+              <FormLabel>{t('name')}</FormLabel>
               <FormControl>
-                <Input {...field} value={field.value || ''} />
+                <Input {...field} value={field.value || ''} placeholder={t('namePlaceholder')} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -27,7 +29,7 @@ export function Step2() {
           name="receiver.address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Address</FormLabel>
+              <FormLabel>{t('address')}</FormLabel>
               <FormControl>
                 <Input {...field} value={field.value || ''} />
               </FormControl>
@@ -41,7 +43,7 @@ export function Step2() {
             name="receiver.city"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>City</FormLabel>
+                <FormLabel>{t('city', { defaultValue: 'City' })}</FormLabel>
                 <FormControl>
                   <Input {...field} value={field.value || ''} />
                 </FormControl>
@@ -54,7 +56,7 @@ export function Step2() {
             name="receiver.zipCode"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ZIP Code</FormLabel>
+                <FormLabel>{t('zipCode', { defaultValue: 'ZIP Code' })}</FormLabel>
                 <FormControl>
                   <Input {...field} value={field.value || ''} />
                 </FormControl>
@@ -68,7 +70,7 @@ export function Step2() {
           name="receiver.country"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Country</FormLabel>
+              <FormLabel>{t('country', { defaultValue: 'Country' })}</FormLabel>
               <FormControl>
                 <Input {...field} value={field.value || ''} />
               </FormControl>
@@ -82,9 +84,9 @@ export function Step2() {
             name="receiver.email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t('email')}</FormLabel>
                 <FormControl>
-                  <Input {...field} type="email" value={field.value || ''} />
+                  <Input {...field} type="email" value={field.value || ''} placeholder={t('emailPlaceholder')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -95,9 +97,9 @@ export function Step2() {
             name="receiver.phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone</FormLabel>
+                <FormLabel>{t('phone')}</FormLabel>
                 <FormControl>
-                  <Input {...field} type="tel" value={field.value || ''} />
+                  <Input {...field} type="tel" value={field.value || ''} placeholder={t('phonePlaceholder')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

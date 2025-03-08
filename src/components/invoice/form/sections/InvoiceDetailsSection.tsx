@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
 import { format } from 'date-fns';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { FormInput } from '@/components/ui/form-input';
@@ -43,6 +44,7 @@ export function InvoiceDetailsSection() {
     watch,
     formState: { errors },
   } = useFormContext<InvoiceType>();
+  const t = useTranslations('form.invoiceDetails');
 
   const invoiceDate = watch('details.invoiceDate');
   const dueDate = watch('details.dueDate');
@@ -104,20 +106,20 @@ export function InvoiceDetailsSection() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Invoice Details</CardTitle>
+        <CardTitle>{t('title')}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <FormInput
-          label="Invoice Number"
+          label={t('invoiceNumber')}
           {...register('details.invoiceNumber')}
           error={errors.details?.invoiceNumber?.message}
-          placeholder="INV-001"
+          placeholder={t('invoiceNumberPlaceholder')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Invoice Date */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Invoice Date</label>
+            <label className="text-sm font-medium">{t('invoiceDate')}</label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -128,7 +130,7 @@ export function InvoiceDetailsSection() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {invoiceDate ? format(new Date(invoiceDate), 'PPP') : 'Select date'}
+                  {invoiceDate ? format(new Date(invoiceDate), 'PPP') : t('selectDate', { defaultValue: 'Select date' })}
                 </Button>
               </PopoverTrigger>
               <PopoverContent align="start" className="w-[280px] p-0">
@@ -147,7 +149,7 @@ export function InvoiceDetailsSection() {
 
           {/* Due Date */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Due Date</label>
+            <label className="text-sm font-medium">{t('dueDate')}</label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -158,7 +160,7 @@ export function InvoiceDetailsSection() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dueDate ? format(new Date(dueDate), 'PPP') : 'Select date'}
+                  {dueDate ? format(new Date(dueDate), 'PPP') : t('selectDate', { defaultValue: 'Select date' })}
                 </Button>
               </PopoverTrigger>
               <PopoverContent align="start" className="w-[280px] p-0">
@@ -178,7 +180,7 @@ export function InvoiceDetailsSection() {
 
         {/* Searchable Currency Combobox */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Currency</label>
+          <label className="text-sm font-medium">{t('currency')}</label>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -190,16 +192,16 @@ export function InvoiceDetailsSection() {
                 <span className="truncate text-left">
                   {selectedCurrency
                     ? currencies.find((currency) => currency.value === selectedCurrency)?.label
-                    : 'Select currency...'}
+                    : t('selectCurrency', { defaultValue: 'Select currency...' })}
                 </span>
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
               <Command>
-                <CommandInput placeholder="Search currency..." />
+                <CommandInput placeholder={t('searchCurrency', { defaultValue: 'Search currency...' })} />
                 <CommandList>
-                  <CommandEmpty>No currency found.</CommandEmpty>
+                  <CommandEmpty>{t('noCurrencyFound', { defaultValue: 'No currency found.' })}</CommandEmpty>
                   <CommandGroup>
                     {currencies.map((currency) => (
                       <CommandItem

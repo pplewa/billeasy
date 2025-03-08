@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -20,6 +21,7 @@ interface SignatureModalProps {
 function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProps, 'open'>) {
   const [activeTab, setActiveTab] = useState<SignatureTabs>(SignatureTabs.DRAW);
   const { signatureRef, typedSignature, selectedFont, uploadedSignature } = useSignatureContext();
+  const t = useTranslations('form.signature');
 
   const handleSaveSignature = () => {
     let signatureData = '';
@@ -42,9 +44,9 @@ function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProp
   return (
     <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as SignatureTabs)}>
       <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value={SignatureTabs.DRAW}>Draw</TabsTrigger>
-        <TabsTrigger value={SignatureTabs.TYPE}>Type</TabsTrigger>
-        <TabsTrigger value={SignatureTabs.UPLOAD}>Upload</TabsTrigger>
+        <TabsTrigger value={SignatureTabs.DRAW}>{t('drawTab', { defaultValue: 'Draw' })}</TabsTrigger>
+        <TabsTrigger value={SignatureTabs.TYPE}>{t('typeTab', { defaultValue: 'Type' })}</TabsTrigger>
+        <TabsTrigger value={SignatureTabs.UPLOAD}>{t('uploadTab', { defaultValue: 'Upload' })}</TabsTrigger>
       </TabsList>
       <DrawSignature handleSaveSignature={handleSaveSignature} />
       <TypeSignature handleSaveSignature={handleSaveSignature} />
@@ -54,11 +56,13 @@ function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProp
 }
 
 export function SignatureModal({ open, onOpenChange, onSave }: SignatureModalProps) {
+  const t = useTranslations('form.signature');
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Signature</DialogTitle>
+          <DialogTitle>{t('addSignature', { defaultValue: 'Add Signature' })}</DialogTitle>
         </DialogHeader>
         <SignatureProvider>
           <SignatureModalContent onSave={onSave} onOpenChange={onOpenChange} />

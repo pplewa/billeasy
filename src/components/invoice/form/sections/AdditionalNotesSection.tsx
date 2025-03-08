@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormContext } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,17 +13,18 @@ export function AdditionalNotesSection() {
     register,
     formState: { errors },
   } = useFormContext<InvoiceType>();
+  const t = useTranslations('form.additionalNotes');
 
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Additional Notes</CardTitle>
+        <CardTitle>{t('title')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           <Textarea
             {...register('details.additionalNotes')}
-            placeholder="Add any additional notes or terms and conditions..."
+            placeholder={t('notesPlaceholder')}
             className="min-h-[100px]"
           />
           {errors.details?.additionalNotes?.message && (
