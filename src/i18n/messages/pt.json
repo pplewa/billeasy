@@ -1,0 +1,263 @@
+{
+  "app": {
+    "name": "Bill Easy",
+    "description": "Um modelo moderno e completo para iniciar"
+  },
+  "navigation": {
+    "dashboard": "Painel",
+    "invoices": "Faturas",
+    "profile": "Perfil",
+    "signIn": "Entrar",
+    "signOut": "Sair"
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "signOut": "Sair",
+    "emailPlaceholder": "Digite seu email",
+    "emailLabel": "Email",
+    "submit": "Continuar",
+    "sendLink": "Enviar link mágico",
+    "checkEmail": "Verifique seu email",
+    "emailSent": "Enviamos um link de acesso para {email}",
+    "verify": "Verificando seu acesso...",
+    "success": "Login realizado com sucesso!",
+    "error": "Algo deu errado",
+    "invalidLink": "Link inválido ou expirado",
+    "tryAgain": "Tentar novamente"
+  },
+  "dashboard": {
+    "welcome": "Bem-vindo ao seu painel",
+    "description": "Esta é uma página protegida que apenas usuários autenticados podem acessar."
+  },
+  "home": {
+    "title": "Bem-vindo ao {appName}",
+    "description": "Um modelo moderno e completo com autenticação, internacionalização e componentes prontos para uso.",
+    "getStarted": "Começar",
+    "hero": {
+      "title": "Faturas profissionais em segundos",
+      "subtitle": "Crie, personalize e envie faturas instantaneamente",
+      "textareaPlaceholder": "Descreva os detalhes da sua fatura ou faça upload de uma existente (PDF, JPEG, PNG, WebP)",
+      "uploadButton": "Enviar fatura",
+      "createButton": "Criar nova fatura",
+      "parseButton": "Analisar e criar",
+      "processingButton": "Processando..."
+    },
+    "benefits": {
+      "lightningFast": {
+        "title": "Extremamente rápido",
+        "description": "Crie faturas profissionais em segundos, não minutos"
+      },
+      "aiPowered": {
+        "title": "Alimentado por IA",
+        "description": "Extraia automaticamente detalhes de texto ou documentos"
+      },
+      "noSignup": {
+        "title": "Sem cadastro",
+        "description": "Comece imediatamente, faça login apenas quando precisar salvar"
+      }
+    },
+    "howItWorks": {
+      "title": "Como funciona",
+      "subtitle": "Crie faturas profissionais em três etapas simples",
+      "steps": {
+        "create": {
+          "title": "Criar",
+          "description": "Digite uma descrição ou faça upload de uma fatura existente. Nossa IA extrairá automaticamente todos os detalhes relevantes."
+        },
+        "customize": {
+          "title": "Personalizar",
+          "description": "Revise e edite os detalhes da sua fatura em nosso editor amigável. Adicione sua marca, ajuste itens e muito mais."
+        },
+        "download": {
+          "title": "Baixar ou salvar",
+          "description": "Exporte sua fatura como um PDF profissional ou faça login para salvá-la em sua conta para referência futura e acompanhamento."
+        }
+      },
+      "createFirstInvoice": "Crie sua primeira fatura"
+    },
+    "features": {
+      "title": "Recursos poderosos",
+      "subtitle": "Tudo o que você precisa para criar faturas profissionais rapidamente",
+      "aiExtraction": {
+        "title": "Extração alimentada por IA",
+        "description": "Nossa IA avançada analisa texto e documentos para preencher automaticamente os detalhes da fatura, economizando tempo e reduzindo erros."
+      },
+      "noAccount": {
+        "title": "Sem necessidade de conta",
+        "description": "Crie e baixe faturas sem se cadastrar. Faça login apenas quando quiser salvar faturas para depois ou acompanhar pagamentos."
+      },
+      "templates": {
+        "title": "Modelos profissionais",
+        "description": "Escolha entre uma variedade de modelos de fatura projetados profissionalmente para fazer sua empresa parecer melhor."
+      },
+      "calculations": {
+        "title": "Cálculos automáticos",
+        "description": "Deixe nosso sistema lidar com todos os cálculos, incluindo subtotais, impostos, descontos e totais com precisão perfeita."
+      },
+      "export": {
+        "title": "Exportação em vários formatos",
+        "description": "Baixe suas faturas em vários formatos, incluindo PDF, prontas para enviar aos clientes ou para seus registros."
+      },
+      "branding": {
+        "title": "Marca personalizada",
+        "description": "Adicione seu logotipo, cores personalizadas e personalize cada aspecto da sua fatura para corresponder à identidade da sua marca."
+      },
+      "tryNow": "Experimente o Bill Easy agora — Grátis"
+    },
+    "cta": {
+      "title": "Pronto para criar faturas profissionais?",
+      "subtitle": "Comece a criar faturas lindamente projetadas e legalmente compatíveis em apenas segundos.",
+      "button": "Comece agora"
+    }
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "submit": "Enviar",
+    "print": "Imprimir",
+    "email": "Email",
+    "export": "Exportar",
+    "saving": "Salvando...",
+    "saveInvoice": "Salvar fatura",
+    "itemsLoaded": "itens foram carregados da sua fatura.",
+    "itemsNotVisible": "Se você não vê os itens na Etapa 3, clique no botão abaixo.",
+    "close": "Fechar",
+    "morePages": "Mais páginas",
+    "clearSearch": "Limpar pesquisa",
+    "verifying": "Verificando...",
+    "actions": "Ações",
+    "openMenu": "Abrir menu",
+    "language": "Idioma"
+  },
+  "footer": {
+    "allRightsReserved": "Todos os direitos reservados",
+    "privacyPolicy": "Política de Privacidade",
+    "termsOfService": "Termos de Serviço"
+  },
+  "privacyPolicy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última Atualização",
+    "introduction": "Introdução",
+    "introText": "Bem-vindo ao {appName}. Respeitamos sua privacidade e estamos comprometidos em proteger seus dados pessoais. Esta política de privacidade informará como tratamos seus dados ao usar nosso sistema de gerenciamento de faturas e quais direitos você tem em relação aos seus dados.",
+    "dataWeCollect": "Os Dados que Coletamos",
+    "dataWeCollectText": "Coletamos e processamos apenas os dados necessários para fornecer nosso serviço de gerenciamento de faturas. Isso inclui:",
+    "accountData": "Dados da Conta",
+    "accountDataText": "Endereço de email e senha para autenticação.",
+    "businessInfo": "Informações Comerciais",
+    "businessInfoText": "Detalhes da sua empresa usados nas faturas (nome da empresa, endereço, informações de contato).",
+    "clientData": "Dados do Cliente",
+    "clientDataText": "Informações sobre seus clientes necessárias para a criação de faturas (nomes de empresas, endereços, detalhes de contato).",
+    "invoiceData": "Dados da Fatura",
+    "invoiceDataText": "Informações contidas em suas faturas (itens, preços, condições de pagamento, notas).",
+    "usageData": "Dados de Uso",
+    "usageDataText": "Informações básicas sobre como você usa o aplicativo para melhorar nosso serviço.",
+    "howWeUseData": "Como Usamos Seus Dados",
+    "howWeUseDataText": "Usamos seus dados exclusivamente para:",
+    "dataStorage": "Armazenamento e Segurança de Dados",
+    "dataStorageText": "Todos os dados são armazenados com segurança em nosso banco de dados. Implementamos medidas de segurança apropriadas para proteger seus dados contra acesso não autorizado, modificação ou exclusão. Suas faturas e informações comerciais são acessíveis apenas através da sua conta autenticada.",
+    "dataRetention": "Retenção de Dados",
+    "dataRetentionText": "Mantemos seus dados enquanto você mantiver uma conta ativa. Os dados da fatura são mantidos para manter seu histórico de faturas e cumprir requisitos legais relacionados à documentação comercial. Você pode solicitar a exclusão da sua conta e dados associados a qualquer momento.",
+    "yourRights": "Seus Direitos",
+    "yourRightsText": "Você tem o direito de:",
+    "contactUs": "Contate-nos",
+    "contactUsText": "Se você tiver alguma dúvida sobre esta política de privacidade ou como tratamos seus dados, entre em contato conosco em:",
+    "email": "Email"
+  },
+  "termsOfService": {
+    "title": "Termos de Serviço",
+    "lastUpdated": "Última Atualização",
+    "introduction": "Introdução",
+    "introText": "Bem-vindo ao {appName}. Estes termos e condições regem o uso do nosso sistema de gerenciamento de faturas. Ao usar o {appName}, você concorda com estes termos na íntegra. Por favor, leia-os cuidadosamente antes de usar o serviço.",
+    "serviceDescription": "Descrição do Serviço",
+    "serviceDescriptionText": "{appName} fornece um sistema online de gerenciamento de faturas que permite:",
+    "userObligations": "Obrigações do Usuário",
+    "userObligationsText": "Ao usar o {appName}, você concorda em:",
+    "dataAndContent": "Dados e Conteúdo",
+    "dataAndContentText1": "Você mantém todos os direitos sobre o conteúdo que cria usando o {appName}, incluindo suas faturas, informações de clientes e dados comerciais. Não reivindicamos propriedade do seu conteúdo.",
+    "dataAndContentText2": "Você é responsável por:",
+    "serviceAvailability": "Disponibilidade do Serviço",
+    "serviceAvailabilityText": "Embora nos esforcemos para manter alta disponibilidade, não garantimos acesso ininterrupto ao serviço. Ocasionalmente, podemos precisar suspender o acesso para implantar atualizações ou realizar manutenção.",
+    "limitationOfLiability": "Limitação de Responsabilidade",
+    "limitationOfLiabilityText": "{appName} é fornecido \"como está\" sem quaisquer garantias. Não somos responsáveis por:",
+    "changesToService": "Alterações no Serviço",
+    "changesToServiceText": "Reservamo-nos o direito de modificar ou descontinuar qualquer parte do serviço a qualquer momento. Forneceremos aviso de mudanças significativas através do aplicativo ou via email.",
+    "termination": "Rescisão",
+    "terminationText": "Você pode parar de usar o serviço a qualquer momento. Podemos encerrar ou suspender seu acesso se você violar estes termos ou usar o serviço de forma inadequada.",
+    "contact": "Contato",
+    "contactText": "Se você tiver alguma dúvida sobre estes termos, entre em contato conosco em:",
+    "email": "Email"
+  },
+  "invoice": {
+    "create": "Criar fatura",
+    "edit": "Editar fatura",
+    "itemsDetected": "Itens detectados",
+    "noInvoicesFound": "Nenhuma fatura encontrada",
+    "noDraftsFound": "Nenhum rascunho encontrado",
+    "noMatchingInvoices": "Nenhuma fatura corresponde aos seus filtros atuais. Tente ajustar seus critérios de pesquisa ou filtro.",
+    "noInvoicesYet": "Você ainda não criou nenhuma fatura. Crie sua primeira fatura para começar.",
+    "startCreatingDraft": "Comece a criar uma fatura para salvar rascunhos automaticamente.",
+    "draftInvoices": "Rascunhos de faturas",
+    "manageDrafts": "Gerencie seus rascunhos de faturas salvos localmente",
+    "invoiceNumber": "Fatura nº",
+    "billTo": "Faturar para:",
+    "invoiceDetails": "Detalhes da fatura:",
+    "invoiceDate": "Data da fatura:",
+    "dueDate": "Data de vencimento:",
+    "poNumber": "Número do pedido:",
+    "items": "Itens",
+    "item": "Item",
+    "qty": "Qtd",
+    "price": "Preço",
+    "discount": "Desconto",
+    "tax": "Imposto",
+    "total": "Total",
+    "subtotal": "Subtotal:",
+    "paymentInfo": "Informações de pagamento",
+    "bank": "Banco:",
+    "accountName": "Nome da conta:",
+    "accountNumber": "Número da conta:",
+    "notes": "Observações",
+    "terms": "Termos",
+    "authorizedSignature": "Assinatura autorizada",
+    "client": "Cliente:",
+    "date": "Data:",
+    "amount": "Valor:",
+    "invoiceTemplate": "Modelo de fatura",
+    "templatePreview": "Visualização do modelo {id}",
+    "amountType": "Tipo de valor",
+    "currency": "Moeda",
+    "fontStyle": "Estilo de fonte",
+    "supportsFormats": "Suporta PNG, JPG ou GIF",
+    "invoiceItems": "ITENS DA FATURA",
+    "description": "Descrição",
+    "quantity": "Quantidade",
+    "itemDescription": "Descrição do item",
+    "thankYou": "Obrigado por usar o BillEasy!"
+  },
+  "drafts": {
+    "draftName": "Nome do rascunho",
+    "created": "Criado",
+    "actions": "Ações"
+  },
+  "form": {
+    "addressLookahead": {
+      "manualEntry": "Entrada manual",
+      "searchAddress": "Buscar endereço",
+      "searchPlaceholder": "Digite para buscar um endereço...",
+      "suggestions": "Sugestões de endereço",
+      "error": "Erro:"
+    },
+    "wizard": {
+      "stepError": "Por favor, corrija os erros nesta etapa"
+    },
+    "errors": {
+      "formField": "useFormField deve ser usado dentro de <FormField>"
+    }
+  }
+} 

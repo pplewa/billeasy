@@ -1,0 +1,263 @@
+{
+  "app": {
+    "name": "Bill Easy",
+    "description": "现代化的全栈启动模板"
+  },
+  "navigation": {
+    "dashboard": "仪表板",
+    "invoices": "发票",
+    "profile": "个人资料",
+    "signIn": "登录",
+    "signOut": "退出"
+  },
+  "auth": {
+    "signIn": "登录",
+    "signOut": "退出",
+    "emailPlaceholder": "输入您的电子邮件",
+    "emailLabel": "电子邮件",
+    "submit": "继续",
+    "sendLink": "发送魔法链接",
+    "checkEmail": "检查您的电子邮件",
+    "emailSent": "我们已向 {email} 发送了登录链接",
+    "verify": "正在验证您的登录...",
+    "success": "登录成功！",
+    "error": "出现错误",
+    "invalidLink": "无效或过期的链接",
+    "tryAgain": "重试"
+  },
+  "dashboard": {
+    "welcome": "欢迎来到您的仪表板",
+    "description": "这是一个受保护的页面，只有经过身份验证的用户才能访问。"
+  },
+  "home": {
+    "title": "欢迎来到 {appName}",
+    "description": "一个现代化的全栈启动模板，具有身份验证、国际化和即用型组件。",
+    "getStarted": "开始使用",
+    "hero": {
+      "title": "几秒钟内完成专业发票",
+      "subtitle": "立即创建、自定义和发送发票",
+      "textareaPlaceholder": "描述您的发票详情或上传现有发票（PDF、JPEG、PNG、WebP）",
+      "uploadButton": "上传发票",
+      "createButton": "创建新发票",
+      "parseButton": "解析并创建",
+      "processingButton": "处理中..."
+    },
+    "benefits": {
+      "lightningFast": {
+        "title": "闪电般快速",
+        "description": "几秒钟内创建专业发票，而不是几分钟"
+      },
+      "aiPowered": {
+        "title": "AI 驱动",
+        "description": "自动从文本或文档中提取详细信息"
+      },
+      "noSignup": {
+        "title": "无需注册",
+        "description": "立即开始，只有在需要保存时才登录"
+      }
+    },
+    "howItWorks": {
+      "title": "工作原理",
+      "subtitle": "通过三个简单步骤创建专业发票",
+      "steps": {
+        "create": {
+          "title": "创建",
+          "description": "输入描述或上传现有发票。我们的 AI 将自动提取所有相关详细信息。"
+        },
+        "customize": {
+          "title": "自定义",
+          "description": "在我们用户友好的编辑器中查看和编辑您的发票详情。添加您的品牌、调整项目等。"
+        },
+        "download": {
+          "title": "下载或保存",
+          "description": "将您的发票导出为专业 PDF，或登录以将其保存到您的账户中以供将来参考和跟踪。"
+        }
+      },
+      "createFirstInvoice": "创建您的第一张发票"
+    },
+    "features": {
+      "title": "强大功能",
+      "subtitle": "快速创建专业发票所需的一切",
+      "aiExtraction": {
+        "title": "AI 驱动提取",
+        "description": "我们的高级 AI 分析文本和文档，自动填写发票详情，节省时间并减少错误。"
+      },
+      "noAccount": {
+        "title": "无需账户",
+        "description": "无需注册即可创建和下载发票。只有在想要保存发票以供日后使用或跟踪付款时才需要登录。"
+      },
+      "templates": {
+        "title": "专业模板",
+        "description": "从各种专业设计的发票模板中选择，使您的业务看起来最好。"
+      },
+      "calculations": {
+        "title": "自动计算",
+        "description": "让我们的系统处理所有计算，包括小计、税费、折扣和总计，精确无误。"
+      },
+      "export": {
+        "title": "多格式导出",
+        "description": "以多种格式下载您的发票，包括 PDF，随时可以发送给客户或用于您的记录。"
+      },
+      "branding": {
+        "title": "自定义品牌",
+        "description": "添加您的徽标、自定义颜色，并个性化您的发票的每个方面，以匹配您的品牌标识。"
+      },
+      "tryNow": "立即免费试用 Bill Easy"
+    },
+    "cta": {
+      "title": "准备好创建专业发票了吗？",
+      "subtitle": "开始创建设计精美、合法合规的发票，只需几秒钟。",
+      "button": "立即开始"
+    }
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "submit": "提交",
+    "print": "打印",
+    "email": "电子邮件",
+    "export": "导出",
+    "saving": "保存中...",
+    "saveInvoice": "保存发票",
+    "itemsLoaded": "项目已从您的发票中加载。",
+    "itemsNotVisible": "如果您在步骤 3 中看不到项目，请点击下面的按钮。",
+    "close": "关闭",
+    "morePages": "更多页面",
+    "clearSearch": "清除搜索",
+    "verifying": "验证中...",
+    "actions": "操作",
+    "openMenu": "打开菜单",
+    "language": "语言"
+  },
+  "footer": {
+    "allRightsReserved": "版权所有",
+    "privacyPolicy": "隐私政策",
+    "termsOfService": "服务条款"
+  },
+  "privacyPolicy": {
+    "title": "隐私政策",
+    "lastUpdated": "最后更新",
+    "introduction": "介绍",
+    "introText": "欢迎来到 {appName}。我们尊重您的隐私并致力于保护您的个人数据。本隐私政策将告知您我们如何在您使用我们的发票管理系统时处理您的数据，以及您对自己数据拥有的权利。",
+    "dataWeCollect": "我们收集的数据",
+    "dataWeCollectText": "我们仅收集和处理提供发票管理服务所需的数据。这包括：",
+    "accountData": "账户数据",
+    "accountDataText": "用于身份验证的电子邮件地址和密码。",
+    "businessInfo": "业务信息",
+    "businessInfoText": "您在发票中使用的业务详情（公司名称、地址、联系信息）。",
+    "clientData": "客户数据",
+    "clientDataText": "创建发票所需的客户信息（公司名称、地址、联系方式）。",
+    "invoiceData": "发票数据",
+    "invoiceDataText": "您的发票中包含的信息（项目、价格、付款条件、备注）。",
+    "usageData": "使用数据",
+    "usageDataText": "关于您如何使用应用程序的基本信息，用于改进我们的服务。",
+    "howWeUseData": "我们如何使用您的数据",
+    "howWeUseDataText": "我们仅将您的数据用于：",
+    "dataStorage": "数据存储和安全",
+    "dataStorageText": "所有数据都安全地存储在我们的数据库中。我们实施适当的安全措施，保护您的数据免受未经授权的访问、修改或删除。您的发票和业务信息只能通过您的认证账户访问。",
+    "dataRetention": "数据保留",
+    "dataRetentionText": "只要您保持活跃账户，我们就会保留您的数据。发票数据会被保留以维护您的发票历史记录并遵守有关业务文档的法律要求。您可以随时要求删除您的账户和相关数据。",
+    "yourRights": "您的权利",
+    "yourRightsText": "您有权：",
+    "contactUs": "联系我们",
+    "contactUsText": "如果您对本隐私政策或我们如何处理您的数据有任何疑问，请通过以下方式联系我们：",
+    "email": "电子邮件"
+  },
+  "termsOfService": {
+    "title": "服务条款",
+    "lastUpdated": "最后更新",
+    "introduction": "介绍",
+    "introText": "欢迎来到 {appName}。这些条款和条件规范您对我们发票管理系统的使用。使用 {appName} 即表示您完全同意这些条款。请在使用服务前仔细阅读。",
+    "serviceDescription": "服务描述",
+    "serviceDescriptionText": "{appName} 提供在线发票管理系统，允许您：",
+    "userObligations": "用户义务",
+    "userObligationsText": "使用 {appName} 时，您同意：",
+    "dataAndContent": "数据和内容",
+    "dataAndContentText1": "您保留使用 {appName} 创建的内容的所有权利，包括您的发票、客户信息和业务数据。我们不主张对您内容的所有权。",
+    "dataAndContentText2": "您负责：",
+    "serviceAvailability": "服务可用性",
+    "serviceAvailabilityText": "虽然我们努力保持高可用性，但我们不保证不间断地访问服务。我们可能偶尔需要暂停访问以部署更新或执行维护。",
+    "limitationOfLiability": "责任限制",
+    "limitationOfLiabilityText": "{appName} 按\"原样\"提供，没有任何保证。我们不对以下负责：",
+    "changesToService": "服务变更",
+    "changesToServiceText": "我们保留随时修改或终止服务任何部分的权利。我们将通过应用程序或电子邮件通知重大变更。",
+    "termination": "终止",
+    "terminationText": "您可以随时停止使用服务。如果您违反这些条款或不当使用服务，我们可能终止或暂停您的访问。",
+    "contact": "联系",
+    "contactText": "如果您对这些条款有任何疑问，请通过以下方式联系我们：",
+    "email": "电子邮件"
+  },
+  "invoice": {
+    "create": "创建发票",
+    "edit": "编辑发票",
+    "itemsDetected": "检测到项目",
+    "noInvoicesFound": "未找到发票",
+    "noDraftsFound": "未找到草稿",
+    "noMatchingInvoices": "没有符合当前筛选条件的发票。尝试调整您的搜索或筛选条件。",
+    "noInvoicesYet": "您尚未创建任何发票。创建您的第一张发票以开始使用。",
+    "startCreatingDraft": "开始创建发票以自动保存草稿。",
+    "draftInvoices": "发票草稿",
+    "manageDrafts": "管理您本地保存的发票草稿",
+    "invoiceNumber": "发票编号",
+    "billTo": "收款方：",
+    "invoiceDetails": "发票详情：",
+    "invoiceDate": "发票日期：",
+    "dueDate": "到期日期：",
+    "poNumber": "采购订单号：",
+    "items": "项目",
+    "item": "项目",
+    "qty": "数量",
+    "price": "价格",
+    "discount": "折扣",
+    "tax": "税费",
+    "total": "总计",
+    "subtotal": "小计：",
+    "paymentInfo": "付款信息",
+    "bank": "银行：",
+    "accountName": "账户名称：",
+    "accountNumber": "账号：",
+    "notes": "备注",
+    "terms": "条款",
+    "authorizedSignature": "授权签名",
+    "client": "客户：",
+    "date": "日期：",
+    "amount": "金额：",
+    "invoiceTemplate": "发票模板",
+    "templatePreview": "模板 {id} 预览",
+    "amountType": "金额类型",
+    "currency": "货币",
+    "fontStyle": "字体样式",
+    "supportsFormats": "支持 PNG、JPG 或 GIF",
+    "invoiceItems": "发票项目",
+    "description": "描述",
+    "quantity": "数量",
+    "itemDescription": "项目描述",
+    "thankYou": "感谢使用 BillEasy！"
+  },
+  "drafts": {
+    "draftName": "草稿名称",
+    "created": "创建时间",
+    "actions": "操作"
+  },
+  "form": {
+    "addressLookahead": {
+      "manualEntry": "手动输入",
+      "searchAddress": "搜索地址",
+      "searchPlaceholder": "输入以搜索地址...",
+      "suggestions": "地址建议",
+      "error": "错误："
+    },
+    "wizard": {
+      "stepError": "请修正此步骤中的错误"
+    },
+    "errors": {
+      "formField": "useFormField 必须在 <FormField> 内使用"
+    }
+  }
+} 
