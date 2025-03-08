@@ -206,11 +206,11 @@
     "noInvoicesYet": "Nie utworzyłeś jeszcze żadnych faktur. Zacznij od utworzenia pierwszej faktury!",
     "status": {
       "all": "Wszystkie statusy",
-      "draft": "Wersja robocza",
-      "pending": "Oczekujące", 
-      "paid": "Opłacone",
-      "overdue": "Przeterminowane",
-      "cancelled": "Anulowane"
+      "draft": "Szkic",
+      "pending": "Oczekujący", 
+      "paid": "Opłacony",
+      "overdue": "Przeterminowany",
+      "cancelled": "Anulowany"
     },
     "sort": {
       "newestFirst": "Najnowsze pierwsze",

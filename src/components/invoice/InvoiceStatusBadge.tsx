@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { InvoiceStatus } from '@/types';
 import { cn } from '@/lib/utils/ui';
+import { useTranslations } from 'next-intl';
 
 interface InvoiceStatusBadgeProps {
   status: string;
@@ -11,19 +12,22 @@ interface InvoiceStatusBadgeProps {
  * Component to display invoice status with appropriate styling
  */
 export function InvoiceStatusBadge({ status, className }: InvoiceStatusBadgeProps) {
-  // Get human-readable label
+  // Get translations for invoice statuses
+  const t = useTranslations('invoice.status');
+
+  // Get human-readable label using translations
   const getLabel = () => {
     switch (status) {
       case InvoiceStatus.PAID:
-        return 'Paid';
+        return t('paid');
       case InvoiceStatus.PENDING:
-        return 'Pending';
+        return t('pending');
       case InvoiceStatus.OVERDUE:
-        return 'Overdue';
+        return t('overdue');
       case InvoiceStatus.CANCELLED:
-        return 'Cancelled';
+        return t('cancelled');
       case InvoiceStatus.DRAFT:
-        return 'Draft';
+        return t('draft');
       default:
         return status;
     }

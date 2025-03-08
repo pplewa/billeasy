@@ -208,9 +208,9 @@
       "all": "Tous les statuts",
       "draft": "Brouillon",
       "pending": "En attente", 
-      "paid": "Payée",
+      "paid": "Payé",
       "overdue": "En retard",
-      "cancelled": "Annulée"
+      "cancelled": "Annulé"
     },
     "sort": {
       "newestFirst": "Les plus récentes d'abord",

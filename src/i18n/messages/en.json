@@ -150,24 +150,50 @@
     "introText": "Welcome to {appName}. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we handle your data when using our invoice management system and what rights you have regarding your data.",
     "dataWeCollect": "The Data We Collect",
     "dataWeCollectText": "We collect and process only the data necessary to provide our invoice management service. This includes:",
-    "accountData": "Account Data",
-    "accountDataText": "Email address and password for authentication.",
-    "businessInfo": "Business Information",
-    "businessInfoText": "Your business details used in invoices (company name, address, contact information).",
-    "clientData": "Client Data",
-    "clientDataText": "Information about your clients necessary for invoice creation (company names, addresses, contact details).",
-    "invoiceData": "Invoice Data",
-    "invoiceDataText": "Information contained in your invoices (items, prices, payment terms, notes).",
-    "usageData": "Usage Data",
-    "usageDataText": "Basic information about how you use the application to improve our service.",
+    "dataWeCollectItems": [
+      {
+        "title": "Account Data",
+        "description": "Email address and password for authentication."
+      },
+      {
+        "title": "Business Information",
+        "description": "Your business details used in invoices (company name, address, contact information)."
+      },
+      {
+        "title": "Client Data",
+        "description": "Information about your clients necessary for invoice creation (company names, addresses, contact details)."
+      },
+      {
+        "title": "Invoice Data",
+        "description": "Information contained in your invoices (items, prices, payment terms, notes)."
+      },
+      {
+        "title": "Usage Data",
+        "description": "Basic information about how you use the application to improve our service."
+      }
+    ],
     "howWeUseData": "How We Use Your Data",
     "howWeUseDataText": "We use your data exclusively for:",
+    "howWeUseDataItems": [
+      "Providing the invoice management service",
+      "Generating and managing your invoices", 
+      "Storing your invoice history",
+      "Improving the application's functionality",
+      "Ensuring the security of your account"
+    ],
     "dataStorage": "Data Storage and Security",
     "dataStorageText": "All data is stored securely in our database. We implement appropriate security measures to protect your data from unauthorized access, modification, or deletion. Your invoices and business information are only accessible through your authenticated account.",
     "dataRetention": "Data Retention",
     "dataRetentionText": "We retain your data for as long as you maintain an active account. Invoice data is kept to maintain your invoice history and comply with legal requirements regarding business documentation. You can request the deletion of your account and associated data at any time.",
     "yourRights": "Your Rights",
     "yourRightsText": "You have the right to:",
+    "yourRightsItems": [
+      "Access your stored data",
+      "Correct any inaccurate information", 
+      "Export your invoice data",
+      "Delete your account and associated data",
+      "Request information about how your data is processed"
+    ],
     "contactUs": "Contact Us",
     "contactUsText": "If you have any questions about this privacy policy or how we handle your data, please contact us at:",
     "email": "Email"
@@ -194,7 +220,33 @@
     "terminationText": "You may stop using the service at any time. We may terminate or suspend your access if you violate these terms or use the service inappropriately.",
     "contact": "Contact",
     "contactText": "If you have any questions about these terms, please contact us at:",
-    "email": "Email"
+    "email": "Email",
+    "serviceDescriptionItems": [
+      "Create and manage professional invoices",
+      "Store and organize client information", 
+      "Track invoice status and payment history",
+      "Generate invoice PDFs",
+      "Manage multiple invoice templates"
+    ],
+    "userObligationsItems": [
+      "Provide accurate information in your invoices",
+      "Keep your account credentials secure",
+      "Not use the service for any illegal purposes",
+      "Not attempt to disrupt or compromise the service",
+      "Comply with relevant tax and business regulations in your jurisdiction"
+    ],
+    "dataAndContentResponsibilities": [
+      "The accuracy of information in your invoices",
+      "Maintaining appropriate records for tax purposes", 
+      "Obtaining necessary permissions to use client information",
+      "Backing up your important data"
+    ],
+    "limitationOfLiabilityItems": [
+      "The accuracy of generated invoices",
+      "Any financial losses related to using our service",
+      "Compliance with local tax or business regulations", 
+      "Data loss in case of service disruption"
+    ]
   },
   "invoice": {
     "pageTitle": "Invoices",

@@ -205,12 +205,12 @@
     "noMatchingInvoices": "Ninguna factura coincide con sus filtros actuales. Intente ajustar su búsqueda o filtros.",
     "noInvoicesYet": "Aún no ha creado ninguna factura. ¡Comience creando su primera factura!",
     "status": {
-      "all": "Todos los Estados",
+      "all": "Todos los estados",
       "draft": "Borrador",
       "pending": "Pendiente", 
-      "paid": "Pagada",
-      "overdue": "Vencida",
-      "cancelled": "Cancelada"
+      "paid": "Pagado",
+      "overdue": "Vencido",
+      "cancelled": "Cancelado"
     },
     "sort": {
       "newestFirst": "Más Recientes Primero",

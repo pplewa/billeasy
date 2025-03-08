@@ -21,31 +21,19 @@ function PrivacyPolicyContent() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">2. {t('dataWeCollect')}</h2>
         <p>{t('dataWeCollectText')}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          <li>
-            <strong>{t('accountData')}:</strong> {t('accountDataText')}
-          </li>
-          <li>
-            <strong>{t('businessInfo')}:</strong> {t('businessInfoText')}
-          </li>
-          <li>
-            <strong>{t('clientData')}:</strong> {t('clientDataText')}
-          </li>
-          <li>
-            <strong>{t('invoiceData')}:</strong> {t('invoiceDataText')}
-          </li>
-          <li>
-            <strong>{t('usageData')}:</strong> {t('usageDataText')}
-          </li>
+          {(t('dataWeCollectItems', { returnObjects: true }) as Array<{title: string, description: string}>).map((item) => (
+            <li key={item.title}>
+              <strong>{item.title}:</strong> {item.description}
+            </li>
+          ))}
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">3. {t('howWeUseData')}</h2>
         <p>{t('howWeUseDataText')}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          <li>Providing the invoice management service</li>
-          <li>Generating and managing your invoices</li>
-          <li>Storing your invoice history</li>
-          <li>Improving the application's functionality</li>
-          <li>Ensuring the security of your account</li>
+          {(t('howWeUseDataItems', { returnObjects: true }) as string[]).map((item: string) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">4. {t('dataStorage')}</h2>
@@ -57,11 +45,9 @@ function PrivacyPolicyContent() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">6. {t('yourRights')}</h2>
         <p>{t('yourRightsText')}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          <li>Access your stored data</li>
-          <li>Correct any inaccurate information</li>
-          <li>Export your invoice data</li>
-          <li>Delete your account and associated data</li>
-          <li>Request information about how your data is processed</li>
+          {(t('yourRightsItems', { returnObjects: true }) as string[]).map((item: string) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">7. {t('contactUs')}</h2>
