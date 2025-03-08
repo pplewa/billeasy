@@ -135,22 +135,20 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
       const restructuredInvoice: ParsedInvoiceType = {
         sender: {
           ...((invoice as ParsedInvoice).sender || {}),
-          customInputs: Array.isArray((invoice)?.sender?.customInputs) 
-            ? ((invoice)?.sender?.customInputs as CustomInput[]) 
-            : []
+          customInputs: Array.isArray(invoice?.sender?.customInputs)
+            ? (invoice?.sender?.customInputs as CustomInput[])
+            : [],
         },
         receiver: {
           ...((invoice as ParsedInvoice).receiver || {}),
-          customInputs: Array.isArray((invoice )?.receiver?.customInputs) 
-            ? ((invoice)?.receiver?.customInputs as CustomInput[]) 
-            : []
+          customInputs: Array.isArray(invoice?.receiver?.customInputs)
+            ? (invoice?.receiver?.customInputs as CustomInput[])
+            : [],
         },
         details: {
           ...((invoice as ParsedInvoice).details || {}),
-          items: Array.isArray((invoice )?.details?.items) 
-            ? ((invoice)?.details?.items) 
-            : []
-        }
+          items: Array.isArray(invoice?.details?.items) ? invoice?.details?.items : [],
+        },
       };
 
       // Ensure the invoice has sender and receiver sections
@@ -199,22 +197,20 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
       const typedInvoice: ParsedInvoiceType = {
         sender: {
           ...((invoice as Record<string, unknown>).sender || {}),
-          customInputs: Array.isArray((invoice)?.sender?.customInputs) 
-            ? ((invoice)?.sender?.customInputs as CustomInput[]) 
-            : []
+          customInputs: Array.isArray(invoice?.sender?.customInputs)
+            ? (invoice?.sender?.customInputs as CustomInput[])
+            : [],
         },
         receiver: {
-          ...((invoice).receiver || {}),
-          customInputs: Array.isArray((invoice)?.receiver?.customInputs) 
-            ? ((invoice)?.receiver?.customInputs as CustomInput[]) 
-            : []
+          ...(invoice.receiver || {}),
+          customInputs: Array.isArray(invoice?.receiver?.customInputs)
+            ? (invoice?.receiver?.customInputs as CustomInput[])
+            : [],
         },
         details: {
           ...((invoice as Record<string, unknown>).details || {}),
-          items: Array.isArray((invoice)?.details?.items) 
-            ? ((invoice)?.details?.items) 
-            : []
-        }
+          items: Array.isArray(invoice?.details?.items) ? invoice?.details?.items : [],
+        },
       };
 
       setParsedInvoice(typedInvoice);

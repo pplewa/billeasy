@@ -43,10 +43,7 @@ function Step1() {
 
 function Step2() {
   return (
-    <WizardStep
-      title="Invoice Details"
-      description="Enter invoice and payment information"
-    >
+    <WizardStep title="Invoice Details" description="Enter invoice and payment information">
       <div className="space-y-8">
         <InvoiceDetailsSection />
         <PaymentInformationSection />
@@ -57,10 +54,7 @@ function Step2() {
 
 function Step3() {
   return (
-    <WizardStep
-      title="Items"
-      description="Add items to your invoice"
-    >
+    <WizardStep title="Items" description="Add items to your invoice">
       <Items />
     </WizardStep>
   );
@@ -68,10 +62,7 @@ function Step3() {
 
 function Step4() {
   return (
-    <WizardStep
-      title="Additional Information"
-      description="Add signature and notes"
-    >
+    <WizardStep title="Additional Information" description="Add signature and notes">
       <div className="space-y-8">
         <SignatureSection />
         <AdditionalNotesSection />

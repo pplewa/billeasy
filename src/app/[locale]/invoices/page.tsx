@@ -137,17 +137,29 @@ export default function InvoicesPage() {
         // Search across multiple fields
         return (
           // Sender info
-          String(invoice.sender?.name || '').toLowerCase().includes(query) ||
-          String(invoice.sender?.email || '').toLowerCase().includes(query) ||
+          String(invoice.sender?.name || '')
+            .toLowerCase()
+            .includes(query) ||
+          String(invoice.sender?.email || '')
+            .toLowerCase()
+            .includes(query) ||
           // Receiver info
-          String(invoice.receiver?.name || '').toLowerCase().includes(query) ||
-          String(invoice.receiver?.email || '').toLowerCase().includes(query) ||
+          String(invoice.receiver?.name || '')
+            .toLowerCase()
+            .includes(query) ||
+          String(invoice.receiver?.email || '')
+            .toLowerCase()
+            .includes(query) ||
           // Invoice details
-          String(invoice.details?.invoiceNumber || '').toLowerCase().includes(query) ||
+          String(invoice.details?.invoiceNumber || '')
+            .toLowerCase()
+            .includes(query) ||
           // Convert amounts to string for searching
           String(invoice.details?.totalAmount || '').includes(query) ||
           // Search in additionalNotes only (notes may not exist in the type)
-          String(invoice.details?.additionalNotes || '').toLowerCase().includes(query)
+          String(invoice.details?.additionalNotes || '')
+            .toLowerCase()
+            .includes(query)
         );
       }
 
@@ -274,11 +286,15 @@ export default function InvoicesPage() {
                     {invoice.details?.invoiceNumber || 'N/A'}
                   </TableCell>
                   <TableCell>
-                    {invoice.details?.invoiceDate 
-                      ? formatDate(new Date(
-                          invoice.details.invoiceDate !== null && invoice.details.invoiceDate !== undefined
-                            ? String(invoice.details.invoiceDate) 
-                            : Date.now()))
+                    {invoice.details?.invoiceDate
+                      ? formatDate(
+                          new Date(
+                            invoice.details.invoiceDate !== null &&
+                            invoice.details.invoiceDate !== undefined
+                              ? String(invoice.details.invoiceDate)
+                              : Date.now()
+                          )
+                        )
                       : 'N/A'}
                   </TableCell>
                   <TableCell>{invoice.receiver?.name || 'No Client'}</TableCell>

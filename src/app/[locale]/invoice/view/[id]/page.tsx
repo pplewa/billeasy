@@ -104,7 +104,7 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
   // ViewInvoiceDocument is compatible with SourceInvoice
   // since SourceInvoice accepts any key-value pairs
   const normalized = normalizeInvoice(doc) || {};
-  
+
   // Define default objects with proper types
   const defaultTax: BaseAmount = { amount: 0, amountType: 'percentage' };
 
@@ -112,13 +112,19 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
   const taxObj = normalized.details?.tax ?? defaultTax;
   const tax: BaseAmount = {
     amount: Number((taxObj as { amount?: unknown })?.amount ?? 0),
-    amountType: String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount' ? 'amount' : 'percentage',
+    amountType:
+      String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount'
+        ? 'amount'
+        : 'percentage',
   };
 
   const discountObj = normalized.details?.discount ?? defaultTax;
   const discount: BaseAmount = {
     amount: Number((discountObj as { amount?: unknown })?.amount ?? 0),
-    amountType: String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount' ? 'amount' : 'percentage',
+    amountType:
+      String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount'
+        ? 'amount'
+        : 'percentage',
   };
 
   // Ensure sender and receiver are always objects
@@ -131,8 +137,8 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
     country: String(senderObj?.country || '') || null,
     email: String(senderObj?.email || '') || null,
     phone: String(senderObj?.phone || '') || null,
-    customInputs: Array.isArray(senderObj?.customInputs) 
-      ? senderObj.customInputs.map(input => {
+    customInputs: Array.isArray(senderObj?.customInputs)
+      ? senderObj.customInputs.map((input) => {
           const typedInput = input as { key?: unknown; value?: unknown };
           return {
             key: String(typedInput?.key || '') || null,
@@ -152,7 +158,7 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
     email: String(receiverObj?.email || '') || null,
     phone: String(receiverObj?.phone || '') || null,
     customInputs: Array.isArray(receiverObj?.customInputs)
-      ? receiverObj.customInputs.map(input => {
+      ? receiverObj.customInputs.map((input) => {
           const typedInput = input as { key?: unknown; value?: unknown };
           return {
             key: String(typedInput?.key || '') || null,
@@ -182,7 +188,13 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
       shipping: {
         ...defaultTax,
         cost: Number((normalized.details?.shipping as unknown as { cost?: unknown })?.cost ?? 0),
-        costType: String((normalized.details?.shipping as unknown as { costType?: unknown })?.costType ?? 'percentage') === 'amount' ? 'amount' : 'percentage',
+        costType:
+          String(
+            (normalized.details?.shipping as unknown as { costType?: unknown })?.costType ??
+              'percentage'
+          ) === 'amount'
+            ? 'amount'
+            : 'percentage',
       },
       paymentInformation: normalized.details?.paymentInformation || null,
       signature: normalized.details?.signature || null,
@@ -238,14 +250,12 @@ export default function ViewInvoicePage() {
           const price = Number(item.unitPrice || item.price || 0);
 
           // Handle tax - could be in tax object or taxRate field
-          const taxRate = Number(
-            (item.tax as { amount?: unknown })?.amount ?? item.taxRate ?? 0
-          );
+          const taxRate = Number((item.tax as { amount?: unknown })?.amount ?? item.taxRate ?? 0);
 
           // Handle discount - could be direct number or in discount object
           const discount =
-            typeof item.discount === 'number' 
-              ? item.discount 
+            typeof item.discount === 'number'
+              ? item.discount
               : Number((item.discount as { amount?: unknown })?.amount ?? 0);
 
           // Build a standardized item object
@@ -255,13 +265,17 @@ export default function ViewInvoicePage() {
             description,
             quantity: quantity,
             unitPrice: price,
-            tax: { 
-              amount: taxRate, 
-              amountType: String((item.tax as { amountType?: unknown })?.amountType ?? 'percentage')
+            tax: {
+              amount: taxRate,
+              amountType: String(
+                (item.tax as { amountType?: unknown })?.amountType ?? 'percentage'
+              ),
             },
-            discount: { 
-              amount: discount, 
-              amountType: String((item.discount as { amountType?: unknown })?.amountType ?? 'percentage')
+            discount: {
+              amount: discount,
+              amountType: String(
+                (item.discount as { amountType?: unknown })?.amountType ?? 'percentage'
+              ),
             },
             total: Number(item.total ?? price * quantity),
           };
