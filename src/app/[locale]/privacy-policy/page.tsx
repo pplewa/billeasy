@@ -17,116 +17,77 @@ function PrivacyPolicyContent() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">1. Introduction</h2>
         <p>
           Welcome to {appName}. We respect your privacy and are committed to protecting your
-          personal data. This privacy policy will inform you about how we look after your personal
-          data when you visit our website and tell you about your privacy rights and how the law
-          protects you.
+          personal data. This privacy policy will inform you about how we handle your data when using our
+          invoice management system and what rights you have regarding your data.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">2. The Data We Collect About You</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">2. The Data We Collect</h2>
         <p>
-          Personal data, or personal information, means any information about an individual from
-          which that person can be identified. It does not include data where the identity has been
-          removed (anonymous data).
-        </p>
-        <p>
-          We may collect, use, store and transfer different kinds of personal data about you which
-          we have grouped together as follows:
+          We collect and process only the data necessary to provide our invoice management service. This includes:
         </p>
         <ul className="list-disc pl-6 my-4 space-y-2">
           <li>
-            <strong>Identity Data</strong> includes first name, last name, username or similar
-            identifier.
+            <strong>Account Data:</strong> Email address and password for authentication.
           </li>
           <li>
-            <strong>Contact Data</strong> includes billing address, delivery address, email address
-            and telephone numbers.
+            <strong>Business Information:</strong> Your business details used in invoices (company name, address, contact information).
           </li>
           <li>
-            <strong>Financial Data</strong> includes payment card details.
+            <strong>Client Data:</strong> Information about your clients necessary for invoice creation (company names, addresses, contact details).
           </li>
           <li>
-            <strong>Transaction Data</strong> includes details about payments to and from you and
-            other details of products and services you have purchased from us.
+            <strong>Invoice Data:</strong> Information contained in your invoices (items, prices, payment terms, notes).
           </li>
           <li>
-            <strong>Technical Data</strong> includes internet protocol (IP) address, your login
-            data, browser type and version, time zone setting and location, browser plug-in types
-            and versions, operating system and platform, and other technology on the devices you use
-            to access this website.
-          </li>
-          <li>
-            <strong>Profile Data</strong> includes your username and password, purchases or orders
-            made by you, your interests, preferences, feedback and survey responses.
-          </li>
-          <li>
-            <strong>Usage Data</strong> includes information about how you use our website, products
-            and services.
-          </li>
-          <li>
-            <strong>Marketing and Communications Data</strong> includes your preferences in
-            receiving marketing from us and our third parties and your communication preferences.
+            <strong>Usage Data:</strong> Basic information about how you use the application to improve our service.
           </li>
         </ul>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">3. How We Use Your Personal Data</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">3. How We Use Your Data</h2>
         <p>
-          We will only use your personal data when the law allows us to. Most commonly, we will use
-          your personal data in the following circumstances:
+          We use your data exclusively for:
         </p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          <li>
-            Where we need to perform the contract we are about to enter into or have entered into
-            with you.
-          </li>
-          <li>
-            Where it is necessary for our legitimate interests (or those of a third party) and your
-            interests and fundamental rights do not override those interests.
-          </li>
-          <li>Where we need to comply with a legal obligation.</li>
+          <li>Providing the invoice management service</li>
+          <li>Generating and managing your invoices</li>
+          <li>Storing your invoice history</li>
+          <li>Improving the application's functionality</li>
+          <li>Ensuring the security of your account</li>
         </ul>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">4. Data Security</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">4. Data Storage and Security</h2>
         <p>
-          We have put in place appropriate security measures to prevent your personal data from
-          being accidentally lost, used or accessed in an unauthorized way, altered or disclosed. In
-          addition, we limit access to your personal data to those employees, agents, contractors
-          and other third parties who have a business need to know. They will only process your
-          personal data on our instructions and they are subject to a duty of confidentiality.
+          All data is stored securely in our database. We implement appropriate security measures to protect
+          your data from unauthorized access, modification, or deletion. Your invoices and business
+          information are only accessible through your authenticated account.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">5. Data Retention</h2>
         <p>
-          We will only retain your personal data for as long as reasonably necessary to fulfill the
-          purposes we collected it for, including for the purposes of satisfying any legal,
-          regulatory, tax, accounting or reporting requirements. We may retain your personal data
-          for a longer period in the event of a complaint or if we reasonably believe there is a
-          prospect of litigation in respect to our relationship with you.
+          We retain your data for as long as you maintain an active account. Invoice data is kept to
+          maintain your invoice history and comply with legal requirements regarding business documentation.
+          You can request the deletion of your account and associated data at any time.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">6. Your Legal Rights</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-4">6. Your Rights</h2>
         <p>
-          Under certain circumstances, you have rights under data protection laws in relation to
-          your personal data, including the right to:
+          You have the right to:
         </p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          <li>Request access to your personal data.</li>
-          <li>Request correction of your personal data.</li>
-          <li>Request erasure of your personal data.</li>
-          <li>Object to processing of your personal data.</li>
-          <li>Request restriction of processing your personal data.</li>
-          <li>Request transfer of your personal data.</li>
-          <li>Right to withdraw consent.</li>
+          <li>Access your stored data</li>
+          <li>Correct any inaccurate information</li>
+          <li>Export your invoice data</li>
+          <li>Delete your account and associated data</li>
+          <li>Request information about how your data is processed</li>
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">7. Contact Us</h2>
         <p>
-          If you have any questions about this privacy policy or our privacy practices, please
+          If you have any questions about this privacy policy or how we handle your data, please
           contact us at:
         </p>
         <p className="mt-2">
-          <strong>Email:</strong> privacy@billeasy.com
-          <br />
-          <strong>Address:</strong> 123 Invoice Street, Suite 456, San Francisco, CA 94103
+          <strong>Email:</strong> info@billeasy.online
         </p>
       </div>
     </div>

@@ -30,9 +30,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
 import { InvoiceDocument } from '@/lib/db/models/Invoice';
-import { deleteInvoice, fetchInvoices } from '@/services/invoice/client/invoiceClient';
+import { deleteInvoice, fetchInvoices, duplicateInvoice } from '@/services/invoice/client/invoiceClient';
 import {
   Loader2,
   PlusCircle,
@@ -42,14 +41,20 @@ import {
   List,
   ChevronLeft,
   ChevronRight,
+  Pencil,
+  Copy,
+  Trash,
+  X,
 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState, useMemo } from 'react';
+import { InvoiceStatusSelector } from '@/components/invoice/InvoiceStatusSelector';
+import { InvoiceStatus as InvoiceStatusEnum } from '@/types';
 
 // Define available view modes
 type ViewMode = 'card' | 'list';
 
-// Define invoice status types
+// Define available invoice status filters (including the 'all' option)
 type InvoiceStatus = 'draft' | 'pending' | 'paid' | 'overdue' | 'cancelled' | 'all';
 
 // Define available sort options
@@ -84,6 +89,7 @@ export default function InvoicesPage() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDuplicating, setIsDuplicating] = useState(false);
 
   // States for UI preferences
   const [viewMode, setViewMode] = useState<ViewMode>('card');
@@ -126,9 +132,19 @@ export default function InvoicesPage() {
   const filteredAndSortedInvoices = useMemo(() => {
     // First, filter the invoices
     const filtered = invoices.filter((invoice) => {
-      // Filter by status
-      if (statusFilter !== 'all' && invoice.details?.status !== statusFilter) {
-        return false;
+      // Filter by status - ensure we're comparing the correct values
+      if (statusFilter !== 'all') {
+        // Special handling for draft: an invoice with missing status is considered draft
+        if (statusFilter.toLowerCase() === 'draft') {
+          // If the filter is draft, include invoices with null/undefined status or 'draft'
+          const invoiceStatus = invoice.details?.status?.toLowerCase() || 'draft';
+          return invoiceStatus === 'draft';
+        } else {
+          // For other statuses, use case-insensitive comparison
+          const invoiceStatus = invoice.details?.status?.toLowerCase() || '';
+          const filterStatus = statusFilter.toLowerCase();
+          return invoiceStatus === filterStatus;
+        }
       }
 
       // Filter by search query (case insensitive)
@@ -242,31 +258,36 @@ export default function InvoicesPage() {
     );
   };
 
-  const getStatusColor = (status?: string | null): string => {
-    switch (status) {
-      case 'paid':
-        return 'bg-green-100 text-green-800 border-green-300';
-      case 'pending':
-        return 'bg-orange-100 text-orange-800 border-orange-300';
-      case 'draft':
-        return 'bg-gray-100 text-gray-800 border-gray-300';
-      case 'overdue':
-        return 'bg-red-100 text-red-800 border-red-300';
-      case 'cancelled':
-        return 'bg-slate-100 text-slate-800 border-slate-300';
-      default:
-        return 'bg-gray-100 text-gray-800 border-gray-300';
+  // Handle duplicate invoice action
+  const handleDuplicate = async (id: string) => {
+    try {
+      setIsDuplicating(true);
+      const duplicatedInvoice = await duplicateInvoice(id);
+      handleDuplicateInvoice(duplicatedInvoice);
+      toast({
+        title: 'Success',
+        description: 'Invoice duplicated successfully',
+      });
+    } catch (error) {
+      console.error('Error duplicating invoice:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to duplicate invoice',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsDuplicating(false);
     }
   };
 
   // Render list view for invoices
   const renderListView = () => {
     return (
-      <Card className="col-span-full">
-        <CardContent className="p-0">
+      <Card className="col-span-full shadow-sm">
+        <CardContent className="p-0 overflow-auto">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="bg-secondary/30">
                 <TableHead>Invoice #</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead>Client</TableHead>
@@ -276,70 +297,124 @@ export default function InvoicesPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {paginatedInvoices.map((invoice) => (
-                <TableRow
-                  key={invoice._id.toString()}
-                  className="group cursor-pointer hover:bg-secondary/30"
-                  onClick={() => router.push(`/${locale}/invoice/view/${invoice._id}`)}
-                >
-                  <TableCell className="font-medium">
-                    {invoice.details?.invoiceNumber || 'N/A'}
-                  </TableCell>
-                  <TableCell>
-                    {invoice.details?.invoiceDate
-                      ? formatDate(
-                          new Date(
-                            invoice.details.invoiceDate !== null &&
-                            invoice.details.invoiceDate !== undefined
-                              ? String(invoice.details.invoiceDate)
-                              : Date.now()
+              {paginatedInvoices.map((invoice) => {
+                const invoiceId = invoice._id.toString();
+                const status = invoice.details?.status || InvoiceStatusEnum.DRAFT;
+                
+                return (
+                  <TableRow
+                    key={invoiceId}
+                    className="group border-b hover:bg-secondary/10 transition-colors"
+                  >
+                    <TableCell 
+                      className="font-medium cursor-pointer"
+                      onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
+                    >
+                      {invoice.details?.invoiceNumber || 'N/A'}
+                    </TableCell>
+                    <TableCell
+                      className="cursor-pointer"
+                      onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
+                    >
+                      {invoice.details?.invoiceDate
+                        ? formatDate(
+                            new Date(
+                              invoice.details.invoiceDate !== null &&
+                              invoice.details.invoiceDate !== undefined
+                                ? String(invoice.details.invoiceDate)
+                                : Date.now()
+                            )
                           )
-                        )
-                      : 'N/A'}
-                  </TableCell>
-                  <TableCell>{invoice.receiver?.name || 'No Client'}</TableCell>
-                  <TableCell>
-                    {invoice.details?.totalAmount
-                      ? formatCurrency(
-                          invoice.details.totalAmount,
-                          invoice.details.currency || 'USD'
-                        )
-                      : 'N/A'}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Badge variant="outline" className={getStatusColor(invoice.details?.status)}>
-                      {invoice.details?.status || 'draft'}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="opacity-0 group-hover:opacity-100 flex justify-end gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 px-2"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          router.push(`/${locale}/invoice/${invoice._id}/edit`);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        className="h-8 px-2"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setDeleteId(invoice._id.toString());
-                          setIsDeleteDialogOpen(true);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </div>
+                        : 'N/A'}
+                    </TableCell>
+                    <TableCell
+                      className="cursor-pointer"
+                      onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
+                    >
+                      {invoice.receiver?.name || 'No Client'}
+                    </TableCell>
+                    <TableCell
+                      className="cursor-pointer"
+                      onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
+                    >
+                      {invoice.details?.totalAmount
+                        ? formatCurrency(
+                            invoice.details.totalAmount,
+                            invoice.details.currency || 'USD'
+                          )
+                        : 'N/A'}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <InvoiceStatusSelector
+                        invoiceId={invoiceId}
+                        currentStatus={status}
+                        onStatusChange={handleStatusChange}
+                      />
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 px-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/${locale}/invoice/edit/${invoiceId}`);
+                          }}
+                        >
+                          <Pencil className="h-4 w-4 mr-1" />
+                          <span className="hidden sm:inline">Edit</span>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 px-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDuplicate(invoiceId);
+                          }}
+                          disabled={isDuplicating}
+                        >
+                          {isDuplicating ? (
+                            <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                          ) : (
+                            <Copy className="h-4 w-4 mr-1" />
+                          )}
+                          <span className="hidden sm:inline">
+                            {isDuplicating ? 'Duplicating...' : 'Duplicate'}
+                          </span>
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          className="h-8 px-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDeleteId(invoiceId);
+                            setIsDeleteDialogOpen(true);
+                          }}
+                        >
+                          <Trash className="h-4 w-4 mr-1" />
+                          <span className="hidden sm:inline">Delete</span>
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+              {paginatedInvoices.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                    {loading ? (
+                      <div className="flex justify-center">
+                        <Loader2 className="h-6 w-6 animate-spin" />
+                      </div>
+                    ) : (
+                      'No invoices found. Adjust filters or create a new invoice.'
+                    )}
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </CardContent>
@@ -368,7 +443,7 @@ export default function InvoicesPage() {
   return (
     <div className="container mx-auto py-8 p-4 space-y-6">
       {/* Page Header with Title and Create Button */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight mb-1">Invoices</h1>
           <p className="text-muted-foreground">
@@ -377,7 +452,7 @@ export default function InvoicesPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button onClick={handleCreateInvoice}>
+          <Button onClick={handleCreateInvoice} className="bg-primary hover:bg-primary/90">
             <PlusCircle className="mr-2 h-4 w-4" />
             Create Invoice
           </Button>
@@ -385,7 +460,7 @@ export default function InvoicesPage() {
       </div>
 
       {/* Search, Filter, and View Controls */}
-      <Card>
+      <Card className="shadow-sm mb-6">
         <CardContent className="p-4 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {/* Search Input */}
@@ -397,6 +472,16 @@ export default function InvoicesPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+              {searchQuery && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-1 top-1.5 h-7 w-7 p-0"
+                  onClick={() => setSearchQuery('')}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
             </div>
 
             {/* Status Filter */}
@@ -405,16 +490,42 @@ export default function InvoicesPage() {
                 value={statusFilter}
                 onValueChange={(value) => setStatusFilter(value as InvoiceStatus)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-10">
+                  <Filter className="mr-2 h-4 w-4 text-muted-foreground" />
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="draft">Draft</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="paid">Paid</SelectItem>
-                  <SelectItem value="overdue">Overdue</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                  <SelectItem value="draft">
+                    <div className="flex items-center">
+                      <div className="w-2 h-2 rounded-full bg-secondary-foreground/70 mr-2"></div>
+                      Draft
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="pending">
+                    <div className="flex items-center">
+                      <div className="w-2 h-2 rounded-full bg-orange-500 mr-2"></div>
+                      Pending
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="paid">
+                    <div className="flex items-center">
+                      <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                      Paid
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="overdue">
+                    <div className="flex items-center">
+                      <div className="w-2 h-2 rounded-full bg-red-500 mr-2"></div>
+                      Overdue
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="cancelled">
+                    <div className="flex items-center">
+                      <div className="w-2 h-2 rounded-full bg-gray-400 mr-2"></div>
+                      Cancelled
+                    </div>
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -422,7 +533,7 @@ export default function InvoicesPage() {
             {/* Sort Options */}
             <div>
               <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-                <SelectTrigger>
+                <SelectTrigger className="h-10">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -441,7 +552,7 @@ export default function InvoicesPage() {
                 variant={viewMode === 'card' ? 'default' : 'outline'}
                 size="icon"
                 onClick={() => setViewMode('card')}
-                className="flex-1"
+                className="flex-1 h-10"
               >
                 <Grid className="h-4 w-4" />
               </Button>
@@ -449,22 +560,22 @@ export default function InvoicesPage() {
                 variant={viewMode === 'list' ? 'default' : 'outline'}
                 size="icon"
                 onClick={() => setViewMode('list')}
-                className="flex-1"
+                className="flex-1 h-10"
               >
                 <List className="h-4 w-4" />
               </Button>
-              <Select
-                value={itemsPerPage.toString()}
-                onValueChange={(value) => setItemsPerPage(Number(value))}
+              <Select 
+                value={itemsPerPage.toString()} 
+                onValueChange={(value) => setItemsPerPage(parseInt(value))}
               >
-                <SelectTrigger className="flex-1">
-                  <SelectValue placeholder="Page Size" />
+                <SelectTrigger className="h-10 flex-1">
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="12">12 / page</SelectItem>
-                  <SelectItem value="24">24 / page</SelectItem>
-                  <SelectItem value="48">48 / page</SelectItem>
-                  <SelectItem value="96">96 / page</SelectItem>
+                  <SelectItem value="6">6 per page</SelectItem>
+                  <SelectItem value="12">12 per page</SelectItem>
+                  <SelectItem value="24">24 per page</SelectItem>
+                  <SelectItem value="48">48 per page</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -474,8 +585,8 @@ export default function InvoicesPage() {
 
       {/* Main Content Area */}
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <Loader2 className="h-8 w-8 animate-spin" />
+        <div className="flex justify-center items-center py-12">
+          <Loader2 className="h-12 w-12 animate-spin text-primary" />
         </div>
       ) : filteredAndSortedInvoices.length === 0 ? (
         <Card className="col-span-full">

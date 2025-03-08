@@ -68,12 +68,12 @@ export function InvoiceStatusSelector({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild disabled={updating}>
-        <Button variant="ghost" size="sm" className="h-8 gap-1 pl-1">
+        <Button variant="ghost" size="sm" className="h-8 gap-1 pl-1 pr-2">
           <InvoiceStatusBadge status={status} />
           <ChevronDown className="h-4 w-4 opacity-50" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="w-[180px]">
         <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.DRAFT)}>
           <InvoiceStatusBadge status={InvoiceStatus.DRAFT} className="w-full justify-start" />
         </DropdownMenuItem>

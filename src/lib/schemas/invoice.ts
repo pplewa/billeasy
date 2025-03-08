@@ -63,8 +63,8 @@ export const DetailsSchema = z.object({
  */
 export const InvoiceSchema = z
   .object({
-    // MongoDB ID
-    _id: fieldValidators.stringOptional,
+    // MongoDB ID - use our special ObjectId validator
+    _id: fieldValidators.objectIdOptional,
 
     // Main sections
     sender: SenderSchema.optional().nullable(),
@@ -102,8 +102,32 @@ export type Invoice = z.infer<typeof InvoiceSchema>;
  * @returns Processed invoice with calculated values and consistent structure
  */
 export function processInvoice(invoiceData: unknown): Invoice {
+  // Handle MongoDB documents and ObjectId conversions
+  let dataToProcess: Record<string, unknown> = 
+    typeof invoiceData === 'object' && invoiceData !== null 
+      ? invoiceData as Record<string, unknown> 
+      : {};
+  
+  // If it's a Mongoose document, convert to plain object
+  if (typeof dataToProcess === 'object' && dataToProcess !== null) {
+    // Check if it's a mongoose document with toObject function
+    const mongooseDoc = dataToProcess as { toObject?: () => Record<string, unknown> };
+    if (typeof mongooseDoc.toObject === 'function') {
+      dataToProcess = mongooseDoc.toObject();
+    }
+    
+    // If _id is an ObjectId, convert it to string to avoid validation errors
+    const docWithId = dataToProcess as { _id?: { toString(): string } };
+    if (docWithId._id && typeof docWithId._id === 'object' && docWithId._id.toString) {
+      dataToProcess = { 
+        ...dataToProcess,
+        _id: docWithId._id.toString()
+      };
+    }
+  }
+  
   // Parse using schema to ensure basic structure
-  const data = InvoiceSchema.parse(invoiceData || {});
+  const data = InvoiceSchema.parse(dataToProcess || {});
 
   // Process items to ensure consistent calculations
   const items: InvoiceItem[] = [];

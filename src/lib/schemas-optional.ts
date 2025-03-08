@@ -5,6 +5,15 @@ const fieldValidators = {
   // All string fields are optional with no requirements
   stringOptional: z.string().optional().or(z.null()).or(z.literal('')),
 
+  // MongoDB ObjectId can be string, object, or optional
+  objectIdOptional: z.union([
+    z.string(),
+    z.instanceof(Object), // Handles both plain objects and MongoDB ObjectId instances
+    z.undefined(),
+    z.null(),
+    z.literal(''),
+  ]).optional(),
+
   // Number fields allow any number or are optional
   numberOptional: z
     .union([
@@ -156,6 +165,8 @@ const InvoiceDetailsSchema = z.object({
 // Super permissive Invoice Schema with no requirements
 export const InvoiceSchema = z
   .object({
+    // MongoDB _id field - can be string, object, undefined, null or empty string
+    _id: fieldValidators.objectIdOptional,
     sender: InvoiceSenderSchema.optional().nullable(),
     receiver: InvoiceReceiverSchema.optional().nullable(),
     details: InvoiceDetailsSchema.optional().nullable(),

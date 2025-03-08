@@ -8,6 +8,7 @@ import { useWizard } from 'react-use-wizard';
 // Components
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { WizardProgress } from './WizardProgress';
 
 interface WizardStepProps {
   children: ReactNode;
@@ -19,19 +20,14 @@ interface WizardStepProps {
 
 export function WizardStep({
   children,
-  title,
-  description,
   showNext = true,
   showPrevious = true,
 }: WizardStepProps) {
-  const { previousStep, nextStep, isFirstStep, isLastStep } = useWizard();
+  const { previousStep, activeStep, stepCount, nextStep, isFirstStep, isLastStep } = useWizard();
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-lg font-medium">{title}</h2>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </div>
+      <WizardProgress wizard={{ activeStep, stepCount }} />
       <div className="space-y-6">{children}</div>
       <div className="flex justify-between">
         {showPrevious && !isFirstStep && (

@@ -38,8 +38,26 @@ const InvoiceSchema = new Schema(
  */
 InvoiceSchema.pre('save', function (next) {
   try {
-    // Transform this document using our processInvoice function
-    const processedData = processInvoice(this);
+    // For new documents, completely bypass any validation involving _id
+    // by creating a plain object copy first without the _id field
+    let dataToProcess;
+    
+    if (this.isNew) {
+      // Convert to plain object
+      const plainObj = this.toObject();
+      
+      // Create a new object without the _id
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _id, ...rest } = plainObj;
+      dataToProcess = rest;
+    } else {
+      // For existing documents, use a deep copy to avoid ObjectId issues
+      // JSON.stringify/parse converts ObjectIds to strings automatically
+      dataToProcess = JSON.parse(JSON.stringify(this.toObject()));
+    }
+
+    // Process the prepared data
+    const processedData = processInvoice(dataToProcess);
 
     // Apply processed data to this document
     this.sender = processedData.sender;
@@ -48,6 +66,7 @@ InvoiceSchema.pre('save', function (next) {
 
     next();
   } catch (error) {
+    console.error('Invoice pre-save validation error:', error);
     next(error instanceof Error ? error : new Error(String(error)));
   }
 });

@@ -94,11 +94,24 @@ export async function getInvoiceById(id: string): Promise<InvoiceDocument | null
 export async function createInvoice(invoiceData: InvoiceType): Promise<InvoiceDocument> {
   await connectToDatabase();
 
-  // Process invoice data through schema validation and transformation
-  const processedData = processInvoice(invoiceData);
+  try {
+    // Make a deep copy to avoid modifying the original
+    const cleanData = JSON.parse(JSON.stringify(invoiceData));
+    
+    // Always remove _id for new document creation
+    if ('_id' in cleanData) {
+      delete cleanData._id;
+    }
 
-  // Create the invoice with processed data
-  return Invoice.create(processedData);
+    // Process invoice data through schema validation and transformation
+    const processedData = processInvoice(cleanData);
+
+    // Create the invoice with processed data
+    return Invoice.create(processedData);
+  } catch (error) {
+    console.error('Error creating invoice:', error);
+    throw error;
+  }
 }
 
 /**
@@ -155,32 +168,53 @@ export async function deleteInvoice(id: string): Promise<InvoiceDocument | null>
 export async function duplicateInvoice(id: string): Promise<InvoiceDocument | null> {
   await connectToDatabase();
 
-  // Find the original invoice
-  const origInvoice = await Invoice.findById(id);
+  try {
+    // Find the original invoice
+    const origInvoice = await Invoice.findById(id);
 
-  if (!origInvoice) {
-    return null;
-  }
-
-  // Convert the document to a plain JavaScript object and process it
-  const invoiceData = processInvoice(origInvoice.toObject());
-
-  // Remove the _id field to create a new document
-  delete invoiceData._id;
-
-  // Optionally modify some fields
-  if (invoiceData.details && typeof invoiceData.details === 'object') {
-    const details = invoiceData.details as { invoiceNumber?: string; status?: string };
-
-    // Append "- Copy" to invoice number
-    if (details.invoiceNumber) {
-      details.invoiceNumber = `${details.invoiceNumber} - Copy`;
+    if (!origInvoice) {
+      return null;
     }
 
-    // Set status to draft
-    details.status = 'draft';
-  }
+    // Convert to plain object and create a deep copy via JSON stringify/parse
+    // This ensures all MongoDB-specific objects are converted to basic JS types
+    const invoiceObj = JSON.parse(JSON.stringify(origInvoice.toObject()));
+    
+    // Explicitly remove the _id field
+    delete invoiceObj._id;
+    
+    // Ensure any potentially nested _id fields are also removed (e.g., in arrays of subdocuments)
+    if (invoiceObj.details?.items && Array.isArray(invoiceObj.details.items)) {
+      invoiceObj.details.items = invoiceObj.details.items.map((item: Record<string, unknown>) => {
+        if (item && '_id' in item) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { _id, ...rest } = item as { _id: unknown; [key: string]: unknown };
+          return rest;
+        }
+        return item;
+      });
+    }
 
-  // Create a new invoice with the duplicated data
-  return createInvoice(invoiceData);
+    // Process the data after _id has been completely removed
+    const invoiceData = processInvoice(invoiceObj);
+
+    // Optionally modify some fields
+    if (invoiceData.details && typeof invoiceData.details === 'object') {
+      const details = invoiceData.details as { invoiceNumber?: string; status?: string };
+
+      // Append "- Copy" to invoice number
+      if (details.invoiceNumber) {
+        details.invoiceNumber = `${details.invoiceNumber} - Copy`;
+      }
+
+      // Set status to draft
+      details.status = 'draft';
+    }
+
+    // Create a new invoice with the duplicated data
+    return createInvoice(invoiceData);
+  } catch (error) {
+    console.error('Error duplicating invoice:', error);
+    throw error;
+  }
 }
