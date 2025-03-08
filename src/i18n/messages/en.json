@@ -136,7 +136,17 @@
     "actions": "Actions",
     "openMenu": "Open menu",
     "language": "Language",
-    "backToInvoices": "Back to Invoices"
+    "backToInvoices": "Back to Invoices",
+    "datePicker": {
+      "placeholder": "Pick a date"
+    },
+    "pagination": {
+      "next": "Next",
+      "previous": "Previous",
+      "nextPageLabel": "Go to next page",
+      "previousPageLabel": "Go to previous page",
+      "morePagesLabel": "More pages"
+    }
   },
   "footer": {
     "allRightsReserved": "All rights reserved",

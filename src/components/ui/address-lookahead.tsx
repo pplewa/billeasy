@@ -69,6 +69,7 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
     ref
   ) => {
     const t = useTranslations('form');
+
     // Mode state
     const [mode, setMode] = useState<AddressMode>(() => {
       // Start in manual mode if forced or if address values are already populated

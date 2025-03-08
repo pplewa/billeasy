@@ -136,7 +136,17 @@
     "actions": "Ações",
     "openMenu": "Abrir menu",
     "language": "Idioma",
-    "backToInvoices": "Voltar para Faturas"
+    "backToInvoices": "Voltar para Faturas",
+    "datePicker": {
+      "placeholder": "Escolher data"
+    },
+    "pagination": {
+      "next": "Próximo",
+      "previous": "Anterior",
+      "nextPageLabel": "Ir para a próxima página",
+      "previousPageLabel": "Ir para a página anterior",
+      "morePagesLabel": "Mais páginas"
+    }
   },
   "footer": {
     "allRightsReserved": "Todos os direitos reservados",
@@ -386,10 +396,10 @@
   },
   "form": {
     "addressLookahead": {
-      "manualEntry": "Entrada manual",
-      "searchAddress": "Buscar endereço",
-      "searchPlaceholder": "Digite para buscar endereço...",
-      "suggestions": "Sugestões de endereço",
+      "manualEntry": "Entrada Manual",
+      "searchAddress": "Pesquisar Endereço",
+      "searchPlaceholder": "Digite para pesquisar endereço...",
+      "suggestions": "Sugestões de Endereço",
       "error": "Erro:"
     },
     "wizard": {

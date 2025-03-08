@@ -136,7 +136,17 @@
     "actions": "Aktionen",
     "openMenu": "Menü öffnen",
     "language": "Sprache",
-    "backToInvoices": "Zurück zu Rechnungen"
+    "backToInvoices": "Zurück zu Rechnungen",
+    "datePicker": {
+      "placeholder": "Datum auswählen"
+    },
+    "pagination": {
+      "next": "Nächste",
+      "previous": "Vorherige",
+      "nextPageLabel": "Zur nächsten Seite gehen",
+      "previousPageLabel": "Zur vorherigen Seite gehen",
+      "morePagesLabel": "Weitere Seiten"
+    }
   },
   "footer": {
     "allRightsReserved": "Alle Rechte vorbehalten",
@@ -529,7 +539,7 @@
     "addressLookahead": {
       "manualEntry": "Manuelle Eingabe",
       "searchAddress": "Adresse suchen",
-      "searchPlaceholder": "Tippen Sie, um eine Adresse zu suchen...",
+      "searchPlaceholder": "Tippen Sie zur Adressensuche...",
       "suggestions": "Adressvorschläge",
       "error": "Fehler:"
     },

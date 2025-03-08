@@ -136,7 +136,17 @@
     "actions": "操作",
     "openMenu": "打开菜单",
     "language": "语言",
-    "backToInvoices": "返回到发票"
+    "backToInvoices": "返回到发票",
+    "datePicker": {
+      "placeholder": "选择日期"
+    },
+    "pagination": {
+      "next": "下一页",
+      "previous": "上一页",
+      "nextPageLabel": "转到下一页",
+      "previousPageLabel": "转到上一页",
+      "morePagesLabel": "更多页面"
+    }
   },
   "footer": {
     "allRightsReserved": "版权所有",
@@ -390,7 +400,7 @@
       "searchAddress": "搜索地址",
       "searchPlaceholder": "输入以搜索地址...",
       "suggestions": "地址建议",
-      "error": "错误："
+      "error": "错误:"
     },
     "wizard": {
       "stepError": "请更正此步骤中的错误",

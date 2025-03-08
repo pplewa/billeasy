@@ -136,7 +136,17 @@
     "actions": "Akcje",
     "openMenu": "Otwórz menu",
     "language": "Język",
-    "backToInvoices": "Wróć do Faktur"
+    "backToInvoices": "Wróć do Faktur",
+    "datePicker": {
+      "placeholder": "Wybierz datę"
+    },
+    "pagination": {
+      "next": "Następny",
+      "previous": "Poprzedni",
+      "nextPageLabel": "Przejdź do następnej strony",
+      "previousPageLabel": "Przejdź do poprzedniej strony",
+      "morePagesLabel": "Więcej stron"
+    }
   },
   "footer": {
     "allRightsReserved": "Wszelkie prawa zastrzeżone",
@@ -386,10 +396,10 @@
   },
   "form": {
     "addressLookahead": {
-      "manualEntry": "Wprowadzenie ręczne",
-      "searchAddress": "Szukaj adresu",
+      "manualEntry": "Ręczne Wprowadzenie",
+      "searchAddress": "Wyszukaj Adres",
       "searchPlaceholder": "Wpisz, aby wyszukać adres...",
-      "suggestions": "Sugestie adresów",
+      "suggestions": "Sugestie Adresów",
       "error": "Błąd:"
     },
     "wizard": {

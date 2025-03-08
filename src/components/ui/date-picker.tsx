@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useTranslations } from 'next-intl';
 
 interface DatePickerProps {
   value?: Date | null;
@@ -14,6 +15,8 @@ interface DatePickerProps {
 }
 
 export function DatePicker({ value, onChange }: DatePickerProps) {
+  const t = useTranslations('common');
+
   const handleSelect = React.useCallback(
     (date: Date | undefined) => {
       onChange?.(date || null);
@@ -32,7 +35,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {value ? format(value, 'PPP') : <span>Pick a date</span>}
+          {value ? format(value, 'PPP') : <span>{t('datePicker.placeholder')}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
