@@ -1,10 +1,10 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IUser extends Document {
   email: string;
   name?: string;
   image?: string;
-  role: "user" | "admin";
+  role: 'user' | 'admin';
   emailVerified: Date | null;
   lastLogin?: Date;
   createdAt: Date;
@@ -15,11 +15,11 @@ const UserSchema = new Schema<IUser>(
   {
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: [true, 'Email is required'],
       unique: true,
       lowercase: true,
       trim: true,
-      match: [/^\S+@\S+\.\S+$/, "Please enter a valid email address"],
+      match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
     },
     name: {
       type: String,
@@ -30,8 +30,8 @@ const UserSchema = new Schema<IUser>(
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
-      default: "user",
+      enum: ['user', 'admin'],
+      default: 'user',
     },
     emailVerified: {
       type: Date,
@@ -48,7 +48,6 @@ const UserSchema = new Schema<IUser>(
 
 // Check if the model already exists to prevent overwriting it during hot reloads
 const User =
-  (mongoose.models.User as mongoose.Model<IUser>) ||
-  mongoose.model<IUser>("User", UserSchema);
+  (mongoose.models.User as mongoose.Model<IUser>) || mongoose.model<IUser>('User', UserSchema);
 
 export default User;

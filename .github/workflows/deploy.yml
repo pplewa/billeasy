@@ -31,6 +31,8 @@ jobs:
           SMTP_PORT=587
           SMTP_USER=${{ secrets.SMTP_USER }}
           SMTP_PASS=${{ secrets.SMTP_PASS }}
+          GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
           EMAIL_FROM=team@billeasy.online
           NEXT_PUBLIC_APP_URL=https://billeasy.online
           EOF
@@ -50,18 +52,18 @@ jobs:
       #     name: billeasy-image
       #     path: billeasy-image_${{ github.sha }}.tar
 
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main'
+      # deploy:
+      #   needs: build
+      #   runs-on: ubuntu-latest
+      #   if: github.ref == 'refs/heads/main'
 
-  #   steps:
-  #    # Download artifacts
-  #     - name: Download image
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: billeasy-image
-  #         path: .
+      #   steps:
+      #    # Download artifacts
+      #     - name: Download image
+      #       uses: actions/download-artifact@v4
+      #       with:
+      #         name: billeasy-image
+      #         path: .
 
       # Deploy to server
       - name: Copy files to server
@@ -70,8 +72,8 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: "billeasy-image_${{ github.sha }}.tar"
-          target: "/home/ubuntu/billeasy"
+          source: 'billeasy-image_${{ github.sha }}.tar'
+          target: '/home/ubuntu/billeasy'
           rm: true
 
       # Load and start containers
@@ -93,4 +95,3 @@ jobs:
               -e NODE_ENV=production \
               --restart unless-stopped \
               billeasy:${{ github.sha }}
- 

@@ -1,21 +1,62 @@
-import { InvoiceType } from "@/types";
+import { InvoiceType } from '@/types-optional';
+import { FormInvoiceType } from '@/lib/types/invoice';
 
 /**
- * Fetch all invoices from the API
- * @returns {Promise<InvoiceType[]>} A promise that resolves to an array of invoices
+ * Interface for pagination and filter options
+ */
+export interface FetchOptions {
+  page?: number;
+  limit?: number;
+  status?: string;
+  search?: string;
+}
+
+/**
+ * Interface for paginated invoice response
+ */
+export interface PaginatedInvoices {
+  invoices: InvoiceType[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+  hasMore: boolean;
+}
+
+/**
+ * Fetch invoices from the API with pagination and filtering
+ * @param {FetchOptions} options - Options for pagination and filtering
+ * @returns {Promise<PaginatedInvoices>} A promise that resolves to a paginated invoice response
  * @throws {Error} If there is an error fetching the invoices
  */
-export async function fetchInvoices() {
-  const response = await fetch("/api/invoices", {
-    method: "GET",
+export async function fetchInvoices(options: FetchOptions = {}): Promise<PaginatedInvoices> {
+  const { page = 1, limit = 9, status = '', search = '' } = options;
+
+  // Build query string
+  const params = new URLSearchParams();
+  params.append('page', page.toString());
+  params.append('limit', limit.toString());
+
+  if (status) {
+    params.append('status', status);
+  }
+
+  if (search) {
+    params.append('search', search);
+  }
+
+  const queryString = params.toString();
+  const url = `/api/invoices${queryString ? `?${queryString}` : ''}`;
+
+  const response = await fetch(url, {
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error || "Failed to fetch invoices");
+    throw new Error(error.error || 'Failed to fetch invoices');
   }
 
   return response.json();
@@ -29,97 +70,74 @@ export async function fetchInvoices() {
  */
 export async function fetchInvoiceById(id: string) {
   const response = await fetch(`/api/invoices/${id}`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error || "Failed to fetch invoice");
+    throw new Error(error.error || 'Failed to fetch invoice');
   }
 
   return response.json();
+}
+
+interface InvoiceResponse {
+  _id: string;
+  [key: string]: unknown;
 }
 
 /**
  * Create a new invoice
- * @param {InvoiceType} invoiceData - The invoice data to create
- * @returns {Promise<InvoiceType>} A promise that resolves to the created invoice
+ * @param {FormInvoiceType} invoice - The invoice data to create
+ * @returns {Promise<InvoiceResponse>} A promise that resolves to the created invoice
  * @throws {Error} If there is an error creating the invoice
  */
-export async function createInvoice(invoiceData: InvoiceType) {
-  // Create a deep copy of the invoice data
-  const processedData = JSON.parse(JSON.stringify(invoiceData));
-
-  // Convert date strings to Date objects for validation
-  if (processedData.details.invoiceDate) {
-    processedData.details.invoiceDate = new Date(
-      processedData.details.invoiceDate
-    );
-  }
-
-  if (processedData.details.dueDate) {
-    processedData.details.dueDate = new Date(
-      processedData.details.dueDate
-    );
-  }
-
-  const response = await fetch("/api/invoices", {
-    method: "POST",
+export async function createInvoice(invoice: FormInvoiceType): Promise<InvoiceResponse> {
+  const response = await fetch('/api/invoices', {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(processedData),
+    body: JSON.stringify(invoice),
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || "Failed to create invoice");
+    throw new Error('Failed to create invoice');
   }
 
   return response.json();
 }
 
+type PartialDeep<T> = {
+  [P in keyof T]?: Partial<T[P]>;
+};
+
 /**
  * Update an existing invoice
  * @param {string} id - The ID of the invoice to update
- * @param {InvoiceType} invoiceData - The updated invoice data
- * @returns {Promise<InvoiceType>} A promise that resolves to the updated invoice
+ * @param {FormInvoiceType} invoiceData - The updated invoice data
+ * @returns {Promise<void>} A promise that resolves when the invoice is updated
  * @throws {Error} If there is an error updating the invoice
  */
-export async function updateInvoice(id: string, invoiceData: InvoiceType) {
-  // Create a deep copy of the invoice data
-  const processedData = JSON.parse(JSON.stringify(invoiceData));
-
-  // Convert date strings to Date objects for validation
-  if (processedData.details.invoiceDate) {
-    processedData.details.invoiceDate = new Date(
-      processedData.details.invoiceDate
-    );
-  }
-
-  if (processedData.details.dueDate) {
-    processedData.details.dueDate = new Date(
-      processedData.details.dueDate
-    );
-  }
-
+export async function updateInvoice(
+  id: string,
+  invoiceData: PartialDeep<FormInvoiceType>
+): Promise<void> {
   const response = await fetch(`/api/invoices/${id}`, {
-    method: "PUT",
+    method: 'PUT',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(processedData),
+    body: JSON.stringify(invoiceData),
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error || "Failed to update invoice");
+    throw new Error(error.message || 'Failed to update invoice');
   }
-
-  return response.json();
 }
 
 /**
@@ -130,15 +148,15 @@ export async function updateInvoice(id: string, invoiceData: InvoiceType) {
  */
 export async function deleteInvoice(id: string) {
   const response = await fetch(`/api/invoices/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error || "Failed to delete invoice");
+    throw new Error(error.error || 'Failed to delete invoice');
   }
 
   return response.json();
@@ -152,16 +170,16 @@ export async function deleteInvoice(id: string) {
  */
 export async function duplicateInvoice(id: string) {
   const response = await fetch(`/api/invoices/${id}?action=duplicate`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error || "Failed to duplicate invoice");
+    throw new Error(error.error || 'Failed to duplicate invoice');
   }
 
   return response.json();
-} 
+}

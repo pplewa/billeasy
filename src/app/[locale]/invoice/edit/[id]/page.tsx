@@ -1,16 +1,22 @@
-"use client";
+'use client';
 
-import { InvoiceForm } from "@/components/invoice/InvoiceForm";
-import { useToast } from "@/components/ui/use-toast";
-import { InvoiceContextProvider } from "@/contexts/InvoiceContext";
-import { InvoiceSchema } from "@/lib/schemas";
-import { fetchInvoiceById, updateInvoice } from "@/services/invoice/client/invoiceClient";
-import { InvoiceType } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
+import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
+import { InvoiceForm } from '@/components/invoice/InvoiceForm';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+import { InvoiceContextProvider } from '@/contexts/InvoiceContext';
+import { InvoiceSchemaForm } from '@/lib/schemas/invoice';
+import { fetchInvoiceById, updateInvoice } from '@/services/invoice/client/invoiceClient';
+import { FormInvoiceType } from '@/lib/types/invoice';
+import { InvoiceTransformer } from '@/lib/transformers/invoice';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Download, Loader2, Mail, Printer, Edit } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 export default function EditInvoicePage({
   params,
@@ -19,11 +25,20 @@ export default function EditInvoicePage({
 }) {
   const router = useRouter();
   const { toast } = useToast();
-  const [invoice, setInvoice] = useState<InvoiceType | null>(null);
+  const [invoice, setInvoice] = useState<FormInvoiceType>({
+    sender: null,
+    receiver: null,
+    details: null,
+  });
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [locale, setLocale] = useState<string>("");
-  const [invoiceId, setInvoiceId] = useState<string>("");
+  const [locale, setLocale] = useState<string>('');
+  const [invoiceId, setInvoiceId] = useState<string>('');
+  const printRef = useRef<HTMLDivElement>(null);
+
+  // Get translations
+  const t = useTranslations();
+  const invoiceT = useTranslations('invoice');
 
   // Get locale and id from params
   useEffect(() => {
@@ -36,28 +51,34 @@ export default function EditInvoicePage({
   }, [params]);
 
   // Create form methods
-  const form = useForm<InvoiceType>({
-    resolver: zodResolver(InvoiceSchema),
-    mode: "onChange",
+  const form = useForm<FormInvoiceType>({
+    resolver: zodResolver(InvoiceSchemaForm),
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+    criteriaMode: 'all',
+    shouldFocusError: false,
+    shouldUseNativeValidation: false,
+    delayError: 500,
   });
 
   useEffect(() => {
     const loadInvoice = async () => {
       if (!invoiceId) return; // Wait until we have the ID
-      
+
       try {
         setLoading(true);
         const data = await fetchInvoiceById(invoiceId);
-        setInvoice(data);
+        const formData = InvoiceTransformer.transformParsedToForm(data);
+        setInvoice(formData);
 
-        // Reset form with the loaded invoice data
-        form.reset(data);
+        // Reset form with the transformed data
+        form.reset(formData);
       } catch (error) {
-        console.error("Error loading invoice:", error);
+        console.error('Error loading invoice:', error);
         toast({
-          title: "Error",
-          description: "Failed to load invoice. Please try again.",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to load invoice. Please try again.',
+          variant: 'destructive',
         });
         if (locale) {
           router.push(`/${locale}/invoices`);
@@ -71,26 +92,37 @@ export default function EditInvoicePage({
   }, [invoiceId, locale, router, toast, form]);
 
   // Handle form submission
-  const handleSubmit = async (data: InvoiceType) => {
+  const handleSubmit = async () => {
     if (!invoiceId) return;
-    
+
     try {
       setIsSubmitting(true);
-      await updateInvoice(invoiceId, data);
+
+      // Get raw values from the form - bypass validation
+      const formData = form.getValues();
+
+      await updateInvoice(invoiceId, formData);
       toast({
-        title: "Success",
-        description: "Invoice updated successfully",
+        title: 'Success',
+        description: 'Invoice updated successfully',
       });
-      router.push(`/${locale}/invoices`);
+      router.push(`/${locale}/invoice/view/${invoiceId}`);
     } catch (error) {
-      console.error("Error updating invoice:", error);
+      console.error('Error updating invoice:', error);
       toast({
-        title: "Error",
-        description: "Failed to update invoice. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update invoice. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // Handle print functionality
+  const handlePrint = () => {
+    if (printRef.current) {
+      window.print();
     }
   };
 
@@ -103,8 +135,67 @@ export default function EditInvoicePage({
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-6">Edit Invoice</h1>
+    <div className="container mx-auto py-6 px-4 md:px-6 max-w-7xl">
+      <style jsx global>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #print-content,
+          #print-content * {
+            visibility: visible;
+          }
+          #print-content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+          .print-hidden {
+            display: none !important;
+          }
+        }
+      `}</style>
+
+      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
+        <h1 className="text-3xl font-bold tracking-tight">{invoiceT('edit')}</h1>
+        <div className="flex gap-2 flex-wrap md:flex-nowrap">
+          <Button variant="outline" asChild>
+            <Link href={`/${locale}/invoice/edit/${invoiceId}`}>
+              <Edit className="mr-2 h-4 w-4" />
+              {t('common.edit')}
+            </Link>
+          </Button>
+
+          <Button variant="outline" onClick={handlePrint}>
+            <Printer className="mr-2 h-4 w-4" />
+            {t('common.print')}
+          </Button>
+
+          <InvoiceEmailModal invoice={invoice}>
+            <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
+              <Mail className="w-4 h-4 mr-2" />
+              {t('common.email')}
+            </Button>
+          </InvoiceEmailModal>
+
+          <InvoiceExportModal invoice={invoice}>
+            <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
+              <Download className="w-4 h-4 mr-2" />
+              {t('common.export')}
+            </Button>
+          </InvoiceExportModal>
+
+          <Button
+            className="w-full md:w-auto"
+            onClick={form.handleSubmit(handleSubmit)}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <>{t('common.saving')}</> : <>{t('common.saveInvoice')}</>}
+          </Button>
+        </div>
+      </div>
+
       <InvoiceContextProvider
         form={form}
         invoice={invoice}
@@ -116,4 +207,4 @@ export default function EditInvoicePage({
       </InvoiceContextProvider>
     </div>
   );
-} 
+}

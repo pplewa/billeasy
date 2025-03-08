@@ -1,34 +1,21 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-
 /**
- * Format a date to a readable string
- * @param date The date to format
- * @returns A formatted date string
+ * This file re-exports all utility functions from their respective modules.
+ * It's provided for backward compatibility with existing code.
+ *
+ * For new code, prefer importing directly from the specific utility module.
  */
-export function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-}
 
-/**
- * Format a number as currency with the specified currency code
- * @param amount The amount to format
- * @param currencyCode The ISO currency code (e.g., 'USD', 'EUR')
- * @returns A formatted currency string
- */
-export function formatCurrency(amount: number, currencyCode: string = 'USD'): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currencyCode,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-}
+// Re-export everything from the UI utilities
+export * from './utils/ui';
+
+// Re-export everything from the formatting utilities
+export * from './utils/formatting';
+
+// Re-export everything from the object utilities
+export * from './utils/object';
+
+// Re-export everything from the validation utilities
+export * from './utils/validation';
+
+// Re-export everything from the file utilities
+export * from './utils/file';

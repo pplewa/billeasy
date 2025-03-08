@@ -1,14 +1,15 @@
-"use client";
+'use client';
 
-import { useRef } from "react";
-import { Check, Eraser, Upload } from "lucide-react";
+import { useRef } from 'react';
+import { Check, Eraser, Upload } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-import { Card, CardContent } from "@/components/ui/card";
-import { TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from '@/components/ui/card';
+import { TabsContent } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 
-import { useSignatureContext } from "@/contexts/SignatureContext";
-import { SignatureTabs } from "@/types";
+import { useSignatureContext } from '@/contexts/SignatureContext';
+import { SignatureTabs } from '@/types';
 
 interface UploadSignatureProps {
   handleSaveSignature: () => void;
@@ -16,8 +17,8 @@ interface UploadSignatureProps {
 
 export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { uploadedSignature, setUploadedSignature, clearUploadedSignature } =
-    useSignatureContext();
+  const { uploadedSignature, setUploadedSignature, clearUploadedSignature } = useSignatureContext();
+  const t = useTranslations('form.signature');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -26,7 +27,7 @@ export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
     const reader = new FileReader();
     reader.onload = (event) => {
       const result = event.target?.result;
-      if (typeof result === "string") {
+      if (typeof result === 'string') {
         setUploadedSignature(result);
       }
     };
@@ -53,21 +54,17 @@ export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
             <div className="relative aspect-[3/1] w-full overflow-hidden rounded-lg border">
               <img
                 src={uploadedSignature}
-                alt="Uploaded signature"
+                alt={t('uploadedSignatureAlt', { defaultValue: 'Uploaded signature' })}
                 className="h-full w-full object-contain"
               />
             </div>
           ) : (
-            <Button
-              variant="outline"
-              className="h-32 w-full"
-              onClick={handleUploadClick}
-            >
+            <Button variant="outline" className="h-32 w-full" onClick={handleUploadClick}>
               <div className="flex flex-col items-center gap-2">
                 <Upload className="h-6 w-6" />
-                <span>Click to upload signature</span>
+                <span>{t('uploadButtonText', { defaultValue: 'Click to upload signature' })}</span>
                 <span className="text-xs text-muted-foreground">
-                  Supports PNG, JPG or GIF
+                  {t('supportedFormats', { defaultValue: 'Supports PNG, JPG or GIF' })}
                 </span>
               </div>
             </Button>
@@ -76,12 +73,12 @@ export function UploadSignature({ handleSaveSignature }: UploadSignatureProps) {
         <div className="flex justify-end gap-2 pt-2">
           {uploadedSignature && (
             <Button variant="outline" onClick={clearUploadedSignature}>
-              Clear
+              {t('clearButton', { defaultValue: 'Clear' })}
               <Eraser className="ml-2 h-4 w-4" />
             </Button>
           )}
           <Button disabled={!uploadedSignature} onClick={handleSaveSignature}>
-            Done
+            {t('doneButton', { defaultValue: 'Done' })}
             <Check className="ml-2 h-4 w-4" />
           </Button>
         </div>

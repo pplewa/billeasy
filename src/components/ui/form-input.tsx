@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { forwardRef } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { forwardRef } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils/ui';
 
 const FormInput = forwardRef<
   HTMLInputElement,
@@ -17,19 +17,14 @@ const FormInput = forwardRef<
       {label && <Label htmlFor={props.id}>{label}</Label>}
       <Input
         ref={ref}
-        className={cn(
-          error && "border-destructive focus-visible:ring-destructive",
-          className
-        )}
+        className={cn(error && 'border-destructive focus-visible:ring-destructive', className)}
         {...props}
       />
-      {error && (
-        <p className="text-sm font-medium text-destructive">{error}</p>
-      )}
+      {error && <p className="text-sm font-medium text-destructive">{error}</p>}
     </div>
   );
 });
 
-FormInput.displayName = "FormInput";
+FormInput.displayName = 'FormInput';
 
-export { FormInput }; 
+export { FormInput };

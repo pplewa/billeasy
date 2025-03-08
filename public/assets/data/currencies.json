@@ -1,0 +1,134 @@
+{
+    "USD": {
+        "currency": "United States Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "EUR": {
+        "currency": "Euro",
+        "decimals": 2,
+        "beforeDecimal": "Euro",
+        "afterDecimal": "Cent"
+    },
+    "GBP": {
+        "currency": "British Pound",
+        "decimals": 2,
+        "beforeDecimal": "Pound",
+        "afterDecimal": "Penny"
+    },
+    "JPY": {
+        "currency": "Japanese Yen",
+        "decimals": 0,
+        "beforeDecimal": "Yen",
+        "afterDecimal": null
+    },
+    "CAD": {
+        "currency": "Canadian Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "AUD": {
+        "currency": "Australian Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "INR": {
+        "currency": "Indian Rupee",
+        "decimals": 2,
+        "beforeDecimal": "Rupee",
+        "afterDecimal": "Paisa"
+    },
+    "CNY": {
+        "currency": "Chinese Yuan",
+        "decimals": 2,
+        "beforeDecimal": "Yuan",
+        "afterDecimal": "Fen"
+    },
+    "CHF": {
+        "currency": "Swiss Franc",
+        "decimals": 2,
+        "beforeDecimal": "Franc",
+        "afterDecimal": "Rappen"
+    },
+    "SGD": {
+        "currency": "Singapore Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "NZD": {
+        "currency": "New Zealand Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "MXN": {
+        "currency": "Mexican Peso",
+        "decimals": 2,
+        "beforeDecimal": "Peso",
+        "afterDecimal": "Centavo"
+    },
+    "BRL": {
+        "currency": "Brazilian Real",
+        "decimals": 2,
+        "beforeDecimal": "Real",
+        "afterDecimal": "Centavo"
+    },
+    "ZAR": {
+        "currency": "South African Rand",
+        "decimals": 2,
+        "beforeDecimal": "Rand",
+        "afterDecimal": "Cent"
+    },
+    "HKD": {
+        "currency": "Hong Kong Dollar",
+        "decimals": 2,
+        "beforeDecimal": "Dollar",
+        "afterDecimal": "Cent"
+    },
+    "SEK": {
+        "currency": "Swedish Krona",
+        "decimals": 2,
+        "beforeDecimal": "Krona",
+        "afterDecimal": "Öre"
+    },
+    "NOK": {
+        "currency": "Norwegian Krone",
+        "decimals": 2,
+        "beforeDecimal": "Krone",
+        "afterDecimal": "Øre"
+    },
+    "DKK": {
+        "currency": "Danish Krone",
+        "decimals": 2,
+        "beforeDecimal": "Krone",
+        "afterDecimal": "Øre"
+    },
+    "AED": {
+        "currency": "United Arab Emirates Dirham",
+        "decimals": 2,
+        "beforeDecimal": "Dirham",
+        "afterDecimal": "Fils"
+    },
+    "SAR": {
+        "currency": "Saudi Riyal",
+        "decimals": 2,
+        "beforeDecimal": "Riyal",
+        "afterDecimal": "Halala"
+    },
+    "PLN": {
+        "currency": "Polish Złoty",
+        "decimals": 2,
+        "beforeDecimal": "Złoty",
+        "afterDecimal": "Grosz"
+    },
+    "TRY": {
+        "currency": "Turkish Lira",
+        "decimals": 2,
+        "beforeDecimal": "Lira",
+        "afterDecimal": "Kuruş"
+    }
+} 

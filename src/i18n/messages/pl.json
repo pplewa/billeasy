@@ -1,0 +1,649 @@
+{
+  "app": {
+    "name": "Bill Easy",
+    "description": "Nowoczesny, pełny szablon startowy"
+  },
+  "navigation": {
+    "dashboard": "Panel",
+    "invoices": "Faktury",
+    "profile": "Profil",
+    "signIn": "Zaloguj się",
+    "signOut": "Wyloguj się"
+  },
+  "auth": {
+    "signIn": "Zaloguj się",
+    "signOut": "Wyloguj się",
+    "emailPlaceholder": "Wprowadź swój email",
+    "emailLabel": "Email",
+    "submit": "Kontynuuj",
+    "sendLink": "Wyślij magiczny link",
+    "checkEmail": "Sprawdź swój email",
+    "emailSent": "Wysłaliśmy link logowania na adres {email}",
+    "verify": "Weryfikacja logowania...",
+    "success": "Zalogowano pomyślnie!",
+    "error": "Coś poszło nie tak",
+    "invalidLink": "Nieprawidłowy lub wygasły link",
+    "tryAgain": "Spróbuj ponownie"
+  },
+  "dashboard": {
+    "welcome": "Witaj w swoim panelu",
+    "description": "To jest chroniona strona, do której dostęp mają tylko uwierzytelnieni użytkownicy."
+  },
+  "home": {
+    "title": "Witaj w {appName}",
+    "description": "Nowoczesny, pełny szablon startowy z uwierzytelnianiem, internacjonalizacją i gotowymi do użycia komponentami.",
+    "getStarted": "Rozpocznij",
+    "hero": {
+      "title": "Profesjonalne faktury w kilka sekund",
+      "subtitle": "Twórz, dostosowuj i wysyłaj faktury natychmiast",
+      "textareaPlaceholder": "Opisz szczegóły faktury lub prześlij istniejącą (PDF, JPEG, PNG, WebP)",
+      "uploadButton": "Prześlij fakturę",
+      "createButton": "Utwórz nową fakturę",
+      "parseButton": "Analizuj i utwórz",
+      "processingButton": "Przetwarzanie..."
+    },
+    "benefits": {
+      "lightningFast": {
+        "title": "Błyskawicznie",
+        "description": "Twórz profesjonalne faktury w sekundy, nie minuty"
+      },
+      "aiPowered": {
+        "title": "Napędzane AI",
+        "description": "Automatycznie wyciągaj szczegóły z tekstu lub dokumentów"
+      },
+      "noSignup": {
+        "title": "Bez rejestracji",
+        "description": "Zacznij natychmiast, zaloguj się tylko wtedy, gdy chcesz zapisać"
+      }
+    },
+    "howItWorks": {
+      "title": "Jak to działa",
+      "subtitle": "Twórz profesjonalne faktury w trzech prostych krokach",
+      "steps": {
+        "create": {
+          "title": "Utwórz",
+          "description": "Wpisz opis lub prześlij istniejącą fakturę. Nasza sztuczna inteligencja automatycznie wyciągnie wszystkie istotne szczegóły."
+        },
+        "customize": {
+          "title": "Dostosuj",
+          "description": "Przejrzyj i edytuj szczegóły faktury w naszym przyjaznym edytorze. Dodaj swoje logo, dostosuj pozycje i więcej."
+        },
+        "download": {
+          "title": "Pobierz lub zapisz",
+          "description": "Eksportuj fakturę jako profesjonalny PDF lub zaloguj się, aby zapisać ją na swoim koncie do późniejszego wykorzystania i śledzenia."
+        }
+      },
+      "createFirstInvoice": "Utwórz swoją pierwszą fakturę"
+    },
+    "features": {
+      "title": "Potężne funkcje",
+      "subtitle": "Wszystko, czego potrzebujesz, aby szybko tworzyć profesjonalne faktury",
+      "aiExtraction": {
+        "title": "Ekstrakcja napędzana AI",
+        "description": "Nasza zaawansowana sztuczna inteligencja analizuje tekst i dokumenty, aby automatycznie wypełnić szczegóły faktury, oszczędzając czas i zmniejszając błędy."
+      },
+      "noAccount": {
+        "title": "Konto nie jest wymagane",
+        "description": "Twórz i pobieraj faktury bez rejestracji. Zaloguj się tylko wtedy, gdy chcesz zapisać faktury na później lub śledzić płatności."
+      },
+      "templates": {
+        "title": "Profesjonalne szablony",
+        "description": "Wybieraj spośród różnych profesjonalnie zaprojektowanych szablonów faktur, aby Twoja firma wyglądała jak najlepiej."
+      },
+      "calculations": {
+        "title": "Automatyczne obliczenia",
+        "description": "Pozwól naszemu systemowi obsłużyć wszystkie obliczenia, w tym sumy częściowe, podatki, rabaty i sumy z idealną dokładnością."
+      },
+      "export": {
+        "title": "Eksport w wielu formatach",
+        "description": "Pobieraj faktury w wielu formatach, w tym PDF, gotowe do wysłania do klientów lub do Twoich archiwów."
+      },
+      "branding": {
+        "title": "Własna marka",
+        "description": "Dodaj swoje logo, niestandardowe kolory i spersonalizuj każdy aspekt faktury, aby pasował do tożsamości Twojej marki."
+      },
+      "tryNow": "Wypróbuj Bill Easy teraz — za darmo"
+    },
+    "cta": {
+      "title": "Gotowy do tworzenia profesjonalnych faktur?",
+      "subtitle": "Zacznij tworzyć pięknie zaprojektowane, zgodne z prawem faktury w zaledwie kilka sekund.",
+      "button": "Rozpocznij teraz"
+    }
+  },
+  "common": {
+    "loading": "Ładowanie...",
+    "error": "Błąd",
+    "success": "Sukces",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "view": "Podgląd",
+    "create": "Utwórz",
+    "submit": "Wyślij",
+    "print": "Drukuj",
+    "email": "E-mail",
+    "export": "Eksportuj",
+    "saving": "Zapisywanie...",
+    "deleting": "Usuwanie...",
+    "saveInvoice": "Zapisz Fakturę",
+    "itemsLoaded": "elementy zostały załadowane z faktury.",
+    "itemsNotVisible": "Jeśli nie widzisz elementów w Kroku 3, kliknij przycisk poniżej.",
+    "close": "Zamknij",
+    "morePages": "Więcej stron",
+    "clearSearch": "Wyczyść wyszukiwanie",
+    "verifying": "Weryfikacja...",
+    "actions": "Akcje",
+    "openMenu": "Otwórz menu",
+    "language": "Język",
+    "backToInvoices": "Wróć do Faktur",
+    "datePicker": {
+      "placeholder": "Wybierz datę"
+    },
+    "pagination": {
+      "next": "Następny",
+      "previous": "Poprzedni",
+      "nextPageLabel": "Przejdź do następnej strony",
+      "previousPageLabel": "Przejdź do poprzedniej strony",
+      "morePagesLabel": "Więcej stron"
+    },
+    "signIn": "Zaloguj się"
+  },
+  "footer": {
+    "allRightsReserved": "Wszelkie prawa zastrzeżone",
+    "privacyPolicy": "Polityka prywatności",
+    "termsOfService": "Warunki korzystania z usługi"
+  },
+  "privacyPolicy": {
+    "title": "Polityka prywatności",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "introduction": "Wprowadzenie",
+    "introText": "Witaj w {appName}. Szanujemy Twoją prywatność i zobowiązujemy się do ochrony Twoich danych osobowych. Ta polityka prywatności poinformuje Cię o tym, jak przetwarzamy Twoje dane podczas korzystania z naszego systemu zarządzania fakturami oraz jakie prawa przysługują Ci w związku z Twoimi danymi.",
+    "dataWeCollect": "Dane, które zbieramy",
+    "dataWeCollectText": "Zbieramy i przetwarzamy tylko dane niezbędne do świadczenia naszej usługi zarządzania fakturami. Obejmuje to:",
+    "dataWeCollectItems": [
+      {
+        "title": "Dane konta",
+        "description": "Adres e-mail i hasło do uwierzytelniania."
+      },
+      {
+        "title": "Informacje o firmie",
+        "description": "Dane Twojej firmy używane w fakturach (nazwa firmy, adres, dane kontaktowe)."
+      },
+      {
+        "title": "Dane klientów",
+        "description": "Informacje o Twoich klientach niezbędne do tworzenia faktur (nazwy firm, adresy, dane kontaktowe)."
+      },
+      {
+        "title": "Dane faktur",
+        "description": "Informacje zawarte w Twoich fakturach (pozycje, ceny, warunki płatności, notatki)."
+      },
+      {
+        "title": "Dane użytkowania",
+        "description": "Podstawowe informacje o tym, jak korzystasz z aplikacji, aby ulepszyć naszą usługę."
+      }
+    ],
+    "howWeUseData": "Jak wykorzystujemy Twoje dane",
+    "howWeUseDataText": "Wykorzystujemy Twoje dane wyłącznie do:",
+    "howWeUseDataItems": [
+      "Świadczenia usługi zarządzania fakturami",
+      "Generowania i zarządzania Twoimi fakturami",
+      "Przechowywania historii Twoich faktur",
+      "Poprawy funkcjonalności aplikacji",
+      "Zapewnienia bezpieczeństwa Twojego konta"
+    ],
+    "dataStorage": "Przechowywanie i bezpieczeństwo danych",
+    "dataStorageText": "Wszystkie dane są bezpiecznie przechowywane w naszej bazie danych. Wdrażamy odpowiednie środki bezpieczeństwa, aby chronić Twoje dane przed nieautoryzowanym dostępem, modyfikacją lub usunięciem. Twoje faktury i informacje o firmie są dostępne tylko za pośrednictwem Twojego uwierzytelnionego konta.",
+    "dataRetention": "Przechowywanie danych",
+    "dataRetentionText": "Przechowujemy Twoje dane tak długo, jak utrzymujesz aktywne konto. Dane faktur są przechowywane w celu utrzymania historii faktur i spełnienia wymogów prawnych dotyczących dokumentacji biznesowej. Możesz w każdej chwili zażądać usunięcia swojego konta i powiązanych danych.",
+    "yourRights": "Twoje prawa",
+    "yourRightsText": "Masz prawo do:",
+    "yourRightsItems": [
+      "Dostępu do przechowywanych danych",
+      "Poprawienia wszelkich nieprawidłowych informacji",
+      "Eksportu danych z faktur",
+      "Usunięcia konta i powiązanych danych",
+      "Żądania informacji o sposobie przetwarzania Twoich danych"
+    ],
+    "contactUs": "Kontakt",
+    "contactUsText": "Jeśli masz jakiekolwiek pytania dotyczące tej polityki prywatności lub sposobu, w jaki przetwarzamy Twoje dane, skontaktuj się z nami pod adresem:",
+    "email": "Email"
+  },
+  "termsOfService": {
+    "title": "Warunki korzystania z usługi",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "introduction": "Wprowadzenie",
+    "introText": "Witaj w {appName}. Niniejsze warunki regulują korzystanie z naszego systemu zarządzania fakturami. Korzystając z {appName}, zgadzasz się na te warunki w całości. Prosimy o uważne zapoznanie się z nimi przed rozpoczęciem korzystania z usługi.",
+    "serviceDescription": "Opis usługi",
+    "serviceDescriptionText": "{appName} zapewnia internetowy system zarządzania fakturami, który umożliwia:",
+    "serviceDescriptionItems": [
+      "Tworzenie i zarządzanie profesjonalnymi fakturami",
+      "Przechowywanie i organizowanie informacji o klientach",
+      "Śledzenie statusu faktur i historii płatności",
+      "Generowanie faktur PDF",
+      "Zarządzanie wieloma szablonami faktur"
+    ],
+    "userObligations": "Obowiązki użytkownika",
+    "userObligationsText": "Korzystając z {appName}, zgadzasz się:",
+    "userObligationsItems": [
+      "Dostarczanie dokładnych informacji na fakturach",
+      "Zachowanie bezpieczeństwa danych uwierzytelniających konta",
+      "Nieprowadzenie działań niezgodnych z prawem",
+      "Nieprzerywanie lub nienaruszanie pracy usługi",
+      "Przestrzeganie lokalnych przepisów podatkowych i biznesowych"
+    ],
+    "dataAndContent": "Dane i zawartość",
+    "dataAndContentText1": "Zachowujesz wszystkie prawa do treści, które tworzysz za pomocą {appName}, w tym do swoich faktur, informacji o klientach i danych biznesowych. Nie rościmy sobie praw własności do Twoich treści.",
+    "dataAndContentText2": "Jesteś odpowiedzialny za:",
+    "dataAndContentResponsibilities": [
+      "Dokładność informacji na fakturach",
+      "Prowadzenie odpowiednich rejestrów do celów podatkowych",
+      "Uzyskanie niezbędnych pozwoleń na użycie informacji o klientach",
+      "Tworzenie kopii zapasowych ważnych danych"
+    ],
+    "serviceAvailability": "Dostępność usługi",
+    "serviceAvailabilityText": "Chociaż dążymy do utrzymania wysokiej dostępności, nie gwarantujemy nieprzerwanego dostępu do usługi. Możemy czasami zawiesić dostęp w celu wdrożenia aktualizacji lub przeprowadzenia konserwacji.",
+    "limitationOfLiability": "Ograniczenie odpowiedzialności",
+    "limitationOfLiabilityText": "{appName} jest dostarczany \"tak jak jest\" bez żadnych gwarancji. Nie ponosimy odpowiedzialności za:",
+    "limitationOfLiabilityItems": [
+      "Dokładność generowanych faktur",
+      "Wszelkie straty finansowe związane z korzystaniem z naszej usługi",
+      "Zgodność z lokalnymi przepisami podatkowymi lub biznesowymi",
+      "Utratę danych w przypadku awarii usługi"
+    ],
+    "changesToService": "Zmiany w usłudze",
+    "changesToServiceText": "Zastrzegamy sobie prawo do modyfikacji lub zaprzestania świadczenia dowolnej części usługi w dowolnym momencie. Powiadomimy o istotnych zmianach za pośrednictwem aplikacji lub e-maila.",
+    "termination": "Zakończenie",
+    "terminationText": "Możesz przestać korzystać z usługi w dowolnym momencie. Możemy zakończyć lub zawiesić Twój dostęp, jeśli naruszysz te warunki lub korzystasz z usługi w niewłaściwy sposób.",
+    "contact": "Kontakt",
+    "contactText": "Jeśli masz jakiekolwiek pytania dotyczące tych warunków, skontaktuj się z nami pod adresem:",
+    "email": "Email"
+  },
+  "invoice": {
+    "pageTitle": "Faktury",
+    "totalInvoices": "{count, plural, =0 {Brak faktur} one {# faktura} few {# faktury} many {# faktur} other {# faktur}}",
+    "createInvoice": "Utwórz fakturę",
+    "searchPlaceholder": "Szukaj faktur...",
+    "clearFilters": "Wyczyść filtry",
+    "noInvoicesFound": "Nie znaleziono faktur",
+    "noMatchingInvoices": "Żadne faktury nie pasują do aktualnych filtrów. Spróbuj dostosować wyszukiwanie lub filtry.",
+    "noInvoicesYet": "Nie utworzyłeś jeszcze żadnych faktur. Zacznij od utworzenia pierwszej faktury!",
+    "status": {
+      "all": "Wszystkie stany",
+      "draft": "Szkic",
+      "pending": "Oczekujący",
+      "paid": "Opłacony",
+      "overdue": "Przeterminowany",
+      "cancelled": "Anulowany"
+    },
+    "sort": {
+      "newestFirst": "Najnowsze pierwsze",
+      "oldestFirst": "Najstarsze pierwsze",
+      "highestAmount": "Najwyższa kwota",
+      "lowestAmount": "Najniższa kwota",
+      "byStatus": "Według statusu"
+    },
+    "itemsPerPage": "{count} na stronie",
+    "table": {
+      "number": "Faktura nr",
+      "date": "Data",
+      "client": "Klient",
+      "amount": "Kwota",
+      "status": "Status",
+      "actions": "Akcje"
+    },
+    "actions": {
+      "edit": "Edytuj",
+      "duplicate": "Duplikuj",
+      "duplicating": "Duplikowanie...",
+      "delete": "Usuń"
+    },
+    "pagination": {
+      "showing": "Wyświetlanie {start} do {end} z {total}"
+    },
+    "deleteDialog": {
+      "title": "Czy jesteś pewien?",
+      "description": "Tej operacji nie można cofnąć. Faktura zostanie trwale usunięta.",
+      "cancel": "Anuluj",
+      "delete": "Usuń",
+      "deleting": "Usuwanie...",
+      "successTitle": "Sukces",
+      "successDescription": "Faktura została pomyślnie usunięta",
+      "errorTitle": "Błąd",
+      "errorDescription": "Nie udało się usunąć faktury"
+    },
+    "create": "Utwórz Fakturę",
+    "edit": "Edytuj Fakturę",
+    "itemsDetected": "Wykryto pozycje",
+    "noDraftsFound": "Nie znaleziono wersji roboczych",
+    "startCreatingDraft": "Zacznij tworzyć fakturę, aby automatycznie zapisać wersję roboczą",
+    "draftInvoices": "Wersje robocze faktur",
+    "manageDrafts": "Zarządzaj lokalnie zapisanymi wersjami roboczymi faktur",
+    "invoiceNumber": "Numer faktury",
+    "billTo": "Faktura dla:",
+    "invoiceDetails": "Szczegóły faktury:",
+    "invoiceDate": "Data faktury:",
+    "dueDate": "Data płatności:",
+    "poNumber": "Numer zamówienia:",
+    "items": "Pozycje",
+    "item": "Pozycja",
+    "qty": "Ilość",
+    "price": "Cena",
+    "discount": "Rabat",
+    "tax": "Podatek",
+    "total": "Razem",
+    "subtotal": "Suma częściowa:",
+    "paymentInfo": "Informacje o płatności",
+    "bank": "Bank:",
+    "accountName": "Nazwa konta:",
+    "accountNumber": "Numer konta:",
+    "notes": "Notatki",
+    "terms": "Warunki",
+    "authorizedSignature": "Podpis upoważniony",
+    "client": "Klient:",
+    "date": "Data:",
+    "amount": "Kwota:",
+    "invoiceTemplate": "Szablon faktury",
+    "templatePreview": "Podgląd szablonu {id}",
+    "amountType": "Typ kwoty",
+    "currency": "Waluta",
+    "fontStyle": "Styl czcionki",
+    "supportsFormats": "Obsługuje PNG, JPG lub GIF",
+    "invoiceItems": "Pozycje faktury",
+    "description": "Opis",
+    "quantity": "Ilość",
+    "itemDescription": "Opis pozycji",
+    "thankYou": "Dziękujemy za korzystanie z BillEasy!",
+    "export": {
+      "title": "Eksportuj fakturę",
+      "description": "Wybierz format eksportu faktury",
+      "formats": {
+        "pdf": "Eksportuj jako PDF",
+        "json": "Eksportuj jako JSON",
+        "csv": "Eksportuj jako CSV",
+        "xlsx": "Eksportuj jako XLSX",
+        "xml": "Eksportuj jako XML"
+      }
+    },
+    "addressSwap": {
+      "toast": {
+        "title": "Adresy zamienione",
+        "description": "Informacje o nadawcy i odbiorcy zostały zamienione."
+      }
+    },
+    "email": {
+      "title": "Wyślij fakturę e-mailem",
+      "description": "Wyślij tę fakturę e-mailem do klienta.",
+      "defaultSubject": "Faktura z Twojej firmy",
+      "defaultMessage": "W załączniku znajduje się faktura za Twoją ostatnią transakcję.",
+      "recipient": {
+        "label": "E-mail odbiorcy",
+        "placeholder": "klient@przyklad.com"
+      },
+      "subject": {
+        "label": "Temat",
+        "placeholder": "Faktura z Twojej firmy"
+      },
+      "message": {
+        "label": "Wiadomość",
+        "placeholder": "Wpisz swoją wiadomość tutaj"
+      },
+      "buttons": {
+        "cancel": "Anuluj",
+        "send": "Wyślij e-mail",
+        "sending": "Wysyłanie..."
+      },
+      "toast": {
+        "success": {
+          "title": "Sukces",
+          "description": "E-mail wysłany do {recipient}"
+        },
+        "error": {
+          "title": "Błąd",
+          "description": "Nie udało się wysłać e-maila. Spróbuj ponownie."
+        }
+      }
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "placeholder": "Wszystkie statusy",
+        "options": {
+          "all": "Wszystkie statusy",
+          "draft": "Szkic",
+          "pending": "Oczekujące",
+          "paid": "Zapłacone",
+          "overdue": "Przeterminowane",
+          "cancelled": "Anulowane"
+        }
+      },
+      "search": {
+        "label": "Szukaj",
+        "placeholder": "Szukaj po kliencie, numerze faktury itp.",
+        "clear": "Wyczyść wyszukiwanie"
+      },
+      "clearFilters": "Wyczyść filtry"
+    },
+    "statusSelector": {
+      "statuses": {
+        "draft": "Szkic",
+        "pending": "Oczekujące",
+        "paid": "Zapłacone",
+        "overdue": "Przeterminowane",
+        "cancelled": "Anulowane"
+      },
+      "toast": {
+        "title": "Status zaktualizowany",
+        "description": "Status faktury zmieniony na {status}",
+        "error": {
+          "title": "Błąd",
+          "description": "Nie udało się zaktualizować statusu faktury"
+        }
+      }
+    },
+    "authRequired": "Wymagane Uwierzytelnienie",
+    "authRequiredDescription": "Musisz się zalogować, aby uzyskać dostęp do tej strony. Proszę się zalogować, aby kontynuować."
+  },
+  "drafts": {
+    "draftName": "Nazwa szkicu",
+    "created": "Utworzono",
+    "actions": "Akcje"
+  },
+  "form": {
+    "addressLookahead": {
+      "manualEntry": "Ręczne Wprowadzenie",
+      "searchAddress": "Wyszukaj Adres",
+      "searchPlaceholder": "Wpisz, aby wyszukać adres...",
+      "suggestions": "Sugestie Adresów",
+      "error": "Błąd:"
+    },
+    "wizard": {
+      "stepError": "Proszę poprawić błędy w tym kroku",
+      "steps": {
+        "senderReceiver": {
+          "title": "Nadawca i Odbiorca",
+          "description": "Dodaj szczegóły nadawcy i odbiorcy"
+        },
+        "invoiceDetails": {
+          "title": "Szczegóły Faktury",
+          "description": "Dodaj szczegóły faktury i informacje o płatności"
+        },
+        "items": {
+          "title": "Pozycje",
+          "description": "Dodaj pozycje faktury z podatkami i rabatami"
+        },
+        "signature": {
+          "title": "Podpis i Notatki",
+          "description": "Dodaj podpis i dodatkowe notatki"
+        }
+      }
+    },
+    "errors": {
+      "formField": "useFormField musi być użyty wewnątrz <FormField>"
+    },
+    "billFrom": {
+      "title": "Faktura od",
+      "name": "Nazwa",
+      "namePlaceholder": "Twoja nazwa lub nazwa firmy",
+      "address": "Adres",
+      "email": "Email",
+      "emailPlaceholder": "Adres email",
+      "phone": "Telefon",
+      "phonePlaceholder": "Numer telefonu",
+      "customFields": {
+        "show": "Dodaj Pola Niestandardowe",
+        "hide": "Ukryj Pola Niestandardowe",
+        "fieldName": "Pole {number}",
+        "fieldValue": "Wartość",
+        "fieldNamePlaceholder": "Nazwa pola",
+        "fieldValuePlaceholder": "Wartość pola",
+        "addAnother": "Dodaj Kolejne Pole"
+      }
+    },
+    "billTo": {
+      "title": "Faktura dla",
+      "name": "Nazwa",
+      "namePlaceholder": "Nazwa klienta lub firmy",
+      "address": "Adres",
+      "email": "Email",
+      "emailPlaceholder": "Adres email",
+      "phone": "Telefon",
+      "phonePlaceholder": "Numer telefonu",
+      "customFields": {
+        "show": "Dodaj Pola Niestandardowe",
+        "hide": "Ukryj Pola Niestandardowe",
+        "fieldName": "Nazwa Pola {number}",
+        "fieldValue": "Wartość Pola {number}",
+        "fieldNamePlaceholder": "Nazwa pola",
+        "fieldValuePlaceholder": "Wartość pola",
+        "addAnother": "Dodaj Kolejne Pole"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Szczegóły Faktury",
+      "description": "Wprowadź szczegóły faktury",
+      "invoiceNumber": "Numer Faktury",
+      "invoiceNumberPlaceholder": "FAK-001",
+      "poNumber": "Numer Zamówienia",
+      "poNumberPlaceholder": "ZAM-001",
+      "invoiceDate": "Data Faktury",
+      "dueDate": "Data Płatności",
+      "currency": "Waluta"
+    },
+    "paymentInfo": {
+      "title": "Informacje o Płatności",
+      "bankName": "Nazwa Banku",
+      "bankNamePlaceholder": "Nazwa banku",
+      "accountName": "Nazwa Konta",
+      "accountNamePlaceholder": "Nazwa konta",
+      "accountNumber": "Numer Konta",
+      "accountNumberPlaceholder": "Numer konta",
+      "paymentTerms": "Warunki Płatności",
+      "paymentTermsPlaceholder": "np. Netto 30"
+    },
+    "items": {
+      "title": "Pozycje",
+      "addItem": "Dodaj Pozycję",
+      "name": "Nazwa",
+      "namePlaceholder": "Nazwa pozycji",
+      "description": "Opis",
+      "descriptionPlaceholder": "Opis pozycji",
+      "quantity": "Ilość",
+      "price": "Cena",
+      "tax": "Podatek (%)",
+      "discount": "Rabat (%)",
+      "amount": "Kwota",
+      "actions": "Akcje",
+      "noItems": "Nie dodano jeszcze żadnych pozycji. Dodaj pierwszą pozycję, aby rozpocząć."
+    },
+    "taxDetails": {
+      "title": "Szczegóły Podatku",
+      "taxId": "Identyfikator Podatkowy",
+      "taxIdPlaceholder": "Numer identyfikacji podatkowej",
+      "taxAmount": "Kwota Podatku",
+      "amountType": "Typ Kwoty",
+      "amountTypePlaceholder": "Wybierz typ kwoty",
+      "amountTypePercentage": "Procent (%)",
+      "amountTypeFixed": "Kwota Stała"
+    },
+    "discountDetails": {
+      "title": "Szczegóły Rabatu",
+      "discountAmount": "Kwota Rabatu",
+      "amountType": "Typ Kwoty",
+      "amountTypePlaceholder": "Wybierz typ kwoty",
+      "amountTypePercentage": "Procent (%)",
+      "amountTypeFixed": "Kwota Stała"
+    },
+    "additionalNotes": {
+      "title": "Dodatkowe Notatki",
+      "notesPlaceholder": "Dodaj dodatkowe notatki lub warunki usługi"
+    },
+    "signature": {
+      "title": "Podpis",
+      "addSignature": "Dodaj Podpis",
+      "clear": "Wyczyść",
+      "save": "Zapisz Podpis",
+      "placeholder": "Podpisz tutaj",
+      "uploadedSignatureAlt": "Przesłany podpis",
+      "uploadButtonText": "Kliknij, aby przesłać podpis",
+      "supportedFormats": "Obsługuje PNG, JPG lub GIF",
+      "clearButton": "Wyczyść",
+      "doneButton": "Gotowe",
+      "fontStyle": "Styl Czcionki",
+      "fontStylePlaceholder": "Wybierz styl czcionki",
+      "colorSelectAriaLabel": "Wybierz kolor {colorName}",
+      "drawCanvasAriaLabel": "Płótno do rysowania podpisu",
+      "drawTab": "Rysuj",
+      "typeTab": "Wpisz",
+      "uploadTab": "Prześlij",
+      "signatureAlt": "Podpis"
+    },
+    "navigation": {
+      "back": "Wstecz",
+      "next": "Dalej",
+      "finish": "Zakończ"
+    },
+    "selectors": {
+      "template": {
+        "placeholder": "Wybierz szablon"
+      },
+      "status": {
+        "placeholder": "Wybierz status",
+        "allStatuses": "Wszystkie statusy"
+      },
+      "sort": {
+        "placeholder": "Sortuj według"
+      }
+    }
+  },
+  "invoiceTemplate": {
+    "title": "Szablon Faktury",
+    "preview": "Podgląd",
+    "templates": {
+      "template1": {
+        "name": "Klasyczny Biznesowy",
+        "description": "Czysty, profesjonalny szablon z niebieskim akcentem"
+      },
+      "template2": {
+        "name": "Nowoczesny Minimalistyczny",
+        "description": "Smukły, minimalistyczny design z współczesnym charakterem"
+      },
+      "template3": {
+        "name": "Profesjonalnie Elegancki",
+        "description": "Elegancki szablon z wyrafinowaną typografią i układem"
+      },
+      "template4": {
+        "name": "Kreatywny Odważny",
+        "description": "Odważny i kreatywny szablon, który wyróżnia się"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "Twoja faktura #{invoiceNumber} jest gotowa do pobrania",
+      "heading": "Dziękujemy za korzystanie z BillEasy!",
+      "body": "Z przyjemnością informujemy, że Twoja faktura {invoiceNumber} jest gotowa do pobrania. Prosimy o zapoznanie się z załączonym dokumentem PDF.",
+      "signature": "Pozdrawiamy,\nZespół BillEasy"
+    }
+  }
+}

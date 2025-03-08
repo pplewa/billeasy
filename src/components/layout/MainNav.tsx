@@ -1,12 +1,19 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Link, Locale, usePathname } from "@/i18n/routing";
-import useAuthStore from "@/store/auth-store";
-import { useLocale, useTranslations } from "next-intl";
+import { Button } from '@/components/ui/button';
+import { Link, Locale, usePathname } from '@/i18n/routing';
+import useAuthStore from '@/store/auth-store';
+import { useLocale, useTranslations } from 'next-intl';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Globe } from 'lucide-react';
 
 export default function MainNav() {
-  const t = useTranslations("navigation");
+  const t = useTranslations('navigation');
   const locale = useLocale() as Locale;
   const pathname = usePathname();
 
@@ -17,9 +24,9 @@ export default function MainNav() {
   const handleSignOut = async () => {
     try {
       const response = await fetch(`/api/auth/signout`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
@@ -28,7 +35,7 @@ export default function MainNav() {
         window.location.href = `/${locale}`;
       }
     } catch (error) {
-      console.error("Error signing out:", error);
+      console.error('Error signing out:', error);
     }
   };
 
@@ -40,20 +47,12 @@ export default function MainNav() {
             Bill Easy
           </Link>
           <nav className="hidden md:flex gap-6">
-            <Link
-              href="/"
-              className={`text-sm ${pathname === "/" ? "font-medium" : ""}`}
-            >
-              {t("home")}
-            </Link>
             {user && (
               <Link
-                href={{ pathname: "/invoices" }}
-                className={`text-sm ${
-                  pathname.includes("/invoices") ? "font-medium" : ""
-                }`}
+                href={{ pathname: '/invoices' }}
+                className={`text-sm ${pathname.includes('/invoices') ? 'font-medium' : ''}`}
               >
-                {t("invoices")}
+                {t('invoices')}
               </Link>
             )}
           </nav>
@@ -61,16 +60,14 @@ export default function MainNav() {
         <div className="flex items-center gap-4">
           {user ? (
             <div className="flex items-center gap-4">
-              <span className="text-sm hidden md:inline-block">
-                {user.email}
-              </span>
+              <span className="text-sm hidden md:inline-block">{user.email}</span>
               <Button variant="outline" size="sm" onClick={handleSignOut}>
-                {t("signOut")}
+                {t('signOut')}
               </Button>
             </div>
           ) : (
             <Button variant="outline" size="sm" asChild>
-              <Link href="/signin">{t("signIn")}</Link>
+              <Link href="/signin">{t('signIn')}</Link>
             </Button>
           )}
           <LanguageSwitcher />
@@ -83,29 +80,42 @@ export default function MainNav() {
 function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
+  const t = useTranslations('common');
 
   const languages: Record<Locale, { name: string; flag: string }> = {
-    en: { name: "English", flag: "🇺🇸" },
-    es: { name: "Español", flag: "🇪🇸" },
-    fr: { name: "Français", flag: "🇫🇷" },
-    de: { name: "Deutsch", flag: "🇩🇪" },
+    en: { name: 'English', flag: '🇺🇸' },
+    es: { name: 'Español', flag: '🇪🇸' },
+    fr: { name: 'Français', flag: '🇫🇷' },
+    de: { name: 'Deutsch', flag: '🇩🇪' },
+    pl: { name: 'Polski', flag: '🇵🇱' },
+    pt: { name: 'Português', flag: '🇵🇹' },
+    zh: { name: '中文', flag: '🇨🇳' },
   };
 
   return (
-    <div className="flex items-center gap-2">
-      {Object.entries(languages).map(([lang, { name, flag }]) => (
-        <Link
-          key={lang}
-          href={pathname}
-          locale={lang as Locale}
-          className={`text-xs px-2 py-1 rounded-md ${
-            locale === lang ? "bg-gray-100 font-medium" : "hover:bg-gray-50"
-          }`}
-          title={name}
-        >
-          {flag}
-        </Link>
-      ))}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+          <Globe className="h-4 w-4" />
+          <span className="sr-only">{t('language')}</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {Object.entries(languages).map(([lang, { name, flag }]) => (
+          <DropdownMenuItem key={lang} asChild>
+            <Link
+              href={pathname}
+              locale={lang as Locale}
+              className={`flex items-center gap-2 w-full ${
+                locale === lang ? 'font-medium bg-accent' : ''
+              }`}
+            >
+              <span className="mr-1">{flag}</span>
+              <span>{name}</span>
+            </Link>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

@@ -1,7 +1,8 @@
-import mongoose, { Document, Schema } from "mongoose";
-import { InvoiceType } from "@/types";
+import mongoose, { Document, Schema } from 'mongoose';
+import { InvoiceType } from '@/types';
 
-export interface InvoiceDocument extends InvoiceType, Document {
+export interface InvoiceDocument extends Omit<InvoiceType, '_id'>, Document {
+  _id: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -54,6 +55,20 @@ const ItemSchema = new Schema(
     quantity: { type: Number },
     unitPrice: { type: Number },
     total: { type: Number },
+    tax: {
+      type: {
+        amount: { type: Number },
+        amountType: { type: String },
+      },
+      required: false,
+    },
+    discount: {
+      type: {
+        amount: { type: Number },
+        amountType: { type: String },
+      },
+      required: false,
+    },
   },
   { _id: false, strict: false }
 );
@@ -87,15 +102,6 @@ const TaxDetailsSchema = new Schema(
   { _id: false, strict: false }
 );
 
-// Shipping Details Schema
-const ShippingDetailsSchema = new Schema(
-  {
-    cost: { type: Number },
-    costType: { type: String },
-  },
-  { _id: false, strict: false }
-);
-
 // Signature Schema
 const SignatureSchema = new Schema(
   {
@@ -114,12 +120,10 @@ const InvoiceDetailsSchema = new Schema(
     dueDate: { type: Date },
     purchaseOrderNumber: { type: String },
     currency: { type: String },
-    language: { type: String },
     items: [ItemSchema],
     paymentInformation: PaymentInformationSchema,
     taxDetails: TaxDetailsSchema,
     discountDetails: DiscountDetailsSchema,
-    shippingDetails: ShippingDetailsSchema,
     subTotal: { type: Number },
     totalAmount: { type: Number },
     totalAmountInWords: { type: String },
@@ -139,12 +143,13 @@ const InvoiceSchema = new Schema(
     receiver: { type: InvoiceReceiverSchema },
     details: { type: InvoiceDetailsSchema },
   },
-  { 
-    timestamps: true, 
+  {
+    timestamps: true,
     strict: false,
     _id: true,
-    validateBeforeSave: false // Disable validation before save
+    validateBeforeSave: false, // Disable validation before save
   }
 );
 
-export const Invoice = mongoose.models.Invoice || mongoose.model<InvoiceDocument>("Invoice", InvoiceSchema); 
+export const Invoice =
+  mongoose.models.Invoice || mongoose.model<InvoiceDocument>('Invoice', InvoiceSchema);

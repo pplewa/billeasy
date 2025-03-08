@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { SignatureProvider, useSignatureContext } from "@/contexts/SignatureContext";
-import { SignatureTabs } from "@/types";
-import { DrawSignature } from "./signature/DrawSignature";
-import { TypeSignature } from "./signature/TypeSignature";
-import { UploadSignature } from "./signature/UploadSignature";
+import { SignatureProvider, useSignatureContext } from '@/contexts/SignatureContext';
+import { SignatureTabs } from '@/types';
+import { DrawSignature } from './signature/DrawSignature';
+import { TypeSignature } from './signature/TypeSignature';
+import { UploadSignature } from './signature/UploadSignature';
 
 interface SignatureModalProps {
   open: boolean;
@@ -17,52 +18,21 @@ interface SignatureModalProps {
   onSave: (signature: string, fontFamily?: string) => void;
 }
 
-function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProps, "open">) {
+function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProps, 'open'>) {
   const [activeTab, setActiveTab] = useState<SignatureTabs>(SignatureTabs.DRAW);
-  const {
-    signatureRef,
-    typedSignature,
-    selectedFont,
-    uploadedSignature,
-  } = useSignatureContext();
+  const { signatureRef, typedSignature, selectedFont, uploadedSignature } = useSignatureContext();
+  const t = useTranslations('form.signature');
 
   const handleSaveSignature = () => {
-    let signatureData = "";
+    let signatureData = '';
     let fontFamily: string | undefined;
 
     if (activeTab === SignatureTabs.DRAW) {
-      signatureData = signatureRef.current?.toDataURL("image/png") ?? "";
+      signatureData = signatureRef.current?.toDataURL('image/png') ?? '';
     } else if (activeTab === SignatureTabs.TYPE) {
-      // Create a canvas to render the typed signature with the selected font
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        // Set canvas dimensions based on text size
-        const fontSize = 48;
-        ctx.font = `${fontSize}px ${selectedFont.variable}`;
-        const textMetrics = ctx.measureText(typedSignature);
-        const textWidth = textMetrics.width;
-        const textHeight = fontSize;
-
-        canvas.width = textWidth + 40; // Add padding
-        canvas.height = textHeight + 40; // Add padding
-
-        // Clear canvas and set font
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = `${fontSize}px ${selectedFont.variable}`;
-        ctx.fillStyle = "#000000";
-        ctx.textBaseline = "middle";
-
-        // Draw text centered
-        ctx.fillText(
-          typedSignature,
-          20, // Left padding
-          canvas.height / 2 // Vertical center
-        );
-
-        signatureData = canvas.toDataURL("image/png");
-        fontFamily = selectedFont.variable;
-      }
+      // For typed signatures, just use the text directly
+      signatureData = typedSignature;
+      fontFamily = selectedFont.variable;
     } else if (activeTab === SignatureTabs.UPLOAD) {
       signatureData = uploadedSignature;
     }
@@ -74,9 +44,15 @@ function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProp
   return (
     <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as SignatureTabs)}>
       <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value={SignatureTabs.DRAW}>Draw</TabsTrigger>
-        <TabsTrigger value={SignatureTabs.TYPE}>Type</TabsTrigger>
-        <TabsTrigger value={SignatureTabs.UPLOAD}>Upload</TabsTrigger>
+        <TabsTrigger value={SignatureTabs.DRAW}>
+          {t('drawTab', { defaultValue: 'Draw' })}
+        </TabsTrigger>
+        <TabsTrigger value={SignatureTabs.TYPE}>
+          {t('typeTab', { defaultValue: 'Type' })}
+        </TabsTrigger>
+        <TabsTrigger value={SignatureTabs.UPLOAD}>
+          {t('uploadTab', { defaultValue: 'Upload' })}
+        </TabsTrigger>
       </TabsList>
       <DrawSignature handleSaveSignature={handleSaveSignature} />
       <TypeSignature handleSaveSignature={handleSaveSignature} />
@@ -86,11 +62,13 @@ function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProp
 }
 
 export function SignatureModal({ open, onOpenChange, onSave }: SignatureModalProps) {
+  const t = useTranslations('form.signature');
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Signature</DialogTitle>
+          <DialogTitle>{t('addSignature', { defaultValue: 'Add Signature' })}</DialogTitle>
         </DialogHeader>
         <SignatureProvider>
           <SignatureModalContent onSave={onSave} onOpenChange={onOpenChange} />
@@ -98,4 +76,4 @@ export function SignatureModal({ open, onOpenChange, onSave }: SignatureModalPro
       </DialogContent>
     </Dialog>
   );
-} 
+}

@@ -4,7 +4,6 @@
     "description": "Eine moderne Full-Stack-Vorlage"
   },
   "navigation": {
-    "home": "Startseite",
     "dashboard": "Dashboard",
     "invoices": "Rechnungen",
     "profile": "Profil",
@@ -14,15 +13,15 @@
   "auth": {
     "signIn": "Anmelden",
     "signOut": "Abmelden",
-    "emailPlaceholder": "E-Mail-Adresse eingeben",
+    "emailPlaceholder": "Geben Sie Ihre E-Mail ein",
     "emailLabel": "E-Mail",
-    "submit": "Weiter",
+    "submit": "Fortfahren",
     "sendLink": "Magic Link senden",
-    "checkEmail": "Überprüfen Sie Ihre E-Mails",
-    "emailSent": "Wir haben einen Link an {email} gesendet",
+    "checkEmail": "Überprüfen Sie Ihre E-Mail",
+    "emailSent": "Wir haben einen Anmeldelink an {email} gesendet",
     "verify": "Überprüfung Ihrer Anmeldung...",
     "success": "Erfolgreich angemeldet!",
-    "error": "Etwas ist schiefgelaufen",
+    "error": "Etwas ist schief gelaufen",
     "invalidLink": "Ungültiger oder abgelaufener Link",
     "tryAgain": "Erneut versuchen"
   },
@@ -32,18 +31,694 @@
   },
   "home": {
     "title": "Willkommen bei {appName}",
-    "description": "Eine moderne Full-Stack-Vorlage mit Authentifizierung, Internationalisierung und sofort einsetzbaren Komponenten.",
-    "getStarted": "Loslegen"
+    "description": "Eine moderne Full-Stack-Vorlage mit Authentifizierung, Internationalisierung und einsatzbereiten Komponenten.",
+    "getStarted": "Loslegen",
+    "hero": {
+      "title": "Professionelle Rechnungen in Sekunden",
+      "subtitle": "Erstellen, anpassen und senden Sie Rechnungen sofort",
+      "textareaPlaceholder": "Beschreiben Sie Ihre Rechnungsdetails oder laden Sie eine bestehende hoch (PDF, JPEG, PNG, WebP)",
+      "uploadButton": "Rechnung hochladen",
+      "createButton": "Neue Rechnung erstellen",
+      "parseButton": "Analysieren & Erstellen",
+      "processingButton": "Verarbeitung..."
+    },
+    "benefits": {
+      "lightningFast": {
+        "title": "Blitzschnell",
+        "description": "Erstellen Sie professionelle Rechnungen in Sekunden, nicht Minuten"
+      },
+      "aiPowered": {
+        "title": "KI-gestützt",
+        "description": "Automatische Extraktion von Details aus Text oder Dokumenten"
+      },
+      "noSignup": {
+        "title": "Keine Anmeldung",
+        "description": "Starten Sie sofort, melden Sie sich nur an, wenn Sie speichern möchten"
+      }
+    },
+    "howItWorks": {
+      "title": "Wie es funktioniert",
+      "subtitle": "Erstellen Sie professionelle Rechnungen in drei einfachen Schritten",
+      "steps": {
+        "create": {
+          "title": "Erstellen",
+          "description": "Geben Sie eine Beschreibung ein oder laden Sie eine bestehende Rechnung hoch. Unsere KI extrahiert automatisch alle relevanten Details."
+        },
+        "customize": {
+          "title": "Anpassen",
+          "description": "Überprüfen und bearbeiten Sie Ihre Rechnungsdetails in unserem benutzerfreundlichen Editor. Fügen Sie Ihr Branding hinzu, passen Sie Positionen an und mehr."
+        },
+        "download": {
+          "title": "Herunterladen oder Speichern",
+          "description": "Exportieren Sie Ihre Rechnung als professionelles PDF oder melden Sie sich an, um sie in Ihrem Konto für zukünftige Referenz und Nachverfolgung zu speichern."
+        }
+      },
+      "createFirstInvoice": "Erstellen Sie Ihre erste Rechnung"
+    },
+    "features": {
+      "title": "Leistungsstarke Funktionen",
+      "subtitle": "Alles, was Sie brauchen, um schnell professionelle Rechnungen zu erstellen",
+      "aiExtraction": {
+        "title": "KI-gestützte Extraktion",
+        "description": "Unsere fortschrittliche KI analysiert Text und Dokumente, um Rechnungsdetails automatisch auszufüllen, spart Zeit und reduziert Fehler."
+      },
+      "noAccount": {
+        "title": "Kein Konto erforderlich",
+        "description": "Erstellen und laden Sie Rechnungen herunter, ohne sich anzumelden. Melden Sie sich nur an, wenn Sie Rechnungen für später speichern oder Zahlungen verfolgen möchten."
+      },
+      "templates": {
+        "title": "Professionelle Vorlagen",
+        "description": "Wählen Sie aus einer Vielzahl professionell gestalteter Rechnungsvorlagen, um Ihr Unternehmen bestmöglich zu präsentieren."
+      },
+      "calculations": {
+        "title": "Automatische Berechnungen",
+        "description": "Lassen Sie unser System alle Berechnungen einschließlich Zwischensummen, Steuern, Rabatte und Gesamtsummen mit perfekter Genauigkeit durchführen."
+      },
+      "export": {
+        "title": "Multi-Format-Export",
+        "description": "Laden Sie Ihre Rechnungen in mehreren Formaten herunter, einschließlich PDF, bereit zum Versenden an Kunden oder für Ihre Unterlagen."
+      },
+      "branding": {
+        "title": "Individuelles Branding",
+        "description": "Fügen Sie Ihr Logo, benutzerdefinierte Farben hinzu und personalisieren Sie jeden Aspekt Ihrer Rechnung, um Ihrer Markenidentität zu entsprechen."
+      },
+      "tryNow": "Probieren Sie Bill Easy jetzt — Kostenlos"
+    },
+    "cta": {
+      "title": "Bereit, professionelle Rechnungen zu erstellen?",
+      "subtitle": "Beginnen Sie mit der Erstellung schön gestalteter, rechtlich konformer Rechnungen in nur wenigen Sekunden.",
+      "button": "Jetzt starten"
+    }
   },
   "common": {
-    "loading": "Laden...",
+    "loading": "Wird geladen...",
     "error": "Fehler",
     "success": "Erfolg",
     "save": "Speichern",
     "cancel": "Abbrechen",
     "delete": "Löschen",
     "edit": "Bearbeiten",
+    "view": "Ansehen",
     "create": "Erstellen",
-    "submit": "Absenden"
+    "submit": "Absenden",
+    "print": "Drucken",
+    "email": "E-Mail",
+    "export": "Exportieren",
+    "saving": "Speichern...",
+    "deleting": "Löschen...",
+    "saveInvoice": "Rechnung speichern",
+    "itemsLoaded": "Positionen wurden aus Ihrer Rechnung geladen.",
+    "itemsNotVisible": "Wenn Sie die Positionen in Schritt 3 nicht sehen, klicken Sie auf die Schaltfläche unten.",
+    "close": "Schließen",
+    "morePages": "Weitere Seiten",
+    "clearSearch": "Suche löschen",
+    "verifying": "Überprüfung...",
+    "actions": "Aktionen",
+    "openMenu": "Menü öffnen",
+    "language": "Sprache",
+    "backToInvoices": "Zurück zu Rechnungen",
+    "datePicker": {
+      "placeholder": "Datum auswählen"
+    },
+    "pagination": {
+      "next": "Nächste",
+      "previous": "Vorherige",
+      "nextPageLabel": "Zur nächsten Seite gehen",
+      "previousPageLabel": "Zur vorherigen Seite gehen",
+      "morePagesLabel": "Weitere Seiten"
+    },
+    "signIn": "Anmelden"
+  },
+  "footer": {
+    "allRightsReserved": "Alle Rechte vorbehalten",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen"
+  },
+  "privacyPolicy": {
+    "title": "Datenschutzrichtlinie",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "introduction": "Einführung",
+    "introText": "Willkommen bei {appName}. Wir respektieren Ihre Privatsphäre und verpflichten uns, Ihre persönlichen Daten zu schützen. Diese Datenschutzrichtlinie informiert Sie darüber, wie wir Ihre Daten bei der Nutzung unseres Rechnungsmanagement-Systems verarbeiten und welche Rechte Sie in Bezug auf Ihre Daten haben.",
+    "dataWeCollect": "Die Daten, die wir sammeln",
+    "dataWeCollectText": "Wir sammeln und verarbeiten nur die Daten, die für die Bereitstellung unseres Rechnungsmanagement-Services erforderlich sind. Dies umfasst:",
+    "dataWeCollectItems": [
+      {
+        "title": "Kontodaten",
+        "description": "E-Mail-Adresse und Passwort zur Authentifizierung."
+      },
+      {
+        "title": "Geschäftsinformationen",
+        "description": "Ihre Geschäftsdaten, die in Rechnungen verwendet werden (Firmenname, Adresse, Kontaktinformationen)."
+      },
+      {
+        "title": "Kundendaten",
+        "description": "Informationen über Ihre Kunden, die für die Rechnungserstellung erforderlich sind (Firmennamen, Adressen, Kontaktdetails)."
+      },
+      {
+        "title": "Rechnungsdaten",
+        "description": "Informationen in Ihren Rechnungen (Artikel, Preise, Zahlungsbedingungen, Notizen)."
+      },
+      {
+        "title": "Nutzungsdaten",
+        "description": "Grundlegende Informationen darüber, wie Sie die Anwendung nutzen, um unseren Service zu verbessern."
+      }
+    ],
+    "howWeUseData": "Wie wir Ihre Daten verwenden",
+    "howWeUseDataText": "Wir verwenden Ihre Daten ausschließlich für:",
+    "howWeUseDataItems": [
+      "Bereitstellung des Rechnungsmanagement-Services",
+      "Generierung und Verwaltung Ihrer Rechnungen",
+      "Speicherung Ihrer Rechnungshistorie",
+      "Verbesserung der Anwendungsfunktionalität",
+      "Sicherstellung der Sicherheit Ihres Kontos"
+    ],
+    "dataStorage": "Datenspeicherung und -sicherheit",
+    "dataStorageText": "Alle Daten werden sicher in unserer Datenbank gespeichert. Wir implementieren angemessene Sicherheitsmaßnahmen, um Ihre Daten vor unbefugtem Zugriff, Änderung oder Löschung zu schützen. Ihre Rechnungen und Geschäftsinformationen sind nur über Ihr authentifiziertes Konto zugänglich.",
+    "dataRetention": "Datenaufbewahrung",
+    "dataRetentionText": "Wir bewahren Ihre Daten so lange auf, wie Sie ein aktives Konto haben. Rechnungsdaten werden aufbewahrt, um Ihre Rechnungshistorie zu erhalten und gesetzliche Anforderungen an Geschäftsdokumentation zu erfüllen. Sie können jederzeit die Löschung Ihres Kontos und der zugehörigen Daten beantragen.",
+    "yourRights": "Ihre Rechte",
+    "yourRightsText": "Sie haben das Recht auf:",
+    "yourRightsItems": [
+      "Zugriff auf Ihre gespeicherten Daten",
+      "Korrektur ungenauer Informationen",
+      "Export Ihrer Rechnungsdaten",
+      "Löschung Ihres Kontos und der zugehörigen Daten",
+      "Anfrage von Informationen zur Verarbeitung Ihrer Daten"
+    ],
+    "contactUs": "Kontaktieren Sie uns",
+    "contactUsText": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie oder zur Verarbeitung Ihrer Daten haben, kontaktieren Sie uns unter:",
+    "email": "E-Mail"
+  },
+  "termsOfService": {
+    "title": "Nutzungsbedingungen",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "introduction": "Einführung",
+    "introText": "Willkommen bei {appName}. Diese Nutzungsbedingungen regeln die Nutzung unseres Rechnungsmanagement-Systems. Durch die Nutzung von {appName} stimmen Sie diesen Bedingungen vollständig zu. Bitte lesen Sie diese sorgfältig durch, bevor Sie den Service nutzen.",
+    "serviceDescription": "Dienstbeschreibung",
+    "serviceDescriptionText": "{appName} bietet ein Online-Rechnungsmanagement-System, das Ihnen ermöglicht:",
+    "serviceDescriptionItems": [
+      "Professionelle Rechnungen erstellen und verwalten",
+      "Kundeninformationen speichern und organisieren",
+      "Rechnungsstatus und Zahlungsverlauf verfolgen",
+      "Rechnungs-PDFs generieren",
+      "Mehrere Rechnungsvorlagen verwalten"
+    ],
+    "userObligations": "Nutzerverpflichtungen",
+    "userObligationsText": "Bei der Nutzung von {appName} verpflichten Sie sich:",
+    "userObligationsItems": [
+      "Genaue Informationen in Ihren Rechnungen bereitzustellen",
+      "Ihre Kontoanmeldedaten sicher aufzubewahren",
+      "Den Service nicht für illegale Zwecke zu nutzen",
+      "Nicht zu versuchen, den Service zu stören oder zu kompromittieren",
+      "Die relevanten Steuer- und Geschäftsvorschriften in Ihrer Jurisdiktion einzuhalten"
+    ],
+    "dataAndContent": "Daten und Inhalt",
+    "dataAndContentText1": "Sie behalten alle Rechte an den Inhalten, die Sie mit {appName} erstellen, einschließlich Ihrer Rechnungen, Kundeninformationen und Geschäftsdaten. Wir beanspruchen keine Eigentumsrechte an Ihren Inhalten.",
+    "dataAndContentText2": "Sie sind verantwortlich für:",
+    "dataAndContentResponsibilities": [
+      "Die Genauigkeit der Informationen in Ihren Rechnungen",
+      "Die Führung angemessener Aufzeichnungen für Steuerzwecke",
+      "Das Einholen der erforderlichen Genehmigungen zur Nutzung von Kundeninformationen",
+      "Die Sicherung Ihrer wichtigen Daten"
+    ],
+    "serviceAvailability": "Dienstverfügbarkeit",
+    "serviceAvailabilityText": "Obwohl wir uns um hohe Verfügbarkeit bemühen, garantieren wir keinen unterbrechungsfreien Zugang zum Service. Wir müssen den Zugang gelegentlich unterbrechen, um Updates zu implementieren oder Wartungsarbeiten durchzuführen.",
+    "limitationOfLiability": "Haftungsbeschränkung",
+    "limitationOfLiabilityText": "{appName} wird „wie besehen“ ohne jegliche Garantien bereitgestellt. Wir sind nicht verantwortlich für:",
+    "limitationOfLiabilityItems": [
+      "Die Genauigkeit der erstellten Rechnungen",
+      "Jegliche finanziellen Verluste im Zusammenhang mit der Nutzung unseres Services",
+      "Die Einhaltung lokaler Steuer- oder Geschäftsvorschriften",
+      "Datenverlust im Falle einer Dienstunterbrechung"
+    ],
+    "changesToService": "Änderungen am Service",
+    "changesToServiceText": "Wir behalten uns das Recht vor, jeglichen Teil des Services jederzeit zu ändern oder einzustellen. Wir werden über wesentliche Änderungen über die Anwendung oder per E-Mail informieren.",
+    "termination": "Beendigung",
+    "terminationText": "Sie können den Service jederzeit einstellen. Wir können Ihren Zugang beenden oder aussetzen, wenn Sie gegen diese Bedingungen verstoßen oder den Service unsachgemäß nutzen.",
+    "contact": "Kontakt",
+    "contactText": "Wenn Sie Fragen zu diesen Bedingungen haben, kontaktieren Sie uns unter:",
+    "email": "E-Mail"
+  },
+  "invoice": {
+    "pageTitle": "Rechnungen",
+    "totalInvoices": "{count, plural, =0 {Keine Rechnungen} one {# Rechnung} other {# Rechnungen}}",
+    "createInvoice": "Rechnung erstellen",
+    "searchPlaceholder": "Rechnungen suchen...",
+    "clearFilters": "Filter löschen",
+    "noInvoicesFound": "Keine Rechnungen gefunden",
+    "noMatchingInvoices": "Keine Rechnungen entsprechen den aktuellen Filtern. Versuchen Sie, Ihre Suche oder Filter anzupassen.",
+    "noInvoicesYet": "Sie haben noch keine Rechnungen erstellt. Beginnen Sie mit der Erstellung Ihrer ersten Rechnung!",
+    "status": {
+      "all": "Alle Status",
+      "draft": "Entwurf",
+      "pending": "Ausstehend",
+      "paid": "Bezahlt",
+      "overdue": "Überfällig",
+      "cancelled": "Storniert"
+    },
+    "sort": {
+      "newestFirst": "Neueste zuerst",
+      "oldestFirst": "Älteste zuerst",
+      "highestAmount": "Höchster Betrag",
+      "lowestAmount": "Niedrigster Betrag",
+      "byStatus": "Nach Status"
+    },
+    "itemsPerPage": "{count} pro Seite",
+    "table": {
+      "number": "Rechnungsnr.",
+      "date": "Datum",
+      "client": "Kunde",
+      "amount": "Betrag",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "actions": {
+      "edit": "Bearbeiten",
+      "duplicate": "Duplizieren",
+      "duplicating": "Duplizieren...",
+      "delete": "Löschen"
+    },
+    "pagination": {
+      "showing": "Zeige {start} bis {end} von {total}"
+    },
+    "deleteDialog": {
+      "title": "Sind Sie sicher?",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die Rechnung wird dauerhaft gelöscht.",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "deleting": "Löschen...",
+      "successTitle": "Erfolg",
+      "successDescription": "Rechnung erfolgreich gelöscht",
+      "errorTitle": "Fehler",
+      "errorDescription": "Fehler beim Löschen der Rechnung"
+    },
+    "create": "Rechnung erstellen",
+    "edit": "Rechnung bearbeiten",
+    "itemsDetected": "Positionen erkannt",
+    "noDraftsFound": "Keine Entwürfe gefunden",
+    "startCreatingDraft": "Beginnen Sie mit der Erstellung einer Rechnung, um automatisch einen Entwurf zu speichern",
+    "draftInvoices": "Rechnungsentwürfe",
+    "manageDrafts": "Verwalten Sie lokal gespeicherte Rechnungsentwürfe",
+    "invoiceNumber": "Rechnungsnummer",
+    "billTo": "Rechnungsempfänger:",
+    "invoiceDetails": "Rechnungsdetails:",
+    "invoiceDate": "Rechnungsdatum:",
+    "dueDate": "Fälligkeitsdatum:",
+    "poNumber": "Bestellnummer:",
+    "items": "Positionen",
+    "item": "Position",
+    "qty": "Menge",
+    "price": "Preis",
+    "discount": "Rabatt",
+    "tax": "Steuer",
+    "total": "Gesamt",
+    "subtotal": "Zwischensumme:",
+    "paymentInfo": "Zahlungsinformationen",
+    "bank": "Bank:",
+    "accountName": "Kontoname:",
+    "accountNumber": "Kontonummer:",
+    "notes": "Notizen",
+    "terms": "Bedingungen",
+    "authorizedSignature": "Autorisierte Unterschrift",
+    "client": "Kunde:",
+    "date": "Datum:",
+    "amount": "Betrag:",
+    "invoiceTemplate": "Rechnungsvorlage",
+    "templatePreview": "Vorlagenvorschau {id}",
+    "amountType": "Betragstyp",
+    "currency": "Währung",
+    "fontStyle": "Schriftstil",
+    "supportsFormats": "Unterstützt PNG, JPG oder GIF",
+    "invoiceItems": "Rechnungspositionen",
+    "description": "Beschreibung",
+    "quantity": "Menge",
+    "itemDescription": "Positionsbeschreibung",
+    "thankYou": "Vielen Dank für die Nutzung von BillEasy!",
+    "export": {
+      "title": "Rechnung exportieren",
+      "description": "Wählen Sie ein Format zum Exportieren der Rechnung",
+      "formats": {
+        "pdf": "Als PDF exportieren",
+        "json": "Als JSON exportieren",
+        "csv": "Als CSV exportieren",
+        "xlsx": "Als XLSX exportieren",
+        "xml": "Als XML exportieren"
+      }
+    },
+    "addressSwap": {
+      "toast": {
+        "title": "Adressen getauscht",
+        "description": "Die Informationen von Rechnungsersteller und Rechnungsempfänger wurden getauscht."
+      }
+    },
+    "email": {
+      "title": "Rechnung per E-Mail senden",
+      "description": "Senden Sie diese Rechnung per E-Mail an Ihren Kunden.",
+      "defaultSubject": "Rechnung von Ihrem Unternehmen",
+      "defaultMessage": "Bitte finden Sie die Rechnung für Ihren letzten Einkauf im Anhang.",
+      "recipient": {
+        "label": "E-Mail-Empfänger",
+        "placeholder": "kunde@beispiel.com"
+      },
+      "subject": {
+        "label": "Betreff",
+        "placeholder": "Rechnung von Ihrem Unternehmen"
+      },
+      "message": {
+        "label": "Nachricht",
+        "placeholder": "Geben Sie hier Ihre Nachricht ein"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "send": "E-Mail senden",
+        "sending": "Wird gesendet..."
+      },
+      "toast": {
+        "success": {
+          "title": "Erfolg",
+          "description": "E-Mail gesendet an {recipient}"
+        },
+        "error": {
+          "title": "Fehler",
+          "description": "E-Mail konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+        }
+      }
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "placeholder": "Alle Status",
+        "options": {
+          "all": "Alle Status",
+          "draft": "Entwurf",
+          "pending": "Ausstehend",
+          "paid": "Bezahlt",
+          "overdue": "Überfällig",
+          "cancelled": "Storniert"
+        }
+      },
+      "search": {
+        "label": "Suchen",
+        "placeholder": "Suchen nach Kunde, Rechnungsnummer usw.",
+        "clear": "Suche löschen"
+      },
+      "clearFilters": "Filter löschen"
+    },
+    "statusSelector": {
+      "statuses": {
+        "draft": "Entwurf",
+        "pending": "Ausstehend",
+        "paid": "Bezahlt",
+        "overdue": "Überfällig",
+        "cancelled": "Storniert"
+      },
+      "toast": {
+        "title": "Status aktualisiert",
+        "description": "Rechnungsstatus geändert zu {status}",
+        "error": {
+          "title": "Fehler",
+          "description": "Rechnungsstatus konnte nicht aktualisiert werden"
+        }
+      }
+    },
+    "authRequired": "Authentifizierung erforderlich",
+    "authRequiredDescription": "Sie müssen sich anmelden, um auf diese Seite zuzugreifen. Bitte melden Sie sich an, um fortzufahren."
+  },
+  "drafts": {
+    "draftName": "Entwurfsname",
+    "created": "Erstellt",
+    "actions": "Aktionen"
+  },
+  "form": {
+    "steps": {
+      "billingInfo": {
+        "title": "Rechnungsinformationen",
+        "description": "Geben Sie die Rechnungsadressen für beide Parteien ein"
+      },
+      "invoiceDetails": {
+        "title": "Rechnungsdetails",
+        "description": "Geben Sie Rechnungs- und Zahlungsinformationen ein"
+      },
+      "items": {
+        "title": "Positionen",
+        "description": "Fügen Sie Positionen zu Ihrer Rechnung hinzu"
+      },
+      "additionalInfo": {
+        "title": "Zusätzliche Informationen",
+        "description": "Fügen Sie Unterschrift und Notizen hinzu"
+      },
+      "senderInfo": {
+        "title": "Absenderinformationen",
+        "description": "Geben Sie Ihre Geschäftsdetails ein"
+      },
+      "receiverInfo": {
+        "title": "Empfängerinformationen",
+        "description": "Geben Sie die Details Ihres Kunden ein"
+      }
+    },
+    "fields": {
+      "email": {
+        "label": "E-Mail",
+        "placeholder": "E-Mail-Adresse"
+      },
+      "phone": {
+        "label": "Telefon",
+        "placeholder": "Telefonnummer"
+      },
+      "customField": {
+        "namePlaceholder": "Feldname",
+        "valuePlaceholder": "Feldwert"
+      },
+      "bankName": {
+        "label": "Bankname",
+        "placeholder": "Bankname"
+      },
+      "accountName": {
+        "label": "Kontoinhaber",
+        "placeholder": "Kontoinhaber"
+      },
+      "accountNumber": {
+        "label": "Kontonummer",
+        "placeholder": "Kontonummer"
+      },
+      "paymentTerms": {
+        "label": "Zahlungsbedingungen"
+      },
+      "discountAmount": {
+        "label": "Rabattbetrag"
+      },
+      "taxId": {
+        "label": "Steuernummer"
+      },
+      "taxAmount": {
+        "label": "Steuerbetrag"
+      },
+      "invoiceNumber": {
+        "label": "Rechnungsnummer"
+      },
+      "item": {
+        "namePlaceholder": "Positionsname",
+        "duplicate": "Position duplizieren",
+        "remove": "Position entfernen"
+      }
+    },
+    "selectors": {
+      "template": {
+        "placeholder": "Vorlage auswählen"
+      },
+      "status": {
+        "placeholder": "Status auswählen",
+        "allStatuses": "Alle Status"
+      },
+      "sort": {
+        "placeholder": "Sortieren nach"
+      }
+    },
+    "addressSuggestions": {
+      "label": "Adressvorschläge"
+    },
+    "addressLookahead": {
+      "manualEntry": "Manuelle Eingabe",
+      "searchAddress": "Adresse suchen",
+      "searchPlaceholder": "Tippen Sie zur Adressensuche...",
+      "suggestions": "Adressvorschläge",
+      "error": "Fehler:"
+    },
+    "wizard": {
+      "stepError": "Bitte korrigieren Sie die Fehler in diesem Schritt",
+      "steps": {
+        "senderReceiver": {
+          "title": "Absender und Empfänger",
+          "description": "Details des Absenders und Empfängers hinzufügen"
+        },
+        "invoiceDetails": {
+          "title": "Rechnungsdetails",
+          "description": "Rechnungsdetails und Zahlungsinformationen hinzufügen"
+        },
+        "items": {
+          "title": "Positionen",
+          "description": "Rechnungspositionen mit Steuern und Rabatten hinzufügen"
+        },
+        "signature": {
+          "title": "Unterschrift und Notizen",
+          "description": "Unterschrift und zusätzliche Notizen hinzufügen"
+        }
+      }
+    },
+    "errors": {
+      "formField": "useFormField muss innerhalb von <FormField> verwendet werden"
+    },
+    "billFrom": {
+      "title": "Rechnungsersteller",
+      "name": "Name",
+      "namePlaceholder": "Ihr Name oder Firmenname",
+      "address": "Adresse",
+      "email": "E-Mail",
+      "emailPlaceholder": "E-Mail-Adresse",
+      "phone": "Telefon",
+      "phonePlaceholder": "Telefonnummer",
+      "customFields": {
+        "show": "Benutzerdefinierte Felder Hinzufügen",
+        "hide": "Benutzerdefinierte Felder Ausblenden",
+        "fieldName": "Feld {number}",
+        "fieldValue": "Wert",
+        "fieldNamePlaceholder": "Feldname",
+        "fieldValuePlaceholder": "Feldwert",
+        "addAnother": "Weiteres Feld Hinzufügen"
+      }
+    },
+    "billTo": {
+      "title": "Rechnungsempfänger",
+      "name": "Name",
+      "namePlaceholder": "Kundenname oder Firmenname",
+      "address": "Adresse",
+      "email": "E-Mail",
+      "emailPlaceholder": "E-Mail-Adresse",
+      "phone": "Telefon",
+      "phonePlaceholder": "Telefonnummer",
+      "customFields": {
+        "show": "Benutzerdefinierte Felder Hinzufügen",
+        "hide": "Benutzerdefinierte Felder Ausblenden",
+        "fieldName": "Feldname {number}",
+        "fieldValue": "Feldwert {number}",
+        "fieldNamePlaceholder": "Feldname",
+        "fieldValuePlaceholder": "Feldwert",
+        "addAnother": "Weiteres Feld Hinzufügen"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Rechnungsdetails",
+      "description": "Rechnungsdetails eingeben",
+      "invoiceNumber": "Rechnungsnummer",
+      "invoiceNumberPlaceholder": "RG-001",
+      "poNumber": "Bestellnummer",
+      "poNumberPlaceholder": "BE-001",
+      "invoiceDate": "Rechnungsdatum",
+      "dueDate": "Fälligkeitsdatum",
+      "currency": "Währung"
+    },
+    "paymentInfo": {
+      "title": "Zahlungsinformationen",
+      "bankName": "Bankname",
+      "bankNamePlaceholder": "Bankname",
+      "accountName": "Kontoinhaber",
+      "accountNamePlaceholder": "Kontoinhaber",
+      "accountNumber": "Kontonummer",
+      "accountNumberPlaceholder": "Kontonummer",
+      "paymentTerms": "Zahlungsbedingungen",
+      "paymentTermsPlaceholder": "z.B., Netto 30"
+    },
+    "items": {
+      "title": "Positionen",
+      "addItem": "Position Hinzufügen",
+      "name": "Name",
+      "namePlaceholder": "Positionsname",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Positionsbeschreibung",
+      "quantity": "Menge",
+      "price": "Preis",
+      "tax": "Steuer (%)",
+      "discount": "Rabatt (%)",
+      "amount": "Betrag",
+      "actions": "Aktionen",
+      "noItems": "Noch keine Positionen hinzugefügt. Fügen Sie Ihre erste Position hinzu, um zu beginnen."
+    },
+    "taxDetails": {
+      "title": "Steuerdetails",
+      "taxId": "Steuer-ID",
+      "taxIdPlaceholder": "Steuernummer",
+      "taxAmount": "Steuerbetrag",
+      "amountType": "Betragsart",
+      "amountTypePlaceholder": "Betragsart auswählen",
+      "amountTypePercentage": "Prozentsatz (%)",
+      "amountTypeFixed": "Fester Betrag"
+    },
+    "discountDetails": {
+      "title": "Rabattdetails",
+      "discountAmount": "Rabattbetrag",
+      "amountType": "Betragsart",
+      "amountTypePlaceholder": "Betragsart auswählen",
+      "amountTypePercentage": "Prozentsatz (%)",
+      "amountTypeFixed": "Fester Betrag"
+    },
+    "additionalNotes": {
+      "title": "Zusätzliche Hinweise",
+      "notesPlaceholder": "Fügen Sie zusätzliche Hinweise oder Geschäftsbedingungen hinzu"
+    },
+    "signature": {
+      "title": "Unterschrift",
+      "addSignature": "Unterschrift Hinzufügen",
+      "clear": "Löschen",
+      "save": "Unterschrift Speichern",
+      "placeholder": "Hier unterschreiben",
+      "uploadedSignatureAlt": "Hochgeladene Unterschrift",
+      "uploadButtonText": "Klicken Sie zum Hochladen der Unterschrift",
+      "supportedFormats": "Unterstützt PNG, JPG oder GIF",
+      "clearButton": "Löschen",
+      "doneButton": "Fertig",
+      "fontStyle": "Schriftstil",
+      "fontStylePlaceholder": "Schriftstil auswählen",
+      "colorSelectAriaLabel": "Farbe {colorName} auswählen",
+      "drawCanvasAriaLabel": "Unterschrift-Zeichenbereich",
+      "drawTab": "Zeichnen",
+      "typeTab": "Tippen",
+      "uploadTab": "Hochladen",
+      "signatureAlt": "Unterschrift"
+    },
+    "navigation": {
+      "back": "Zurück",
+      "next": "Weiter",
+      "finish": "Fertigstellen"
+    }
+  },
+  "invoiceTemplate": {
+    "title": "Rechnungsvorlage",
+    "preview": "Vorschau",
+    "templates": {
+      "template1": {
+        "name": "Klassisch Geschäftlich",
+        "description": "Eine saubere, professionelle Vorlage mit blauem Akzent"
+      },
+      "template2": {
+        "name": "Modern Minimalistisch",
+        "description": "Ein schlankes, minimalistisches Design mit zeitgemäßem Gefühl"
+      },
+      "template3": {
+        "name": "Professionell Elegant",
+        "description": "Eine elegante Vorlage mit raffinierter Typografie und Layout"
+      },
+      "template4": {
+        "name": "Kreativ Mutig",
+        "description": "Eine mutige und kreative Vorlage, die heraussticht"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "Ihre Rechnung #{invoiceNumber} ist zum Download bereit",
+      "heading": "Vielen Dank für die Nutzung von BillEasy!",
+      "body": "Wir freuen uns, Ihnen mitzuteilen, dass Ihre Rechnung {invoiceNumber} zum Download bereit ist. Das PDF-Dokument finden Sie im Anhang.",
+      "signature": "Mit freundlichen Grüßen,\nIhr BillEasy-Team"
+    }
   }
 }

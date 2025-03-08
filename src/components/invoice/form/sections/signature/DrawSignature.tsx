@@ -1,28 +1,25 @@
-"use client";
+'use client';
 
-import { Check, Eraser } from "lucide-react";
-import SignatureCanvas from "react-signature-canvas";
+import { Check, Eraser } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import SignatureCanvas from 'react-signature-canvas';
 
-import { Card, CardContent } from "@/components/ui/card";
-import { TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from '@/components/ui/card';
+import { TabsContent } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 
-import { useSignatureContext } from "@/contexts/SignatureContext";
-import { SignatureTabs } from "@/types";
-import { SignatureColorSelector } from "@/components/invoice/form/sections/signature/SignatureColorSelector";
+import { useSignatureContext } from '@/contexts/SignatureContext';
+import { SignatureTabs } from '@/types';
+import { SignatureColorSelector } from '@/components/invoice/form/sections/signature/SignatureColorSelector';
 
 interface DrawSignatureProps {
   handleSaveSignature: () => void;
 }
 
 export function DrawSignature({ handleSaveSignature }: DrawSignatureProps) {
-  const {
-    signatureRef,
-    signatureColors,
-    selectedColor,
-    setSelectedColor,
-    clearDrawnSignature,
-  } = useSignatureContext();
+  const { signatureRef, signatureColors, selectedColor, setSelectedColor, clearDrawnSignature } =
+    useSignatureContext();
+  const t = useTranslations('form.signature');
 
   return (
     <TabsContent value={SignatureTabs.DRAW}>
@@ -34,7 +31,10 @@ export function DrawSignature({ handleSaveSignature }: DrawSignatureProps) {
               ref={signatureRef}
               penColor={selectedColor.value}
               canvasProps={{
-                className: "w-full h-full",
+                className: 'w-full h-full',
+                'aria-label': t('drawCanvasAriaLabel', {
+                  defaultValue: 'Signature drawing canvas',
+                }),
               }}
             />
           </div>
@@ -47,15 +47,12 @@ export function DrawSignature({ handleSaveSignature }: DrawSignatureProps) {
             />
 
             <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={clearDrawnSignature}
-              >
-                Clear
+              <Button variant="outline" onClick={clearDrawnSignature}>
+                {t('clearButton', { defaultValue: 'Clear' })}
                 <Eraser className="ml-2 h-4 w-4" />
               </Button>
               <Button onClick={handleSaveSignature}>
-                Done
+                {t('doneButton', { defaultValue: 'Done' })}
                 <Check className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -64,4 +61,4 @@ export function DrawSignature({ handleSaveSignature }: DrawSignatureProps) {
       </Card>
     </TabsContent>
   );
-} 
+}

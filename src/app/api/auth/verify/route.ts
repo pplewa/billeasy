@@ -1,10 +1,10 @@
-import { setAuthCookie, verifyAuthToken } from "@/lib/auth/auth";
-import connectToDatabase from "@/lib/db/mongodb";
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { setAuthCookie, verifyAuthToken } from '@/lib/auth/auth';
+import connectToDatabase from '@/lib/db/mongodb';
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 
 const VerifySchema = z.object({
-  token: z.string().min(1, "Token is required"),
+  token: z.string().min(1, 'Token is required'),
 });
 
 export async function POST(request: NextRequest) {
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     const result = VerifySchema.safeParse(body);
 
     if (!result.success) {
-      return NextResponse.json({ message: "Invalid token" }, { status: 400 });
+      return NextResponse.json({ message: 'Invalid token' }, { status: 400 });
     }
 
     const { token } = result.data;
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     if (!verification.success) {
       return NextResponse.json(
-        { message: verification.message || "Invalid or expired token" },
+        { message: verification.message || 'Invalid or expired token' },
         { status: 400 }
       );
     }
@@ -45,10 +45,7 @@ export async function POST(request: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error("Error in verify API:", error);
-    return NextResponse.json(
-      { message: "Verification failed" },
-      { status: 500 }
-    );
+    console.error('Error in verify API:', error);
+    return NextResponse.json({ message: 'Verification failed' }, { status: 500 });
   }
 }

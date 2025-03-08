@@ -1,28 +1,48 @@
-"use client";
+'use client';
 
-import React from "react";
+import React, { ReactNode } from 'react';
 
 // React Wizard
-import { useWizard } from "react-use-wizard";
+import { useWizard } from 'react-use-wizard';
+
+// Translations
+import { useTranslations } from 'next-intl';
 
 // Components
-import { WizardNavigation } from "./WizardNavigation";
-import { WizardProgress } from "./WizardProgress";
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { WizardProgress } from './WizardProgress';
 
 interface WizardStepProps {
-    children: React.ReactNode;
+  children: ReactNode;
+  title: string;
+  description: string;
+  showNext?: boolean;
+  showPrevious?: boolean;
 }
 
-export function WizardStep({ children }: WizardStepProps) {
-    const wizard = useWizard();
+export function WizardStep({ children, showNext = true, showPrevious = true }: WizardStepProps) {
+  const { previousStep, activeStep, stepCount, nextStep, isFirstStep, isLastStep } = useWizard();
+  const t = useTranslations('form.navigation');
 
-    return (
-        <div className="min-h-[25rem] space-y-8">
-            <WizardProgress wizard={wizard} />
-            <div className="space-y-4">
-                {children}
-            </div>
-            <WizardNavigation />
-        </div>
-    );
-} 
+  return (
+    <div className="space-y-6">
+      <WizardProgress wizard={{ activeStep, stepCount }} />
+      <div className="space-y-6">{children}</div>
+      <div className="flex justify-between">
+        {showPrevious && !isFirstStep && (
+          <Button type="button" variant="outline" onClick={previousStep}>
+            <ChevronLeft className="h-4 w-4 mr-2" />
+            {t('back')}
+          </Button>
+        )}
+        {showNext && !isLastStep && (
+          <Button type="button" onClick={nextStep} className="ml-auto">
+            {t('next')}
+            <ChevronRight className="h-4 w-4 ml-2" />
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}

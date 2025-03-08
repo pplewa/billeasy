@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useRef, useState } from 'react';
 // We need to keep the import but disable the linter warning
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import SignatureCanvas from "react-signature-canvas";
+import SignatureCanvas from 'react-signature-canvas';
 
 interface SignatureFont {
   name: string;
@@ -48,15 +48,15 @@ interface SignatureContextType {
 const SignatureContext = createContext<SignatureContextType | undefined>(undefined);
 
 const defaultColors: SignatureColor[] = [
-  { name: "Black", value: "#000000" },
-  { name: "Blue", value: "#0000FF" },
-  { name: "Red", value: "#FF0000" },
+  { name: 'Black', value: '#000000' },
+  { name: 'Blue', value: '#0000FF' },
+  { name: 'Red', value: '#FF0000' },
 ];
 
 const defaultFonts: SignatureFont[] = [
-  { name: "Dancing Script", variable: "var(--font-dancing-script)" },
-  { name: "Great Vibes", variable: "var(--font-great-vibes)" },
-  { name: "Pacifico", variable: "var(--font-pacifico)" },
+  { name: 'Dancing Script', variable: 'var(--font-dancing-script)' },
+  { name: 'Great Vibes', variable: 'var(--font-great-vibes)' },
+  { name: 'Pacifico', variable: 'var(--font-pacifico)' },
 ];
 
 export function SignatureProvider({ children }: { children: React.ReactNode }) {
@@ -64,20 +64,20 @@ export function SignatureProvider({ children }: { children: React.ReactNode }) {
   const typedSignatureRef = useRef<HTMLInputElement | null>(null);
 
   const [selectedColor, setSelectedColor] = useState<SignatureColor>(defaultColors[0]);
-  const [typedSignature, setTypedSignature] = useState("");
+  const [typedSignature, setTypedSignature] = useState('');
   const [selectedFont, setSelectedFont] = useState<SignatureFont>(defaultFonts[0]);
-  const [uploadedSignature, setUploadedSignature] = useState("");
+  const [uploadedSignature, setUploadedSignature] = useState('');
 
   const clearDrawnSignature = () => {
     signatureRef.current?.clear();
   };
 
   const clearTypedSignature = () => {
-    setTypedSignature("");
+    setTypedSignature('');
   };
 
   const clearUploadedSignature = () => {
-    setUploadedSignature("");
+    setUploadedSignature('');
   };
 
   return (
@@ -108,7 +108,7 @@ export function SignatureProvider({ children }: { children: React.ReactNode }) {
 export function useSignatureContext() {
   const context = useContext(SignatureContext);
   if (context === undefined) {
-    throw new Error("useSignatureContext must be used within a SignatureProvider");
+    throw new Error('useSignatureContext must be used within a SignatureProvider');
   }
   return context;
-} 
+}

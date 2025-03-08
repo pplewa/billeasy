@@ -1,0 +1,118 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## Overview of Translation System
+
+The BillEasy application uses `next-intl` for internationalization. This system allows for a structured, maintainable approach to managing translations across multiple languages. Here's a step-by-step guide on handling translations effectively.
+
+## Step 1: Structure of Translation Files
+
+All translation files are located in `src/i18n/messages/` directory with language-specific JSON files:
+- `en.json` (English - base language)
+- `es.json` (Spanish)
+- `pl.json` (Polish)
+- `zh.json` (Chinese)
+- `pt.json` (Portuguese)
+- `de.json` (German)
+- `fr.json` (French)
+
+Each file follows a nested structure where keys are organized by feature or component area.
+
+## Step 2: Adding New Translations
+
+1. **Start with English First**: Always add new text to the English version (`en.json`) first.
+   ```json
+   "key": "English text"
+   ```
+
+2. **Maintain the Same Structure**: Ensure all language files follow the identical hierarchical structure.
+
+3. **Add to All Languages**: After updating English, add the same keys to all other language files with appropriate translations.
+
+4. **Keep Context in Mind**: Translations should maintain the meaning, not just be word-for-word conversions.
+
+5. **Preserve Placeholders**: Maintain any placeholders like `{count}`, `{name}`, or `{id}` in the exact same format across all languages.
+
+## Step 3: Implementing Translations in Components
+
+1. **Import the Hook**:
+   ```typescript
+   import { useTranslations } from 'next-intl';
+   ```
+
+2. **Initialize the Hook**:
+   ```typescript
+   const t = useTranslations('namespace');  // e.g., 'invoice', 'common'
+   ```
+
+3. **Use Translations in JSX**:
+   ```tsx
+   <Button>{t('save')}</Button>
+   ```
+
+4. **For Multiple Namespaces**: Create separate hooks for each namespace:
+   ```typescript
+   const t = useTranslations('invoice');
+   const tCommon = useTranslations('common');
+   ```
+
+## Step 4: Handling Pluralization
+
+Use the built-in pluralization support for countable items:
+
+```json
+"totalInvoices": "{count, plural, =0 {No invoices} one {# invoice} other {# invoices}}"
+```
+
+For languages with more complex pluralization rules (like Polish), include all necessary forms:
+
+```json
+"totalInvoices": "{count, plural, =0 {Brak faktur} one {# faktura} few {# faktury} many {# faktur} other {# faktur}}"
+```
+
+## Step 5: Special Considerations
+
+1. **Common Elements**: Put frequently used strings like "Save", "Delete", "Edit" in the `common` namespace.
+
+2. **Dynamic Values**: Use string interpolation for dynamic values:
+   ```
+   t('showing', { start: pagination.start, end: pagination.end, total: pagination.total })
+   ```
+
+3. **Button States**: Include variations for different states (e.g., "Saving...", "Deleting...").
+
+4. **Form Fields**: Organize form-related translations by form section and type (labels, placeholders, errors).
+
+## Step 6: Updates and Maintenance
+
+1. **Complete Updates**: When adding new text, update ALL language files at the same time to avoid missing translations.
+
+2. **Consistency Check**: Ensure the same keys exist in all language files.
+
+3. **Context Notes**: Add comments in the codebase for translators when context isn't obvious.
+
+4. **Check Rendering**: Test each language to ensure text fits properly in UI elements.
+
+## Step 7: Best Practices for Translation Updates
+
+1. **Group Related Changes**: When updating translations, group related components or features together.
+
+2. **Follow File Structure**: Maintain the nested structure when adding new sections.
+
+3. **Test After Updates**: Always test the UI with various languages after updating translations.
+
+4. **Use Language Experts**: When possible, have native speakers review translations for accuracy.
+
+## Example Workflow
+
+1. Add new feature in the codebase
+2. Add English translations first
+3. Integrate `useTranslations` hook in the components
+4. Add the same translation keys to all other language files
+5. Test the feature across all supported languages
+6. Make adjustments if necessary (for text length, special characters, etc.)
+7. You can use [update_translations_example.py](mdc:scripts/translations/update_translations_example.py) script as an example of how to bulk modify translations
+
+Following these guidelines will ensure a consistent, maintainable approach to internationalization across the BillEasy application.

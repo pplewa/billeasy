@@ -1,5 +1,5 @@
-import { UserInfo } from "@/lib/auth/auth";
-import { create } from "zustand";
+import { UserInfo } from '@/lib/auth/auth';
+import { create } from 'zustand';
 
 interface AuthState {
   // User state

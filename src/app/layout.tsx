@@ -1,16 +1,12 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Bill Easy - Modern Next.js Starter",
+  title: 'Bill Easy - Modern Next.js Starter',
   description:
-    "A modern, full-stack starter template with authentication, internationalization, and ready-to-use components.",
+    'A modern, full-stack starter template with authentication, internationalization, and ready-to-use components.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

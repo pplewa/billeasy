@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
-import { generatePdfService } from "@/services/invoice/server/generatePdfService";
+import { NextRequest } from 'next/server';
+import { generatePdfService } from '@/services/invoice/server/generatePdfService';
 
 /**
  * POST handler for generating a PDF invoice
@@ -8,4 +8,4 @@ import { generatePdfService } from "@/services/invoice/server/generatePdfService
  */
 export async function POST(req: NextRequest) {
   return generatePdfService(req);
-} 
+}

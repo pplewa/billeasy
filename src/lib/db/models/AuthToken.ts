@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IAuthToken extends Document {
   token: string;
@@ -44,6 +44,6 @@ AuthTokenSchema.index({ expires: 1 }, { expireAfterSeconds: 0 }); // Auto-delete
 // Check if the model already exists to prevent overwriting it during hot reloads
 const AuthToken =
   (mongoose.models.AuthToken as mongoose.Model<IAuthToken>) ||
-  mongoose.model<IAuthToken>("AuthToken", AuthTokenSchema);
+  mongoose.model<IAuthToken>('AuthToken', AuthTokenSchema);
 
 export default AuthToken;

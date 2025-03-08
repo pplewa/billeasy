@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import useAuthStore from "@/store/auth-store";
-import { useEffect } from "react";
+import useAuthStore from '@/store/auth-store';
+import { useEffect } from 'react';
 
 /**
  * AuthProvider component that fetches the current user on mount
@@ -13,7 +13,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     async function fetchCurrentUser() {
       try {
-        const response = await fetch("/api/auth/me");
+        const response = await fetch('/api/auth/me');
         const data = await response.json();
 
         if (response.ok && data.user) {
@@ -23,8 +23,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
           setUser(null);
         }
       } catch (error) {
-        console.error("Error fetching current user:", error);
-        setError("Failed to fetch current user");
+        console.error('Error fetching current user:', error);
+        setError('Failed to fetch current user');
       } finally {
         setLoading(false);
       }
@@ -34,4 +34,4 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   }, [setUser, setLoading, setError]);
 
   return <>{children}</>;
-} 
+}

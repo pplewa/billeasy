@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
-import { exportInvoiceService } from "@/services/invoice/server/exportInvoiceService";
+import { NextRequest } from 'next/server';
+import { exportInvoiceService } from '@/services/invoice/server/exportInvoiceService';
 
 /**
  * POST handler for exporting an invoice in the requested format
@@ -8,4 +8,4 @@ import { exportInvoiceService } from "@/services/invoice/server/exportInvoiceSer
  */
 export async function POST(req: NextRequest) {
   return exportInvoiceService(req);
-} 
+}

@@ -1,162 +1,153 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-
-// UI Components
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-
-// Helpers
-import { isValidEmail } from "@/lib/helpers";
-
-// Variables
-import { SEND_INVOICE_API } from "@/lib/variables";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { FormInvoiceType } from '@/lib/types/invoice';
+import { sendInvoiceEmail } from '@/services/invoice/client/emailInvoice';
+import { useToast } from '@/components/ui/use-toast';
+import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface InvoiceEmailModalProps {
-    children: React.ReactNode;
-    invoice: {
-        details?: {
-            invoiceNumber?: string;
-        };
-    };
-    isLoading?: boolean;
+  children: React.ReactNode;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form?: any; // Using any to avoid complex form typing issues
+  invoice?: FormInvoiceType;
+  isLoading?: boolean;
 }
 
 /**
  * Modal for sending invoices by email
  */
-export function InvoiceEmailModal({ 
-    children, 
-    invoice, 
-    isLoading = false 
+export function InvoiceEmailModal({
+  children,
+  form,
+  invoice,
+  isLoading = false,
 }: InvoiceEmailModalProps) {
-    const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState("");
-    const [error, setError] = useState("");
-    const { toast } = useToast();
-    const errorMessage = "Please enter a valid email address";
+  const [open, setOpen] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [recipient, setRecipient] = useState('');
+  const t = useTranslations('invoice.email');
+  const [subject, setSubject] = useState(t('defaultSubject'));
+  const [message, setMessage] = useState(t('defaultMessage'));
+  const { toast } = useToast();
 
-    /**
-     * Send the invoice as a PDF attachment to the specified email
-     */
-    const handleSendEmail = async () => {
-        if (!isValidEmail(email)) {
-            setError(errorMessage);
-            return;
-        }
+  const handleSendEmail = async () => {
+    try {
+      setSending(true);
 
-        setLoading(true);
-        setError("");
+      // Get invoice data from form or direct invoice prop
+      let invoiceData;
+      if (form) {
+        invoiceData = form.getValues() as unknown as FormInvoiceType;
+      } else if (invoice) {
+        invoiceData = invoice;
+      } else {
+        throw new Error('No invoice data available');
+      }
 
-        try {
-            // Generate PDF from invoice data
-            const pdfResponse = await fetch(`/api/invoice/export?format=pdf`, {
-                method: "POST",
-                body: JSON.stringify(invoice),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            
-            if (!pdfResponse.ok) {
-                throw new Error(`Error generating PDF: ${pdfResponse.status}`);
-            }
-            
-            // Get the PDF blob
-            const pdfBlob = await pdfResponse.blob();
-            
-            // Create a File object from the blob
-            const pdfFile = new File([pdfBlob], `invoice-${invoice.details?.invoiceNumber || 'download'}.pdf`, {
-                type: "application/pdf",
-            });
-            
-            // Create form data for the email request
-            const formData = new FormData();
-            formData.append("email", email);
-            formData.append("invoicePdf", pdfFile);
-            formData.append("invoiceNumber", invoice.details?.invoiceNumber || "Unknown");
-            
-            // Send the email
-            const emailResponse = await fetch(SEND_INVOICE_API, {
-                method: "POST",
-                body: formData,
-            });
-            
-            if (!emailResponse.ok) {
-                throw new Error(`Error sending email: ${emailResponse.status}`);
-            }
-            
-            // Show success message
-            toast({
-                title: "Success",
-                description: `Invoice sent to ${email}`,
-            });
-            
-            // Close the modal and reset state
-            setEmail("");
-            setOpen(false);
-        } catch (error) {
-            console.error("Error sending email:", error);
-            toast({
-                title: "Error",
-                description: "Failed to send email. Please try again.",
-                variant: "destructive",
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
+      // Pre-fill recipient email if available from the invoice
+      if (!recipient && invoiceData?.receiver?.email) {
+        setRecipient(invoiceData.receiver.email);
+      }
 
-    return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>{children}</DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Send to email</DialogTitle>
-                    <DialogDescription>
-                        Please specify the email address for invoice delivery.
-                    </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="email" className="text-right">
-                            Email
-                        </Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            placeholder="Enter email address"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="col-span-3"
-                        />
-                    </div>
-                    {error && (
-                        <p className="text-sm text-destructive col-start-2 col-span-3">
-                            {error}
-                        </p>
-                    )}
-                </div>
-                <div className="flex justify-end">
-                    <Button 
-                        onClick={handleSendEmail} 
-                        disabled={loading || isLoading}
-                    >
-                        {loading ? "Sending..." : "Send Invoice"}
-                    </Button>
-                </div>
-            </DialogContent>
-        </Dialog>
-    );
-} 
+      await sendInvoiceEmail({
+        invoice: invoiceData,
+        recipient,
+        subject,
+        message,
+      });
+
+      toast({
+        title: t('toast.success.title'),
+        description: t('toast.success.description', { recipient }),
+      });
+
+      setOpen(false);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: t('toast.error.title'),
+        description: t('toast.error.description'),
+        variant: 'destructive',
+      });
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="sm:max-w-[525px]">
+        <DialogHeader>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
+        </DialogHeader>
+
+        <div className="grid gap-4 py-4">
+          <div className="grid gap-2">
+            <Label htmlFor="recipient">{t('recipient.label')}</Label>
+            <Input
+              id="recipient"
+              value={recipient}
+              onChange={(e) => setRecipient(e.target.value)}
+              placeholder={t('recipient.placeholder')}
+              type="email"
+              required
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="subject">{t('subject.label')}</Label>
+            <Input
+              id="subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              placeholder={t('subject.placeholder')}
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="message">{t('message.label')}</Label>
+            <Textarea
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder={t('message.placeholder')}
+              rows={5}
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-2">
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            {t('buttons.cancel')}
+          </Button>
+          <Button onClick={handleSendEmail} disabled={!recipient || sending || isLoading}>
+            {sending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                {t('buttons.sending')}
+              </>
+            ) : (
+              t('buttons.send')
+            )}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}

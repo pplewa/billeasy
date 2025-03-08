@@ -4,7 +4,6 @@
     "description": "A modern, full-stack starter template"
   },
   "navigation": {
-    "home": "Home",
     "dashboard": "Dashboard",
     "invoices": "Invoices",
     "profile": "Profile",
@@ -33,7 +32,83 @@
   "home": {
     "title": "Welcome to {appName}",
     "description": "A modern, full-stack starter template with authentication, internationalization, and ready-to-use components.",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "hero": {
+      "title": "Professional Invoices in Seconds",
+      "subtitle": "Create, customize, and send invoices instantly",
+      "textareaPlaceholder": "Describe your invoice details or upload an existing one (PDF, JPEG, PNG, WebP)",
+      "uploadButton": "Upload Invoice",
+      "createButton": "Create New Invoice",
+      "parseButton": "Parse & Create",
+      "processingButton": "Processing..."
+    },
+    "benefits": {
+      "lightningFast": {
+        "title": "Lightning Fast",
+        "description": "Create professional invoices in seconds, not minutes"
+      },
+      "aiPowered": {
+        "title": "AI-Powered",
+        "description": "Auto-extract details from text or documents"
+      },
+      "noSignup": {
+        "title": "No Sign-up",
+        "description": "Start immediately, sign in only when you need to save"
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Create professional invoices in three simple steps",
+      "steps": {
+        "create": {
+          "title": "Create",
+          "description": "Type a description or upload an existing invoice. Our AI will extract all relevant details automatically."
+        },
+        "customize": {
+          "title": "Customize",
+          "description": "Review and edit your invoice details in our user-friendly editor. Add your branding, adjust line items, and more."
+        },
+        "download": {
+          "title": "Download or Save",
+          "description": "Export your invoice as a professional PDF, or sign in to save it to your account for future reference and tracking."
+        }
+      },
+      "createFirstInvoice": "Create Your First Invoice"
+    },
+    "features": {
+      "title": "Powerful Features",
+      "subtitle": "Everything you need to create professional invoices quickly",
+      "aiExtraction": {
+        "title": "AI-Powered Extraction",
+        "description": "Our advanced AI analyzes text and documents to automatically fill in invoice details, saving you time and reducing errors."
+      },
+      "noAccount": {
+        "title": "No Account Required",
+        "description": "Create and download invoices without signing up. Sign in only when you want to save invoices for later or track payments."
+      },
+      "templates": {
+        "title": "Professional Templates",
+        "description": "Choose from a variety of professionally designed invoice templates to make your business look its best."
+      },
+      "calculations": {
+        "title": "Automatic Calculations",
+        "description": "Let our system handle all calculations including subtotals, taxes, discounts, and totals with perfect accuracy."
+      },
+      "export": {
+        "title": "Multi-format Export",
+        "description": "Download your invoices in multiple formats including PDF, ready to send to clients or for your records."
+      },
+      "branding": {
+        "title": "Custom Branding",
+        "description": "Add your logo, custom colors, and personalize every aspect of your invoice to match your brand identity."
+      },
+      "tryNow": "Try Bill Easy Now — Free"
+    },
+    "cta": {
+      "title": "Ready to create professional invoices?",
+      "subtitle": "Start creating beautifully designed, legally compliant invoices in just seconds.",
+      "button": "Get Started Now"
+    }
   },
   "common": {
     "loading": "Loading...",
@@ -43,7 +118,607 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
+    "view": "View",
     "create": "Create",
-    "submit": "Submit"
+    "submit": "Submit",
+    "print": "Print",
+    "email": "Email",
+    "export": "Export",
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "saveInvoice": "Save Invoice",
+    "itemsLoaded": "items loaded",
+    "itemsNotVisible": "Some items may not be visible in the form. Use the 'Force Update' button to add them.",
+    "close": "Close",
+    "morePages": "More pages",
+    "clearSearch": "Clear search",
+    "verifying": "Verifying...",
+    "actions": "Actions",
+    "openMenu": "Open menu",
+    "language": "Language",
+    "backToInvoices": "Back to Invoices",
+    "datePicker": {
+      "placeholder": "Pick a date"
+    },
+    "pagination": {
+      "next": "Next",
+      "previous": "Previous",
+      "nextPageLabel": "Go to next page",
+      "previousPageLabel": "Go to previous page",
+      "morePagesLabel": "More pages"
+    },
+    "signIn": "Sign in"
+  },
+  "footer": {
+    "allRightsReserved": "All rights reserved",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated",
+    "introduction": "Introduction",
+    "introText": "Welcome to {appName}. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we handle your data when using our invoice management system and what rights you have regarding your data.",
+    "dataWeCollect": "The Data We Collect",
+    "dataWeCollectText": "We collect and process only the data necessary to provide our invoice management service. This includes:",
+    "dataWeCollectItems": [
+      {
+        "title": "Account Data",
+        "description": "Email address and password for authentication."
+      },
+      {
+        "title": "Business Information",
+        "description": "Your business details used in invoices (company name, address, contact information)."
+      },
+      {
+        "title": "Client Data",
+        "description": "Information about your clients necessary for invoice creation (company names, addresses, contact details)."
+      },
+      {
+        "title": "Invoice Data",
+        "description": "Information contained in your invoices (items, prices, payment terms, notes)."
+      },
+      {
+        "title": "Usage Data",
+        "description": "Basic information about how you use the application to improve our service."
+      }
+    ],
+    "howWeUseData": "How We Use Your Data",
+    "howWeUseDataText": "We use your data exclusively for:",
+    "howWeUseDataItems": [
+      "Providing the invoice management service",
+      "Generating and managing your invoices",
+      "Storing your invoice history",
+      "Improving the application's functionality",
+      "Ensuring the security of your account"
+    ],
+    "dataStorage": "Data Storage and Security",
+    "dataStorageText": "All data is stored securely in our database. We implement appropriate security measures to protect your data from unauthorized access, modification, or deletion. Your invoices and business information are only accessible through your authenticated account.",
+    "dataRetention": "Data Retention",
+    "dataRetentionText": "We retain your data for as long as you maintain an active account. Invoice data is kept to maintain your invoice history and comply with legal requirements regarding business documentation. You can request the deletion of your account and associated data at any time.",
+    "yourRights": "Your Rights",
+    "yourRightsText": "You have the right to:",
+    "yourRightsItems": [
+      "Access your stored data",
+      "Correct any inaccurate information",
+      "Export your invoice data",
+      "Delete your account and associated data",
+      "Request information about how your data is processed"
+    ],
+    "contactUs": "Contact Us",
+    "contactUsText": "If you have any questions about this privacy policy or how we handle your data, please contact us at:",
+    "email": "Email"
+  },
+  "termsOfService": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last Updated",
+    "introduction": "Introduction",
+    "introText": "Welcome to {appName}. These terms and conditions govern your use of our invoice management system. By using {appName}, you agree to these terms in full. Please read them carefully before using the service.",
+    "serviceDescription": "Service Description",
+    "serviceDescriptionText": "{appName} provides an online invoice management system that allows you to:",
+    "userObligations": "User Obligations",
+    "userObligationsText": "When using {appName}, you agree to:",
+    "dataAndContent": "Data and Content",
+    "dataAndContentText1": "You retain all rights to the content you create using {appName}, including your invoices, client information, and business data. We do not claim ownership of your content.",
+    "dataAndContentText2": "You are responsible for:",
+    "serviceAvailability": "Service Availability",
+    "serviceAvailabilityText": "While we strive to maintain high availability, we do not guarantee uninterrupted access to the service. We may occasionally need to suspend access to deploy updates or perform maintenance.",
+    "limitationOfLiability": "Limitation of Liability",
+    "limitationOfLiabilityText": "{appName} is provided \"as is\" without any warranties. We are not responsible for:",
+    "changesToService": "Changes to Service",
+    "changesToServiceText": "We reserve the right to modify or discontinue any part of the service at any time. We will provide notice of significant changes through the application or via email.",
+    "termination": "Termination",
+    "terminationText": "You may stop using the service at any time. We may terminate or suspend your access if you violate these terms or use the service inappropriately.",
+    "contact": "Contact",
+    "contactText": "If you have any questions about these terms, please contact us at:",
+    "email": "Email",
+    "serviceDescriptionItems": [
+      "Create and manage professional invoices",
+      "Store and organize client information",
+      "Track invoice status and payment history",
+      "Generate invoice PDFs",
+      "Manage multiple invoice templates"
+    ],
+    "userObligationsItems": [
+      "Provide accurate information in your invoices",
+      "Keep your account credentials secure",
+      "Not use the service for any illegal purposes",
+      "Not attempt to disrupt or compromise the service",
+      "Comply with relevant tax and business regulations in your jurisdiction"
+    ],
+    "dataAndContentResponsibilities": [
+      "The accuracy of information in your invoices",
+      "Maintaining appropriate records for tax purposes",
+      "Obtaining necessary permissions to use client information",
+      "Backing up your important data"
+    ],
+    "limitationOfLiabilityItems": [
+      "The accuracy of generated invoices",
+      "Any financial losses related to using our service",
+      "Compliance with local tax or business regulations",
+      "Data loss in case of service disruption"
+    ]
+  },
+  "invoice": {
+    "pageTitle": "Invoices",
+    "totalInvoices": "{count, plural, =0 {No invoices} one {# invoice} other {# invoices}}",
+    "createInvoice": "Create Invoice",
+    "searchPlaceholder": "Search invoices...",
+    "clearFilters": "Clear Filters",
+    "noInvoicesFound": "No Invoices Found",
+    "noMatchingInvoices": "No invoices match your current filters. Try adjusting your search or filters.",
+    "noInvoicesYet": "You haven't created any invoices yet. Start by creating your first invoice!",
+    "status": {
+      "all": "All Statuses",
+      "draft": "Draft",
+      "pending": "Pending",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "cancelled": "Cancelled"
+    },
+    "sort": {
+      "newestFirst": "Newest First",
+      "oldestFirst": "Oldest First",
+      "highestAmount": "Highest Amount",
+      "lowestAmount": "Lowest Amount",
+      "byStatus": "By Status"
+    },
+    "itemsPerPage": "{count} per page",
+    "table": {
+      "number": "Invoice #",
+      "date": "Date",
+      "client": "Client",
+      "amount": "Amount",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "duplicating": "Duplicating...",
+      "delete": "Delete"
+    },
+    "pagination": {
+      "showing": "Showing {start} to {end} of {total}"
+    },
+    "deleteDialog": {
+      "title": "Are you sure?",
+      "description": "This action cannot be undone. This will permanently delete the invoice.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "successTitle": "Success",
+      "successDescription": "Invoice deleted successfully",
+      "errorTitle": "Error",
+      "errorDescription": "Failed to delete invoice"
+    },
+    "create": "Create Invoice",
+    "edit": "Edit Invoice",
+    "itemsDetected": "Detected Invoice Items",
+    "noDraftsFound": "No drafts found",
+    "startCreatingDraft": "Start creating an invoice to save drafts automatically.",
+    "draftInvoices": "Draft Invoices",
+    "manageDrafts": "Manage your locally saved invoice drafts",
+    "invoiceNumber": "Invoice #",
+    "billTo": "Bill To:",
+    "invoiceDetails": "Invoice Details:",
+    "invoiceDate": "Invoice Date:",
+    "dueDate": "Due Date:",
+    "poNumber": "PO Number:",
+    "items": "Items",
+    "item": "Item",
+    "qty": "Qty",
+    "price": "Price",
+    "discount": "Discount",
+    "tax": "Tax",
+    "total": "Total",
+    "subtotal": "Subtotal:",
+    "paymentInfo": "Payment Information",
+    "bank": "Bank:",
+    "accountName": "Account Name:",
+    "accountNumber": "Account Number:",
+    "notes": "Notes",
+    "terms": "Terms",
+    "authorizedSignature": "Authorized Signature",
+    "client": "Client:",
+    "date": "Date:",
+    "amount": "Amount:",
+    "invoiceTemplate": "Invoice Template",
+    "templatePreview": "Template {id} Preview",
+    "amountType": "Amount Type",
+    "currency": "Currency",
+    "fontStyle": "Font Style",
+    "supportsFormats": "Supports PNG, JPG or GIF",
+    "invoiceItems": "INVOICE ITEMS",
+    "description": "Description",
+    "quantity": "Quantity",
+    "itemDescription": "Item Description",
+    "thankYou": "Thanks for using BillEasy!",
+    "authRequired": "Authentication Required",
+    "authRequiredDescription": "You need to be signed in to {action} an invoice.",
+    "export": {
+      "title": "Export Invoice",
+      "description": "Choose a format to export your invoice",
+      "formats": {
+        "pdf": "Export as PDF",
+        "json": "Export as JSON",
+        "csv": "Export as CSV",
+        "xlsx": "Export as XLSX",
+        "xml": "Export as XML"
+      }
+    },
+    "addressSwap": {
+      "toast": {
+        "title": "Addresses Swapped",
+        "description": "The Bill From and Bill To information has been switched."
+      }
+    },
+    "email": {
+      "title": "Send Invoice Email",
+      "description": "Send this invoice via email to your client.",
+      "defaultSubject": "Invoice from Your Company",
+      "defaultMessage": "Please find attached the invoice for your recent purchase.",
+      "recipient": {
+        "label": "Recipient Email",
+        "placeholder": "client@example.com"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Invoice from Your Company"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Enter your message here"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "send": "Send Email",
+        "sending": "Sending..."
+      },
+      "toast": {
+        "success": {
+          "title": "Success",
+          "description": "Email sent to {recipient}"
+        },
+        "error": {
+          "title": "Error",
+          "description": "Failed to send email. Please try again."
+        }
+      }
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "placeholder": "All Statuses",
+        "options": {
+          "all": "All Statuses",
+          "draft": "Draft",
+          "pending": "Pending",
+          "paid": "Paid",
+          "overdue": "Overdue",
+          "cancelled": "Cancelled"
+        }
+      },
+      "search": {
+        "label": "Search",
+        "placeholder": "Search by client, invoice number, etc.",
+        "clear": "Clear search"
+      },
+      "clearFilters": "Clear Filters"
+    },
+    "statusSelector": {
+      "statuses": {
+        "draft": "Draft",
+        "pending": "Pending",
+        "paid": "Paid",
+        "overdue": "Overdue",
+        "cancelled": "Cancelled"
+      },
+      "toast": {
+        "title": "Status Updated",
+        "description": "Invoice status changed to {status}",
+        "error": {
+          "title": "Error",
+          "description": "Failed to update invoice status"
+        }
+      }
+    }
+  },
+  "drafts": {
+    "draftName": "Draft Name",
+    "created": "Created",
+    "actions": "Actions"
+  },
+  "form": {
+    "steps": {
+      "billingInfo": {
+        "title": "Billing Information",
+        "description": "Enter the billing addresses for both parties"
+      },
+      "invoiceDetails": {
+        "title": "Invoice Details",
+        "description": "Enter invoice and payment information"
+      },
+      "items": {
+        "title": "Items",
+        "description": "Add items to your invoice"
+      },
+      "additionalInfo": {
+        "title": "Additional Information",
+        "description": "Add signature and notes"
+      },
+      "senderInfo": {
+        "title": "Sender Information",
+        "description": "Enter your business details"
+      },
+      "receiverInfo": {
+        "title": "Receiver Information",
+        "description": "Enter your client's details"
+      }
+    },
+    "fields": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Email address"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Phone number"
+      },
+      "customField": {
+        "namePlaceholder": "Field name",
+        "valuePlaceholder": "Field value"
+      },
+      "bankName": {
+        "label": "Bank Name",
+        "placeholder": "Bank name"
+      },
+      "accountName": {
+        "label": "Account Name",
+        "placeholder": "Account name"
+      },
+      "accountNumber": {
+        "label": "Account Number",
+        "placeholder": "Account number"
+      },
+      "paymentTerms": {
+        "label": "Payment Terms"
+      },
+      "discountAmount": {
+        "label": "Discount Amount"
+      },
+      "taxId": {
+        "label": "Tax ID"
+      },
+      "taxAmount": {
+        "label": "Tax Amount"
+      },
+      "invoiceNumber": {
+        "label": "Invoice Number"
+      },
+      "item": {
+        "namePlaceholder": "Item name",
+        "duplicate": "Duplicate item",
+        "remove": "Remove item"
+      }
+    },
+    "selectors": {
+      "template": {
+        "placeholder": "Select template"
+      },
+      "status": {
+        "placeholder": "Select status",
+        "allStatuses": "All Statuses"
+      },
+      "sort": {
+        "placeholder": "Sort by"
+      }
+    },
+    "addressSuggestions": {
+      "label": "Address suggestions"
+    },
+    "addressLookahead": {
+      "manualEntry": "Manual Entry",
+      "searchAddress": "Search Address",
+      "searchPlaceholder": "Type to search address...",
+      "suggestions": "Address Suggestions",
+      "error": "Error:"
+    },
+    "wizard": {
+      "stepError": "Please correct errors in this step",
+      "steps": {
+        "senderReceiver": {
+          "title": "Sender and Receiver",
+          "description": "Add sender and receiver details"
+        },
+        "invoiceDetails": {
+          "title": "Invoice Details",
+          "description": "Add invoice details and payment information"
+        },
+        "items": {
+          "title": "Items",
+          "description": "Add invoice items with taxes and discounts"
+        },
+        "signature": {
+          "title": "Signature and Notes",
+          "description": "Add signature and additional notes"
+        }
+      }
+    },
+    "errors": {
+      "formField": "useFormField must be used within <FormField>"
+    },
+    "billFrom": {
+      "title": "Bill From",
+      "name": "Name",
+      "namePlaceholder": "Your name or company name",
+      "address": "Address",
+      "email": "Email",
+      "emailPlaceholder": "Email address",
+      "phone": "Phone",
+      "phonePlaceholder": "Phone number",
+      "customFields": {
+        "show": "Add Custom Fields",
+        "hide": "Hide Custom Fields",
+        "fieldName": "Field {number}",
+        "fieldValue": "Value",
+        "fieldNamePlaceholder": "Field name",
+        "fieldValuePlaceholder": "Field value",
+        "addAnother": "Add Another Field"
+      }
+    },
+    "billTo": {
+      "title": "Bill To",
+      "name": "Name",
+      "namePlaceholder": "Client or company name",
+      "address": "Address",
+      "email": "Email",
+      "emailPlaceholder": "Email address",
+      "phone": "Phone",
+      "phonePlaceholder": "Phone number",
+      "customFields": {
+        "show": "Add Custom Fields",
+        "hide": "Hide Custom Fields",
+        "fieldName": "Field Name {number}",
+        "fieldValue": "Field Value {number}",
+        "fieldNamePlaceholder": "Field name",
+        "fieldValuePlaceholder": "Field value",
+        "addAnother": "Add Another Field"
+      }
+    },
+    "invoiceDetails": {
+      "title": "Invoice Details",
+      "description": "Enter invoice details",
+      "invoiceNumber": "Invoice Number",
+      "invoiceNumberPlaceholder": "INV-001",
+      "poNumber": "PO Number",
+      "poNumberPlaceholder": "PO-001",
+      "invoiceDate": "Invoice Date",
+      "dueDate": "Due Date",
+      "currency": "Currency"
+    },
+    "paymentInfo": {
+      "title": "Payment Information",
+      "bankName": "Bank Name",
+      "bankNamePlaceholder": "Bank name",
+      "accountName": "Account Name",
+      "accountNamePlaceholder": "Account name",
+      "accountNumber": "Account Number",
+      "accountNumberPlaceholder": "Account number",
+      "paymentTerms": "Payment Terms",
+      "paymentTermsPlaceholder": "e.g., Net 30"
+    },
+    "items": {
+      "title": "Items",
+      "addItem": "Add Item",
+      "name": "Name",
+      "namePlaceholder": "Item name",
+      "description": "Description",
+      "descriptionPlaceholder": "Item description",
+      "quantity": "Quantity",
+      "price": "Price",
+      "tax": "Tax (%)",
+      "discount": "Discount (%)",
+      "amount": "Amount",
+      "actions": "Actions",
+      "noItems": "No items added yet. Add your first item to get started."
+    },
+    "taxDetails": {
+      "title": "Tax Details",
+      "taxId": "Tax ID",
+      "taxIdPlaceholder": "Tax identification number",
+      "taxAmount": "Tax Amount",
+      "amountType": "Amount Type",
+      "amountTypePlaceholder": "Select amount type",
+      "amountTypePercentage": "Percentage (%)",
+      "amountTypeFixed": "Fixed Amount"
+    },
+    "discountDetails": {
+      "title": "Discount Details",
+      "discountAmount": "Discount Amount",
+      "amountType": "Amount Type",
+      "amountTypePlaceholder": "Select amount type",
+      "amountTypePercentage": "Percentage (%)",
+      "amountTypeFixed": "Fixed Amount"
+    },
+    "additionalNotes": {
+      "title": "Additional Notes",
+      "notesPlaceholder": "Add any additional notes or terms of service"
+    },
+    "signature": {
+      "title": "Signature",
+      "addSignature": "Add Signature",
+      "clear": "Clear",
+      "save": "Save Signature",
+      "placeholder": "Sign here",
+      "uploadedSignatureAlt": "Uploaded signature",
+      "uploadButtonText": "Click to upload signature",
+      "supportedFormats": "Supports PNG, JPG or GIF",
+      "clearButton": "Clear",
+      "doneButton": "Done",
+      "fontStyle": "Font Style",
+      "fontStylePlaceholder": "Select font style",
+      "colorSelectAriaLabel": "Select color {colorName}",
+      "drawCanvasAriaLabel": "Signature drawing canvas",
+      "drawTab": "Draw",
+      "typeTab": "Type",
+      "uploadTab": "Upload",
+      "signatureAlt": "Signature"
+    },
+    "navigation": {
+      "back": "Back",
+      "next": "Next",
+      "finish": "Finish"
+    }
+  },
+  "invoiceTemplate": {
+    "title": "Invoice Template",
+    "preview": "Preview",
+    "templates": {
+      "template1": {
+        "name": "Classic Business",
+        "description": "A clean, professional template with a blue accent color"
+      },
+      "template2": {
+        "name": "Modern Minimalist",
+        "description": "A sleek, minimalist design with a contemporary feel"
+      },
+      "template3": {
+        "name": "Professional Elegant",
+        "description": "An elegant template with refined typography and layout"
+      },
+      "template4": {
+        "name": "Creative Bold",
+        "description": "A bold and creative template that stands out"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "Your invoice #{invoiceNumber} is ready for download",
+      "heading": "Thanks for using BillEasy!",
+      "body": "We're pleased to inform you that your invoice {invoiceNumber} is ready for download. Please find the attached PDF document.",
+      "signature": "Best Regards,\nBillEasy Team"
+    }
   }
 }

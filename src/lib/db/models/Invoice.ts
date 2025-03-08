@@ -1,5 +1,5 @@
-import { InvoiceType } from "@/types";
-import mongoose, { Document, Schema } from "mongoose";
+import { InvoiceType } from '@/types';
+import mongoose, { Document, Schema } from 'mongoose';
 
 // Define the Invoice document interface extending the InvoiceType
 export interface InvoiceDocument extends InvoiceType, Document {
@@ -55,7 +55,11 @@ const ItemSchema = new Schema(
     name: { type: String, required: true },
     quantity: { type: Number, required: true },
     price: { type: Number, required: true },
-    taxRate: { type: Number, required: true },
+    taxRate: { type: Number, default: 0 },
+    tax: {
+      amount: { type: Number, default: 0 },
+      amountType: { type: String, enum: ['percentage', 'fixed'], default: 'fixed' },
+    },
     discount: { type: Number, required: false, default: 0 },
   },
   { _id: false }
@@ -68,7 +72,6 @@ const InvoiceDetailsSchema = new Schema(
     invoiceDate: { type: Date, required: true },
     dueDate: { type: Date, required: true },
     currency: { type: String, required: true },
-    language: { type: String, required: true },
     taxSystem: { type: String, required: true },
     notes: { type: String, required: false },
     terms: { type: String, required: false },
@@ -90,7 +93,7 @@ const InvoiceSettingsSchema = new Schema(
 // Create the main invoice schema
 const InvoiceSchema = new Schema(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     sender: { type: InvoiceSenderSchema, required: true },
     receiver: { type: InvoiceReceiverSchema, required: true },
     items: { type: [ItemSchema], required: true },
@@ -100,5 +103,18 @@ const InvoiceSchema = new Schema(
   { timestamps: true }
 );
 
+// Check for any pre-save hooks that might be modifying tax values
+InvoiceSchema.pre('save', function (next) {
+  // ⚠️ Look for any code here that might be modifying tax values
+  // Example of problematic code:
+  // if (this.details && this.details.items) {
+  //   this.details.items.forEach(item => {
+  //     if (item.tax) item.tax.amount = 0; // This would reset all tax amounts
+  //   });
+  // }
+  next();
+});
+
 // Create and export the Invoice model
-export const Invoice = mongoose.models.Invoice || mongoose.model<InvoiceDocument>("Invoice", InvoiceSchema); 
+export const Invoice =
+  mongoose.models.Invoice || mongoose.model<InvoiceDocument>('Invoice', InvoiceSchema);
