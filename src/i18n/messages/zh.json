@@ -414,6 +414,32 @@
   },
   "invoiceTemplate": {
     "title": "发票模板",
-    "preview": "预览"
+    "preview": "预览",
+    "templates": {
+      "template1": {
+        "name": "经典商务",
+        "description": "一个干净、专业的模板，带有蓝色强调色"
+      },
+      "template2": {
+        "name": "现代简约",
+        "description": "一个时尚、简约的设计，具有现代感"
+      },
+      "template3": {
+        "name": "专业优雅",
+        "description": "一个优雅的模板，具有精致的排版和布局"
+      },
+      "template4": {
+        "name": "创意大胆",
+        "description": "一个大胆且富有创意的模板，脱颖而出"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "您的发票 #{invoiceNumber} 已准备好下载",
+      "heading": "感谢使用 BillEasy！",
+      "body": "我们很高兴地通知您，您的发票 {invoiceNumber} 已准备好下载。请查看附件中的 PDF 文档。",
+      "signature": "此致，\nBillEasy 团队"
+    }
   }
 } 

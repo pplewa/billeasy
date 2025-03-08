@@ -413,6 +413,32 @@
   },
   "invoiceTemplate": {
     "title": "Szablon Faktury",
-    "preview": "Podgląd"
+    "preview": "Podgląd",
+    "templates": {
+      "template1": {
+        "name": "Klasyczny Biznesowy",
+        "description": "Czysty, profesjonalny szablon z niebieskim akcentem"
+      },
+      "template2": {
+        "name": "Nowoczesny Minimalistyczny",
+        "description": "Smukły, minimalistyczny design z współczesnym charakterem"
+      },
+      "template3": {
+        "name": "Profesjonalnie Elegancki",
+        "description": "Elegancki szablon z wyrafinowaną typografią i układem"
+      },
+      "template4": {
+        "name": "Kreatywny Odważny",
+        "description": "Odważny i kreatywny szablon, który wyróżnia się"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "Twoja faktura #{invoiceNumber} jest gotowa do pobrania",
+      "heading": "Dziękujemy za korzystanie z BillEasy!",
+      "body": "Z przyjemnością informujemy, że Twoja faktura {invoiceNumber} jest gotowa do pobrania. Prosimy o zapoznanie się z załączonym dokumentem PDF.",
+      "signature": "Pozdrawiamy,\nZespół BillEasy"
+    }
   }
 } 

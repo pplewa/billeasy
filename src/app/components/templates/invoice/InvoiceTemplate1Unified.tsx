@@ -8,11 +8,17 @@ import InvoiceLayout from './InvoiceLayout';
 // Types
 import { InvoiceType, ItemType } from '@/lib/types';
 
+// Internationalization
+import { useTranslations } from 'next-intl';
+
 /**
  * Invoice Template 1 - Classic business style
  * A clean, professional template with a blue accent color
  */
 const InvoiceTemplate1 = (data: InvoiceType) => {
+  // Translations
+  const t = useTranslations('invoice');
+
   // Use fallbacks for type safety
   const sender = data.sender || {};
   const receiver = data.receiver || {};
@@ -34,14 +40,14 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
               src={details.invoiceLogo}
               width={140}
               height={100}
-              alt={`Logo of ${sender?.name || 'Company'}`}
+              alt={`${t('templatePreview', { id: 1 })} - ${sender?.name || 'Company'}`}
               className="object-contain"
             />
           )}
           <h1 className="mt-2 text-lg md:text-xl font-semibold text-blue-600">{sender?.name}</h1>
         </div>
         <div className="text-right">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">Invoice #</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">{t('invoiceNumber')}</h2>
           <span className="mt-1 block text-gray-500">{details?.invoiceNumber}</span>
           <address className="mt-4 not-italic text-gray-800">
             {sender?.address}
@@ -56,7 +62,7 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
 
       <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
         <div>
-          <h3 className="text-lg font-medium text-gray-800">Bill To:</h3>
+          <h3 className="text-lg font-medium text-gray-800">{t('billTo')}:</h3>
           <div className="mt-2 text-gray-600">
             {receiver?.name && <p className="font-medium">{receiver?.name}</p>}
             {receiver?.address && <p>{receiver?.address}</p>}
@@ -66,24 +72,24 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
               </p>
             )}
             {receiver?.country && <p>{receiver?.country}</p>}
-            {receiver?.email && <p>Email: {receiver?.email}</p>}
-            {receiver?.phone && <p>Phone: {receiver?.phone}</p>}
+            {receiver?.email && <p>{t('email')}: {receiver?.email}</p>}
+            {receiver?.phone && <p>{t('phone')}: {receiver?.phone}</p>}
           </div>
         </div>
         <div className="sm:text-right">
-          <h3 className="text-lg font-medium text-gray-800">Invoice Details:</h3>
+          <h3 className="text-lg font-medium text-gray-800">{t('invoiceDetails')}:</h3>
           <div className="mt-2 text-gray-600">
             <p>
-              <span className="font-medium">Invoice Date: </span>
+              <span className="font-medium">{t('invoiceDate')}: </span>
               {formatDate(details?.invoiceDate)}
             </p>
             <p>
-              <span className="font-medium">Due Date: </span>
+              <span className="font-medium">{t('dueDate')}: </span>
               {formatDate(details?.dueDate)}
             </p>
             {details?.purchaseOrderNumber && (
               <p>
-                <span className="font-medium">PO Number: </span>
+                <span className="font-medium">{t('poNumber')}: </span>
                 {details.purchaseOrderNumber}
               </p>
             )}
@@ -92,17 +98,17 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
       </div>
 
       <div className="mt-8">
-        <h3 className="text-lg font-medium text-gray-800 mb-4">Items</h3>
+        <h3 className="text-lg font-medium text-gray-800 mb-4">{t('items')}</h3>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-gray-200 text-gray-700">
-                <th className="text-left py-3 px-4">Description</th>
-                <th className="text-right py-3 px-4">Quantity</th>
-                <th className="text-right py-3 px-4">Price</th>
-                <th className="text-right py-3 px-4">Discount</th>
-                <th className="text-right py-3 px-4">Tax</th>
-                <th className="text-right py-3 px-4">Total</th>
+                <th className="text-left py-3 px-4">{t('description')}</th>
+                <th className="text-right py-3 px-4">{t('quantity')}</th>
+                <th className="text-right py-3 px-4">{t('price')}</th>
+                <th className="text-right py-3 px-4">{t('discount')}</th>
+                <th className="text-right py-3 px-4">{t('tax')}</th>
+                <th className="text-right py-3 px-4">{t('total')}</th>
               </tr>
             </thead>
             <tbody>
@@ -180,13 +186,13 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
           <table className="w-full">
             <tbody>
               <tr>
-                <td className="font-medium text-gray-800 py-1">Subtotal:</td>
+                <td className="font-medium text-gray-800 py-1">{t('subtotal')}:</td>
                 <td className="text-gray-600 text-right py-1">
                   {formatCurrency(subTotal, details?.currency || 'USD')}
                 </td>
               </tr>
               <tr className="border-t border-gray-200">
-                <td className="font-semibold text-gray-800 py-2">Total:</td>
+                <td className="font-semibold text-gray-800 py-2">{t('total')}:</td>
                 <td className="font-semibold text-gray-800 text-right py-2">
                   {formatCurrency(totalAmount, details?.currency || 'USD')}
                 </td>
@@ -198,23 +204,23 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
 
       {details?.paymentInformation && (
         <div className="mt-8 border-t border-gray-200 pt-4">
-          <h3 className="text-lg font-medium text-gray-800">Payment Information</h3>
+          <h3 className="text-lg font-medium text-gray-800">{t('paymentInfo')}</h3>
           <div className="mt-2 text-gray-600">
             {details.paymentInformation.bankName && (
               <p>
-                <span className="font-medium">Bank: </span>
+                <span className="font-medium">{t('bank')}: </span>
                 {details.paymentInformation.bankName}
               </p>
             )}
             {details.paymentInformation.accountName && (
               <p>
-                <span className="font-medium">Account Name: </span>
+                <span className="font-medium">{t('accountName')}: </span>
                 {details.paymentInformation.accountName}
               </p>
             )}
             {details.paymentInformation.accountNumber && (
               <p>
-                <span className="font-medium">Account Number: </span>
+                <span className="font-medium">{t('accountNumber')}: </span>
                 {details.paymentInformation.accountNumber}
               </p>
             )}
@@ -224,14 +230,14 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
 
       {details?.additionalNotes && (
         <div className="mt-8 border-t border-gray-200 pt-4">
-          <h3 className="text-lg font-medium text-gray-800">Notes</h3>
+          <h3 className="text-lg font-medium text-gray-800">{t('notes')}</h3>
           <p className="mt-2 text-gray-600 whitespace-pre-line">{details.additionalNotes}</p>
         </div>
       )}
 
       {details?.paymentTerms && (
         <div className="mt-8 border-t border-gray-200 pt-4">
-          <h3 className="text-lg font-medium text-gray-800">Terms</h3>
+          <h3 className="text-lg font-medium text-gray-800">{t('terms')}</h3>
           <p className="mt-2 text-gray-600 whitespace-pre-line">{details.paymentTerms}</p>
         </div>
       )}
@@ -248,15 +254,23 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
               }}
             >
               {details.signature.data.startsWith('data:image') ? (
-                <img src={details.signature.data} alt="Signature" className="h-16 object-contain" />
+                <img 
+                  src={details.signature.data} 
+                  alt={t('authorizedSignature')} 
+                  className="max-h-20 max-w-full" 
+                />
               ) : (
-                <p className="text-xl text-gray-800">{details.signature.data}</p>
+                details.signature.data
               )}
             </div>
-            <p className="mt-2 text-sm text-gray-500">Authorized Signature</p>
+            <span className="mt-2 text-gray-600">{t('authorizedSignature')}</span>
           </div>
         </div>
       )}
+
+      <div className="mt-8 text-center text-gray-600">
+        <p>{t('thankYou')}</p>
+      </div>
     </InvoiceLayout>
   );
 };

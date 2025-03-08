@@ -489,6 +489,32 @@
   },
   "invoiceTemplate": {
     "title": "Invoice Template",
-    "preview": "Preview"
+    "preview": "Preview",
+    "templates": {
+      "template1": {
+        "name": "Classic Business",
+        "description": "A clean, professional template with a blue accent color"
+      },
+      "template2": {
+        "name": "Modern Minimalist",
+        "description": "A sleek, minimalist design with a contemporary feel"
+      },
+      "template3": {
+        "name": "Professional Elegant",
+        "description": "An elegant template with refined typography and layout"
+      },
+      "template4": {
+        "name": "Creative Bold",
+        "description": "A bold and creative template that stands out"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "Your invoice #{invoiceNumber} is ready for download",
+      "heading": "Thanks for using BillEasy!",
+      "body": "We're pleased to inform you that your invoice {invoiceNumber} is ready for download. Please find the attached PDF document.",
+      "signature": "Best Regards,\nBillEasy Team"
+    }
   }
 }

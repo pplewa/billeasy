@@ -489,6 +489,32 @@
   },
   "invoiceTemplate": {
     "title": "Rechnungsvorlage",
-    "preview": "Vorschau"
+    "preview": "Vorschau",
+    "templates": {
+      "template1": {
+        "name": "Klassisch Geschäftlich",
+        "description": "Eine saubere, professionelle Vorlage mit blauem Akzent"
+      },
+      "template2": {
+        "name": "Modern Minimalistisch",
+        "description": "Ein schlankes, minimalistisches Design mit zeitgemäßem Gefühl"
+      },
+      "template3": {
+        "name": "Professionell Elegant",
+        "description": "Eine elegante Vorlage mit raffinierter Typografie und Layout"
+      },
+      "template4": {
+        "name": "Kreativ Mutig",
+        "description": "Eine mutige und kreative Vorlage, die heraussticht"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "Ihre Rechnung #{invoiceNumber} ist zum Download bereit",
+      "heading": "Vielen Dank für die Nutzung von BillEasy!",
+      "body": "Wir freuen uns, Ihnen mitzuteilen, dass Ihre Rechnung {invoiceNumber} zum Download bereit ist. Das PDF-Dokument finden Sie im Anhang.",
+      "signature": "Mit freundlichen Grüßen,\nIhr BillEasy-Team"
+    }
   }
 }

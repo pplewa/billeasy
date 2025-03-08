@@ -9,11 +9,17 @@ import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting'
 // Types
 import { InvoiceType, ItemType } from '@/lib/types';
 
+// Internationalization
+import { useTranslations } from 'next-intl';
+
 /**
  * Invoice Template 3 - Creative Professional
  * A stylish template with a green accent color and modern layout
  */
 const InvoiceTemplate3 = (data: InvoiceType) => {
+  // Translations
+  const t = useTranslations('invoice');
+
   // Use fallbacks for type safety
   const sender = data.sender || {};
   const receiver = data.receiver || {};
@@ -23,8 +29,8 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
   const invoiceItems = Array.isArray(details.items) ? details.items : [];
 
   // Calculate totals
-  const subTotal = parseNumber(details?.subTotal);
-  const totalAmount = parseNumber(details?.totalAmount);
+  const subTotal = parseNumber(details.subTotal);
+  const totalAmount = parseNumber(details.totalAmount);
 
   return (
     <InvoiceLayout>
@@ -36,14 +42,14 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
                 src={details.invoiceLogo}
                 width={120}
                 height={80}
-                alt={`Logo of ${sender?.name || 'Company'}`}
+                alt={`${t('templatePreview', { id: 3 })} - ${sender?.name || 'Company'}`}
                 className="object-contain mb-4 md:mb-0"
               />
             )}
             <h1 className="text-xl md:text-2xl font-bold text-green-700 mt-2">{sender?.name}</h1>
           </div>
           <div className="mt-4 md:mt-0 text-right">
-            <h2 className="text-3xl md:text-4xl font-bold text-green-700">INVOICE</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-green-700">{t('invoiceNumber')}</h2>
             <p className="text-green-600 font-medium"># {details?.invoiceNumber}</p>
           </div>
         </div>
@@ -52,7 +58,7 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
       <div className="mt-8 flex flex-col md:flex-row justify-between gap-8">
         <div className="flex-1 bg-gray-50 p-5 rounded-lg">
           <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">
-            FROM
+            {t('billFrom')}
           </h3>
           <div className="text-gray-600">
             <p className="font-medium">{sender?.name}</p>
@@ -61,14 +67,14 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
               {sender?.zipCode}, {sender?.city}
             </p>
             <p>{sender?.country}</p>
-            <p>Email: {sender?.email}</p>
-            <p>Phone: {sender?.phone}</p>
+            <p>{t('email')}: {sender?.email}</p>
+            <p>{t('phone')}: {sender?.phone}</p>
           </div>
         </div>
 
         <div className="flex-1 bg-gray-50 p-5 rounded-lg">
           <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">
-            TO
+            {t('billTo')}
           </h3>
           <div className="text-gray-600">
             <p className="font-medium">{receiver?.name}</p>
@@ -77,44 +83,44 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
               {receiver?.zipCode}, {receiver?.city}
             </p>
             <p>{receiver?.country}</p>
-            <p>Email: {receiver?.email}</p>
-            <p>Phone: {receiver?.phone}</p>
+            <p>{t('email')}: {receiver?.email}</p>
+            <p>{t('phone')}: {receiver?.phone}</p>
           </div>
         </div>
       </div>
 
       <div className="mt-8 bg-gray-50 p-5 rounded-lg">
         <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-3">
-          DETAILS
+          {t('invoiceDetails')}
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div>
-            <p className="text-sm text-gray-500">Invoice Date</p>
+            <p className="text-sm text-gray-500">{t('invoiceDate')}</p>
             <p className="font-medium text-gray-700">{formatDate(details?.invoiceDate)}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Due Date</p>
+            <p className="text-sm text-gray-500">{t('dueDate')}</p>
             <p className="font-medium text-gray-700">{formatDate(details?.dueDate)}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Currency</p>
+            <p className="text-sm text-gray-500">{t('currency')}</p>
             <p className="font-medium text-gray-700">{details?.currency || 'USD'}</p>
           </div>
         </div>
       </div>
 
       <div className="mt-8">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">INVOICE ITEMS</h3>
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('invoiceItems')}</h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b-2 border-green-200">
-                <th className="text-left py-3 px-4 text-green-700">Description</th>
-                <th className="text-right py-3 px-4 text-green-700">Quantity</th>
-                <th className="text-right py-3 px-4 text-green-700">Price</th>
-                <th className="text-right py-3 px-4 text-green-700">Discount</th>
-                <th className="text-right py-3 px-4 text-green-700">Tax</th>
-                <th className="text-right py-3 px-4 text-green-700">Amount</th>
+                <th className="text-left py-3 px-4 text-green-700">{t('description')}</th>
+                <th className="text-right py-3 px-4 text-green-700">{t('quantity')}</th>
+                <th className="text-right py-3 px-4 text-green-700">{t('price')}</th>
+                <th className="text-right py-3 px-4 text-green-700">{t('discount')}</th>
+                <th className="text-right py-3 px-4 text-green-700">{t('tax')}</th>
+                <th className="text-right py-3 px-4 text-green-700">{t('amount')}</th>
               </tr>
             </thead>
             <tbody>
@@ -191,13 +197,13 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
         <div className="w-full md:w-1/3">
           <div className="bg-gray-50 p-5 rounded-lg">
             <div className="flex justify-between py-2">
-              <span className="font-medium text-gray-600">Subtotal:</span>
+              <span className="font-medium text-gray-600">{t('subtotal')}:</span>
               <span className="text-gray-800">
                 {formatCurrency(subTotal, details?.currency || 'USD')}
               </span>
             </div>
             <div className="flex justify-between py-2 border-t border-gray-300 mt-2">
-              <span className="font-bold text-gray-700">Total:</span>
+              <span className="font-bold text-gray-700">{t('total')}:</span>
               <span className="font-bold text-green-700">
                 {formatCurrency(totalAmount, details?.currency || 'USD')}
               </span>
@@ -208,14 +214,14 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
 
       {details?.additionalNotes && (
         <div className="mt-8 bg-gray-50 p-5 rounded-lg">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Notes</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">{t('notes')}</h3>
           <p className="text-gray-600 whitespace-pre-line">{details.additionalNotes}</p>
         </div>
       )}
 
       {details?.paymentTerms && (
         <div className="mt-4 bg-gray-50 p-5 rounded-lg">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Terms and Conditions</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">{t('terms')}</h3>
           <p className="text-gray-600 whitespace-pre-line">{details.paymentTerms}</p>
         </div>
       )}
@@ -224,7 +230,11 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
         <div className="mt-8 border-t border-gray-200 pt-4 text-right">
           <div className="inline-block max-w-xs">
             {details.signature.data.startsWith('data:image') ? (
-              <img src={details.signature.data} alt="Signature" className="h-16 object-contain" />
+              <img 
+                src={details.signature.data} 
+                alt={t('authorizedSignature')} 
+                className="max-h-20 max-w-full" 
+              />
             ) : (
               <p
                 className="text-xl text-gray-800"
@@ -233,10 +243,14 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
                 {details.signature.data}
               </p>
             )}
-            <p className="mt-2 text-sm text-gray-500">Authorized Signature</p>
+            <p className="mt-2 text-sm text-gray-500">{t('authorizedSignature')}</p>
           </div>
         </div>
       )}
+
+      <div className="mt-8 text-center text-gray-600">
+        <p>{t('thankYou')}</p>
+      </div>
     </InvoiceLayout>
   );
 };

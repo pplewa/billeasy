@@ -489,6 +489,32 @@
   },
   "invoiceTemplate": {
     "title": "Modèle de Facture",
-    "preview": "Aperçu"
+    "preview": "Aperçu",
+    "templates": {
+      "template1": {
+        "name": "Entreprise Classique",
+        "description": "Un modèle propre et professionnel avec un accent de couleur bleue"
+      },
+      "template2": {
+        "name": "Minimaliste Moderne",
+        "description": "Un design minimaliste et élégant avec une touche contemporaine"
+      },
+      "template3": {
+        "name": "Élégant Professionnel",
+        "description": "Un modèle élégant avec une typographie et une mise en page raffinées"
+      },
+      "template4": {
+        "name": "Créatif Audacieux",
+        "description": "Un modèle audacieux et créatif qui se démarque"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "Votre facture #{invoiceNumber} est prête à être téléchargée",
+      "heading": "Merci d'utiliser BillEasy !",
+      "body": "Nous sommes heureux de vous informer que votre facture {invoiceNumber} est prête à être téléchargée. Veuillez trouver le document PDF en pièce jointe.",
+      "signature": "Cordialement,\nL'équipe BillEasy"
+    }
   }
 }

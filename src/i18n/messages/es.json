@@ -489,6 +489,32 @@
   },
   "invoiceTemplate": {
     "title": "Plantilla de Factura",
-    "preview": "Vista Previa"
+    "preview": "Vista Previa",
+    "templates": {
+      "template1": {
+        "name": "Negocio Clásico",
+        "description": "Una plantilla limpia y profesional con un acento de color azul"
+      },
+      "template2": {
+        "name": "Minimalista Moderno",
+        "description": "Un diseño minimalista y elegante con un toque contemporáneo"
+      },
+      "template3": {
+        "name": "Elegante Profesional",
+        "description": "Una plantilla elegante con tipografía y diseño refinados"
+      },
+      "template4": {
+        "name": "Creativo Audaz",
+        "description": "Una plantilla audaz y creativa que destaca"
+      }
+    }
+  },
+  "emailTemplate": {
+    "sendPdfEmail": {
+      "preview": "Su factura #{invoiceNumber} está lista para descargar",
+      "heading": "¡Gracias por usar BillEasy!",
+      "body": "Nos complace informarle que su factura {invoiceNumber} está lista para descargar. Encontrará el documento PDF adjunto.",
+      "signature": "Saludos cordiales,\nEquipo de BillEasy"
+    }
   }
 }
