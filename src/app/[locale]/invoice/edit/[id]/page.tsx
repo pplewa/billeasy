@@ -13,8 +13,9 @@ import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Download, Loader2, Mail, Printer } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 export default function EditInvoicePage({
   params,
@@ -32,6 +33,11 @@ export default function EditInvoicePage({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [locale, setLocale] = useState<string>('');
   const [invoiceId, setInvoiceId] = useState<string>('');
+  const printRef = useRef<HTMLDivElement>(null);
+  
+  // Get translations
+  const t = useTranslations();
+  const invoiceT = useTranslations('invoice');
 
   // Get locale and id from params
   useEffect(() => {
@@ -114,10 +120,9 @@ export default function EditInvoicePage({
 
   // Handle print functionality
   const handlePrint = () => {
-    // Add a small delay to ensure styles are applied
-    setTimeout(() => {
+    if (printRef.current) {
       window.print();
-    }, 100);
+    }
   };
 
   if (loading) {
@@ -129,25 +134,22 @@ export default function EditInvoicePage({
   }
 
   return (
-    <main className="container py-6 space-y-8 p-4">
-      {/* Add print-specific styles */}
+    <div className="container mx-auto py-6 px-4 md:px-6 max-w-7xl">
       <style jsx global>{`
         @media print {
-          body {
-            font-family: Arial, sans-serif;
-            color: #000;
-            background: #fff;
-            margin: 0;
-            padding: 0;
+          body * {
+            visibility: hidden;
           }
-
-          .container {
+          #print-content,
+          #print-content * {
+            visibility: visible;
+          }
+          #print-content {
+            position: absolute;
+            left: 0;
+            top: 0;
             width: 100%;
-            max-width: 100%;
-            padding: 20px;
-            margin: 0;
           }
-
           .print-hidden {
             display: none !important;
           }
@@ -155,7 +157,7 @@ export default function EditInvoicePage({
       `}</style>
 
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
-        <h1 className="text-3xl font-bold tracking-tight">Edit Invoice</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{invoiceT('edit')}</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
           <Button
             variant="outline"
@@ -164,20 +166,20 @@ export default function EditInvoicePage({
             disabled={isSubmitting}
           >
             <Printer className="w-4 h-4 mr-2" />
-            Print
+            {t('common.print')}
           </Button>
 
           <InvoiceEmailModal invoice={invoice}>
             <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Mail className="w-4 h-4 mr-2" />
-              Email
+              {t('common.email')}
             </Button>
           </InvoiceEmailModal>
 
           <InvoiceExportModal invoice={invoice}>
             <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Download className="w-4 h-4 mr-2" />
-              Export
+              {t('common.export')}
             </Button>
           </InvoiceExportModal>
 
@@ -186,7 +188,7 @@ export default function EditInvoicePage({
             onClick={form.handleSubmit(handleSubmit)}
             disabled={isSubmitting}
           >
-            {isSubmitting ? <>Saving...</> : <>Save Invoice</>}
+            {isSubmitting ? <>{t('common.saving')}</> : <>{t('common.saveInvoice')}</>}
           </Button>
         </div>
       </div>
@@ -200,6 +202,6 @@ export default function EditInvoicePage({
       >
         <InvoiceForm />
       </InvoiceContextProvider>
-    </main>
+    </div>
   );
 }

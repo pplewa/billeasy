@@ -9,7 +9,7 @@ import { FormInvoiceType, ParsedInvoiceType } from '@/lib/types/invoice';
 import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import useInvoiceParserStore from '@/store/invoice-parser-store';
 import useAuthStore from '@/store/auth-store';
@@ -26,6 +26,7 @@ import { Download, AlertCircle, Zap, Mail, Printer } from 'lucide-react';
 import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
 import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
 import { AddressSwapButton } from '@/components/invoice/AddressSwapButton';
+import { useTranslations } from 'next-intl';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -202,6 +203,7 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
   const { user, isLoading: authLoading } = useAuthStore();
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [actionType, setActionType] = useState<'save' | 'export'>('save');
+  const printRef = useRef<HTMLDivElement>(null);
 
   // Get locale from params
   useEffect(() => {
@@ -211,6 +213,10 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
     };
     getParams();
   }, [params]);
+
+  // Get translations
+  const t = useTranslations();
+  const invoiceT = useTranslations('invoice');
 
   // Create form with transformed initial values
   const initialValues = useMemo(() => {
@@ -309,25 +315,22 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
   };
 
   return (
-    <main className="container py-6 space-y-8 p-4">
-      {/* Print styles */}
+    <div className="container mx-auto py-6 px-4 md:px-6 max-w-7xl">
       <style jsx global>{`
         @media print {
-          body {
-            font-family: Arial, sans-serif;
-            color: #000;
-            background: #fff;
-            margin: 0;
-            padding: 0;
+          body * {
+            visibility: hidden;
           }
-
-          .container {
+          #print-content,
+          #print-content * {
+            visibility: visible;
+          }
+          #print-content {
+            position: absolute;
+            left: 0;
+            top: 0;
             width: 100%;
-            max-width: 100%;
-            padding: 20px;
-            margin: 0;
           }
-
           .print-hidden {
             display: none !important;
           }
@@ -335,7 +338,7 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
       `}</style>
 
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
-        <h1 className="text-3xl font-bold tracking-tight">Create Invoice</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{invoiceT('create')}</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
           <Button
             variant="outline"
@@ -344,14 +347,14 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
             disabled={isSubmitting}
           >
             <Printer className="w-4 h-4 mr-2" />
-            Print
+            {t('common.print')}
           </Button>
 
           {user && (
             <InvoiceEmailModal form={form}>
               <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
                 <Mail className="w-4 h-4 mr-2" />
-                Email
+                {t('common.email')}
               </Button>
             </InvoiceEmailModal>
           )}
@@ -359,7 +362,7 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
           <InvoiceExportModal form={form}>
             <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Download className="w-4 h-4 mr-2" />
-              Export
+              {t('common.export')}
             </Button>
           </InvoiceExportModal>
 
@@ -368,7 +371,7 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
             onClick={handleAuthenticatedSave}
             disabled={isSubmitting}
           >
-            {isSubmitting ? <>Saving...</> : <>Save Invoice</>}
+            {isSubmitting ? <>{t('common.saving')}</> : <>{t('common.saveInvoice')}</>}
           </Button>
         </div>
       </div>
@@ -378,10 +381,10 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
           <div className="flex items-start gap-2">
             <AlertCircle className="h-5 w-5 text-yellow-500 mt-0.5" />
             <div>
-              <h3 className="font-medium">Items Detected</h3>
-              <p>{parsedInvoice.details.items.length} items have been loaded from your invoice.</p>
+              <h3 className="font-medium">{invoiceT('itemsDetected')}</h3>
+              <p>{parsedInvoice.details.items.length} {t('common.itemsLoaded')}</p>
               <p className="text-sm text-muted-foreground">
-                If you don&apos;t see the items in Step 3, click the button below.
+                {t('common.itemsNotVisible')}
               </p>
               <div className="mt-2">
                 <ForceUpdateButton parsedInvoice={parsedInvoice} />
@@ -423,6 +426,6 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </main>
+    </div>
   );
 }

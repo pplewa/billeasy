@@ -32,7 +32,83 @@
   "home": {
     "title": "Bienvenue sur {appName}",
     "description": "Un modèle moderne full-stack avec authentification, internationalisation et composants prêts à l'emploi.",
-    "getStarted": "Commencer"
+    "getStarted": "Commencer",
+    "hero": {
+      "title": "Factures professionnelles en quelques secondes",
+      "subtitle": "Créez, personnalisez et envoyez des factures instantanément",
+      "textareaPlaceholder": "Décrivez les détails de votre facture ou téléchargez une facture existante (PDF, JPEG, PNG, WebP)",
+      "uploadButton": "Télécharger une facture",
+      "createButton": "Créer une nouvelle facture",
+      "parseButton": "Analyser et créer",
+      "processingButton": "Traitement en cours..."
+    },
+    "benefits": {
+      "lightningFast": {
+        "title": "Ultra rapide",
+        "description": "Créez des factures professionnelles en quelques secondes, pas en minutes"
+      },
+      "aiPowered": {
+        "title": "Alimenté par l'IA",
+        "description": "Extraction automatique des détails à partir de texte ou de documents"
+      },
+      "noSignup": {
+        "title": "Sans inscription",
+        "description": "Commencez immédiatement, connectez-vous uniquement lorsque vous devez sauvegarder"
+      }
+    },
+    "howItWorks": {
+      "title": "Comment ça marche",
+      "subtitle": "Créez des factures professionnelles en trois étapes simples",
+      "steps": {
+        "create": {
+          "title": "Créer",
+          "description": "Saisissez une description ou téléchargez une facture existante. Notre IA extraira automatiquement tous les détails pertinents."
+        },
+        "customize": {
+          "title": "Personnaliser",
+          "description": "Révisez et modifiez les détails de votre facture dans notre éditeur convivial. Ajoutez votre marque, ajustez les éléments et plus encore."
+        },
+        "download": {
+          "title": "Télécharger ou sauvegarder",
+          "description": "Exportez votre facture en PDF professionnel, ou connectez-vous pour la sauvegarder dans votre compte pour référence future et suivi."
+        }
+      },
+      "createFirstInvoice": "Créez votre première facture"
+    },
+    "features": {
+      "title": "Fonctionnalités puissantes",
+      "subtitle": "Tout ce dont vous avez besoin pour créer rapidement des factures professionnelles",
+      "aiExtraction": {
+        "title": "Extraction alimentée par l'IA",
+        "description": "Notre IA avancée analyse le texte et les documents pour remplir automatiquement les détails de la facture, économisant du temps et réduisant les erreurs."
+      },
+      "noAccount": {
+        "title": "Pas de compte requis",
+        "description": "Créez et téléchargez des factures sans vous inscrire. Connectez-vous uniquement lorsque vous souhaitez sauvegarder des factures pour plus tard ou suivre les paiements."
+      },
+      "templates": {
+        "title": "Modèles professionnels",
+        "description": "Choisissez parmi une variété de modèles de factures conçus professionnellement pour que votre entreprise paraisse sous son meilleur jour."
+      },
+      "calculations": {
+        "title": "Calculs automatiques",
+        "description": "Laissez notre système gérer tous les calculs, y compris les sous-totaux, taxes, remises et totaux avec une précision parfaite."
+      },
+      "export": {
+        "title": "Exportation multi-format",
+        "description": "Téléchargez vos factures dans plusieurs formats, y compris PDF, prêtes à être envoyées aux clients ou pour vos archives."
+      },
+      "branding": {
+        "title": "Personnalisation de marque",
+        "description": "Ajoutez votre logo, des couleurs personnalisées et personnalisez chaque aspect de votre facture pour correspondre à l'identité de votre marque."
+      },
+      "tryNow": "Essayez Bill Easy maintenant — Gratuit"
+    },
+    "cta": {
+      "title": "Prêt à créer des factures professionnelles ?",
+      "subtitle": "Commencez à créer des factures magnifiquement conçues et légalement conformes en quelques secondes.",
+      "button": "Commencer maintenant"
+    }
   },
   "common": {
     "loading": "Chargement...",
@@ -43,6 +119,231 @@
     "delete": "Supprimer",
     "edit": "Modifier",
     "create": "Créer",
-    "submit": "Soumettre"
+    "submit": "Soumettre",
+    "print": "Imprimer",
+    "email": "Email",
+    "export": "Exporter",
+    "saving": "Enregistrement...",
+    "saveInvoice": "Enregistrer la facture",
+    "itemsLoaded": "éléments ont été chargés depuis votre facture.",
+    "itemsNotVisible": "Si vous ne voyez pas les éléments à l'Étape 3, cliquez sur le bouton ci-dessous.",
+    "close": "Fermer",
+    "morePages": "Plus de pages",
+    "clearSearch": "Effacer la recherche",
+    "verifying": "Vérification...",
+    "actions": "Actions",
+    "openMenu": "Ouvrir le menu"
+  },
+  "footer": {
+    "allRightsReserved": "Tous droits réservés",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation"
+  },
+  "privacyPolicy": {
+    "title": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour",
+    "introduction": "Introduction",
+    "introText": "Bienvenue sur {appName}. Nous respectons votre vie privée et nous nous engageons à protéger vos données personnelles. Cette politique de confidentialité vous informera sur la façon dont nous traitons vos données lors de l'utilisation de notre système de gestion de factures et sur les droits dont vous disposez concernant vos données.",
+    "dataWeCollect": "Les données que nous collectons",
+    "dataWeCollectText": "Nous collectons et traitons uniquement les données nécessaires à la fourniture de notre service de gestion de factures. Cela comprend :",
+    "accountData": "Données du compte",
+    "accountDataText": "Adresse e-mail et mot de passe pour l'authentification.",
+    "businessInfo": "Informations commerciales",
+    "businessInfoText": "Les détails de votre entreprise utilisés dans les factures (nom de l'entreprise, adresse, coordonnées).",
+    "clientData": "Données clients",
+    "clientDataText": "Informations sur vos clients nécessaires à la création de factures (noms d'entreprises, adresses, coordonnées).",
+    "invoiceData": "Données de facturation",
+    "invoiceDataText": "Informations contenues dans vos factures (articles, prix, conditions de paiement, notes).",
+    "usageData": "Données d'utilisation",
+    "usageDataText": "Informations de base sur la façon dont vous utilisez l'application pour améliorer notre service.",
+    "howWeUseData": "Comment nous utilisons vos données",
+    "howWeUseDataText": "Nous utilisons vos données exclusivement pour :",
+    "dataStorage": "Stockage et sécurité des données",
+    "dataStorageText": "Toutes les données sont stockées en toute sécurité dans notre base de données. Nous mettons en œuvre des mesures de sécurité appropriées pour protéger vos données contre tout accès, modification ou suppression non autorisés. Vos factures et informations commerciales ne sont accessibles que via votre compte authentifié.",
+    "dataRetention": "Conservation des données",
+    "dataRetentionText": "Nous conservons vos données tant que vous maintenez un compte actif. Les données de facturation sont conservées pour maintenir votre historique de facturation et se conformer aux exigences légales concernant la documentation commerciale. Vous pouvez demander la suppression de votre compte et des données associées à tout moment.",
+    "yourRights": "Vos droits",
+    "yourRightsText": "Vous avez le droit de :",
+    "contactUs": "Contactez-nous",
+    "contactUsText": "Si vous avez des questions concernant cette politique de confidentialité ou la façon dont nous traitons vos données, veuillez nous contacter à :",
+    "email": "Email"
+  },
+  "termsOfService": {
+    "title": "Conditions d'utilisation",
+    "lastUpdated": "Dernière mise à jour",
+    "introduction": "Introduction",
+    "introText": "Bienvenue sur {appName}. Ces termes et conditions régissent votre utilisation de notre système de gestion de factures. En utilisant {appName}, vous acceptez ces conditions dans leur intégralité. Veuillez les lire attentivement avant d'utiliser le service.",
+    "serviceDescription": "Description du service",
+    "serviceDescriptionText": "{appName} fournit un système de gestion de factures en ligne qui vous permet de :",
+    "userObligations": "Obligations de l'utilisateur",
+    "userObligationsText": "Lorsque vous utilisez {appName}, vous acceptez de :",
+    "dataAndContent": "Données et contenu",
+    "dataAndContentText1": "Vous conservez tous les droits sur le contenu que vous créez en utilisant {appName}, y compris vos factures, informations clients et données commerciales. Nous ne revendiquons pas la propriété de votre contenu.",
+    "dataAndContentText2": "Vous êtes responsable de :",
+    "serviceAvailability": "Disponibilité du service",
+    "serviceAvailabilityText": "Bien que nous nous efforcions de maintenir une haute disponibilité, nous ne garantissons pas un accès ininterrompu au service. Nous pouvons occasionnellement avoir besoin de suspendre l'accès pour déployer des mises à jour ou effectuer une maintenance.",
+    "limitationOfLiability": "Limitation de responsabilité",
+    "limitationOfLiabilityText": "{appName} est fourni \"tel quel\" sans aucune garantie. Nous ne sommes pas responsables de :",
+    "changesToService": "Modifications du service",
+    "changesToServiceText": "Nous nous réservons le droit de modifier ou d'interrompre toute partie du service à tout moment. Nous vous informerons des changements importants via l'application ou par e-mail.",
+    "termination": "Résiliation",
+    "terminationText": "Vous pouvez cesser d'utiliser le service à tout moment. Nous pouvons résilier ou suspendre votre accès si vous violez ces conditions ou utilisez le service de manière inappropriée.",
+    "contact": "Contact",
+    "contactText": "Si vous avez des questions concernant ces conditions, veuillez nous contacter à :",
+    "email": "Email"
+  },
+  "invoice": {
+    "create": "Créer une facture",
+    "edit": "Modifier une facture",
+    "itemsDetected": "Éléments détectés",
+    "noInvoicesFound": "Aucune facture trouvée",
+    "noDraftsFound": "Aucun brouillon trouvé",
+    "noMatchingInvoices": "Aucune facture ne correspond à vos filtres actuels. Essayez d'ajuster vos critères de recherche ou de filtrage.",
+    "noInvoicesYet": "Vous n'avez pas encore créé de factures. Créez votre première facture pour commencer.",
+    "startCreatingDraft": "Commencez à créer une facture pour sauvegarder automatiquement les brouillons.",
+    "draftInvoices": "Brouillons de factures",
+    "manageDrafts": "Gérez vos brouillons de factures sauvegardés localement",
+    "invoiceNumber": "Facture n°",
+    "billTo": "Facturer à :",
+    "invoiceDetails": "Détails de la facture :",
+    "invoiceDate": "Date de facture :",
+    "dueDate": "Date d'échéance :",
+    "poNumber": "Numéro de commande :",
+    "items": "Éléments",
+    "item": "Élément",
+    "qty": "Qté",
+    "price": "Prix",
+    "discount": "Remise",
+    "tax": "Taxe",
+    "total": "Total",
+    "subtotal": "Sous-total :",
+    "paymentInfo": "Informations de paiement",
+    "bank": "Banque :",
+    "accountName": "Nom du compte :",
+    "accountNumber": "Numéro de compte :",
+    "notes": "Notes",
+    "terms": "Conditions",
+    "authorizedSignature": "Signature autorisée",
+    "client": "Client :",
+    "date": "Date :",
+    "amount": "Montant :",
+    "invoiceTemplate": "Modèle de facture",
+    "templatePreview": "Aperçu du modèle {id}",
+    "amountType": "Type de montant",
+    "currency": "Devise",
+    "fontStyle": "Style de police",
+    "supportsFormats": "Prend en charge PNG, JPG ou GIF",
+    "invoiceItems": "ÉLÉMENTS DE FACTURE",
+    "description": "Description",
+    "quantity": "Quantité",
+    "itemDescription": "Description de l'élément",
+    "thankYou": "Merci d'utiliser BillEasy !"
+  },
+  "drafts": {
+    "draftName": "Nom du brouillon",
+    "created": "Créé",
+    "actions": "Actions"
+  },
+  "form": {
+    "steps": {
+      "billingInfo": {
+        "title": "Informations de facturation",
+        "description": "Saisissez les adresses de facturation pour les deux parties"
+      },
+      "invoiceDetails": {
+        "title": "Détails de la facture",
+        "description": "Saisissez les informations de facture et de paiement"
+      },
+      "items": {
+        "title": "Éléments",
+        "description": "Ajoutez des éléments à votre facture"
+      },
+      "additionalInfo": {
+        "title": "Informations supplémentaires",
+        "description": "Ajoutez signature et notes"
+      },
+      "senderInfo": {
+        "title": "Informations de l'expéditeur",
+        "description": "Saisissez les détails de votre entreprise"
+      },
+      "receiverInfo": {
+        "title": "Informations du destinataire",
+        "description": "Saisissez les détails de votre client"
+      }
+    },
+    "fields": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Adresse email"
+      },
+      "phone": {
+        "label": "Téléphone",
+        "placeholder": "Numéro de téléphone"
+      },
+      "customField": {
+        "namePlaceholder": "Nom du champ",
+        "valuePlaceholder": "Valeur du champ"
+      },
+      "bankName": {
+        "label": "Nom de la banque",
+        "placeholder": "Nom de la banque"
+      },
+      "accountName": {
+        "label": "Nom du compte",
+        "placeholder": "Nom du compte"
+      },
+      "accountNumber": {
+        "label": "Numéro de compte",
+        "placeholder": "Numéro de compte"
+      },
+      "paymentTerms": {
+        "label": "Conditions de paiement"
+      },
+      "discountAmount": {
+        "label": "Montant de la remise"
+      },
+      "taxId": {
+        "label": "Numéro de TVA"
+      },
+      "taxAmount": {
+        "label": "Montant de la taxe"
+      },
+      "invoiceNumber": {
+        "label": "Numéro de facture"
+      },
+      "item": {
+        "namePlaceholder": "Nom de l'élément",
+        "duplicate": "Dupliquer l'élément",
+        "remove": "Supprimer l'élément"
+      }
+    },
+    "selectors": {
+      "template": {
+        "placeholder": "Sélectionner un modèle"
+      },
+      "status": {
+        "placeholder": "Sélectionner un statut",
+        "allStatuses": "Tous les statuts"
+      },
+      "sort": {
+        "placeholder": "Trier par"
+      }
+    },
+    "addressSuggestions": {
+      "label": "Suggestions d'adresses"
+    },
+    "addressLookahead": {
+      "manualEntry": "Saisie manuelle",
+      "searchAddress": "Rechercher une adresse",
+      "searchPlaceholder": "Tapez pour rechercher une adresse...",
+      "suggestions": "Suggestions d'adresses",
+      "error": "Erreur :"
+    },
+    "wizard": {
+      "stepError": "Veuillez corriger les erreurs dans cette étape"
+    },
+    "errors": {
+      "formField": "useFormField doit être utilisé dans <FormField>"
+    }
   }
 }

@@ -9,6 +9,7 @@ import {
   FormProvider,
   useFormContext,
 } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils/ui';
 import { Label } from '@/components/ui/label';
@@ -38,6 +39,7 @@ const FormField = <
 };
 
 const useFormField = () => {
+  const t = useTranslations('form');
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();
@@ -45,7 +47,7 @@ const useFormField = () => {
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
-    throw new Error('useFormField should be used within <FormField>');
+    throw new Error(t('errors.formField'));
   }
 
   const { id } = itemContext;

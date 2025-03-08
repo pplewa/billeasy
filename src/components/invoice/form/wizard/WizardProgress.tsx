@@ -13,6 +13,8 @@ import { cn } from '@/lib/utils/ui';
 // Types
 import { InvoiceType } from '@/types';
 
+import { useTranslations } from 'next-intl';
+
 interface WizardProgressProps {
   wizard: {
     activeStep: number;
@@ -62,6 +64,7 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
     formState: { errors },
   } = useFormContext<InvoiceType>();
   const { goToStep } = useWizard();
+  const t = useTranslations('form');
 
   return (
     <nav aria-label="Progress">
@@ -110,7 +113,7 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
                 <span className="text-sm text-muted-foreground">{step.description}</span>
                 {hasErrors && (
                   <span className="text-sm text-destructive">
-                    Please fix the errors in this step
+                    {t('wizard.stepError')}
                   </span>
                 )}
               </button>

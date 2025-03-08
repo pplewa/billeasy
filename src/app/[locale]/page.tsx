@@ -22,6 +22,7 @@ import { parseInvoiceText, parseInvoiceFile } from '@/services/invoice/client/in
 import useInvoiceParserStore from '@/store/invoice-parser-store';
 import { useToast } from '@/components/ui/use-toast';
 import { ParsedInvoiceType, CustomInput } from '@/lib/types/invoice';
+import { useTranslations } from 'next-intl';
 
 export default function Home({ params }: { params: Promise<{ locale: string }> }) {
   const [locale, setLocale] = useState<string>('');
@@ -32,6 +33,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
     useInvoiceParserStore();
   const router = useRouter();
   const { toast } = useToast();
+  
+  // Get translations
+  const t = useTranslations('home');
 
   // Get locale from params
   useEffect(() => {
@@ -245,10 +249,10 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
             </div>
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
-            Professional Invoices in Seconds
+            {t('hero.title')}
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12">
-            Create, customize, and send invoices instantly
+            {t('hero.subtitle')}
           </p>
 
           {/* Quick Invoice Generator */}
@@ -258,7 +262,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                 className={`relative transition-all duration-200 ${isTextFocused ? 'ring-2 ring-primary/50 rounded-lg' : ''}`}
               >
                 <Textarea
-                  placeholder="Describe your invoice details or upload an existing one (PDF, JPEG, PNG, WebP)"
+                  placeholder={t('hero.textareaPlaceholder')}
                   className={`transition-all duration-200 text-lg resize-none pb-20 ${isTextFocused ? 'border-primary' : ''}`}
                   value={text}
                   onChange={(e) => setText(e.target.value)}
@@ -267,7 +271,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                   autoExpand={true}
                 />
 
-                <div className="flex flex-col  sm:flex-row gap-3 justify-end -mt-14">
+                <div className="flex flex-col sm:flex-row gap-3 justify-end -mt-14">
                   <input
                     type="file"
                     id="invoice-file"
@@ -286,7 +290,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                       disabled={isParserLoading}
                     >
                       <Upload className="h-4 w-4" />
-                      <span>Upload Invoice</span>
+                      <span>{t('hero.uploadButton')}</span>
                     </Button>
 
                     <Button
@@ -298,12 +302,12 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                       {isParserLoading ? (
                         <>
                           <Loader2 className="h-5 w-5 animate-spin" />
-                          <span>Processing...</span>
+                          <span>{t('hero.processingButton')}</span>
                         </>
                       ) : (
                         <>
                           <ArrowUpRight className="h-5 w-5" />
-                          <span>{text.trim() ? 'Parse & Create' : 'Create New Invoice'}</span>
+                          <span>{text.trim() ? t('hero.parseButton') : t('hero.createButton')}</span>
                         </>
                       )}
                     </Button>
@@ -319,9 +323,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
                 <Zap className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Lightning Fast</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('benefits.lightningFast.title')}</h3>
               <p className="text-muted-foreground text-center">
-                Create professional invoices in seconds, not minutes
+                {t('benefits.lightningFast.description')}
               </p>
             </div>
 
@@ -329,9 +333,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
                 <Sparkles className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">AI-Powered</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('benefits.aiPowered.title')}</h3>
               <p className="text-muted-foreground text-center">
-                Auto-extract details from text or documents
+                {t('benefits.aiPowered.description')}
               </p>
             </div>
 
@@ -339,9 +343,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
                 <Shield className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">No Sign-up</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('benefits.noSignup.title')}</h3>
               <p className="text-muted-foreground text-center">
-                Start immediately, sign in only when you need to save
+                {t('benefits.noSignup.description')}
               </p>
             </div>
           </div>
@@ -351,9 +355,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
         <section className="py-16 md:py-24 border-t border-muted/30">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('howItWorks.title')}</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Create professional invoices in three simple steps
+                {t('howItWorks.subtitle')}
               </p>
             </div>
 
@@ -362,10 +366,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary text-white mb-6 z-10">
                   <span className="text-xl font-bold">1</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Create</h3>
+                <h3 className="text-xl font-semibold mb-3">{t('howItWorks.steps.create.title')}</h3>
                 <p className="text-muted-foreground">
-                  Type a description or upload an existing invoice. Our AI will extract all relevant
-                  details automatically.
+                  {t('howItWorks.steps.create.description')}
                 </p>
               </div>
 
@@ -373,10 +376,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary text-white mb-6 z-10">
                   <span className="text-xl font-bold">2</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Customize</h3>
+                <h3 className="text-xl font-semibold mb-3">{t('howItWorks.steps.customize.title')}</h3>
                 <p className="text-muted-foreground">
-                  Review and edit your invoice details in our user-friendly editor. Add your
-                  branding, adjust line items, and more.
+                  {t('howItWorks.steps.customize.description')}
                 </p>
               </div>
 
@@ -384,10 +386,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary text-white mb-6 z-10">
                   <span className="text-xl font-bold">3</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Download or Save</h3>
+                <h3 className="text-xl font-semibold mb-3">{t('howItWorks.steps.download.title')}</h3>
                 <p className="text-muted-foreground">
-                  Export your invoice as a professional PDF, or sign in to save it to your account
-                  for future reference and tracking.
+                  {t('howItWorks.steps.download.description')}
                 </p>
               </div>
             </div>
@@ -398,7 +399,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                 onClick={() => router.push(`/${locale}/invoice/create`)}
                 className="px-8 gap-2"
               >
-                Create Your First Invoice
+                {t('howItWorks.createFirstInvoice')}
                 <ChevronRight className="h-5 w-5" />
               </Button>
             </div>
@@ -409,9 +410,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
         <section className="py-16 md:py-24 bg-muted/30 -mx-4 px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Powerful Features</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('features.title')}</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Everything you need to create professional invoices quickly
+                {t('features.subtitle')}
               </p>
             </div>
 
@@ -422,10 +423,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                     <Sparkles className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">AI-Powered Extraction</h3>
+                    <h3 className="text-xl font-semibold mb-2">{t('features.aiExtraction.title')}</h3>
                     <p className="text-muted-foreground">
-                      Our advanced AI analyzes text and documents to automatically fill in invoice
-                      details, saving you time and reducing errors.
+                      {t('features.aiExtraction.description')}
                     </p>
                   </div>
                 </div>
@@ -437,10 +437,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                     <Shield className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">No Account Required</h3>
+                    <h3 className="text-xl font-semibold mb-2">{t('features.noAccount.title')}</h3>
                     <p className="text-muted-foreground">
-                      Create and download invoices without signing up. Sign in only when you want to
-                      save invoices for later or track payments.
+                      {t('features.noAccount.description')}
                     </p>
                   </div>
                 </div>
@@ -452,10 +451,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                     <CreditCard className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Professional Templates</h3>
+                    <h3 className="text-xl font-semibold mb-2">{t('features.templates.title')}</h3>
                     <p className="text-muted-foreground">
-                      Choose from a variety of professionally designed invoice templates to make
-                      your business look its best.
+                      {t('features.templates.description')}
                     </p>
                   </div>
                 </div>
@@ -467,10 +465,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                     <BarChart className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Automatic Calculations</h3>
+                    <h3 className="text-xl font-semibold mb-2">{t('features.calculations.title')}</h3>
                     <p className="text-muted-foreground">
-                      Let our system handle all calculations including subtotals, taxes, discounts,
-                      and totals with perfect accuracy.
+                      {t('features.calculations.description')}
                     </p>
                   </div>
                 </div>
@@ -482,10 +479,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                     <FileText className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Multi-format Export</h3>
+                    <h3 className="text-xl font-semibold mb-2">{t('features.export.title')}</h3>
                     <p className="text-muted-foreground">
-                      Download your invoices in multiple formats including PDF, ready to send to
-                      clients or for your records.
+                      {t('features.export.description')}
                     </p>
                   </div>
                 </div>
@@ -497,10 +493,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                     <Star className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Custom Branding</h3>
+                    <h3 className="text-xl font-semibold mb-2">{t('features.branding.title')}</h3>
                     <p className="text-muted-foreground">
-                      Add your logo, custom colors, and personalize every aspect of your invoice to
-                      match your brand identity.
+                      {t('features.branding.description')}
                     </p>
                   </div>
                 </div>
@@ -514,7 +509,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                 onClick={() => router.push(`/${locale}/invoice/create`)}
                 className="px-8"
               >
-                Try Bill Easy Now — Free
+                {t('features.tryNow')}
               </Button>
             </div>
           </div>
@@ -526,17 +521,17 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
         <section className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to create professional invoices?
+              {t('cta.title')}
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Start creating beautifully designed, legally compliant invoices in just seconds.
+              {t('cta.subtitle')}
             </p>
             <Button
               size="lg"
               onClick={() => router.push(`/${locale}/invoice/create`)}
               className="px-10 py-6 text-lg"
             >
-              Get Started Now
+              {t('cta.button')}
             </Button>
           </div>
         </section>

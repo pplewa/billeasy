@@ -50,6 +50,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState, useMemo } from 'react';
 import { InvoiceStatusSelector } from '@/components/invoice/InvoiceStatusSelector';
 import { InvoiceStatus as InvoiceStatusEnum } from '@/types';
+import { useTranslations } from 'next-intl';
 
 // Define available view modes
 type ViewMode = 'card' | 'list';
@@ -82,6 +83,10 @@ export default function InvoicesPage() {
   const params = useParams();
   const locale = params.locale as string;
   const { toast } = useToast();
+
+  // Get translations
+  const t = useTranslations();
+  const invoiceT = useTranslations('invoice');
 
   // States for data management
   const [invoices, setInvoices] = useState<InvoiceDocument[]>([]);
@@ -594,15 +599,14 @@ export default function InvoicesPage() {
             <div className="rounded-full bg-secondary w-12 h-12 flex items-center justify-center mb-4">
               <Filter className="h-6 w-6 text-secondary-foreground" />
             </div>
-            <h2 className="text-xl font-semibold mb-2">No invoices found</h2>
+            <h2 className="text-xl font-semibold mb-2">{invoiceT('noInvoicesFound')}</h2>
             {searchQuery || statusFilter !== 'all' ? (
               <p className="text-muted-foreground text-center max-w-md mb-4">
-                No invoices match your current filters. Try adjusting your search or filter
-                criteria.
+                {t('invoice.noMatchingInvoices')}
               </p>
             ) : (
               <p className="text-muted-foreground text-center max-w-md mb-4">
-                You haven&apos;t created any invoices yet. Create your first invoice to get started.
+                {t('invoice.noInvoicesYet')}
               </p>
             )}
 

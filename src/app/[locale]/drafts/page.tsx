@@ -33,6 +33,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Edit, MoreVertical, Trash, FileText, Plus } from 'lucide-react';
 import useInvoiceParserStore from '@/store/invoice-parser-store';
 import { DraftInvoice } from '@/lib/types/invoice';
+import { useTranslations } from 'next-intl';
 
 export default function DraftsPage({ params }: { params: Promise<{ locale: string }> }) {
   const router = useRouter();
@@ -41,6 +42,10 @@ export default function DraftsPage({ params }: { params: Promise<{ locale: strin
   const { draftInvoices, removeDraftInvoice, setParsedInvoice } = useInvoiceParserStore();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedDraftId, setSelectedDraftId] = useState<string | null>(null);
+
+  // Get translations
+  const t = useTranslations();
+  const invoiceT = useTranslations('invoice');
 
   // Get locale from params
   useEffect(() => {
@@ -139,12 +144,12 @@ export default function DraftsPage({ params }: { params: Promise<{ locale: strin
           {draftInvoices.length === 0 ? (
             <div className="text-center py-8">
               <FileText className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
-              <h3 className="text-lg font-medium mb-2">No drafts found</h3>
+              <h3 className="text-lg font-medium mb-2">{invoiceT('noDraftsFound')}</h3>
               <p className="text-muted-foreground mb-4">
-                Start creating an invoice to save drafts automatically.
+                {t('invoice.startCreatingDraft')}
               </p>
               <Button onClick={() => router.push(`/${locale}/invoice/create`)}>
-                Create Your First Invoice
+                {t('home.howItWorks.createFirstInvoice')}
               </Button>
             </div>
           ) : (

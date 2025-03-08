@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils/ui';
 import { Check, Loader2, Search, Edit, Map } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 // Define the address suggestion type
 interface AddressSuggestion {
@@ -67,6 +68,7 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
     },
     ref
   ) => {
+    const t = useTranslations('form');
     // Mode state
     const [mode, setMode] = useState<AddressMode>(() => {
       // Start in manual mode if forced or if address values are already populated
@@ -369,12 +371,12 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
             {mode === 'lookahead' ? (
               <>
                 <Edit className="h-3.5 w-3.5" />
-                <span>Manual Entry</span>
+                <span>{t('addressLookahead.manualEntry')}</span>
               </>
             ) : (
               <>
                 <Map className="h-3.5 w-3.5" />
-                <span>Search Address</span>
+                <span>{t('addressLookahead.searchAddress')}</span>
               </>
             )}
           </Button>
@@ -429,7 +431,7 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
                   error && 'border-destructive focus-visible:ring-destructive',
                   className
                 )}
-                placeholder="Type to search for an address..."
+                placeholder={t('addressLookahead.searchPlaceholder')}
                 aria-expanded={open}
                 aria-haspopup="listbox"
                 aria-autocomplete="list"
@@ -446,7 +448,7 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
                   <ul
                     id="address-suggestions"
                     role="listbox"
-                    aria-label="Address suggestions"
+                    aria-label={t('addressLookahead.suggestions')}
                     className="py-2 overflow-auto max-h-60"
                   >
                     {!loading &&
@@ -487,7 +489,7 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
                       ))}
                   </ul>
                   {apiError && (
-                    <div className="p-2 text-sm text-destructive">Error: {apiError}</div>
+                    <div className="p-2 text-sm text-destructive">{t('addressLookahead.error')} {apiError}</div>
                   )}
                 </div>
               </div>

@@ -79,6 +79,9 @@ function LanguageSwitcher() {
     es: { name: 'Español', flag: '🇪🇸' },
     fr: { name: 'Français', flag: '🇫🇷' },
     de: { name: 'Deutsch', flag: '🇩🇪' },
+    pl: { name: 'Polski', flag: '🇵🇱' },
+    pt: { name: 'Português', flag: '🇵🇹' },
+    zh: { name: '中文', flag: '🇨🇳' },
   };
 
   return (
