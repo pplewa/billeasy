@@ -212,7 +212,7 @@
     "title": "Términos de servicio",
     "lastUpdated": "Última actualización",
     "introduction": "Introducción",
-    "introText": "Bienvenido a {appName}. Estos términos y condiciones rigen tu uso de nuestro sistema de gestión de facturas. Al usar {appName}, aceptas estos términos en su totalidad. Por favor, léelos cuidadosamente antes de usar el servicio.",
+    "introText": "Bienvenido a {appName}. Estos términos y condiciones rigen el uso de nuestro sistema de gestión de facturas. Al usar {appName}, aceptas estos términos en su totalidad. Por favor, léelos cuidadosamente antes de usar el servicio.",
     "serviceDescription": "Descripción del servicio",
     "serviceDescriptionText": "{appName} proporciona un sistema de gestión de facturas en línea que te permite:",
     "serviceDescriptionItems": [

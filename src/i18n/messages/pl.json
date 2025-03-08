@@ -215,15 +215,41 @@
     "introText": "Witaj w {appName}. Niniejsze warunki regulują korzystanie z naszego systemu zarządzania fakturami. Korzystając z {appName}, zgadzasz się na te warunki w całości. Prosimy o uważne zapoznanie się z nimi przed rozpoczęciem korzystania z usługi.",
     "serviceDescription": "Opis usługi",
     "serviceDescriptionText": "{appName} zapewnia internetowy system zarządzania fakturami, który umożliwia:",
+    "serviceDescriptionItems": [
+      "Tworzenie i zarządzanie profesjonalnymi fakturami",
+      "Przechowywanie i organizowanie informacji o klientach",
+      "Śledzenie statusu faktur i historii płatności",
+      "Generowanie faktur PDF",
+      "Zarządzanie wieloma szablonami faktur"
+    ],
     "userObligations": "Obowiązki użytkownika",
     "userObligationsText": "Korzystając z {appName}, zgadzasz się:",
+    "userObligationsItems": [
+      "Dostarczanie dokładnych informacji na fakturach",
+      "Zachowanie bezpieczeństwa danych uwierzytelniających konta",
+      "Nieprowadzenie działań niezgodnych z prawem",
+      "Nieprzerywanie lub nienaruszanie pracy usługi",
+      "Przestrzeganie lokalnych przepisów podatkowych i biznesowych"
+    ],
     "dataAndContent": "Dane i zawartość",
     "dataAndContentText1": "Zachowujesz wszystkie prawa do treści, które tworzysz za pomocą {appName}, w tym do swoich faktur, informacji o klientach i danych biznesowych. Nie rościmy sobie praw własności do Twoich treści.",
     "dataAndContentText2": "Jesteś odpowiedzialny za:",
+    "dataAndContentResponsibilities": [
+      "Dokładność informacji na fakturach",
+      "Prowadzenie odpowiednich rejestrów do celów podatkowych",
+      "Uzyskanie niezbędnych pozwoleń na użycie informacji o klientach",
+      "Tworzenie kopii zapasowych ważnych danych"
+    ],
     "serviceAvailability": "Dostępność usługi",
     "serviceAvailabilityText": "Chociaż dążymy do utrzymania wysokiej dostępności, nie gwarantujemy nieprzerwanego dostępu do usługi. Możemy czasami zawiesić dostęp w celu wdrożenia aktualizacji lub przeprowadzenia konserwacji.",
     "limitationOfLiability": "Ograniczenie odpowiedzialności",
     "limitationOfLiabilityText": "{appName} jest dostarczany \"tak jak jest\" bez żadnych gwarancji. Nie ponosimy odpowiedzialności za:",
+    "limitationOfLiabilityItems": [
+      "Dokładność generowanych faktur",
+      "Wszelkie straty finansowe związane z korzystaniem z naszej usługi",
+      "Zgodność z lokalnymi przepisami podatkowymi lub biznesowymi",
+      "Utratę danych w przypadku awarii usługi"
+    ],
     "changesToService": "Zmiany w usłudze",
     "changesToServiceText": "Zastrzegamy sobie prawo do modyfikacji lub zaprzestania świadczenia dowolnej części usługi w dowolnym momencie. Powiadomimy o istotnych zmianach za pośrednictwem aplikacji lub e-maila.",
     "termination": "Zakończenie",

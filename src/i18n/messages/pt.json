@@ -215,15 +215,41 @@
     "introText": "Bem-vindo ao {appName}. Estes termos e condições regem o uso do nosso sistema de gerenciamento de faturas. Ao usar o {appName}, você concorda com estes termos na íntegra. Por favor, leia-os cuidadosamente antes de usar o serviço.",
     "serviceDescription": "Descrição do Serviço",
     "serviceDescriptionText": "{appName} fornece um sistema online de gerenciamento de faturas que permite:",
+    "serviceDescriptionItems": [
+      "Criar e gerenciar faturas profissionais",
+      "Armazenar e organizar informações de clientes",
+      "Rastrear o status de faturas e histórico de pagamentos",
+      "Gerar PDFs de faturas",
+      "Gerenciar múltiplos modelos de faturas"
+    ],
     "userObligations": "Obrigações do Usuário",
     "userObligationsText": "Ao usar o {appName}, você concorda em:",
+    "userObligationsItems": [
+      "Fornecer informações precisas em suas faturas",
+      "Manter suas credenciais de conta seguras",
+      "Não usar o serviço para fins ilegais",
+      "Não tentar interromper ou comprometer o serviço",
+      "Cumprir as regulamentações fiscais e comerciais relevantes em sua jurisdição"
+    ],
     "dataAndContent": "Dados e Conteúdo",
     "dataAndContentText1": "Você mantém todos os direitos sobre o conteúdo que cria usando o {appName}, incluindo suas faturas, informações de clientes e dados comerciais. Não reivindicamos propriedade do seu conteúdo.",
     "dataAndContentText2": "Você é responsável por:",
+    "dataAndContentResponsibilities": [
+      "A precisão das informações em suas faturas",
+      "Manter registros apropriados para fins fiscais",
+      "Obter as permissões necessárias para usar as informações dos clientes",
+      "Fazer backup de seus dados importantes"
+    ],
     "serviceAvailability": "Disponibilidade do Serviço",
     "serviceAvailabilityText": "Embora nos esforcemos para manter alta disponibilidade, não garantimos acesso ininterrupto ao serviço. Ocasionalmente, podemos precisar suspender o acesso para implantar atualizações ou realizar manutenção.",
     "limitationOfLiability": "Limitação de Responsabilidade",
     "limitationOfLiabilityText": "{appName} é fornecido \"como está\" sem quaisquer garantias. Não somos responsáveis por:",
+    "limitationOfLiabilityItems": [
+      "A precisão das faturas geradas",
+      "Quaisquer perdas financeiras relacionadas ao uso do nosso serviço",
+      "Conformidade com regulamentações fiscais ou comerciais locais",
+      "Perda de dados em caso de interrupção do serviço"
+    ],
     "changesToService": "Alterações no Serviço",
     "changesToServiceText": "Reservamo-nos o direito de modificar ou descontinuar qualquer parte do serviço a qualquer momento. Forneceremos aviso de mudanças significativas através do aplicativo ou via email.",
     "termination": "Rescisão",

@@ -215,15 +215,41 @@
     "introText": "欢迎来到 {appName}。这些条款和条件规范您对我们发票管理系统的使用。使用 {appName} 即表示您完全同意这些条款。请在使用服务前仔细阅读。",
     "serviceDescription": "服务描述",
     "serviceDescriptionText": "{appName} 提供在线发票管理系统，允许您：",
+    "serviceDescriptionItems": [
+      "创建和管理专业发票",
+      "存储和组织客户信息",
+      "跟踪发票状态和付款历史",
+      "生成发票 PDF",
+      "管理多个发票模板"
+    ],
     "userObligations": "用户义务",
     "userObligationsText": "使用 {appName} 时，您同意：",
+    "userObligationsItems": [
+      "在发票中提供准确信息",
+      "保持账户凭证安全",
+      "不将服务用于非法目的",
+      "不尝试中断或破坏服务",
+      "遵守您所在司法管辖区的相关税务和商业法规"
+    ],
     "dataAndContent": "数据和内容",
     "dataAndContentText1": "您保留使用 {appName} 创建的内容的所有权利，包括您的发票、客户信息和业务数据。我们不主张对您内容的所有权。",
     "dataAndContentText2": "您负责：",
+    "dataAndContentResponsibilities": [
+      "发票信息的准确性",
+      "为税务目的保留适当的记录",
+      "获取使用客户信息的必要许可",
+      "备份您的重要数据"
+    ],
     "serviceAvailability": "服务可用性",
     "serviceAvailabilityText": "虽然我们努力保持高可用性，但我们不保证不间断地访问服务。我们可能偶尔需要暂停访问以部署更新或执行维护。",
     "limitationOfLiability": "责任限制",
     "limitationOfLiabilityText": "{appName} 按\"原样\"提供，没有任何保证。我们不对以下负责：",
+    "limitationOfLiabilityItems": [
+      "生成的发票的准确性",
+      "与使用我们的服务相关的任何财务损失",
+      "遵守当地税务或商业法规",
+      "服务中断时的数据丢失"
+    ],
     "changesToService": "服务变更",
     "changesToServiceText": "我们保留随时修改或终止服务任何部分的权利。我们将通过应用程序或电子邮件通知重大变更。",
     "termination": "终止",
