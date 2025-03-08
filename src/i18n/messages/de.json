@@ -346,89 +346,89 @@
     "itemDescription": "Positionsbeschreibung",
     "thankYou": "Vielen Dank für die Nutzung von BillEasy!",
     "export": {
-      "title": "Exportar Factura",
-      "description": "Elija un formato para exportar su factura",
+      "title": "Rechnung exportieren",
+      "description": "Wählen Sie ein Format zum Exportieren der Rechnung",
       "formats": {
-        "pdf": "Exportar como PDF",
-        "json": "Exportar como JSON",
-        "csv": "Exportar como CSV",
-        "xlsx": "Exportar como XLSX",
-        "xml": "Exportar como XML"
+        "pdf": "Als PDF exportieren",
+        "json": "Als JSON exportieren",
+        "csv": "Als CSV exportieren",
+        "xlsx": "Als XLSX exportieren",
+        "xml": "Als XML exportieren"
       }
     },
     "addressSwap": {
       "toast": {
-        "title": "Direcciones Intercambiadas",
-        "description": "La información de Facturar Desde y Facturar A ha sido cambiada."
+        "title": "Adressen getauscht",
+        "description": "Die Informationen von Rechnungsersteller und Rechnungsempfänger wurden getauscht."
       }
     },
     "email": {
-      "title": "Enviar correo electrónico de factura",
-      "description": "Envíe esta factura por correo electrónico a su cliente.",
-      "defaultSubject": "Factura de su empresa",
-      "defaultMessage": "Encuentre adjunta la factura de su compra reciente.",
+      "title": "Rechnung per E-Mail senden",
+      "description": "Senden Sie diese Rechnung per E-Mail an Ihren Kunden.",
+      "defaultSubject": "Rechnung von Ihrem Unternehmen",
+      "defaultMessage": "Bitte finden Sie die Rechnung für Ihren letzten Einkauf im Anhang.",
       "recipient": {
-        "label": "Correo electrónico del destinatario",
-        "placeholder": "cliente@ejemplo.com"
+        "label": "E-Mail-Empfänger",
+        "placeholder": "kunde@beispiel.com"
       },
       "subject": {
-        "label": "Asunto",
-        "placeholder": "Factura de su empresa"
+        "label": "Betreff",
+        "placeholder": "Rechnung von Ihrem Unternehmen"
       },
       "message": {
-        "label": "Mensaje",
-        "placeholder": "Escriba su mensaje aquí"
+        "label": "Nachricht",
+        "placeholder": "Geben Sie hier Ihre Nachricht ein"
       },
       "buttons": {
-        "cancel": "Cancelar",
-        "send": "Enviar correo electrónico",
-        "sending": "Enviando..."
+        "cancel": "Abbrechen",
+        "send": "E-Mail senden",
+        "sending": "Wird gesendet..."
       },
       "toast": {
         "success": {
-          "title": "Éxito",
-          "description": "Correo electrónico enviado a {recipient}"
+          "title": "Erfolg",
+          "description": "E-Mail gesendet an {recipient}"
         },
         "error": {
-          "title": "Error",
-          "description": "No se pudo enviar el correo electrónico. Inténtelo de nuevo."
+          "title": "Fehler",
+          "description": "E-Mail konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
         }
       }
     },
     "filters": {
       "status": {
-        "label": "Estado",
-        "placeholder": "Todos los estados",
+        "label": "Status",
+        "placeholder": "Alle Status",
         "options": {
-          "all": "Todos los estados",
-          "draft": "Borrador",
-          "pending": "Pendiente",
-          "paid": "Pagado",
-          "overdue": "Vencido",
-          "cancelled": "Cancelado"
+          "all": "Alle Status",
+          "draft": "Entwurf",
+          "pending": "Ausstehend",
+          "paid": "Bezahlt",
+          "overdue": "Überfällig",
+          "cancelled": "Storniert"
         }
       },
       "search": {
-        "label": "Buscar",
-        "placeholder": "Buscar por cliente, número de factura, etc.",
-        "clear": "Limpiar búsqueda"
+        "label": "Suchen",
+        "placeholder": "Suchen nach Kunde, Rechnungsnummer usw.",
+        "clear": "Suche löschen"
       },
-      "clearFilters": "Limpiar filtros"
+      "clearFilters": "Filter löschen"
     },
     "statusSelector": {
       "statuses": {
-        "draft": "Borrador",
-        "pending": "Pendiente",
-        "paid": "Pagado",
-        "overdue": "Vencido",
-        "cancelled": "Cancelado"
+        "draft": "Entwurf",
+        "pending": "Ausstehend",
+        "paid": "Bezahlt",
+        "overdue": "Überfällig",
+        "cancelled": "Storniert"
       },
       "toast": {
-        "title": "Estado actualizado",
-        "description": "Estado de la factura cambiado a {status}",
+        "title": "Status aktualisiert",
+        "description": "Rechnungsstatus geändert zu {status}",
         "error": {
-          "title": "Error",
-          "description": "No se pudo actualizar el estado de la factura"
+          "title": "Fehler",
+          "description": "Rechnungsstatus konnte nicht aktualisiert werden"
         }
       }
     }

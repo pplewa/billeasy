@@ -292,89 +292,89 @@
     "itemDescription": "项目描述",
     "thankYou": "感谢使用 BillEasy！",
     "export": {
-      "title": "Exportar Factura",
-      "description": "Elija un formato para exportar su factura",
+      "title": "导出发票",
+      "description": "选择导出发票的格式",
       "formats": {
-        "pdf": "Exportar como PDF",
-        "json": "Exportar como JSON",
-        "csv": "Exportar como CSV",
-        "xlsx": "Exportar como XLSX",
-        "xml": "Exportar como XML"
+        "pdf": "导出为 PDF",
+        "json": "导出为 JSON",
+        "csv": "导出为 CSV",
+        "xlsx": "导出为 XLSX",
+        "xml": "导出为 XML"
       }
     },
     "addressSwap": {
       "toast": {
-        "title": "Direcciones Intercambiadas",
-        "description": "La información de Facturar Desde y Facturar A ha sido cambiada."
+        "title": "地址已交换",
+        "description": "发件人和收件人信息已交换。"
       }
     },
     "email": {
-      "title": "Enviar correo electrónico de factura",
-      "description": "Envíe esta factura por correo electrónico a su cliente.",
-      "defaultSubject": "Factura de su empresa",
-      "defaultMessage": "Encuentre adjunta la factura de su compra reciente.",
+      "title": "发送发票电子邮件",
+      "description": "通过电子邮件将此发票发送给您的客户。",
+      "defaultSubject": "来自您公司的发票",
+      "defaultMessage": "请查看最近购买的发票附件。",
       "recipient": {
-        "label": "Correo electrónico del destinatario",
-        "placeholder": "cliente@ejemplo.com"
+        "label": "收件人电子邮件",
+        "placeholder": "client@example.com"
       },
       "subject": {
-        "label": "Asunto",
-        "placeholder": "Factura de su empresa"
+        "label": "主题",
+        "placeholder": "来自您公司的发票"
       },
       "message": {
-        "label": "Mensaje",
-        "placeholder": "Escriba su mensaje aquí"
+        "label": "消息",
+        "placeholder": "在此处输入您的消息"
       },
       "buttons": {
-        "cancel": "Cancelar",
-        "send": "Enviar correo electrónico",
-        "sending": "Enviando..."
+        "cancel": "取消",
+        "send": "发送电子邮件",
+        "sending": "正在发送..."
       },
       "toast": {
         "success": {
-          "title": "Éxito",
-          "description": "Correo electrónico enviado a {recipient}"
+          "title": "成功",
+          "description": "电子邮件已发送至 {recipient}"
         },
         "error": {
-          "title": "Error",
-          "description": "No se pudo enviar el correo electrónico. Inténtelo de nuevo."
+          "title": "错误",
+          "description": "发送电子邮件失败。请重试。"
         }
       }
     },
     "filters": {
       "status": {
-        "label": "Estado",
-        "placeholder": "Todos los estados",
+        "label": "状态",
+        "placeholder": "所有状态",
         "options": {
-          "all": "Todos los estados",
-          "draft": "Borrador",
-          "pending": "Pendiente",
-          "paid": "Pagado",
-          "overdue": "Vencido",
-          "cancelled": "Cancelado"
+          "all": "所有状态",
+          "draft": "草稿",
+          "pending": "待处理",
+          "paid": "已付款",
+          "overdue": "逾期",
+          "cancelled": "已取消"
         }
       },
       "search": {
-        "label": "Buscar",
-        "placeholder": "Buscar por cliente, número de factura, etc.",
-        "clear": "Limpiar búsqueda"
+        "label": "搜索",
+        "placeholder": "按客户、发票号等搜索",
+        "clear": "清除搜索"
       },
-      "clearFilters": "Limpiar filtros"
+      "clearFilters": "清除过滤器"
     },
     "statusSelector": {
       "statuses": {
-        "draft": "Borrador",
-        "pending": "Pendiente",
-        "paid": "Pagado",
-        "overdue": "Vencido",
-        "cancelled": "Cancelado"
+        "draft": "草稿",
+        "pending": "待处理",
+        "paid": "已付款",
+        "overdue": "逾期",
+        "cancelled": "已取消"
       },
       "toast": {
-        "title": "Estado actualizado",
-        "description": "Estado de la factura cambiado a {status}",
+        "title": "状态已更新",
+        "description": "发票状态已更改为 {status}",
         "error": {
-          "title": "Error",
-          "description": "No se pudo actualizar el estado de la factura"
+          "title": "错误",
+          "description": "无法更新发票状态"
         }
       }
     }

@@ -113,5 +113,6 @@ For languages with more complex pluralization rules (like Polish), include all n
 4. Add the same translation keys to all other language files
 5. Test the feature across all supported languages
 6. Make adjustments if necessary (for text length, special characters, etc.)
+7. You can use [update_translations_example.py](mdc:scripts/translations/update_translations_example.py) script as an example of how to bulk modify translations
 
 Following these guidelines will ensure a consistent, maintainable approach to internationalization across the BillEasy application.

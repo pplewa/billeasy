@@ -292,8 +292,8 @@
     "itemDescription": "Descrição do item",
     "thankYou": "Obrigado por usar o BillEasy!",
     "export": {
-      "title": "Exportar Factura",
-      "description": "Elija un formato para exportar su factura",
+      "title": "Exportar Fatura",
+      "description": "Escolha um formato para exportar sua fatura",
       "formats": {
         "pdf": "Exportar como PDF",
         "json": "Exportar como JSON",
@@ -304,77 +304,77 @@
     },
     "addressSwap": {
       "toast": {
-        "title": "Direcciones Intercambiadas",
-        "description": "La información de Facturar Desde y Facturar A ha sido cambiada."
+        "title": "Endereços Trocados",
+        "description": "As informações de Faturar De e Faturar Para foram alteradas."
       }
     },
     "email": {
-      "title": "Enviar correo electrónico de factura",
-      "description": "Envíe esta factura por correo electrónico a su cliente.",
-      "defaultSubject": "Factura de su empresa",
-      "defaultMessage": "Encuentre adjunta la factura de su compra reciente.",
+      "title": "Enviar e-mail de fatura",
+      "description": "Envie esta fatura por e-mail para seu cliente.",
+      "defaultSubject": "Fatura da sua empresa",
+      "defaultMessage": "Encontre em anexo a fatura da sua compra recente.",
       "recipient": {
-        "label": "Correo electrónico del destinatario",
-        "placeholder": "cliente@ejemplo.com"
+        "label": "E-mail do destinatário",
+        "placeholder": "cliente@exemplo.com"
       },
       "subject": {
-        "label": "Asunto",
-        "placeholder": "Factura de su empresa"
+        "label": "Assunto",
+        "placeholder": "Fatura da sua empresa"
       },
       "message": {
-        "label": "Mensaje",
-        "placeholder": "Escriba su mensaje aquí"
+        "label": "Mensagem",
+        "placeholder": "Digite sua mensagem aqui"
       },
       "buttons": {
         "cancel": "Cancelar",
-        "send": "Enviar correo electrónico",
+        "send": "Enviar e-mail",
         "sending": "Enviando..."
       },
       "toast": {
         "success": {
-          "title": "Éxito",
-          "description": "Correo electrónico enviado a {recipient}"
+          "title": "Sucesso",
+          "description": "E-mail enviado para {recipient}"
         },
         "error": {
-          "title": "Error",
-          "description": "No se pudo enviar el correo electrónico. Inténtelo de nuevo."
+          "title": "Erro",
+          "description": "Falha ao enviar o e-mail. Tente novamente."
         }
       }
     },
     "filters": {
       "status": {
-        "label": "Estado",
-        "placeholder": "Todos los estados",
+        "label": "Status",
+        "placeholder": "Todos os status",
         "options": {
-          "all": "Todos los estados",
-          "draft": "Borrador",
-          "pending": "Pendiente",
-          "paid": "Pagado",
+          "all": "Todos os status",
+          "draft": "Rascunho",
+          "pending": "Pendente",
+          "paid": "Pago",
           "overdue": "Vencido",
           "cancelled": "Cancelado"
         }
       },
       "search": {
-        "label": "Buscar",
-        "placeholder": "Buscar por cliente, número de factura, etc.",
-        "clear": "Limpiar búsqueda"
+        "label": "Pesquisar",
+        "placeholder": "Pesquisar por cliente, número da fatura, etc.",
+        "clear": "Limpar pesquisa"
       },
-      "clearFilters": "Limpiar filtros"
+      "clearFilters": "Limpar filtros"
     },
     "statusSelector": {
       "statuses": {
-        "draft": "Borrador",
-        "pending": "Pendiente",
-        "paid": "Pagado",
+        "draft": "Rascunho",
+        "pending": "Pendente",
+        "paid": "Pago",
         "overdue": "Vencido",
         "cancelled": "Cancelado"
       },
       "toast": {
-        "title": "Estado actualizado",
-        "description": "Estado de la factura cambiado a {status}",
+        "title": "Status atualizado",
+        "description": "Status da fatura alterado para {status}",
         "error": {
-          "title": "Error",
-          "description": "No se pudo actualizar el estado de la factura"
+          "title": "Erro",
+          "description": "Falha ao atualizar o status da fatura"
         }
       }
     }
