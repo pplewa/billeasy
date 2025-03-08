@@ -249,7 +249,7 @@
     "addressLookahead": {
       "manualEntry": "Entrada manual",
       "searchAddress": "Buscar endereço",
-      "searchPlaceholder": "Digite para buscar um endereço...",
+      "searchPlaceholder": "Digite para buscar endereço...",
       "suggestions": "Sugestões de endereço",
       "error": "Erro:"
     },
@@ -278,7 +278,7 @@
       "formField": "useFormField deve ser usado dentro de <FormField>"
     },
     "billFrom": {
-      "title": "Faturar de",
+      "title": "Faturado por",
       "name": "Nome",
       "namePlaceholder": "Seu nome ou nome da empresa",
       "address": "Endereço",
@@ -287,13 +287,13 @@
       "phone": "Telefone",
       "phonePlaceholder": "Número de telefone",
       "customFields": {
-        "show": "Adicionar campos personalizados",
-        "hide": "Ocultar campos personalizados",
+        "show": "Adicionar Campos Personalizados",
+        "hide": "Ocultar Campos Personalizados",
         "fieldName": "Campo {number}",
         "fieldValue": "Valor",
         "fieldNamePlaceholder": "Nome do campo",
         "fieldValuePlaceholder": "Valor do campo",
-        "addAnother": "Adicionar outro campo"
+        "addAnother": "Adicionar Outro Campo"
       }
     },
     "billTo": {
@@ -306,35 +306,40 @@
       "phone": "Telefone",
       "phonePlaceholder": "Número de telefone",
       "customFields": {
-        "show": "Adicionar campos personalizados",
-        "hide": "Ocultar campos personalizados",
-        "fieldName": "Nome do campo {number}",
-        "fieldValue": "Valor do campo {number}",
+        "show": "Adicionar Campos Personalizados",
+        "hide": "Ocultar Campos Personalizados",
+        "fieldName": "Nome do Campo {number}",
+        "fieldValue": "Valor do Campo {number}",
         "fieldNamePlaceholder": "Nome do campo",
         "fieldValuePlaceholder": "Valor do campo",
-        "addAnother": "Adicionar outro campo"
+        "addAnother": "Adicionar Outro Campo"
       }
     },
     "invoiceDetails": {
-      "title": "Detalhes da fatura",
-      "invoiceNumber": "Número da fatura",
-      "invoiceDate": "Data da fatura",
-      "dueDate": "Data de vencimento",
-      "poNumber": "Número do pedido",
-      "poNumberPlaceholder": "Número de ordem de compra"
+      "title": "Detalhes da Fatura",
+      "description": "Insira os detalhes da fatura",
+      "invoiceNumber": "Número da Fatura",
+      "invoiceNumberPlaceholder": "FAT-001",
+      "poNumber": "Número do Pedido",
+      "poNumberPlaceholder": "PED-001",
+      "invoiceDate": "Data da Fatura",
+      "dueDate": "Data de Vencimento",
+      "currency": "Moeda"
     },
     "paymentInfo": {
-      "title": "Informações de pagamento",
-      "bankName": "Nome do banco",
+      "title": "Informações de Pagamento",
+      "bankName": "Nome do Banco",
       "bankNamePlaceholder": "Nome do banco",
-      "accountName": "Nome da conta",
+      "accountName": "Nome da Conta",
       "accountNamePlaceholder": "Nome da conta",
-      "accountNumber": "Número da conta",
-      "accountNumberPlaceholder": "Número da conta"
+      "accountNumber": "Número da Conta",
+      "accountNumberPlaceholder": "Número da conta",
+      "paymentTerms": "Condições de Pagamento",
+      "paymentTermsPlaceholder": "p. ex., Líquido 30"
     },
     "items": {
       "title": "Itens",
-      "addItem": "Adicionar item",
+      "addItem": "Adicionar Item",
       "name": "Nome",
       "namePlaceholder": "Nome do item",
       "description": "Descrição",
@@ -349,7 +354,7 @@
     },
     "taxDetails": {
       "title": "Detalhes do Imposto",
-      "taxId": "ID Fiscal",
+      "taxId": "ID do Imposto",
       "taxIdPlaceholder": "Número de identificação fiscal",
       "taxAmount": "Valor do Imposto",
       "amountType": "Tipo de Valor",
@@ -358,34 +363,57 @@
       "amountTypeFixed": "Valor Fixo"
     },
     "discountDetails": {
-      "title": "Detalhes do desconto",
-      "discountRate": "Taxa de desconto (%)",
-      "discountAmount": "Valor do desconto"
+      "title": "Detalhes do Desconto",
+      "discountAmount": "Valor do Desconto",
+      "amountType": "Tipo de Valor",
+      "amountTypePlaceholder": "Selecionar tipo de valor",
+      "amountTypePercentage": "Porcentagem (%)",
+      "amountTypeFixed": "Valor Fixo"
     },
     "additionalNotes": {
-      "title": "Notas adicionais",
-      "notesPlaceholder": "Adicione quaisquer notas adicionais ou termos de serviço"
+      "title": "Notas Adicionais",
+      "notesPlaceholder": "Adicione notas adicionais ou termos de serviço"
     },
     "signature": {
       "title": "Assinatura",
-      "addSignature": "Adicionar assinatura",
+      "addSignature": "Adicionar Assinatura",
       "clear": "Limpar",
-      "save": "Salvar assinatura",
-      "placeholder": "Assine aqui"
+      "save": "Salvar Assinatura",
+      "placeholder": "Assine aqui",
+      "uploadedSignatureAlt": "Assinatura carregada",
+      "uploadButtonText": "Clique para carregar assinatura",
+      "supportedFormats": "Suporta PNG, JPG ou GIF",
+      "clearButton": "Limpar",
+      "doneButton": "Concluído",
+      "fontStyle": "Estilo de Fonte",
+      "fontStylePlaceholder": "Selecionar estilo de fonte",
+      "colorSelectAriaLabel": "Selecionar cor {colorName}",
+      "drawCanvasAriaLabel": "Tela para desenhar assinatura",
+      "drawTab": "Desenhar",
+      "typeTab": "Digitar",
+      "uploadTab": "Carregar",
+      "signatureAlt": "Assinatura"
     },
     "navigation": {
       "back": "Voltar",
       "next": "Próximo",
-      "finish": "Finalizar"
+      "finish": "Concluir"
     },
     "selectors": {
       "template": {
         "placeholder": "Selecionar modelo"
+      },
+      "status": {
+        "placeholder": "Selecionar status",
+        "allStatuses": "Todos os status"
+      },
+      "sort": {
+        "placeholder": "Ordenar por"
       }
     }
   },
   "invoiceTemplate": {
     "title": "Modelo de Fatura",
-    "preview": "Pré-visualização"
+    "preview": "Visualização"
   }
 } 

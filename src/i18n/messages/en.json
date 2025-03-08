@@ -336,15 +336,15 @@
     "addressLookahead": {
       "manualEntry": "Manual Entry",
       "searchAddress": "Search Address",
-      "searchPlaceholder": "Type to search for an address...",
-      "suggestions": "Address suggestions",
+      "searchPlaceholder": "Type to search address...",
+      "suggestions": "Address Suggestions",
       "error": "Error:"
     },
     "wizard": {
-      "stepError": "Please fix the errors in this step",
+      "stepError": "Please correct errors in this step",
       "steps": {
         "senderReceiver": {
-          "title": "Sender & Receiver",
+          "title": "Sender and Receiver",
           "description": "Add sender and receiver details"
         },
         "invoiceDetails": {
@@ -353,21 +353,21 @@
         },
         "items": {
           "title": "Items",
-          "description": "Add invoice items with tax and discount"
+          "description": "Add invoice items with taxes and discounts"
         },
         "signature": {
-          "title": "Signature & Notes",
+          "title": "Signature and Notes",
           "description": "Add signature and additional notes"
         }
       }
     },
     "errors": {
-      "formField": "useFormField should be used within <FormField>"
+      "formField": "useFormField must be used within <FormField>"
     },
     "billFrom": {
       "title": "Bill From",
       "name": "Name",
-      "namePlaceholder": "Your name or business name",
+      "namePlaceholder": "Your name or company name",
       "address": "Address",
       "email": "Email",
       "emailPlaceholder": "Email address",
@@ -386,7 +386,7 @@
     "billTo": {
       "title": "Bill To",
       "name": "Name",
-      "namePlaceholder": "Client name or business name",
+      "namePlaceholder": "Client or company name",
       "address": "Address",
       "email": "Email",
       "emailPlaceholder": "Email address",
@@ -395,8 +395,8 @@
       "customFields": {
         "show": "Add Custom Fields",
         "hide": "Hide Custom Fields",
-        "fieldName": "Field {number} Name",
-        "fieldValue": "Field {number} Value",
+        "fieldName": "Field Name {number}",
+        "fieldValue": "Field Value {number}",
         "fieldNamePlaceholder": "Field name",
         "fieldValuePlaceholder": "Field value",
         "addAnother": "Add Another Field"
@@ -404,11 +404,14 @@
     },
     "invoiceDetails": {
       "title": "Invoice Details",
+      "description": "Enter invoice details",
       "invoiceNumber": "Invoice Number",
+      "invoiceNumberPlaceholder": "INV-001",
+      "poNumber": "PO Number",
+      "poNumberPlaceholder": "PO-001",
       "invoiceDate": "Invoice Date",
       "dueDate": "Due Date",
-      "poNumber": "PO Number",
-      "poNumberPlaceholder": "Purchase Order Number"
+      "currency": "Currency"
     },
     "paymentInfo": {
       "title": "Payment Information",
@@ -417,7 +420,9 @@
       "accountName": "Account Name",
       "accountNamePlaceholder": "Account name",
       "accountNumber": "Account Number",
-      "accountNumberPlaceholder": "Account number"
+      "accountNumberPlaceholder": "Account number",
+      "paymentTerms": "Payment Terms",
+      "paymentTermsPlaceholder": "e.g., Net 30"
     },
     "items": {
       "title": "Items",
@@ -437,7 +442,7 @@
     "taxDetails": {
       "title": "Tax Details",
       "taxId": "Tax ID",
-      "taxIdPlaceholder": "Tax ID number",
+      "taxIdPlaceholder": "Tax identification number",
       "taxAmount": "Tax Amount",
       "amountType": "Amount Type",
       "amountTypePlaceholder": "Select amount type",
@@ -446,8 +451,11 @@
     },
     "discountDetails": {
       "title": "Discount Details",
-      "discountRate": "Discount Rate (%)",
-      "discountAmount": "Discount Amount"
+      "discountAmount": "Discount Amount",
+      "amountType": "Amount Type",
+      "amountTypePlaceholder": "Select amount type",
+      "amountTypePercentage": "Percentage (%)",
+      "amountTypeFixed": "Fixed Amount"
     },
     "additionalNotes": {
       "title": "Additional Notes",
@@ -458,7 +466,20 @@
       "addSignature": "Add Signature",
       "clear": "Clear",
       "save": "Save Signature",
-      "placeholder": "Sign here"
+      "placeholder": "Sign here",
+      "uploadedSignatureAlt": "Uploaded signature",
+      "uploadButtonText": "Click to upload signature",
+      "supportedFormats": "Supports PNG, JPG or GIF",
+      "clearButton": "Clear",
+      "doneButton": "Done",
+      "fontStyle": "Font Style",
+      "fontStylePlaceholder": "Select font style",
+      "colorSelectAriaLabel": "Select color {colorName}",
+      "drawCanvasAriaLabel": "Signature drawing canvas",
+      "drawTab": "Draw",
+      "typeTab": "Type",
+      "uploadTab": "Upload",
+      "signatureAlt": "Signature"
     },
     "navigation": {
       "back": "Back",

@@ -344,8 +344,8 @@
       "stepError": "Bitte korrigieren Sie die Fehler in diesem Schritt",
       "steps": {
         "senderReceiver": {
-          "title": "Absender & Empfänger",
-          "description": "Absender- und Empfängerdetails hinzufügen"
+          "title": "Absender und Empfänger",
+          "description": "Details des Absenders und Empfängers hinzufügen"
         },
         "invoiceDetails": {
           "title": "Rechnungsdetails", 
@@ -356,16 +356,16 @@
           "description": "Rechnungspositionen mit Steuern und Rabatten hinzufügen"
         },
         "signature": {
-          "title": "Signatur & Notizen",
-          "description": "Signatur und zusätzliche Notizen hinzufügen"
+          "title": "Unterschrift und Notizen",
+          "description": "Unterschrift und zusätzliche Notizen hinzufügen"
         }
       }
     },
     "errors": {
-      "formField": "useFormField sollte innerhalb von <FormField> verwendet werden"
+      "formField": "useFormField muss innerhalb von <FormField> verwendet werden"
     },
     "billFrom": {
-      "title": "Rechnungssteller",
+      "title": "Rechnungsersteller",
       "name": "Name",
       "namePlaceholder": "Ihr Name oder Firmenname",
       "address": "Adresse",
@@ -374,13 +374,13 @@
       "phone": "Telefon",
       "phonePlaceholder": "Telefonnummer",
       "customFields": {
-        "show": "Benutzerdefinierte Felder hinzufügen",
-        "hide": "Benutzerdefinierte Felder ausblenden",
+        "show": "Benutzerdefinierte Felder Hinzufügen",
+        "hide": "Benutzerdefinierte Felder Ausblenden",
         "fieldName": "Feld {number}",
         "fieldValue": "Wert",
         "fieldNamePlaceholder": "Feldname",
         "fieldValuePlaceholder": "Feldwert",
-        "addAnother": "Weiteres Feld hinzufügen"
+        "addAnother": "Weiteres Feld Hinzufügen"
       }
     },
     "billTo": {
@@ -393,22 +393,25 @@
       "phone": "Telefon",
       "phonePlaceholder": "Telefonnummer",
       "customFields": {
-        "show": "Benutzerdefinierte Felder hinzufügen",
-        "hide": "Benutzerdefinierte Felder ausblenden",
+        "show": "Benutzerdefinierte Felder Hinzufügen",
+        "hide": "Benutzerdefinierte Felder Ausblenden",
         "fieldName": "Feldname {number}",
         "fieldValue": "Feldwert {number}",
         "fieldNamePlaceholder": "Feldname",
         "fieldValuePlaceholder": "Feldwert",
-        "addAnother": "Weiteres Feld hinzufügen"
+        "addAnother": "Weiteres Feld Hinzufügen"
       }
     },
     "invoiceDetails": {
       "title": "Rechnungsdetails",
+      "description": "Rechnungsdetails eingeben",
       "invoiceNumber": "Rechnungsnummer",
+      "invoiceNumberPlaceholder": "RG-001",
+      "poNumber": "Bestellnummer",
+      "poNumberPlaceholder": "BE-001",
       "invoiceDate": "Rechnungsdatum",
       "dueDate": "Fälligkeitsdatum",
-      "poNumber": "Bestellnummer",
-      "poNumberPlaceholder": "Bestellnummer"
+      "currency": "Währung"
     },
     "paymentInfo": {
       "title": "Zahlungsinformationen",
@@ -417,11 +420,13 @@
       "accountName": "Kontoinhaber",
       "accountNamePlaceholder": "Kontoinhaber",
       "accountNumber": "Kontonummer",
-      "accountNumberPlaceholder": "Kontonummer"
+      "accountNumberPlaceholder": "Kontonummer",
+      "paymentTerms": "Zahlungsbedingungen",
+      "paymentTermsPlaceholder": "z.B., Netto 30"
     },
     "items": {
       "title": "Positionen",
-      "addItem": "Position hinzufügen",
+      "addItem": "Position Hinzufügen",
       "name": "Name",
       "namePlaceholder": "Positionsname",
       "description": "Beschreibung",
@@ -446,8 +451,11 @@
     },
     "discountDetails": {
       "title": "Rabattdetails",
-      "discountRate": "Rabattsatz (%)",
-      "discountAmount": "Rabattbetrag"
+      "discountAmount": "Rabattbetrag",
+      "amountType": "Betragsart",
+      "amountTypePlaceholder": "Betragsart auswählen",
+      "amountTypePercentage": "Prozentsatz (%)",
+      "amountTypeFixed": "Fester Betrag"
     },
     "additionalNotes": {
       "title": "Zusätzliche Hinweise",
@@ -455,10 +463,23 @@
     },
     "signature": {
       "title": "Unterschrift",
-      "addSignature": "Unterschrift hinzufügen",
+      "addSignature": "Unterschrift Hinzufügen",
       "clear": "Löschen",
-      "save": "Unterschrift speichern",
-      "placeholder": "Hier unterschreiben"
+      "save": "Unterschrift Speichern",
+      "placeholder": "Hier unterschreiben",
+      "uploadedSignatureAlt": "Hochgeladene Unterschrift",
+      "uploadButtonText": "Klicken Sie zum Hochladen der Unterschrift",
+      "supportedFormats": "Unterstützt PNG, JPG oder GIF",
+      "clearButton": "Löschen",
+      "doneButton": "Fertig",
+      "fontStyle": "Schriftstil",
+      "fontStylePlaceholder": "Schriftstil auswählen",
+      "colorSelectAriaLabel": "Farbe {colorName} auswählen",
+      "drawCanvasAriaLabel": "Unterschrift-Zeichenbereich",
+      "drawTab": "Zeichnen",
+      "typeTab": "Tippen",
+      "uploadTab": "Hochladen",
+      "signatureAlt": "Unterschrift"
     },
     "navigation": {
       "back": "Zurück",

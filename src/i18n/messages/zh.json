@@ -254,7 +254,7 @@
       "error": "错误："
     },
     "wizard": {
-      "stepError": "请修正此步骤中的错误",
+      "stepError": "请更正此步骤中的错误",
       "steps": {
         "senderReceiver": {
           "title": "发件人和收件人",
@@ -270,7 +270,7 @@
         },
         "signature": {
           "title": "签名和备注",
-          "description": "添加签名和附加备注"
+          "description": "添加签名和额外备注"
         }
       }
     },
@@ -278,7 +278,7 @@
       "formField": "useFormField 必须在 <FormField> 内使用"
     },
     "billFrom": {
-      "title": "发票出具方",
+      "title": "发票开具方",
       "name": "名称",
       "namePlaceholder": "您的姓名或公司名称",
       "address": "地址",
@@ -297,9 +297,9 @@
       }
     },
     "billTo": {
-      "title": "发票接收方",
+      "title": "发票收件人",
       "name": "名称",
-      "namePlaceholder": "客户姓名或公司名称",
+      "namePlaceholder": "客户或公司名称",
       "address": "地址",
       "email": "电子邮件",
       "emailPlaceholder": "电子邮件地址",
@@ -317,11 +317,14 @@
     },
     "invoiceDetails": {
       "title": "发票详情",
-      "invoiceNumber": "发票编号",
+      "description": "输入发票详情",
+      "invoiceNumber": "发票号码",
+      "invoiceNumberPlaceholder": "发-001",
+      "poNumber": "采购订单号",
+      "poNumberPlaceholder": "采-001",
       "invoiceDate": "发票日期",
       "dueDate": "到期日期",
-      "poNumber": "采购订单号",
-      "poNumberPlaceholder": "采购订单编号"
+      "currency": "货币"
     },
     "paymentInfo": {
       "title": "付款信息",
@@ -329,8 +332,10 @@
       "bankNamePlaceholder": "银行名称",
       "accountName": "账户名称",
       "accountNamePlaceholder": "账户名称",
-      "accountNumber": "账号",
-      "accountNumberPlaceholder": "账号"
+      "accountNumber": "账户号码",
+      "accountNumberPlaceholder": "账户号码",
+      "paymentTerms": "付款条款",
+      "paymentTermsPlaceholder": "例如，30天内"
     },
     "items": {
       "title": "项目",
@@ -345,13 +350,13 @@
       "discount": "折扣 (%)",
       "amount": "金额",
       "actions": "操作",
-      "noItems": "尚未添加任何项目。添加您的第一个项目以开始。"
+      "noItems": "尚未添加项目。添加您的第一个项目以开始。"
     },
     "taxDetails": {
       "title": "税费详情",
       "taxId": "税号",
       "taxIdPlaceholder": "税务识别号",
-      "taxAmount": "税额",
+      "taxAmount": "税费金额",
       "amountType": "金额类型",
       "amountTypePlaceholder": "选择金额类型",
       "amountTypePercentage": "百分比 (%)",
@@ -359,33 +364,56 @@
     },
     "discountDetails": {
       "title": "折扣详情",
-      "discountRate": "折扣率 (%)",
-      "discountAmount": "折扣金额"
+      "discountAmount": "折扣金额",
+      "amountType": "金额类型",
+      "amountTypePlaceholder": "选择金额类型",
+      "amountTypePercentage": "百分比 (%)",
+      "amountTypeFixed": "固定金额"
     },
     "additionalNotes": {
-      "title": "附加说明",
-      "notesPlaceholder": "添加任何附加说明或服务条款"
+      "title": "额外备注",
+      "notesPlaceholder": "添加额外备注或服务条款"
     },
     "signature": {
       "title": "签名",
       "addSignature": "添加签名",
       "clear": "清除",
       "save": "保存签名",
-      "placeholder": "在此签名"
+      "placeholder": "在此签名",
+      "uploadedSignatureAlt": "已上传的签名",
+      "uploadButtonText": "点击上传签名",
+      "supportedFormats": "支持 PNG、JPG 或 GIF",
+      "clearButton": "清除",
+      "doneButton": "完成",
+      "fontStyle": "字体样式",
+      "fontStylePlaceholder": "选择字体样式",
+      "colorSelectAriaLabel": "选择颜色 {colorName}",
+      "drawCanvasAriaLabel": "签名绘制画布",
+      "drawTab": "绘制",
+      "typeTab": "输入",
+      "uploadTab": "上传",
+      "signatureAlt": "签名"
     },
     "navigation": {
       "back": "返回",
       "next": "下一步",
       "finish": "完成"
     },
-    "invoiceTemplate": {
-      "title": "发票模板",
-      "preview": "预览"
-    },
     "selectors": {
       "template": {
         "placeholder": "选择模板"
+      },
+      "status": {
+        "placeholder": "选择状态",
+        "allStatuses": "所有状态"
+      },
+      "sort": {
+        "placeholder": "排序方式"
       }
     }
+  },
+  "invoiceTemplate": {
+    "title": "发票模板",
+    "preview": "预览"
   }
 } 

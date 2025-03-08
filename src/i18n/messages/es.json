@@ -336,7 +336,7 @@
     "addressLookahead": {
       "manualEntry": "Entrada manual",
       "searchAddress": "Buscar dirección",
-      "searchPlaceholder": "Escriba para buscar una dirección...",
+      "searchPlaceholder": "Escriba para buscar dirección...",
       "suggestions": "Sugerencias de dirección",
       "error": "Error:"
     },
@@ -352,8 +352,8 @@
           "description": "Agregar detalles de la factura e información de pago"
         },
         "items": {
-          "title": "Artículos",
-          "description": "Agregar artículos de la factura con impuestos y descuentos"
+          "title": "Elementos",
+          "description": "Agregar elementos de factura con impuestos y descuentos"
         },
         "signature": {
           "title": "Firma y Notas",
@@ -365,7 +365,7 @@
       "formField": "useFormField debe ser usado dentro de <FormField>"
     },
     "billFrom": {
-      "title": "Facturar desde",
+      "title": "Facturado por",
       "name": "Nombre",
       "namePlaceholder": "Su nombre o nombre de empresa",
       "address": "Dirección",
@@ -374,13 +374,13 @@
       "phone": "Teléfono",
       "phonePlaceholder": "Número de teléfono",
       "customFields": {
-        "show": "Añadir campos personalizados",
-        "hide": "Ocultar campos personalizados",
+        "show": "Agregar Campos Personalizados",
+        "hide": "Ocultar Campos Personalizados",
         "fieldName": "Campo {number}",
         "fieldValue": "Valor",
         "fieldNamePlaceholder": "Nombre del campo",
         "fieldValuePlaceholder": "Valor del campo",
-        "addAnother": "Añadir otro campo"
+        "addAnother": "Agregar Otro Campo"
       }
     },
     "billTo": {
@@ -393,35 +393,40 @@
       "phone": "Teléfono",
       "phonePlaceholder": "Número de teléfono",
       "customFields": {
-        "show": "Añadir campos personalizados",
-        "hide": "Ocultar campos personalizados",
-        "fieldName": "Nombre del campo {number}",
-        "fieldValue": "Valor del campo {number}",
+        "show": "Agregar Campos Personalizados",
+        "hide": "Ocultar Campos Personalizados",
+        "fieldName": "Nombre del Campo {number}",
+        "fieldValue": "Valor del Campo {number}",
         "fieldNamePlaceholder": "Nombre del campo",
         "fieldValuePlaceholder": "Valor del campo",
-        "addAnother": "Añadir otro campo"
+        "addAnother": "Agregar Otro Campo"
       }
     },
     "invoiceDetails": {
-      "title": "Detalles de la factura",
-      "invoiceNumber": "Número de factura",
-      "invoiceDate": "Fecha de emisión",
-      "dueDate": "Fecha de vencimiento",
-      "poNumber": "Número de orden",
-      "poNumberPlaceholder": "Número de orden de compra"
+      "title": "Detalles de la Factura",
+      "description": "Ingrese los detalles de la factura",
+      "invoiceNumber": "Número de Factura",
+      "invoiceNumberPlaceholder": "FAC-001",
+      "poNumber": "Número de Orden de Compra",
+      "poNumberPlaceholder": "OC-001",
+      "invoiceDate": "Fecha de Factura",
+      "dueDate": "Fecha de Vencimiento",
+      "currency": "Moneda"
     },
     "paymentInfo": {
-      "title": "Información de pago",
-      "bankName": "Nombre del banco",
+      "title": "Información de Pago",
+      "bankName": "Nombre del Banco",
       "bankNamePlaceholder": "Nombre del banco",
-      "accountName": "Nombre de la cuenta",
+      "accountName": "Nombre de la Cuenta",
       "accountNamePlaceholder": "Nombre de la cuenta",
-      "accountNumber": "Número de cuenta",
-      "accountNumberPlaceholder": "Número de cuenta"
+      "accountNumber": "Número de Cuenta",
+      "accountNumberPlaceholder": "Número de cuenta",
+      "paymentTerms": "Términos de Pago",
+      "paymentTermsPlaceholder": "p. ej., Neto 30"
     },
     "items": {
       "title": "Elementos",
-      "addItem": "Añadir elemento",
+      "addItem": "Agregar Elemento",
       "name": "Nombre",
       "namePlaceholder": "Nombre del elemento",
       "description": "Descripción",
@@ -432,33 +437,49 @@
       "discount": "Descuento (%)",
       "amount": "Importe",
       "actions": "Acciones",
-      "noItems": "Aún no se han añadido elementos. Añada su primer elemento para comenzar."
+      "noItems": "Aún no se han agregado elementos. Agregue su primer elemento para comenzar."
     },
     "taxDetails": {
       "title": "Detalles de Impuestos",
       "taxId": "ID Fiscal",
       "taxIdPlaceholder": "Número de identificación fiscal",
-      "taxAmount": "Monto de Impuestos",
-      "amountType": "Tipo de Monto",
-      "amountTypePlaceholder": "Seleccionar tipo de monto",
+      "taxAmount": "Importe de Impuestos",
+      "amountType": "Tipo de Importe",
+      "amountTypePlaceholder": "Seleccionar tipo de importe",
       "amountTypePercentage": "Porcentaje (%)",
-      "amountTypeFixed": "Monto Fijo"
+      "amountTypeFixed": "Importe Fijo"
     },
     "discountDetails": {
-      "title": "Detalles del descuento",
-      "discountRate": "Tasa de descuento (%)",
-      "discountAmount": "Importe del descuento"
+      "title": "Detalles de Descuento",
+      "discountAmount": "Importe de Descuento",
+      "amountType": "Tipo de Importe",
+      "amountTypePlaceholder": "Seleccionar tipo de importe",
+      "amountTypePercentage": "Porcentaje (%)",
+      "amountTypeFixed": "Importe Fijo"
     },
     "additionalNotes": {
-      "title": "Notas adicionales",
-      "notesPlaceholder": "Añada cualquier nota adicional o términos de servicio"
+      "title": "Notas Adicionales",
+      "notesPlaceholder": "Agregue notas adicionales o términos de servicio"
     },
     "signature": {
       "title": "Firma",
-      "addSignature": "Añadir firma",
-      "clear": "Limpiar",
-      "save": "Guardar firma",
-      "placeholder": "Firme aquí"
+      "addSignature": "Agregar Firma",
+      "clear": "Borrar",
+      "save": "Guardar Firma",
+      "placeholder": "Firme aquí",
+      "uploadedSignatureAlt": "Firma cargada",
+      "uploadButtonText": "Haga clic para cargar firma",
+      "supportedFormats": "Soporta PNG, JPG o GIF",
+      "clearButton": "Borrar",
+      "doneButton": "Listo",
+      "fontStyle": "Estilo de Fuente",
+      "fontStylePlaceholder": "Seleccionar estilo de fuente",
+      "colorSelectAriaLabel": "Seleccionar color {colorName}",
+      "drawCanvasAriaLabel": "Lienzo para dibujar firma",
+      "drawTab": "Dibujar",
+      "typeTab": "Escribir",
+      "uploadTab": "Cargar",
+      "signatureAlt": "Firma"
     },
     "navigation": {
       "back": "Atrás",

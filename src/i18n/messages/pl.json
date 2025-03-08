@@ -286,13 +286,13 @@
       "phone": "Telefon",
       "phonePlaceholder": "Numer telefonu",
       "customFields": {
-        "show": "Dodaj pola niestandardowe",
-        "hide": "Ukryj pola niestandardowe",
+        "show": "Dodaj Pola Niestandardowe",
+        "hide": "Ukryj Pola Niestandardowe",
         "fieldName": "Pole {number}",
         "fieldValue": "Wartość",
         "fieldNamePlaceholder": "Nazwa pola",
         "fieldValuePlaceholder": "Wartość pola",
-        "addAnother": "Dodaj kolejne pole"
+        "addAnother": "Dodaj Kolejne Pole"
       }
     },
     "billTo": {
@@ -305,40 +305,40 @@
       "phone": "Telefon",
       "phonePlaceholder": "Numer telefonu",
       "customFields": {
-        "show": "Dodaj pola niestandardowe",
-        "hide": "Ukryj pola niestandardowe",
-        "fieldName": "Nazwa pola {number}",
-        "fieldValue": "Wartość pola {number}",
+        "show": "Dodaj Pola Niestandardowe",
+        "hide": "Ukryj Pola Niestandardowe",
+        "fieldName": "Nazwa Pola {number}",
+        "fieldValue": "Wartość Pola {number}",
         "fieldNamePlaceholder": "Nazwa pola",
         "fieldValuePlaceholder": "Wartość pola",
-        "addAnother": "Dodaj kolejne pole"
+        "addAnother": "Dodaj Kolejne Pole"
       }
     },
     "invoiceDetails": {
-      "title": "Szczegóły faktury",
+      "title": "Szczegóły Faktury",
       "description": "Wprowadź szczegóły faktury",
-      "invoiceNumber": "Numer faktury",
-      "invoiceNumberPlaceholder": "INV-001",
-      "poNumber": "Numer zamówienia",
-      "poNumberPlaceholder": "PO-001",
-      "invoiceDate": "Data faktury",
-      "dueDate": "Termin płatności",
+      "invoiceNumber": "Numer Faktury",
+      "invoiceNumberPlaceholder": "FAK-001",
+      "poNumber": "Numer Zamówienia",
+      "poNumberPlaceholder": "ZAM-001",
+      "invoiceDate": "Data Faktury",
+      "dueDate": "Data Płatności",
       "currency": "Waluta"
     },
     "paymentInfo": {
-      "title": "Informacje o płatności",
-      "bankName": "Nazwa banku",
+      "title": "Informacje o Płatności",
+      "bankName": "Nazwa Banku",
       "bankNamePlaceholder": "Nazwa banku",
-      "accountName": "Nazwa konta",
+      "accountName": "Nazwa Konta",
       "accountNamePlaceholder": "Nazwa konta",
-      "accountNumber": "Numer konta",
+      "accountNumber": "Numer Konta",
       "accountNumberPlaceholder": "Numer konta",
-      "paymentTerms": "Warunki płatności",
+      "paymentTerms": "Warunki Płatności",
       "paymentTermsPlaceholder": "np. Netto 30"
     },
     "items": {
       "title": "Pozycje",
-      "addItem": "Dodaj pozycję",
+      "addItem": "Dodaj Pozycję",
       "name": "Nazwa",
       "namePlaceholder": "Nazwa pozycji",
       "description": "Opis",
@@ -362,29 +362,29 @@
       "amountTypeFixed": "Kwota Stała"
     },
     "discountDetails": {
-      "title": "Szczegóły rabatu",
-      "discountAmount": "Kwota rabatu",
-      "amountType": "Typ kwoty",
+      "title": "Szczegóły Rabatu",
+      "discountAmount": "Kwota Rabatu",
+      "amountType": "Typ Kwoty",
       "amountTypePlaceholder": "Wybierz typ kwoty",
       "amountTypePercentage": "Procent (%)",
-      "amountTypeFixed": "Kwota stała"
+      "amountTypeFixed": "Kwota Stała"
     },
     "additionalNotes": {
-      "title": "Dodatkowe notatki",
+      "title": "Dodatkowe Notatki",
       "notesPlaceholder": "Dodaj dodatkowe notatki lub warunki usługi"
     },
     "signature": {
       "title": "Podpis",
-      "addSignature": "Dodaj podpis",
+      "addSignature": "Dodaj Podpis",
       "clear": "Wyczyść",
-      "save": "Zapisz podpis",
+      "save": "Zapisz Podpis",
       "placeholder": "Podpisz tutaj",
       "uploadedSignatureAlt": "Przesłany podpis",
       "uploadButtonText": "Kliknij, aby przesłać podpis",
       "supportedFormats": "Obsługuje PNG, JPG lub GIF",
       "clearButton": "Wyczyść",
       "doneButton": "Gotowe",
-      "fontStyle": "Styl czcionki",
+      "fontStyle": "Styl Czcionki",
       "fontStylePlaceholder": "Wybierz styl czcionki",
       "colorSelectAriaLabel": "Wybierz kolor {colorName}",
       "drawCanvasAriaLabel": "Płótno do rysowania podpisu",
