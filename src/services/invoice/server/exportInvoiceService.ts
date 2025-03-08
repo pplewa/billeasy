@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Helpers
-import { flattenObject, getInvoiceTemplate } from "@/lib/helpers";
+import { flattenObject } from "@/lib/utils/object";
+import { getInvoiceTemplate } from "@/lib/utils/file";
 
 // Types
 import { ExportTypes } from "@/types";

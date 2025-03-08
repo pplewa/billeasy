@@ -530,7 +530,7 @@ export default function CreateInvoicePage({
     const autosaveInterval = setInterval(() => {
       const formData = form.getValues();
       if (formData && (formData.sender?.name || formData.receiver?.name)) {
-        saveDraftInvoice(formData as any);
+        saveDraftInvoice(formData);
       }
     }, 30000);
 

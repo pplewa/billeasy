@@ -3,7 +3,7 @@
 import { forwardRef, useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/ui";
 import { Check, Loader2, Search, Edit, Map } from "lucide-react";
 import { Button } from "@/components/ui/button";
 

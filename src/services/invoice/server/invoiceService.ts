@@ -115,20 +115,6 @@ export async function updateInvoice(
   invoiceData: InvoiceType
 ): Promise<InvoiceDocument | null> {
   try {
-    // Define a proper type for invoice items
-    interface InvoiceItem {
-      id?: string;
-      name?: string;
-      description?: string;
-      quantity?: number;
-      unitPrice?: number;
-      total?: number;
-      tax?: {
-        amount: number;
-        amountType: string;
-      };
-    }
-
     // FIX: Make sure we're using a proper update method that won't strip our data
     // For MongoDB/Mongoose (example):
     const updatedInvoice = await Invoice.findByIdAndUpdate(

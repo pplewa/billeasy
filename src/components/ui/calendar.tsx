@@ -3,7 +3,7 @@
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { addMonths, eachDayOfInterval, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, startOfMonth, startOfWeek, subMonths } from "date-fns"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/ui"
 
 interface CalendarProps {
   selected?: Date

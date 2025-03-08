@@ -8,7 +8,7 @@ import { ReceiptText, FileText, Receipt, UserSquare2 } from "lucide-react";
 import { useWizard } from "react-use-wizard";
 
 // Utils
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/ui";
 
 // Types
 import { InvoiceType } from "@/types";

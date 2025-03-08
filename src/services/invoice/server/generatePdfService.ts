@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Helpers
-import { getInvoiceTemplate } from "@/lib/helpers";
+import { getInvoiceTemplate } from "@/lib/utils/file";
 
 // Variables
 import { ENV } from "@/lib/variables";

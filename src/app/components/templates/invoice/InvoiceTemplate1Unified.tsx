@@ -1,11 +1,9 @@
 import React from "react";
+// Import formatCurrency from the new location
+import { formatCurrency, formatDate, parseNumber } from "@/lib/utils/formatting";
 
 // Components
 import InvoiceLayout from "./InvoiceLayout";
-
-// Helpers
-import { formatCurrency } from "@/lib/utils";
-import { formatDate, parseNumber } from "@/lib/format-utils";
 
 // Types
 import { InvoiceType, ItemType } from "@/types-optional";

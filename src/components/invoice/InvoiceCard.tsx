@@ -1,6 +1,6 @@
 import { InvoiceDocument } from "@/lib/db/models/Invoice";
 import { deleteInvoice, duplicateInvoice } from "@/services/invoice/client/invoiceClient";
-import { formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils/formatting";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pencil, Trash, Copy, Eye } from "lucide-react";

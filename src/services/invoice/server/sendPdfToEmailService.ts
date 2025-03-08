@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
 // Helpers
-import { fileToBuffer } from "@/lib/helpers";
+import { fileToBuffer } from "@/lib/utils/file";
 
 // Nodemailer
 import nodemailer, { SendMailOptions } from "nodemailer";

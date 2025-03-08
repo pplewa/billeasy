@@ -4,8 +4,7 @@ import React from "react";
 import InvoiceLayout from "./InvoiceLayout";
 
 // Helpers
-import { formatCurrency } from "@/lib/utils";
-import { formatDate, parseNumber } from "@/lib/format-utils";
+import { formatCurrency, formatDate, parseNumber } from "@/lib/utils/formatting";
 
 // Types
 import { InvoiceType, ItemType } from "@/types-optional";
