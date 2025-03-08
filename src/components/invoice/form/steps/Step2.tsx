@@ -9,7 +9,10 @@ export function Step2() {
   const t = useTranslations('form.billTo');
 
   return (
-    <WizardStep title={t('title')} description={t('description', { defaultValue: 'Enter your client\'s details' })}>
+    <WizardStep
+      title={t('title')}
+      description={t('description', { defaultValue: "Enter your client's details" })}
+    >
       <div className="grid gap-4">
         <FormField
           control={form.control}
@@ -86,7 +89,12 @@ export function Step2() {
               <FormItem>
                 <FormLabel>{t('email')}</FormLabel>
                 <FormControl>
-                  <Input {...field} type="email" value={field.value || ''} placeholder={t('emailPlaceholder')} />
+                  <Input
+                    {...field}
+                    type="email"
+                    value={field.value || ''}
+                    placeholder={t('emailPlaceholder')}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,7 +107,12 @@ export function Step2() {
               <FormItem>
                 <FormLabel>{t('phone')}</FormLabel>
                 <FormControl>
-                  <Input {...field} type="tel" value={field.value || ''} placeholder={t('phonePlaceholder')} />
+                  <Input
+                    {...field}
+                    type="tel"
+                    value={field.value || ''}
+                    placeholder={t('phonePlaceholder')}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -17,13 +17,15 @@ export const fieldValidators = {
    * Optional MongoDB ObjectId field that handles various formats
    * This handles both string representations and object instances of MongoDB ObjectIds
    */
-  objectIdOptional: z.union([
-    z.string(),
-    z.instanceof(Object), // Handles MongoDB ObjectId instances
-    z.undefined(),
-    z.null(),
-    z.literal(''),
-  ]).optional(),
+  objectIdOptional: z
+    .union([
+      z.string(),
+      z.instanceof(Object), // Handles MongoDB ObjectId instances
+      z.undefined(),
+      z.null(),
+      z.literal(''),
+    ])
+    .optional(),
 
   /**
    * Optional number field with transformation from string

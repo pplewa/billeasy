@@ -18,23 +18,19 @@ import {
 const TEMPLATES = [
   {
     id: 1,
-    name: 'Classic Business',
-    description: 'A clean, professional template with a blue accent color',
+    name: '1',
   },
   {
     id: 2,
-    name: 'Modern Minimalist',
-    description: 'A sleek, modern template with a dark accent color',
+    name: '2',
   },
   {
     id: 3,
-    name: 'Creative Professional',
-    description: 'A stylish template with a green accent color',
+    name: '3',
   },
   {
     id: 4,
-    name: 'Premium Corporate',
-    description: 'An elegant template with a purple accent color',
+    name: '4',
   },
 ];
 
@@ -66,7 +62,7 @@ export function TemplateViewSelector({
         Template:
       </Label>
       <Select value={selectedTemplate.toString()} onValueChange={handleTemplateChange}>
-        <SelectTrigger id="template-select" className="w-[180px]">
+        <SelectTrigger id="template-select" className="w-[60px]">
           <SelectValue placeholder="Select template" />
         </SelectTrigger>
         <SelectContent>

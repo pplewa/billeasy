@@ -130,7 +130,9 @@ export function InvoiceDetailsSection() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {invoiceDate ? format(new Date(invoiceDate), 'PPP') : t('selectDate', { defaultValue: 'Select date' })}
+                  {invoiceDate
+                    ? format(new Date(invoiceDate), 'PPP')
+                    : t('selectDate', { defaultValue: 'Select date' })}
                 </Button>
               </PopoverTrigger>
               <PopoverContent align="start" className="w-[280px] p-0">
@@ -160,7 +162,9 @@ export function InvoiceDetailsSection() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dueDate ? format(new Date(dueDate), 'PPP') : t('selectDate', { defaultValue: 'Select date' })}
+                  {dueDate
+                    ? format(new Date(dueDate), 'PPP')
+                    : t('selectDate', { defaultValue: 'Select date' })}
                 </Button>
               </PopoverTrigger>
               <PopoverContent align="start" className="w-[280px] p-0">
@@ -199,9 +203,13 @@ export function InvoiceDetailsSection() {
             </PopoverTrigger>
             <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
               <Command>
-                <CommandInput placeholder={t('searchCurrency', { defaultValue: 'Search currency...' })} />
+                <CommandInput
+                  placeholder={t('searchCurrency', { defaultValue: 'Search currency...' })}
+                />
                 <CommandList>
-                  <CommandEmpty>{t('noCurrencyFound', { defaultValue: 'No currency found.' })}</CommandEmpty>
+                  <CommandEmpty>
+                    {t('noCurrencyFound', { defaultValue: 'No currency found.' })}
+                  </CommandEmpty>
                   <CommandGroup>
                     {currencies.map((currency) => (
                       <CommandItem

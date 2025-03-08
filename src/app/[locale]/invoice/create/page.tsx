@@ -382,10 +382,10 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
             <AlertCircle className="h-5 w-5 text-yellow-500 mt-0.5" />
             <div>
               <h3 className="font-medium">{invoiceT('itemsDetected')}</h3>
-              <p>{parsedInvoice.details.items.length} {t('common.itemsLoaded')}</p>
-              <p className="text-sm text-muted-foreground">
-                {t('common.itemsNotVisible')}
+              <p>
+                {parsedInvoice.details.items.length} {t('common.itemsLoaded')}
               </p>
+              <p className="text-sm text-muted-foreground">{t('common.itemsNotVisible')}</p>
               <div className="mt-2">
                 <ForceUpdateButton parsedInvoice={parsedInvoice} />
               </div>
@@ -415,7 +415,9 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
           <AlertDialogHeader>
             <AlertDialogTitle>{t('invoice.authRequired')}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t('invoice.authRequiredDescription', { action: actionType === 'save' ? t('common.save') : t('common.export') })}
+              {t('invoice.authRequiredDescription', {
+                action: actionType === 'save' ? t('common.save') : t('common.export'),
+              })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

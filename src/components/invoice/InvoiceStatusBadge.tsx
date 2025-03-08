@@ -51,8 +51,8 @@ export function InvoiceStatusBadge({ status, className }: InvoiceStatusBadgeProp
   };
 
   return (
-    <Badge 
-      variant="outline" 
+    <Badge
+      variant="outline"
       className={cn('capitalize whitespace-nowrap', getCustomStyles(), className)}
     >
       {getLabel()}

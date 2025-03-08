@@ -33,7 +33,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
     useInvoiceParserStore();
   const router = useRouter();
   const { toast } = useToast();
-  
+
   // Get translations
   const t = useTranslations('home');
 
@@ -307,7 +307,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                       ) : (
                         <>
                           <ArrowUpRight className="h-5 w-5" />
-                          <span>{text.trim() ? t('hero.parseButton') : t('hero.createButton')}</span>
+                          <span>
+                            {text.trim() ? t('hero.parseButton') : t('hero.createButton')}
+                          </span>
                         </>
                       )}
                     </Button>
@@ -367,16 +369,16 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                   <span className="text-xl font-bold">1</span>
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{t('howItWorks.steps.create.title')}</h3>
-                <p className="text-muted-foreground">
-                  {t('howItWorks.steps.create.description')}
-                </p>
+                <p className="text-muted-foreground">{t('howItWorks.steps.create.description')}</p>
               </div>
 
               <div className="flex flex-col items-center text-center relative">
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary text-white mb-6 z-10">
                   <span className="text-xl font-bold">2</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{t('howItWorks.steps.customize.title')}</h3>
+                <h3 className="text-xl font-semibold mb-3">
+                  {t('howItWorks.steps.customize.title')}
+                </h3>
                 <p className="text-muted-foreground">
                   {t('howItWorks.steps.customize.description')}
                 </p>
@@ -386,7 +388,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                 <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary text-white mb-6 z-10">
                   <span className="text-xl font-bold">3</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{t('howItWorks.steps.download.title')}</h3>
+                <h3 className="text-xl font-semibold mb-3">
+                  {t('howItWorks.steps.download.title')}
+                </h3>
                 <p className="text-muted-foreground">
                   {t('howItWorks.steps.download.description')}
                 </p>
@@ -423,7 +427,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                     <Sparkles className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">{t('features.aiExtraction.title')}</h3>
+                    <h3 className="text-xl font-semibold mb-2">
+                      {t('features.aiExtraction.title')}
+                    </h3>
                     <p className="text-muted-foreground">
                       {t('features.aiExtraction.description')}
                     </p>
@@ -438,9 +444,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">{t('features.noAccount.title')}</h3>
-                    <p className="text-muted-foreground">
-                      {t('features.noAccount.description')}
-                    </p>
+                    <p className="text-muted-foreground">{t('features.noAccount.description')}</p>
                   </div>
                 </div>
               </div>
@@ -452,9 +456,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">{t('features.templates.title')}</h3>
-                    <p className="text-muted-foreground">
-                      {t('features.templates.description')}
-                    </p>
+                    <p className="text-muted-foreground">{t('features.templates.description')}</p>
                   </div>
                 </div>
               </div>
@@ -465,7 +467,9 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                     <BarChart className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">{t('features.calculations.title')}</h3>
+                    <h3 className="text-xl font-semibold mb-2">
+                      {t('features.calculations.title')}
+                    </h3>
                     <p className="text-muted-foreground">
                       {t('features.calculations.description')}
                     </p>
@@ -480,9 +484,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">{t('features.export.title')}</h3>
-                    <p className="text-muted-foreground">
-                      {t('features.export.description')}
-                    </p>
+                    <p className="text-muted-foreground">{t('features.export.description')}</p>
                   </div>
                 </div>
               </div>
@@ -494,9 +496,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-2">{t('features.branding.title')}</h3>
-                    <p className="text-muted-foreground">
-                      {t('features.branding.description')}
-                    </p>
+                    <p className="text-muted-foreground">{t('features.branding.description')}</p>
                   </div>
                 </div>
               </div>
@@ -520,12 +520,8 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
         {/* Call to Action */}
         <section className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              {t('cta.title')}
-            </h2>
-            <p className="text-xl text-muted-foreground mb-8">
-              {t('cta.subtitle')}
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('cta.title')}</h2>
+            <p className="text-xl text-muted-foreground mb-8">{t('cta.subtitle')}</p>
             <Button
               size="lg"
               onClick={() => router.push(`/${locale}/invoice/create`)}

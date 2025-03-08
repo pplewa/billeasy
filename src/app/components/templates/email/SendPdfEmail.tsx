@@ -26,7 +26,7 @@ type SendPdfEmailProps = {
 export default function SendPdfEmail({ invoiceNumber }: SendPdfEmailProps) {
   const t = useTranslations('emailTemplate.sendPdfEmail');
   const logo = `${BASE_URL}/assets/img/logo.png`;
-  
+
   return (
     <Html>
       <Head />
@@ -38,15 +38,11 @@ export default function SendPdfEmail({ invoiceNumber }: SendPdfEmailProps) {
               <Img src={logo} alt="BillEasy Logo" width={200} height={120} />
               <Heading className="leading-tight">{t('heading')}</Heading>
 
-              <Text>
-                {t('body', { invoiceNumber: `#${invoiceNumber}` })}
-              </Text>
+              <Text>{t('body', { invoiceNumber: `#${invoiceNumber}` })}</Text>
 
               <Hr />
 
-              <Text>
-                {t('signature')}
-              </Text>
+              <Text>{t('signature')}</Text>
             </Section>
           </Container>
         </Body>

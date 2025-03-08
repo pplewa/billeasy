@@ -37,7 +37,11 @@ export function SignatureSection() {
         {signatureData ? (
           <div className="relative aspect-[3/1] w-[300px] overflow-hidden rounded-lg border">
             {signatureData.startsWith('data:image') ? (
-              <img src={signatureData} alt={t('signatureAlt', { defaultValue: 'Signature' })} className="h-full w-full object-contain" />
+              <img
+                src={signatureData}
+                alt={t('signatureAlt', { defaultValue: 'Signature' })}
+                className="h-full w-full object-contain"
+              />
             ) : (
               <div
                 className="h-full w-full flex items-center justify-center"

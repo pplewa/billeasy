@@ -67,8 +67,12 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
               {sender?.zipCode}, {sender?.city}
             </p>
             <p>{sender?.country}</p>
-            <p>{t('email')}: {sender?.email}</p>
-            <p>{t('phone')}: {sender?.phone}</p>
+            <p>
+              {t('email')}: {sender?.email}
+            </p>
+            <p>
+              {t('phone')}: {sender?.phone}
+            </p>
           </div>
         </div>
 
@@ -83,8 +87,12 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
               {receiver?.zipCode}, {receiver?.city}
             </p>
             <p>{receiver?.country}</p>
-            <p>{t('email')}: {receiver?.email}</p>
-            <p>{t('phone')}: {receiver?.phone}</p>
+            <p>
+              {t('email')}: {receiver?.email}
+            </p>
+            <p>
+              {t('phone')}: {receiver?.phone}
+            </p>
           </div>
         </div>
       </div>
@@ -230,10 +238,10 @@ const InvoiceTemplate3 = (data: InvoiceType) => {
         <div className="mt-8 border-t border-gray-200 pt-4 text-right">
           <div className="inline-block max-w-xs">
             {details.signature.data.startsWith('data:image') ? (
-              <img 
-                src={details.signature.data} 
-                alt={t('authorizedSignature')} 
-                className="max-h-20 max-w-full" 
+              <img
+                src={details.signature.data}
+                alt={t('authorizedSignature')}
+                className="max-h-20 max-w-full"
               />
             ) : (
               <p

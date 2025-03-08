@@ -44,9 +44,15 @@ function SignatureModalContent({ onSave, onOpenChange }: Omit<SignatureModalProp
   return (
     <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as SignatureTabs)}>
       <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value={SignatureTabs.DRAW}>{t('drawTab', { defaultValue: 'Draw' })}</TabsTrigger>
-        <TabsTrigger value={SignatureTabs.TYPE}>{t('typeTab', { defaultValue: 'Type' })}</TabsTrigger>
-        <TabsTrigger value={SignatureTabs.UPLOAD}>{t('uploadTab', { defaultValue: 'Upload' })}</TabsTrigger>
+        <TabsTrigger value={SignatureTabs.DRAW}>
+          {t('drawTab', { defaultValue: 'Draw' })}
+        </TabsTrigger>
+        <TabsTrigger value={SignatureTabs.TYPE}>
+          {t('typeTab', { defaultValue: 'Type' })}
+        </TabsTrigger>
+        <TabsTrigger value={SignatureTabs.UPLOAD}>
+          {t('uploadTab', { defaultValue: 'Upload' })}
+        </TabsTrigger>
       </TabsList>
       <DrawSignature handleSaveSignature={handleSaveSignature} />
       <TypeSignature handleSaveSignature={handleSaveSignature} />

@@ -95,7 +95,9 @@ export function InvoiceCard({
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-lg">{t('table.number')} #{invoice.details?.invoiceNumber}</CardTitle>
+        <CardTitle className="text-lg">
+          {t('table.number')} #{invoice.details?.invoiceNumber}
+        </CardTitle>
         <InvoiceStatusSelector
           invoiceId={invoiceId}
           currentStatus={status}
@@ -116,9 +118,11 @@ export function InvoiceCard({
             <span className="text-sm font-medium">{t('table.amount')}:</span>
             <span className="text-sm">
               {invoice.details?.currency}{' '}
-              {Array.isArray(invoice.details?.items) ? invoice.details?.items
-                ?.reduce((sum, item) => sum + (item?.unitPrice ?? 0) * (item?.quantity ?? 0), 0)
-                .toFixed(2) : 0}
+              {Array.isArray(invoice.details?.items)
+                ? invoice.details?.items
+                    ?.reduce((sum, item) => sum + (item?.unitPrice ?? 0) * (item?.quantity ?? 0), 0)
+                    .toFixed(2)
+                : 0}
             </span>
           </div>
         </div>

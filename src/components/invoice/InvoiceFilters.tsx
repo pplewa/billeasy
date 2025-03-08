@@ -84,7 +84,9 @@ export function InvoiceFilters({
               <SelectItem value={InvoiceStatus.PENDING}>{t('status.options.pending')}</SelectItem>
               <SelectItem value={InvoiceStatus.PAID}>{t('status.options.paid')}</SelectItem>
               <SelectItem value={InvoiceStatus.OVERDUE}>{t('status.options.overdue')}</SelectItem>
-              <SelectItem value={InvoiceStatus.CANCELLED}>{t('status.options.cancelled')}</SelectItem>
+              <SelectItem value={InvoiceStatus.CANCELLED}>
+                {t('status.options.cancelled')}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>

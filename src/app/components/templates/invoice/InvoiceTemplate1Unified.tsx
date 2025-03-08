@@ -72,8 +72,16 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
               </p>
             )}
             {receiver?.country && <p>{receiver?.country}</p>}
-            {receiver?.email && <p>{t('email')}: {receiver?.email}</p>}
-            {receiver?.phone && <p>{t('phone')}: {receiver?.phone}</p>}
+            {receiver?.email && (
+              <p>
+                {t('email')}: {receiver?.email}
+              </p>
+            )}
+            {receiver?.phone && (
+              <p>
+                {t('phone')}: {receiver?.phone}
+              </p>
+            )}
           </div>
         </div>
         <div className="sm:text-right">
@@ -254,10 +262,10 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
               }}
             >
               {details.signature.data.startsWith('data:image') ? (
-                <img 
-                  src={details.signature.data} 
-                  alt={t('authorizedSignature')} 
-                  className="max-h-20 max-w-full" 
+                <img
+                  src={details.signature.data}
+                  alt={t('authorizedSignature')}
+                  className="max-h-20 max-w-full"
                 />
               ) : (
                 details.signature.data

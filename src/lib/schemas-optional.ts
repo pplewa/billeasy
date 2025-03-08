@@ -6,13 +6,15 @@ const fieldValidators = {
   stringOptional: z.string().optional().or(z.null()).or(z.literal('')),
 
   // MongoDB ObjectId can be string, object, or optional
-  objectIdOptional: z.union([
-    z.string(),
-    z.instanceof(Object), // Handles both plain objects and MongoDB ObjectId instances
-    z.undefined(),
-    z.null(),
-    z.literal(''),
-  ]).optional(),
+  objectIdOptional: z
+    .union([
+      z.string(),
+      z.instanceof(Object), // Handles both plain objects and MongoDB ObjectId instances
+      z.undefined(),
+      z.null(),
+      z.literal(''),
+    ])
+    .optional(),
 
   // Number fields allow any number or are optional
   numberOptional: z

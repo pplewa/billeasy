@@ -35,7 +35,7 @@ export default function EditInvoicePage({
   const [locale, setLocale] = useState<string>('');
   const [invoiceId, setInvoiceId] = useState<string>('');
   const printRef = useRef<HTMLDivElement>(null);
-  
+
   // Get translations
   const t = useTranslations();
   const invoiceT = useTranslations('invoice');

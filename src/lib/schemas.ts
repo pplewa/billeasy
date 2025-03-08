@@ -159,7 +159,6 @@ const TaxDetailsSchema = z
   })
   .partial();
 
-
 // Signature Schema
 const SignatureSchema = z.object({
   data: fieldValidators.string.optional(),

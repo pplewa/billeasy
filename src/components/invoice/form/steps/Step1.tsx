@@ -86,7 +86,12 @@ export function Step1() {
               <FormItem>
                 <FormLabel>{t('email')}</FormLabel>
                 <FormControl>
-                  <Input {...field} type="email" value={field.value || ''} placeholder={t('emailPlaceholder')} />
+                  <Input
+                    {...field}
+                    type="email"
+                    value={field.value || ''}
+                    placeholder={t('emailPlaceholder')}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,7 +104,12 @@ export function Step1() {
               <FormItem>
                 <FormLabel>{t('phone')}</FormLabel>
                 <FormControl>
-                  <Input {...field} type="tel" value={field.value || ''} placeholder={t('phonePlaceholder')} />
+                  <Input
+                    {...field}
+                    type="tel"
+                    value={field.value || ''}
+                    placeholder={t('phonePlaceholder')}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

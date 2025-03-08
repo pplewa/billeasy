@@ -31,7 +31,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { InvoiceDocument } from '@/lib/db/models/Invoice';
-import { deleteInvoice, fetchInvoices, duplicateInvoice } from '@/services/invoice/client/invoiceClient';
+import {
+  deleteInvoice,
+  fetchInvoices,
+  duplicateInvoice,
+} from '@/services/invoice/client/invoiceClient';
 import {
   Loader2,
   PlusCircle,
@@ -305,13 +309,13 @@ export default function InvoicesPage() {
               {paginatedInvoices.map((invoice) => {
                 const invoiceId = invoice._id.toString();
                 const status = invoice.details?.status || InvoiceStatusEnum.DRAFT;
-                
+
                 return (
                   <TableRow
                     key={invoiceId}
                     className="group border-b hover:bg-secondary/10 transition-colors"
                   >
-                    <TableCell 
+                    <TableCell
                       className="font-medium cursor-pointer"
                       onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
                     >
@@ -386,7 +390,9 @@ export default function InvoicesPage() {
                             <Copy className="h-4 w-4 mr-1" />
                           )}
                           <span className="hidden sm:inline">
-                            {isDuplicating ? t('invoice.actions.duplicating') : t('invoice.actions.duplicate')}
+                            {isDuplicating
+                              ? t('invoice.actions.duplicating')
+                              : t('invoice.actions.duplicate')}
                           </span>
                         </Button>
                         <Button
@@ -568,8 +574,8 @@ export default function InvoicesPage() {
               >
                 <List className="h-4 w-4" />
               </Button>
-              <Select 
-                value={itemsPerPage.toString()} 
+              <Select
+                value={itemsPerPage.toString()}
                 onValueChange={(value) => setItemsPerPage(parseInt(value))}
               >
                 <SelectTrigger className="h-10 flex-1">
@@ -648,7 +654,7 @@ export default function InvoicesPage() {
                 {t('invoice.pagination.showing', {
                   start: (currentPage - 1) * itemsPerPage + 1,
                   end: Math.min(currentPage * itemsPerPage, filteredAndSortedInvoices.length),
-                  total: filteredAndSortedInvoices.length
+                  total: filteredAndSortedInvoices.length,
                 })}
               </div>
               <div className="flex gap-1">
@@ -723,9 +729,7 @@ export default function InvoicesPage() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t('invoice.deleteDialog.title')}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t('invoice.deleteDialog.description')}
-            </AlertDialogDescription>
+            <AlertDialogDescription>{t('invoice.deleteDialog.description')}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t('invoice.deleteDialog.cancel')}</AlertDialogCancel>

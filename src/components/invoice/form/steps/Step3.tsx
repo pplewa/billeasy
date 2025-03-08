@@ -24,17 +24,20 @@ export function Step3() {
   const status = watch('details.status');
 
   return (
-    <WizardStep title={t('title')} description={t('description', { defaultValue: 'Enter invoice details' })}>
+    <WizardStep
+      title={t('title')}
+      description={t('description', { defaultValue: 'Enter invoice details' })}
+    >
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <label htmlFor="invoiceNumber" className="text-sm font-medium">
               {t('invoiceNumber')}
             </label>
-            <Input 
-              id="invoiceNumber" 
-              placeholder={t('invoiceNumberPlaceholder', { defaultValue: 'INV-001' })} 
-              {...register('details.invoiceNumber')} 
+            <Input
+              id="invoiceNumber"
+              placeholder={t('invoiceNumberPlaceholder', { defaultValue: 'INV-001' })}
+              {...register('details.invoiceNumber')}
             />
           </div>
           <div className="space-y-2">
@@ -54,7 +57,10 @@ export function Step3() {
             <label htmlFor="invoiceDate" className="text-sm font-medium">
               {t('invoiceDate')}
             </label>
-            <DatePicker value={invoiceDate} onChange={(date) => setValue('details.invoiceDate', date)} />
+            <DatePicker
+              value={invoiceDate}
+              onChange={(date) => setValue('details.invoiceDate', date)}
+            />
           </div>
           <div className="space-y-2">
             <label htmlFor="dueDate" className="text-sm font-medium">

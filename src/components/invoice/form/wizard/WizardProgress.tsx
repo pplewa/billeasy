@@ -111,11 +111,7 @@ export function WizardProgress({ wizard }: WizardProgressProps) {
                   {step.title}
                 </span>
                 <span className="text-sm text-muted-foreground">{step.description}</span>
-                {hasErrors && (
-                  <span className="text-sm text-destructive">
-                    {t('stepError')}
-                  </span>
-                )}
+                {hasErrors && <span className="text-sm text-destructive">{t('stepError')}</span>}
               </button>
             </li>
           );

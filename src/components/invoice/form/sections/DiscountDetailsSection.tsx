@@ -45,17 +45,25 @@ export function DiscountDetailsSection() {
           />
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">{t('amountType', { defaultValue: 'Amount Type' })}</label>
+            <label className="text-sm font-medium">
+              {t('amountType', { defaultValue: 'Amount Type' })}
+            </label>
             <Select
               value={discountAmountType || undefined}
               onValueChange={(value) => setValue('details.discount.amountType', value)}
             >
               <SelectTrigger>
-                <SelectValue placeholder={t('amountTypePlaceholder', { defaultValue: 'Select amount type' })} />
+                <SelectValue
+                  placeholder={t('amountTypePlaceholder', { defaultValue: 'Select amount type' })}
+                />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="percentage">{t('amountTypePercentage', { defaultValue: 'Percentage (%)' })}</SelectItem>
-                <SelectItem value="fixed">{t('amountTypeFixed', { defaultValue: 'Fixed Amount' })}</SelectItem>
+                <SelectItem value="percentage">
+                  {t('amountTypePercentage', { defaultValue: 'Percentage (%)' })}
+                </SelectItem>
+                <SelectItem value="fixed">
+                  {t('amountTypeFixed', { defaultValue: 'Fixed Amount' })}
+                </SelectItem>
               </SelectContent>
             </Select>
             {errors.details?.discount?.amountType?.message && (

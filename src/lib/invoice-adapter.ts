@@ -44,7 +44,7 @@ interface NormalizedItem {
  */
 export function normalizeInvoice(source: SourceInvoice | null | undefined): InvoiceType {
   // Create a deep copy to avoid mutations, or start with an empty object if source is null/undefined
-  const invoice = source ? JSON.parse(JSON.stringify(source)) : {} as InvoiceType;
+  const invoice = source ? JSON.parse(JSON.stringify(source)) : ({} as InvoiceType);
 
   // Initialize required objects if they don't exist
   invoice.details = invoice.details || {};

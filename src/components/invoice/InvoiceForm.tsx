@@ -21,10 +21,7 @@ function Step1() {
   const t = useTranslations('form.wizard.steps.senderReceiver');
 
   return (
-    <WizardStep
-      title={t('title')}
-      description={t('description')}
-    >
+    <WizardStep title={t('title')} description={t('description')}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 relative">
         <BillFromSection />
 
@@ -48,10 +45,7 @@ function Step2() {
   const t = useTranslations('form.wizard.steps.invoiceDetails');
 
   return (
-    <WizardStep 
-      title={t('title')} 
-      description={t('description')}
-    >
+    <WizardStep title={t('title')} description={t('description')}>
       <div className="space-y-8">
         <InvoiceDetailsSection />
         <PaymentInformationSection />
@@ -64,10 +58,7 @@ function Step3() {
   const t = useTranslations('form.wizard.steps.items');
 
   return (
-    <WizardStep 
-      title={t('title')} 
-      description={t('description')}
-    >
+    <WizardStep title={t('title')} description={t('description')}>
       <Items />
     </WizardStep>
   );
@@ -77,10 +68,7 @@ function Step4() {
   const t = useTranslations('form.wizard.steps.signature');
 
   return (
-    <WizardStep 
-      title={t('title')} 
-      description={t('description')}
-    >
+    <WizardStep title={t('title')} description={t('description')}>
       <div className="space-y-8">
         <SignatureSection />
         <AdditionalNotesSection />

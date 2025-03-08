@@ -6,7 +6,6 @@ export interface PaymentInformation {
   accountNumber: string;
 }
 
-
 export interface InvoiceDetails {
   invoiceNumber: string;
   purchaseOrderNumber?: string;

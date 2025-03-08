@@ -489,7 +489,9 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
                       ))}
                   </ul>
                   {apiError && (
-                    <div className="p-2 text-sm text-destructive">{t('addressLookahead.error')} {apiError}</div>
+                    <div className="p-2 text-sm text-destructive">
+                      {t('addressLookahead.error')} {apiError}
+                    </div>
                   )}
                 </div>
               </div>

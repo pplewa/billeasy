@@ -21,11 +21,7 @@ interface WizardStepProps {
   showPrevious?: boolean;
 }
 
-export function WizardStep({
-  children,
-  showNext = true,
-  showPrevious = true,
-}: WizardStepProps) {
+export function WizardStep({ children, showNext = true, showPrevious = true }: WizardStepProps) {
   const { previousStep, activeStep, stepCount, nextStep, isFirstStep, isLastStep } = useWizard();
   const t = useTranslations('form.navigation');
 

@@ -97,7 +97,7 @@ export async function createInvoice(invoiceData: InvoiceType): Promise<InvoiceDo
   try {
     // Make a deep copy to avoid modifying the original
     const cleanData = JSON.parse(JSON.stringify(invoiceData));
-    
+
     // Always remove _id for new document creation
     if ('_id' in cleanData) {
       delete cleanData._id;
@@ -179,10 +179,10 @@ export async function duplicateInvoice(id: string): Promise<InvoiceDocument | nu
     // Convert to plain object and create a deep copy via JSON stringify/parse
     // This ensures all MongoDB-specific objects are converted to basic JS types
     const invoiceObj = JSON.parse(JSON.stringify(origInvoice.toObject()));
-    
+
     // Explicitly remove the _id field
     delete invoiceObj._id;
-    
+
     // Ensure any potentially nested _id fields are also removed (e.g., in arrays of subdocuments)
     if (invoiceObj.details?.items && Array.isArray(invoiceObj.details.items)) {
       invoiceObj.details.items = invoiceObj.details.items.map((item: Record<string, unknown>) => {

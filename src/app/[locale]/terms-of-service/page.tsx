@@ -13,7 +13,9 @@ function TermsOfServiceContent() {
       <h1 className="text-3xl font-bold mb-8">{t('title')}</h1>
 
       <div className="prose prose-lg max-w-none">
-        <p className="text-gray-600 mb-6">{t('lastUpdated')}: {new Date().toLocaleDateString()}</p>
+        <p className="text-gray-600 mb-6">
+          {t('lastUpdated')}: {new Date().toLocaleDateString()}
+        </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">1. {t('introduction')}</h2>
         <p>{t('introText', { appName })}</p>
@@ -21,9 +23,11 @@ function TermsOfServiceContent() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">2. {t('serviceDescription')}</h2>
         <p>{t('serviceDescriptionText', { appName })}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          {(t('serviceDescriptionItems', { returnObjects: true }) as string[]).map((item: string) => (
-            <li key={item}>{item}</li>
-          ))}
+          {(t('serviceDescriptionItems', { returnObjects: true }) as string[]).map(
+            (item: string) => (
+              <li key={item}>{item}</li>
+            )
+          )}
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">3. {t('userObligations')}</h2>
@@ -38,9 +42,11 @@ function TermsOfServiceContent() {
         <p>{t('dataAndContentText1', { appName })}</p>
         <p>{t('dataAndContentText2')}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          {(t('dataAndContentResponsibilities', { returnObjects: true }) as string[]).map((item: string) => (
-            <li key={item}>{item}</li>
-          ))}
+          {(t('dataAndContentResponsibilities', { returnObjects: true }) as string[]).map(
+            (item: string) => (
+              <li key={item}>{item}</li>
+            )
+          )}
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">5. {t('serviceAvailability')}</h2>
@@ -49,9 +55,11 @@ function TermsOfServiceContent() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">6. {t('limitationOfLiability')}</h2>
         <p>{t('limitationOfLiabilityText', { appName })}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          {(t('limitationOfLiabilityItems', { returnObjects: true }) as string[]).map((item: string) => (
-            <li key={item}>{item}</li>
-          ))}
+          {(t('limitationOfLiabilityItems', { returnObjects: true }) as string[]).map(
+            (item: string) => (
+              <li key={item}>{item}</li>
+            )
+          )}
         </ul>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">7. {t('changesToService')}</h2>

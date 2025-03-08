@@ -58,10 +58,20 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
           <div className="text-gray-600">
             <p className="font-semibold">{sender?.name}</p>
             <p>{sender?.address}</p>
-            <p>{sender?.zipCode}, {sender?.city}</p>
+            <p>
+              {sender?.zipCode}, {sender?.city}
+            </p>
             <p>{sender?.country}</p>
-            {sender?.email && <p>{t('email')}: {sender?.email}</p>}
-            {sender?.phone && <p>{t('phone')}: {sender?.phone}</p>}
+            {sender?.email && (
+              <p>
+                {t('email')}: {sender?.email}
+              </p>
+            )}
+            {sender?.phone && (
+              <p>
+                {t('phone')}: {sender?.phone}
+              </p>
+            )}
           </div>
         </div>
         <div className="sm:text-right">
@@ -69,10 +79,20 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
           <div className="text-gray-600">
             <p className="font-semibold">{receiver?.name}</p>
             <p>{receiver?.address}</p>
-            <p>{receiver?.zipCode}, {receiver?.city}</p>
+            <p>
+              {receiver?.zipCode}, {receiver?.city}
+            </p>
             <p>{receiver?.country}</p>
-            {receiver?.email && <p>{t('email')}: {receiver?.email}</p>}
-            {receiver?.phone && <p>{t('phone')}: {receiver?.phone}</p>}
+            {receiver?.email && (
+              <p>
+                {t('email')}: {receiver?.email}
+              </p>
+            )}
+            {receiver?.phone && (
+              <p>
+                {t('phone')}: {receiver?.phone}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -261,10 +281,10 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
               }}
             >
               {details.signature.data.startsWith('data:image') ? (
-                <img 
-                  src={details.signature.data} 
-                  alt={t('authorizedSignature')} 
-                  className="max-h-20 max-w-full" 
+                <img
+                  src={details.signature.data}
+                  alt={t('authorizedSignature')}
+                  className="max-h-20 max-w-full"
                 />
               ) : (
                 details.signature.data

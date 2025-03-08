@@ -47,7 +47,9 @@ export function TypeSignature({ handleSaveSignature }: TypeSignatureProps) {
           />
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">{t('fontStyle', { defaultValue: 'Font Style' })}</label>
+            <label className="text-sm font-medium">
+              {t('fontStyle', { defaultValue: 'Font Style' })}
+            </label>
             <Select
               value={selectedFont.name}
               onValueChange={(value) => {
@@ -58,7 +60,9 @@ export function TypeSignature({ handleSaveSignature }: TypeSignatureProps) {
               }}
             >
               <SelectTrigger>
-                <SelectValue placeholder={t('fontStylePlaceholder', { defaultValue: 'Select font style' })} />
+                <SelectValue
+                  placeholder={t('fontStylePlaceholder', { defaultValue: 'Select font style' })}
+                />
               </SelectTrigger>
               <SelectContent>
                 {typedSignatureFonts.map((font) => (

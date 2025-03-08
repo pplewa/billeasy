@@ -76,8 +76,12 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
               <p>{sender?.country}</p>
             </div>
             <div className="mt-3 text-gray-600">
-              <p>{t('email')}: {sender?.email}</p>
-              <p>{t('phone')}: {sender?.phone}</p>
+              <p>
+                {t('email')}: {sender?.email}
+              </p>
+              <p>
+                {t('phone')}: {sender?.phone}
+              </p>
             </div>
           </div>
 
@@ -95,8 +99,12 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
               <p>{receiver?.country}</p>
             </div>
             <div className="mt-3 text-gray-600">
-              <p>{t('email')}: {receiver?.email}</p>
-              <p>{t('phone')}: {receiver?.phone}</p>
+              <p>
+                {t('email')}: {receiver?.email}
+              </p>
+              <p>
+                {t('phone')}: {receiver?.phone}
+              </p>
             </div>
           </div>
 
@@ -255,10 +263,10 @@ const InvoiceTemplate4 = (data: InvoiceType) => {
         <div className="mt-8 text-right border-t border-gray-200 pt-4">
           <div className="inline-block">
             {details.signature.data.startsWith('data:image') ? (
-              <img 
-                src={details.signature.data} 
-                alt={t('authorizedSignature')} 
-                className="max-h-20 max-w-full" 
+              <img
+                src={details.signature.data}
+                alt={t('authorizedSignature')}
+                className="max-h-20 max-w-full"
               />
             ) : (
               <p

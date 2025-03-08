@@ -30,9 +30,9 @@ export function SignatureColorSelector({
           className="h-8 w-8 rounded-full p-0"
           style={{ backgroundColor: color.value }}
           onClick={() => handleColorButtonClick(color)}
-          aria-label={t('colorSelectAriaLabel', { 
+          aria-label={t('colorSelectAriaLabel', {
             defaultValue: `Select ${color.name} color`,
-            colorName: color.name 
+            colorName: color.name,
           })}
           data-selected={selectedColor.name === color.name}
         />

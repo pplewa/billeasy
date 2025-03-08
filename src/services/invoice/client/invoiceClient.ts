@@ -112,8 +112,8 @@ export async function createInvoice(invoice: FormInvoiceType): Promise<InvoiceRe
 }
 
 type PartialDeep<T> = {
-  [P in keyof T]?: Partial<T[P]>
-}
+  [P in keyof T]?: Partial<T[P]>;
+};
 
 /**
  * Update an existing invoice
@@ -122,7 +122,10 @@ type PartialDeep<T> = {
  * @returns {Promise<void>} A promise that resolves when the invoice is updated
  * @throws {Error} If there is an error updating the invoice
  */
-export async function updateInvoice(id: string, invoiceData: PartialDeep<FormInvoiceType>): Promise<void> {
+export async function updateInvoice(
+  id: string,
+  invoiceData: PartialDeep<FormInvoiceType>
+): Promise<void> {
   const response = await fetch(`/api/invoices/${id}`, {
     method: 'PUT',
     headers: {

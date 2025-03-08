@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Link, Locale, usePathname } from '@/i18n/routing';
 import useAuthStore from '@/store/auth-store';
 import { useLocale, useTranslations } from 'next-intl';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Globe } from 'lucide-react';
 

@@ -32,7 +32,9 @@ export function DrawSignature({ handleSaveSignature }: DrawSignatureProps) {
               penColor={selectedColor.value}
               canvasProps={{
                 className: 'w-full h-full',
-                'aria-label': t('drawCanvasAriaLabel', { defaultValue: 'Signature drawing canvas' })
+                'aria-label': t('drawCanvasAriaLabel', {
+                  defaultValue: 'Signature drawing canvas',
+                }),
               }}
             />
           </div>

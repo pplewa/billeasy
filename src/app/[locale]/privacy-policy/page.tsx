@@ -13,7 +13,9 @@ function PrivacyPolicyContent() {
       <h1 className="text-3xl font-bold mb-8">{t('title')}</h1>
 
       <div className="prose prose-lg max-w-none">
-        <p className="text-gray-600 mb-6">{t('lastUpdated')}: {new Date().toLocaleDateString()}</p>
+        <p className="text-gray-600 mb-6">
+          {t('lastUpdated')}: {new Date().toLocaleDateString()}
+        </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">1. {t('introduction')}</h2>
         <p>{t('introText', { appName })}</p>
@@ -21,7 +23,12 @@ function PrivacyPolicyContent() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">2. {t('dataWeCollect')}</h2>
         <p>{t('dataWeCollectText')}</p>
         <ul className="list-disc pl-6 my-4 space-y-2">
-          {(t('dataWeCollectItems', { returnObjects: true }) as Array<{title: string, description: string}>).map((item) => (
+          {(
+            t('dataWeCollectItems', { returnObjects: true }) as Array<{
+              title: string;
+              description: string;
+            }>
+          ).map((item) => (
             <li key={item.title}>
               <strong>{item.title}:</strong> {item.description}
             </li>

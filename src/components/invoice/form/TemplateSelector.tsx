@@ -44,7 +44,7 @@ const TEMPLATES = [
 export function TemplateSelector() {
   const t = useTranslations('form');
   const tInvoice = useTranslations('invoice');
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { watch, setValue } = useFormContext<any>();
   const selectedTemplate = watch('details.pdfTemplate') || 1;
