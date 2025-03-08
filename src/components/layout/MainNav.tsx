@@ -4,6 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Link, Locale, usePathname } from '@/i18n/routing';
 import useAuthStore from '@/store/auth-store';
 import { useLocale, useTranslations } from 'next-intl';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from '@/components/ui/dropdown-menu';
+import { Globe } from 'lucide-react';
 
 export default function MainNav() {
   const t = useTranslations('navigation');
@@ -73,6 +80,7 @@ export default function MainNav() {
 function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
+  const t = useTranslations('common');
 
   const languages: Record<Locale, { name: string; flag: string }> = {
     en: { name: 'English', flag: '🇺🇸' },
@@ -85,20 +93,29 @@ function LanguageSwitcher() {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      {Object.entries(languages).map(([lang, { name, flag }]) => (
-        <Link
-          key={lang}
-          href={pathname}
-          locale={lang as Locale}
-          className={`text-xs px-2 py-1 rounded-md ${
-            locale === lang ? 'bg-gray-100 font-medium' : 'hover:bg-gray-50'
-          }`}
-          title={name}
-        >
-          {flag}
-        </Link>
-      ))}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+          <Globe className="h-4 w-4" />
+          <span className="sr-only">{t('language')}</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {Object.entries(languages).map(([lang, { name, flag }]) => (
+          <DropdownMenuItem key={lang} asChild>
+            <Link
+              href={pathname}
+              locale={lang as Locale}
+              className={`flex items-center gap-2 w-full ${
+                locale === lang ? 'font-medium bg-accent' : ''
+              }`}
+            >
+              <span className="mr-1">{flag}</span>
+              <span>{name}</span>
+            </Link>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

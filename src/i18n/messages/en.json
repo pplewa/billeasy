@@ -132,7 +132,8 @@
     "clearSearch": "Clear search",
     "verifying": "Verifying...",
     "actions": "Actions",
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "language": "Language"
   },
   "footer": {
     "allRightsReserved": "All rights reserved",
