@@ -126,7 +126,7 @@ export function InvoiceDetailsSection() {
                   {invoiceDate ? format(new Date(invoiceDate), "PPP") : "Select date"}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
+              <PopoverContent align="start" className="w-[280px] p-0">
                 <Calendar
                   mode="single"
                   selected={invoiceDate ? new Date(invoiceDate) : undefined}
@@ -158,7 +158,7 @@ export function InvoiceDetailsSection() {
                   {dueDate ? format(new Date(dueDate), "PPP") : "Select date"}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
+              <PopoverContent align="start" className="w-[280px] p-0">
                 <Calendar
                   mode="single"
                   selected={dueDate ? new Date(dueDate) : undefined}
