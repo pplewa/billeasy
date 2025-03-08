@@ -126,7 +126,7 @@
     "export": "Exportar",
     "saving": "Salvando...",
     "deleting": "Excluindo...",
-    "saveInvoice": "Salvar fatura",
+    "saveInvoice": "Salvar Fatura",
     "itemsLoaded": "itens foram carregados da sua fatura.",
     "itemsNotVisible": "Se você não vê os itens na Etapa 3, clique no botão abaixo.",
     "close": "Fechar",
@@ -135,7 +135,8 @@
     "verifying": "Verificando...",
     "actions": "Ações",
     "openMenu": "Abrir menu",
-    "language": "Idioma"
+    "language": "Idioma",
+    "backToInvoices": "Voltar para Faturas"
   },
   "footer": {
     "allRightsReserved": "Todos os direitos reservados",
@@ -205,7 +206,7 @@
     "noMatchingInvoices": "Nenhuma fatura corresponde aos filtros atuais. Tente ajustar sua pesquisa ou filtros.",
     "noInvoicesYet": "Você ainda não criou nenhuma fatura. Comece criando sua primeira fatura!",
     "status": {
-      "all": "Todos os status",
+      "all": "Todos os estados",
       "draft": "Rascunho",
       "pending": "Pendente", 
       "paid": "Pago",

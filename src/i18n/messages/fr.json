@@ -135,7 +135,8 @@
     "verifying": "Vérification...",
     "actions": "Actions",
     "openMenu": "Ouvrir le menu",
-    "language": "Langue"
+    "language": "Langue",
+    "backToInvoices": "Retour aux Factures"
   },
   "footer": {
     "allRightsReserved": "Tous droits réservés",
@@ -149,24 +150,50 @@
     "introText": "Bienvenue sur {appName}. Nous respectons votre vie privée et nous nous engageons à protéger vos données personnelles. Cette politique de confidentialité vous informera sur la façon dont nous traitons vos données lors de l'utilisation de notre système de gestion de factures et sur les droits dont vous disposez concernant vos données.",
     "dataWeCollect": "Les données que nous collectons",
     "dataWeCollectText": "Nous collectons et traitons uniquement les données nécessaires à la fourniture de notre service de gestion de factures. Cela comprend :",
-    "accountData": "Données du compte",
-    "accountDataText": "Adresse e-mail et mot de passe pour l'authentification.",
-    "businessInfo": "Informations commerciales",
-    "businessInfoText": "Les détails de votre entreprise utilisés dans les factures (nom de l'entreprise, adresse, coordonnées).",
-    "clientData": "Données clients",
-    "clientDataText": "Informations sur vos clients nécessaires à la création de factures (noms d'entreprises, adresses, coordonnées).",
-    "invoiceData": "Données de facturation",
-    "invoiceDataText": "Informations contenues dans vos factures (articles, prix, conditions de paiement, notes).",
-    "usageData": "Données d'utilisation",
-    "usageDataText": "Informations de base sur la façon dont vous utilisez l'application pour améliorer notre service.",
+    "dataWeCollectItems": [
+      {
+        "title": "Données de compte",
+        "description": "Adresse e-mail et mot de passe pour l'authentification."
+      },
+      {
+        "title": "Informations commerciales",
+        "description": "Détails de votre entreprise utilisés dans les factures (nom de l'entreprise, adresse, coordonnées)."
+      },
+      {
+        "title": "Données clients",
+        "description": "Informations sur vos clients nécessaires à la création de factures (noms d'entreprises, adresses, coordonnées)."
+      },
+      {
+        "title": "Données de facture",
+        "description": "Informations contenues dans vos factures (articles, prix, conditions de paiement, notes)."
+      },
+      {
+        "title": "Données d'utilisation",
+        "description": "Informations de base sur la façon dont vous utilisez l'application pour améliorer notre service."
+      }
+    ],
     "howWeUseData": "Comment nous utilisons vos données",
     "howWeUseDataText": "Nous utilisons vos données exclusivement pour :",
+    "howWeUseDataItems": [
+      "Fournir le service de gestion de factures",
+      "Générer et gérer vos factures", 
+      "Stocker votre historique de factures",
+      "Améliorer les fonctionnalités de l'application",
+      "Garantir la sécurité de votre compte"
+    ],
     "dataStorage": "Stockage et sécurité des données",
     "dataStorageText": "Toutes les données sont stockées en toute sécurité dans notre base de données. Nous mettons en œuvre des mesures de sécurité appropriées pour protéger vos données contre tout accès, modification ou suppression non autorisés. Vos factures et informations commerciales ne sont accessibles que via votre compte authentifié.",
     "dataRetention": "Conservation des données",
     "dataRetentionText": "Nous conservons vos données tant que vous maintenez un compte actif. Les données de facturation sont conservées pour maintenir votre historique de facturation et se conformer aux exigences légales concernant la documentation commerciale. Vous pouvez demander la suppression de votre compte et des données associées à tout moment.",
     "yourRights": "Vos droits",
     "yourRightsText": "Vous avez le droit de :",
+    "yourRightsItems": [
+      "Accéder à vos données stockées",
+      "Corriger toute information inexacte", 
+      "Exporter vos données de factures",
+      "Supprimer votre compte et les données associées",
+      "Demander des informations sur le traitement de vos données"
+    ],
     "contactUs": "Contactez-nous",
     "contactUsText": "Si vous avez des questions concernant cette politique de confidentialité ou la façon dont nous traitons vos données, veuillez nous contacter à :",
     "email": "Email"
@@ -178,15 +205,41 @@
     "introText": "Bienvenue sur {appName}. Ces termes et conditions régissent votre utilisation de notre système de gestion de factures. En utilisant {appName}, vous acceptez ces conditions dans leur intégralité. Veuillez les lire attentivement avant d'utiliser le service.",
     "serviceDescription": "Description du service",
     "serviceDescriptionText": "{appName} fournit un système de gestion de factures en ligne qui vous permet de :",
+    "serviceDescriptionItems": [
+      "Créer et gérer des factures professionnelles",
+      "Stocker et organiser les informations clients", 
+      "Suivre le statut des factures et l'historique des paiements",
+      "Générer des PDF de factures",
+      "Gérer plusieurs modèles de factures"
+    ],
     "userObligations": "Obligations de l'utilisateur",
     "userObligationsText": "Lorsque vous utilisez {appName}, vous acceptez de :",
+    "userObligationsItems": [
+      "Fournir des informations précises dans vos factures",
+      "Maintenir la confidentialité de vos identifiants de compte",
+      "Ne pas utiliser le service à des fins illégales",
+      "Ne pas tenter de perturber ou de compromettre le service",
+      "Respecter les réglementations fiscales et commerciales pertinentes dans votre juridiction"
+    ],
     "dataAndContent": "Données et contenu",
     "dataAndContentText1": "Vous conservez tous les droits sur le contenu que vous créez en utilisant {appName}, y compris vos factures, informations clients et données commerciales. Nous ne revendiquons pas la propriété de votre contenu.",
     "dataAndContentText2": "Vous êtes responsable de :",
+    "dataAndContentResponsibilities": [
+      "La précision des informations dans vos factures",
+      "Tenir des registres appropriés à des fins fiscales", 
+      "Obtenir les autorisations nécessaires pour utiliser les informations des clients",
+      "Sauvegarder vos données importantes"
+    ],
     "serviceAvailability": "Disponibilité du service",
     "serviceAvailabilityText": "Bien que nous nous efforcions de maintenir une haute disponibilité, nous ne garantissons pas un accès ininterrompu au service. Nous pouvons occasionnellement avoir besoin de suspendre l'accès pour déployer des mises à jour ou effectuer une maintenance.",
     "limitationOfLiability": "Limitation de responsabilité",
     "limitationOfLiabilityText": "{appName} est fourni \"tel quel\" sans aucune garantie. Nous ne sommes pas responsables de :",
+    "limitationOfLiabilityItems": [
+      "La précision des factures générées",
+      "Toute perte financière liée à l'utilisation de notre service",
+      "Respect des réglementations fiscales ou commerciales locales", 
+      "Perte de données en cas d'interruption du service"
+    ],
     "changesToService": "Modifications du service",
     "changesToServiceText": "Nous nous réservons le droit de modifier ou d'interrompre toute partie du service à tout moment. Nous vous informerons des changements importants via l'application ou par e-mail.",
     "termination": "Résiliation",

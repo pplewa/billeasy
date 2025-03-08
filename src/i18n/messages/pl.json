@@ -126,7 +126,7 @@
     "export": "Eksportuj",
     "saving": "Zapisywanie...",
     "deleting": "Usuwanie...",
-    "saveInvoice": "Zapisz fakturę",
+    "saveInvoice": "Zapisz Fakturę",
     "itemsLoaded": "elementy zostały załadowane z faktury.",
     "itemsNotVisible": "Jeśli nie widzisz elementów w Kroku 3, kliknij przycisk poniżej.",
     "close": "Zamknij",
@@ -135,7 +135,8 @@
     "verifying": "Weryfikacja...",
     "actions": "Akcje",
     "openMenu": "Otwórz menu",
-    "language": "Język"
+    "language": "Język",
+    "backToInvoices": "Wróć do Faktur"
   },
   "footer": {
     "allRightsReserved": "Wszelkie prawa zastrzeżone",
@@ -205,7 +206,7 @@
     "noMatchingInvoices": "Żadne faktury nie pasują do aktualnych filtrów. Spróbuj dostosować wyszukiwanie lub filtry.",
     "noInvoicesYet": "Nie utworzyłeś jeszcze żadnych faktur. Zacznij od utworzenia pierwszej faktury!",
     "status": {
-      "all": "Wszystkie statusy",
+      "all": "Wszystkie stany",
       "draft": "Szkic",
       "pending": "Oczekujący", 
       "paid": "Opłacony",

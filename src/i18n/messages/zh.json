@@ -128,14 +128,15 @@
     "deleting": "删除中...",
     "saveInvoice": "保存发票",
     "itemsLoaded": "项目已从您的发票中加载。",
-    "itemsNotVisible": "如果您在步骤3中看不到项目，请点击下面的按钮。",
+    "itemsNotVisible": "如果在第3步中看不到项目，请点击下面的按钮。",
     "close": "关闭",
     "morePages": "更多页面",
     "clearSearch": "清除搜索",
     "verifying": "验证中...",
     "actions": "操作",
     "openMenu": "打开菜单",
-    "language": "语言"
+    "language": "语言",
+    "backToInvoices": "返回到发票"
   },
   "footer": {
     "allRightsReserved": "版权所有",

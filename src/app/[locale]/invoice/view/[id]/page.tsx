@@ -419,7 +419,7 @@ export default function ViewInvoicePage() {
         <Button variant="outline" asChild>
           <Link href={`/${locale}/invoices`}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            {t('common.backToInvoices')}
+            {t('backToInvoices')}
           </Link>
         </Button>
         <div className="flex items-center space-x-2">
@@ -429,24 +429,24 @@ export default function ViewInvoicePage() {
           />
           <Button variant="outline" onClick={handlePrint}>
             <Printer className="mr-2 h-4 w-4" />
-            {t('common.print')}
+            {t('print')}
           </Button>
           <Button variant="outline" asChild>
             <Link href={`/${locale}/invoice/edit/${id}`}>
               <Edit className="mr-2 h-4 w-4" />
-              {t('common.edit')}
+              {t('edit')}
             </Link>
           </Button>
           <InvoiceEmailModal invoice={adaptToInvoiceType(invoice)}>
             <Button variant="outline">
               <Mail className="mr-2 h-4 w-4" />
-              {t('common.email')}
+              {t('email')}
             </Button>
           </InvoiceEmailModal>
           <InvoiceExportModal invoice={adaptToInvoiceType(invoice)}>
             <Button>
               <Download className="mr-2 h-4 w-4" />
-              {t('common.export')}
+              {t('export')}
               <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </InvoiceExportModal>

@@ -135,7 +135,8 @@
     "verifying": "Überprüfung...",
     "actions": "Aktionen",
     "openMenu": "Menü öffnen",
-    "language": "Sprache"
+    "language": "Sprache",
+    "backToInvoices": "Zurück zu Rechnungen"
   },
   "footer": {
     "allRightsReserved": "Alle Rechte vorbehalten",
@@ -149,24 +150,52 @@
     "introText": "Willkommen bei {appName}. Wir respektieren Ihre Privatsphäre und verpflichten uns, Ihre persönlichen Daten zu schützen. Diese Datenschutzrichtlinie informiert Sie darüber, wie wir Ihre Daten bei der Nutzung unseres Rechnungsverwaltungssystems behandeln und welche Rechte Sie bezüglich Ihrer Daten haben.",
     "dataWeCollect": "Die Daten, die wir sammeln",
     "dataWeCollectText": "Wir sammeln und verarbeiten nur die Daten, die für die Bereitstellung unseres Rechnungsverwaltungsdienstes notwendig sind. Dazu gehören:",
-    "accountData": "Kontodaten",
-    "accountDataText": "E-Mail-Adresse und Passwort für die Authentifizierung.",
-    "businessInfo": "Geschäftsinformationen",
-    "businessInfoText": "Ihre Geschäftsdetails, die in Rechnungen verwendet werden (Firmenname, Adresse, Kontaktinformationen).",
-    "clientData": "Kundendaten",
-    "clientDataText": "Informationen über Ihre Kunden, die für die Rechnungserstellung erforderlich sind (Firmennamen, Adressen, Kontaktdaten).",
-    "invoiceData": "Rechnungsdaten",
-    "invoiceDataText": "Informationen, die in Ihren Rechnungen enthalten sind (Artikel, Preise, Zahlungsbedingungen, Notizen).",
+    "dataWeCollectItems": [
+      {
+        "title": "Kontodaten",
+        "description": "E-Mail-Adresse und Passwort zur Authentifizierung."
+      },
+      {
+        "title": "Geschäftsinformationen",
+        "description": "Geschäftsdetails, die in Rechnungen verwendet werden (Firmenname, Adresse, Kontaktinformationen)."
+      },
+      {
+        "title": "Kundendaten",
+        "description": "Informationen über Ihre Kunden, die für die Rechnungserstellung erforderlich sind (Firmennamen, Adressen, Kontaktdetails)."
+      },
+      {
+        "title": "Rechnungsdaten",
+        "description": "In Ihren Rechnungen enthaltene Informationen (Artikel, Preise, Zahlungsbedingungen, Notizen)."
+      },
+      {
+        "title": "Nutzungsdaten",
+        "description": "Grundlegende Informationen darüber, wie Sie die Anwendung nutzen, um unseren Service zu verbessern."
+      }
+    ],
     "usageData": "Nutzungsdaten",
     "usageDataText": "Grundlegende Informationen darüber, wie Sie die Anwendung nutzen, um unseren Service zu verbessern.",
     "howWeUseData": "Wie wir Ihre Daten verwenden",
     "howWeUseDataText": "Wir verwenden Ihre Daten ausschließlich für:",
+    "howWeUseDataItems": [
+      "Bereitstellung des Rechnungsmanagement-Services",
+      "Generierung und Verwaltung Ihrer Rechnungen", 
+      "Speicherung Ihres Rechnungsverlaufs",
+      "Verbesserung der Anwendungsfunktionalität",
+      "Sicherstellung der Sicherheit Ihres Kontos"
+    ],
     "dataStorage": "Datenspeicherung und Sicherheit",
     "dataStorageText": "Alle Daten werden sicher in unserer Datenbank gespeichert. Wir implementieren angemessene Sicherheitsmaßnahmen, um Ihre Daten vor unbefugtem Zugriff, Änderung oder Löschung zu schützen. Ihre Rechnungen und Geschäftsinformationen sind nur über Ihr authentifiziertes Konto zugänglich.",
     "dataRetention": "Datenspeicherung",
     "dataRetentionText": "Wir speichern Ihre Daten, solange Sie ein aktives Konto unterhalten. Rechnungsdaten werden aufbewahrt, um Ihren Rechnungsverlauf zu erhalten und gesetzliche Anforderungen bezüglich Geschäftsdokumentation zu erfüllen. Sie können jederzeit die Löschung Ihres Kontos und der zugehörigen Daten beantragen.",
     "yourRights": "Ihre Rechte",
     "yourRightsText": "Sie haben das Recht auf:",
+    "yourRightsItems": [
+      "Zugriff auf Ihre gespeicherten Daten",
+      "Korrektur ungenauer Informationen", 
+      "Exportieren Ihrer Rechnungsdaten",
+      "Löschen Ihres Kontos und der zugehörigen Daten",
+      "Anfrage von Informationen zur Verarbeitung Ihrer Daten"
+    ],
     "contactUs": "Kontaktieren Sie uns",
     "contactUsText": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie oder zur Verarbeitung Ihrer Daten haben, kontaktieren Sie uns bitte unter:",
     "email": "E-Mail"
@@ -178,15 +207,41 @@
     "introText": "Willkommen bei {appName}. Diese Bedingungen regeln Ihre Nutzung unseres Rechnungsverwaltungssystems. Durch die Nutzung von {appName} stimmen Sie diesen Bedingungen vollständig zu. Bitte lesen Sie sie sorgfältig durch, bevor Sie den Dienst nutzen.",
     "serviceDescription": "Dienstbeschreibung",
     "serviceDescriptionText": "{appName} bietet ein Online-Rechnungsverwaltungssystem, das Ihnen ermöglicht:",
+    "serviceDescriptionItems": [
+      "Erstellen und Verwalten professioneller Rechnungen",
+      "Speichern und Organisieren von Kundeninformationen", 
+      "Verfolgen des Rechnungsstatus und Zahlungsverlaufs",
+      "Generieren von Rechnungs-PDFs",
+      "Verwalten mehrerer Rechnungsvorlagen"
+    ],
     "userObligations": "Benutzerpflichten",
     "userObligationsText": "Bei der Nutzung von {appName} stimmen Sie zu:",
+    "userObligationsItems": [
+      "Bereitstellung genauer Informationen in Ihren Rechnungen",
+      "Sicherhalten Ihrer Kontoanmeldedaten",
+      "Keine Nutzung des Dienstes für illegale Zwecke",
+      "Kein Versuch, den Dienst zu stören oder zu kompromittieren",
+      "Einhaltung relevanter Steuer- und Geschäftsvorschriften in Ihrer Jurisdiktion"
+    ],
     "dataAndContent": "Daten und Inhalte",
     "dataAndContentText1": "Sie behalten alle Rechte an den Inhalten, die Sie mit {appName} erstellen, einschließlich Ihrer Rechnungen, Kundeninformationen und Geschäftsdaten. Wir beanspruchen kein Eigentum an Ihren Inhalten.",
     "dataAndContentText2": "Sie sind verantwortlich für:",
+    "dataAndContentResponsibilities": [
+      "Die Genauigkeit der Informationen in Ihren Rechnungen",
+      "Führen angemessener Aufzeichnungen für Steuerzwecke", 
+      "Einholen der erforderlichen Genehmigungen zur Nutzung von Kundeninformationen",
+      "Sichern Ihrer wichtigen Daten"
+    ],
     "serviceAvailability": "Dienstverfügbarkeit",
     "serviceAvailabilityText": "Obwohl wir uns bemühen, eine hohe Verfügbarkeit zu gewährleisten, garantieren wir keinen ununterbrochenen Zugang zum Dienst. Wir müssen möglicherweise gelegentlich den Zugang aussetzen, um Updates zu implementieren oder Wartungsarbeiten durchzuführen.",
     "limitationOfLiability": "Haftungsbeschränkung",
     "limitationOfLiabilityText": "{appName} wird \"wie besehen\" ohne jegliche Garantien bereitgestellt. Wir sind nicht verantwortlich für:",
+    "limitationOfLiabilityItems": [
+      "Die Genauigkeit der erstellten Rechnungen",
+      "Jegliche finanziellen Verluste im Zusammenhang mit der Nutzung unseres Dienstes",
+      "Einhaltung lokaler Steuer- oder Geschäftsvorschriften", 
+      "Datenverlust im Falle einer Dienstunterbrechung"
+    ],
     "changesToService": "Änderungen am Dienst",
     "changesToServiceText": "Wir behalten uns das Recht vor, jederzeit Teile des Dienstes zu ändern oder einzustellen. Wir werden Sie über wesentliche Änderungen über die Anwendung oder per E-Mail informieren.",
     "termination": "Kündigung",
