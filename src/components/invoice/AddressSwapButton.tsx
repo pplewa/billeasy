@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight } from "lucide-react";
 import { useFormContext } from "react-hook-form";
-import { InvoiceType } from "@/types";
+import { FormInvoiceType } from "@/types-optional";
 import { useToast } from "@/components/ui/use-toast";
 
 type AddressFields = {
@@ -18,11 +18,14 @@ type AddressFields = {
  * 1. Form mode: Uses react-hook-form to swap form data
  * 2. Parser mode: Uses invoice parser store to swap parsed data
  */
-export function AddressSwapButton() {
+export function AddressSwapButton({ mode = "form" }: { mode?: "form" | "parser" }) {
   const { toast } = useToast();
-  const { getValues, setValue } = useFormContext<InvoiceType>();
+  const { getValues, setValue } = useFormContext<FormInvoiceType>();
 
   const handleSwap = () => {
+    // Log the current mode
+    console.log(`Swapping addresses in ${mode} mode`);
+    
     // Get current values
     const sender = getValues("sender") || {};
     const receiver = getValues("receiver") || {};

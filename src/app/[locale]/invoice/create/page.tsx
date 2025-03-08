@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { InvoiceContextProvider } from "@/contexts/InvoiceContext";
 import { InvoiceSchema } from "@/lib/schemas-optional";
 import { createInvoice } from "@/services/invoice/client/invoiceClient";
-import { InvoiceType } from "@/types-optional";
+import { FormInvoiceType } from "@/types-optional";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
@@ -93,7 +93,7 @@ function ForceUpdateButton({
   parsedInvoice: ParsedInvoice;
 }) {
   const { toast } = useToast();
-  const formMethods = useFormContext<InvoiceType>();
+  const formMethods = useFormContext<FormInvoiceType>();
 
   const handleForceUpdate = () => {
     // Check for null form methods or missing invoice data
@@ -118,7 +118,7 @@ function ForceUpdateButton({
 
     try {
       // STEP 1: Update items
-      // @ts-expect-error - Type system limitation with complex form data
+      // Type system limitation with complex form data
       const formattedItems = items.map((item: ParsedInvoiceItem) => ({
         id: item.id || crypto.randomUUID(),
         name: item.name || "Item",
@@ -126,8 +126,14 @@ function ForceUpdateButton({
         quantity: item.quantity || 1,
         unitPrice: item.unitPrice || 0,
         total: (item.quantity || 1) * (item.unitPrice || 0),
-        taxRate: 0, // Default tax rate
-        discount: 0, // Default discount
+        tax: {
+          amount: 0,
+          amountType: 'percentage'
+        },
+        discount: {
+          amount: 0,
+          amountType: 'percentage'
+        }
       }));
 
       console.log(
@@ -173,14 +179,18 @@ function ForceUpdateButton({
         if (parsedInvoice.details.subTotal) {
           formMethods.setValue(
             "details.subTotal",
-            parsedInvoice.details.subTotal
+            typeof parsedInvoice.details.subTotal === 'string'
+              ? parseFloat(parsedInvoice.details.subTotal)
+              : parsedInvoice.details.subTotal
           );
         }
 
         if (parsedInvoice.details.totalAmount) {
           formMethods.setValue(
             "details.totalAmount",
-            parsedInvoice.details.totalAmount
+            typeof parsedInvoice.details.totalAmount === 'string'
+              ? parseFloat(parsedInvoice.details.totalAmount)
+              : parsedInvoice.details.totalAmount
           );
         }
       }
@@ -241,7 +251,7 @@ function ForceUpdateButton({
 // Component to automatically update items when form is mounted
 function ItemsUpdater({ parsedInvoice }: { parsedInvoice?: ParsedInvoice }) {
   const { toast } = useToast();
-  const formMethods = useFormContext<InvoiceType>();
+  const formMethods = useFormContext<FormInvoiceType>();
 
   useEffect(() => {
     // Guard against null/undefined values
@@ -261,7 +271,7 @@ function ItemsUpdater({ parsedInvoice }: { parsedInvoice?: ParsedInvoice }) {
       );
 
       // STEP 1: Update items
-      // @ts-expect-error - Type system limitation with complex form data
+      // Type system limitation with complex form data
       const formattedItems = items.map((item: ParsedInvoiceItem) => ({
         id: item.id || crypto.randomUUID(),
         name: item.name || "Item",
@@ -269,8 +279,14 @@ function ItemsUpdater({ parsedInvoice }: { parsedInvoice?: ParsedInvoice }) {
         quantity: item.quantity || 1,
         unitPrice: item.unitPrice || 0,
         total: (item.quantity || 1) * (item.unitPrice || 0),
-        taxRate: 0, // Default tax rate
-        discount: 0, // Default discount
+        tax: {
+          amount: 0,
+          amountType: 'percentage'
+        },
+        discount: {
+          amount: 0,
+          amountType: 'percentage'
+        }
       }));
 
       console.log("[DEBUG] ItemsUpdater: Formatted items:", formattedItems);
@@ -313,14 +329,18 @@ function ItemsUpdater({ parsedInvoice }: { parsedInvoice?: ParsedInvoice }) {
         if (parsedInvoice.details.subTotal) {
           formMethods.setValue(
             "details.subTotal",
-            parsedInvoice.details.subTotal
+            typeof parsedInvoice.details.subTotal === 'string'
+              ? parseFloat(parsedInvoice.details.subTotal)
+              : parsedInvoice.details.subTotal
           );
         }
 
         if (parsedInvoice.details.totalAmount) {
           formMethods.setValue(
             "details.totalAmount",
-            parsedInvoice.details.totalAmount
+            typeof parsedInvoice.details.totalAmount === 'string'
+              ? parseFloat(parsedInvoice.details.totalAmount)
+              : parsedInvoice.details.totalAmount
           );
         }
       }
@@ -377,7 +397,7 @@ export default function CreateInvoicePage({
   // Create form with minimal initial values
   const initialValues = useMemo(() => {
     // Start with a very minimal structure
-    const baseInvoice: Partial<InvoiceType> = {
+    const baseInvoice: Partial<FormInvoiceType> = {
       details: {
         items: [],
       },
@@ -387,12 +407,12 @@ export default function CreateInvoicePage({
     if (parsedInvoice) {
       // Add sender if available
       if (parsedInvoice.sender) {
-        baseInvoice.sender = parsedInvoice.sender;
+        baseInvoice.sender = parsedInvoice.sender as any;
       }
 
       // Add receiver if available
       if (parsedInvoice.receiver) {
-        baseInvoice.receiver = parsedInvoice.receiver;
+        baseInvoice.receiver = parsedInvoice.receiver as any;
       }
 
       // Add details if available
@@ -426,11 +446,15 @@ export default function CreateInvoicePage({
 
         // Add totals if available
         if (parsedInvoice.details.subTotal) {
-          baseInvoice.details.subTotal = parsedInvoice.details.subTotal;
+          baseInvoice.details.subTotal = typeof parsedInvoice.details.subTotal === 'string'
+            ? parseFloat(parsedInvoice.details.subTotal)
+            : parsedInvoice.details.subTotal;
         }
 
         if (parsedInvoice.details.totalAmount) {
-          baseInvoice.details.totalAmount = parsedInvoice.details.totalAmount;
+          baseInvoice.details.totalAmount = typeof parsedInvoice.details.totalAmount === 'string'
+            ? parseFloat(parsedInvoice.details.totalAmount)
+            : parsedInvoice.details.totalAmount;
         }
 
         // Add items if available
@@ -443,8 +467,14 @@ export default function CreateInvoicePage({
               quantity: item.quantity || 1,
               unitPrice: item.unitPrice || 0,
               total: (item.quantity || 1) * (item.unitPrice || 0),
-              taxRate: 0, // Default tax rate
-              discount: 0, // Default discount
+              tax: {
+                amount: 0,
+                amountType: 'percentage'
+              },
+              discount: {
+                amount: 0,
+                amountType: 'percentage'
+              }
             })
           );
 
@@ -462,16 +492,12 @@ export default function CreateInvoicePage({
   }, [parsedInvoice]);
 
   // Create form with minimal initial values
-  const form = useForm<InvoiceType>({
-    // @ts-expect-error - Known type compatibility issue between Zod schema and form types
-    resolver: zodResolver(InvoiceSchema),
+  const form = useForm<FormInvoiceType>({
+    // Use type assertion to resolve schema compatibility issues
+    resolver: zodResolver(InvoiceSchema) as any,
     defaultValues: initialValues,
     mode: "onSubmit",
-    reValidateMode: "onSubmit",
-    criteriaMode: "all",
-    shouldFocusError: false,
-    shouldUseNativeValidation: false,
-    delayError: 500,
+    reValidateMode: "onSubmit"
   });
 
   // Log the form values after initialization
@@ -504,7 +530,7 @@ export default function CreateInvoicePage({
     const autosaveInterval = setInterval(() => {
       const formData = form.getValues();
       if (formData && (formData.sender?.name || formData.receiver?.name)) {
-        saveDraftInvoice(formData);
+        saveDraftInvoice(formData as any);
       }
     }, 30000);
 
@@ -520,7 +546,7 @@ export default function CreateInvoicePage({
       const formData = form.getValues();
 
       // Submit the raw form data
-      const data = await createInvoice(formData);
+      const data = await createInvoice(formData as any);
 
       toast({
         title: "Success",
@@ -555,7 +581,7 @@ export default function CreateInvoicePage({
   const handleNavigateToSignIn = () => {
     // Save the current state before redirecting
     const formData = form.getValues();
-    saveDraftInvoice(formData);
+    saveDraftInvoice(formData as any);
 
     // Redirect to sign in page
     router.push(`/${locale}/signin?redirect=/invoice/create`);

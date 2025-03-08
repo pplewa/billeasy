@@ -24,7 +24,7 @@ import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/ui/form-input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { InvoiceType } from "@/types-optional";
+import { FormInvoiceType } from "@/types-optional";
 
 interface SortableItemProps {
   id: string;
@@ -34,7 +34,7 @@ interface SortableItemProps {
 }
 
 function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
-  const { register, watch, setValue, getValues } = useFormContext<InvoiceType>();
+  const { register, watch, setValue, getValues } = useFormContext<FormInvoiceType>();
   const {
     attributes,
     listeners,
@@ -411,7 +411,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
 }
 
 export function Items() {
-  const { control, getValues } = useFormContext<InvoiceType>();
+  const { control, getValues } = useFormContext<FormInvoiceType>();
   const { fields, append, remove, move } = useFieldArray({
     control,
     name: "details.items",

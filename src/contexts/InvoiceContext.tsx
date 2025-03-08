@@ -3,9 +3,10 @@
 import { createContext, useContext, ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { InvoiceType } from "@/types";
+import { FormInvoiceType } from "@/types-optional";
 
 interface InvoiceContextType {
-  form: ReturnType<typeof useForm<InvoiceType>>;
+  form: ReturnType<typeof useForm<FormInvoiceType>>;
   isLoading: boolean;
   isSubmitting: boolean;
   onSubmit: () => Promise<void>;
@@ -15,7 +16,7 @@ const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
 
 interface InvoiceContextProviderProps {
   children: ReactNode;
-  form: ReturnType<typeof useForm<InvoiceType>>;
+  form: ReturnType<typeof useForm<FormInvoiceType>>;
   invoice: InvoiceType | null;
   isLoading: boolean;
   isSubmitting: boolean;
