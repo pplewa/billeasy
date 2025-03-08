@@ -159,13 +159,6 @@ const TaxDetailsSchema = z
   })
   .partial();
 
-// Shipping Details Schema
-const ShippingDetailsSchema = z
-  .object({
-    cost: fieldValidators.stringToNumberWithMax,
-    costType: fieldValidators.string,
-  })
-  .partial();
 
 // Signature Schema
 const SignatureSchema = z.object({
@@ -187,7 +180,6 @@ const InvoiceDetailsSchema = z
     paymentInformation: PaymentInformationSchema.optional(),
     taxDetails: TaxDetailsSchema.optional(),
     discountDetails: DiscountDetailsSchema.optional(),
-    shippingDetails: ShippingDetailsSchema.optional(),
     subTotal: fieldValidators.nonNegativeNumber,
     totalAmount: fieldValidators.nonNegativeNumber,
     totalAmountInWords: fieldValidators.stringOptional,

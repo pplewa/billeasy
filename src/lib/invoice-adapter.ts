@@ -95,18 +95,6 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
     invoice.details.discountDetails = defaultDiscount;
   }
 
-  // Synchronize shipping/shippingDetails
-  if (invoice.details.shipping && !invoice.details.shippingDetails) {
-    invoice.details.shippingDetails = invoice.details.shipping;
-  } else if (invoice.details.shippingDetails && !invoice.details.shipping) {
-    invoice.details.shipping = invoice.details.shippingDetails;
-  } else if (!invoice.details.shipping && !invoice.details.shippingDetails) {
-    // Set default values if both are missing
-    const defaultShipping = { cost: 0, costType: 'fixed' };
-    invoice.details.shipping = defaultShipping;
-    invoice.details.shippingDetails = defaultShipping;
-  }
-
   // Ensure pdfTemplate is a number
   if (invoice.details.pdfTemplate) {
     invoice.details.pdfTemplate = Number(invoice.details.pdfTemplate);
@@ -127,7 +115,7 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
     }
   }
 
-  // Add proper type definitions for tax, discount, and shipping
+  // Add proper type definitions for tax, discount
   interface TaxDetails {
     amount: number;
     amountType: string;
@@ -136,11 +124,6 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
   interface DiscountDetails {
     amount: number;
     amountType: string;
-  }
-
-  interface ShippingDetails {
-    cost: number;
-    costType: string;
   }
 
   // Ensure tax object exists
@@ -157,14 +140,6 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
       amount: 0,
       amountType: 'percentage',
     } as DiscountDetails;
-  }
-
-  // Ensure shipping object exists
-  if (!invoice.details.shipping) {
-    invoice.details.shipping = {
-      cost: 0,
-      costType: 'fixed',
-    } as ShippingDetails;
   }
 
   return invoice;

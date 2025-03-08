@@ -47,18 +47,6 @@ export const PaymentInformationSchema = z
   .nullable();
 
 /**
- * Schema for shipping information
- */
-export const ShippingSchema = z
-  .object({
-    cost: fieldValidators.numberOptional,
-    costType: fieldValidators.stringOptional,
-  })
-  .passthrough()
-  .optional()
-  .nullable();
-
-/**
  * Schema for invoice sender information
  */
 export const SenderSchema = z.object({

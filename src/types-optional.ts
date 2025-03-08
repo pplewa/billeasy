@@ -66,10 +66,6 @@ export interface FormInvoiceType extends FieldValues {
       amount: number;
       amountType: string;
     } | null;
-    shipping?: {
-      cost: number;
-      costType: string;
-    } | null;
     payment?: {
       bankName?: string | null;
       accountName?: string | null;

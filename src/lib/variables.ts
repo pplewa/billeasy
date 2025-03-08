@@ -139,10 +139,6 @@ export const FORM_DEFAULT_VALUES = {
       amount: 0,
       amountType: 'amount',
     },
-    shippingDetails: {
-      cost: 0,
-      costType: 'amount',
-    },
     paymentInformation: {
       bankName: '',
       accountName: '',
@@ -221,10 +217,6 @@ export const FORM_FILL_VALUES = {
     discountDetails: {
       amount: 5,
       amountType: 'percentage',
-    },
-    shippingDetails: {
-      cost: 5,
-      costType: 'percentage',
     },
     paymentInformation: {
       bankName: 'Bank Inc.',

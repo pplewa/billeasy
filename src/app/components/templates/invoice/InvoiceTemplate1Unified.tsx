@@ -185,22 +185,6 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
                   {formatCurrency(subTotal, details?.currency || 'USD')}
                 </td>
               </tr>
-
-              {/* Shipping row */}
-              {details?.shipping && (
-                <tr>
-                  <td className="font-medium text-gray-800 py-1">Shipping:</td>
-                  <td className="text-gray-600 text-right py-1">
-                    {details.shipping.costType === 'amount'
-                      ? formatCurrency(
-                          parseNumber(details.shipping.cost),
-                          details?.currency || 'USD'
-                        )
-                      : `${parseNumber(details.shipping.cost)}%`}
-                  </td>
-                </tr>
-              )}
-
               <tr className="border-t border-gray-200">
                 <td className="font-semibold text-gray-800 py-2">Total:</td>
                 <td className="font-semibold text-gray-800 text-right py-2">

@@ -63,10 +63,6 @@ export interface ParsedInvoiceDetails {
   totalAmount?: number | null;
   status?: string;
   purchaseOrderNumber?: string;
-  shipping?: BaseAmount & {
-    cost: number;
-    costType: 'percentage' | 'amount';
-  };
   paymentInformation?: {
     bankName?: string;
     accountName?: string;

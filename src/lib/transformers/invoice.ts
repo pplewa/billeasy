@@ -118,7 +118,6 @@ export class InvoiceTransformer {
         totalAmount: this.safeParseNumber(parsedInvoice.details.totalAmount),
         status: parsedInvoice.details.status,
         purchaseOrderNumber: parsedInvoice.details.purchaseOrderNumber,
-        shipping: parsedInvoice.details.shipping,
         paymentInformation: parsedInvoice.details.paymentInformation,
         signature: parsedInvoice.details.signature,
         additionalNotes: parsedInvoice.details.additionalNotes,

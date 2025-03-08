@@ -185,17 +185,6 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
       items: normalized.details?.items || [],
       tax,
       discount,
-      shipping: {
-        ...defaultTax,
-        cost: Number((normalized.details?.shipping as unknown as { cost?: unknown })?.cost ?? 0),
-        costType:
-          String(
-            (normalized.details?.shipping as unknown as { costType?: unknown })?.costType ??
-              'percentage'
-          ) === 'amount'
-            ? 'amount'
-            : 'percentage',
-      },
       paymentInformation: normalized.details?.paymentInformation || null,
       signature: normalized.details?.signature || null,
       purchaseOrderNumber: normalized.details?.purchaseOrderNumber || null,

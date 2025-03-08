@@ -101,15 +101,6 @@ const TaxDetailsSchema = new Schema(
   { _id: false, strict: false }
 );
 
-// Shipping Details Schema
-const ShippingDetailsSchema = new Schema(
-  {
-    cost: { type: Number },
-    costType: { type: String },
-  },
-  { _id: false, strict: false }
-);
-
 // Signature Schema
 const SignatureSchema = new Schema(
   {
@@ -132,7 +123,6 @@ const InvoiceDetailsSchema = new Schema(
     paymentInformation: PaymentInformationSchema,
     taxDetails: TaxDetailsSchema,
     discountDetails: DiscountDetailsSchema,
-    shippingDetails: ShippingDetailsSchema,
     subTotal: { type: Number },
     totalAmount: { type: Number },
     totalAmountInWords: { type: String },

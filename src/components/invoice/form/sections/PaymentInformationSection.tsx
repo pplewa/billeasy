@@ -5,13 +5,13 @@ import { useFormContext } from 'react-hook-form';
 import { FormInput } from '@/components/ui/form-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { InvoiceType } from '@/types';
+import { InvoiceFormData } from '@/types/invoice';
 
 export function PaymentInformationSection() {
   const {
     register,
     formState: { errors },
-  } = useFormContext<InvoiceType>();
+  } = useFormContext<InvoiceFormData>();
 
   return (
     <Card className="w-full">

@@ -210,19 +210,6 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                 {formatCurrency(subTotal, details?.currency || 'USD')}
               </span>
             </div>
-
-            {/* Shipping row */}
-            {details?.shipping && (
-              <div className="flex justify-between">
-                <span className="text-gray-600">Shipping:</span>
-                <span className="text-gray-800">
-                  {details.shipping.costType === 'amount'
-                    ? formatCurrency(parseNumber(details.shipping.cost), details?.currency || 'USD')
-                    : `${parseNumber(details.shipping.cost)}%`}
-                </span>
-              </div>
-            )}
-
             <div className="flex justify-between pt-2 border-t border-gray-200 mt-2">
               <span className="font-bold text-gray-800">Total:</span>
               <span className="font-bold text-gray-800">

@@ -37,7 +37,7 @@ const CustomInputSchema = z.object({
   value: fieldValidators.stringOptional,
 });
 
-// Amount Type Schema (for tax, discount, shipping, etc.)
+// Amount Type Schema (for tax, discount, etc.)
 const AmountTypeSchema = z
   .object({
     amount: fieldValidators.numberOptional,
@@ -155,17 +155,9 @@ const InvoiceDetailsSchema = z.object({
   subTotal: fieldValidators.numberOptional,
   totalAmount: fieldValidators.numberOptional,
 
-  // Global tax, discount, shipping (in addition to per-item)
+  // Global tax, discount (in addition to per-item)
   tax: AmountTypeSchema,
   discount: AmountTypeSchema,
-  shipping: z
-    .object({
-      cost: fieldValidators.numberOptional,
-      costType: fieldValidators.stringOptional,
-    })
-    .passthrough()
-    .optional()
-    .nullable(),
 
   // For backwards compatibility
   notes: fieldValidators.stringOptional, // Alias for additionalNotes
@@ -174,14 +166,6 @@ const InvoiceDetailsSchema = z.object({
   // Also include legacy field names for templates that still use them
   taxDetails: AmountTypeSchema,
   discountDetails: AmountTypeSchema,
-  shippingDetails: z
-    .object({
-      cost: fieldValidators.numberOptional,
-      costType: fieldValidators.stringOptional,
-    })
-    .passthrough()
-    .optional()
-    .nullable(),
 });
 
 // Unified Invoice Schema

@@ -39,7 +39,7 @@ export function SignatureSection() {
             ) : (
               <div
                 className="h-full w-full flex items-center justify-center"
-                style={{ fontFamily: signatureFontFamily }}
+                style={{ fontFamily: signatureFontFamily || undefined }}
               >
                 <p className="text-xl">{signatureData}</p>
               </div>

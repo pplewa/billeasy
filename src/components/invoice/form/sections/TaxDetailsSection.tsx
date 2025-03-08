@@ -32,8 +32,8 @@ export function TaxDetailsSection() {
       <CardContent className="space-y-4">
         <FormInput
           label="Tax ID"
-          {...register('details.taxDetails.taxID')}
-          error={errors.details?.taxDetails?.taxID?.message}
+          {...register('details.tax.taxID')}
+          error={errors.details?.tax?.taxID?.message}
           placeholder="Tax ID number"
         />
 
@@ -42,10 +42,10 @@ export function TaxDetailsSection() {
             label="Tax Amount"
             type="number"
             step="0.01"
-            {...register('details.taxDetails.amount', {
+            {...register('details.tax.amount', {
               valueAsNumber: true,
             })}
-            error={errors.details?.taxDetails?.amount?.message}
+            error={errors.details?.tax?.amount?.message}
             placeholder="0.00"
           />
 
@@ -53,7 +53,7 @@ export function TaxDetailsSection() {
             <label className="text-sm font-medium">Amount Type</label>
             <Select
               value={taxAmountType}
-              onValueChange={(value) => setValue('details.taxDetails.amountType', value)}
+              onValueChange={(value) => setValue('details.tax.amountType', value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select amount type" />
@@ -63,9 +63,9 @@ export function TaxDetailsSection() {
                 <SelectItem value="fixed">Fixed Amount</SelectItem>
               </SelectContent>
             </Select>
-            {errors.details?.taxDetails?.amountType?.message && (
+            {errors.details?.tax?.amountType?.message && (
               <p className="text-sm font-medium text-destructive">
-                {errors.details.taxDetails.amountType.message}
+                {errors.details.tax.amountType.message}
               </p>
             )}
           </div>

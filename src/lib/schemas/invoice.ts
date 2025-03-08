@@ -8,7 +8,6 @@ import {
   SenderSchema,
   ReceiverSchema,
   PaymentInformationSchema,
-  ShippingSchema,
   SignatureSchema,
   AmountTypeSchema,
 } from './components';
@@ -46,10 +45,9 @@ export const DetailsSchema = z.object({
   subTotal: fieldValidators.numberOptional,
   totalAmount: fieldValidators.numberOptional,
 
-  // Global tax, discount, shipping (in addition to per-item)
+  // Global tax, discount (in addition to per-item)
   tax: AmountTypeSchema,
   discount: AmountTypeSchema,
-  shipping: ShippingSchema,
 
   // For backwards compatibility
   notes: fieldValidators.stringOptional, // Alias for additionalNotes
@@ -58,7 +56,6 @@ export const DetailsSchema = z.object({
   // Also include legacy field names for templates that still use them
   taxDetails: AmountTypeSchema,
   discountDetails: AmountTypeSchema,
-  shippingDetails: ShippingSchema,
 });
 
 /**
@@ -152,13 +149,11 @@ export function processInvoice(invoiceData: unknown): Invoice {
     }
   });
 
-  // Process global tax, discount, shipping
+  // Process global tax, discount
   const globalTax = data.details?.tax ||
     data.details?.taxDetails || { amount: 0, amountType: 'percentage' };
   const globalDiscount = data.details?.discount ||
     data.details?.discountDetails || { amount: 0, amountType: 'percentage' };
-  const shipping = data.details?.shipping ||
-    data.details?.shippingDetails || { cost: 0, costType: 'fixed' };
 
   // Calculate global tax
   if (globalTax.amount) {
@@ -178,11 +173,8 @@ export function processInvoice(invoiceData: unknown): Invoice {
     }
   }
 
-  // Calculate shipping cost
-  const shippingCost = shipping.cost || 0;
-
   // Calculate total amount
-  const totalAmount = subTotal - totalDiscount + totalTax + shippingCost;
+  const totalAmount = subTotal - totalDiscount + totalTax;
 
   // Ensure details object exists
   const details = data.details || {};
@@ -197,11 +189,9 @@ export function processInvoice(invoiceData: unknown): Invoice {
       totalAmount,
       tax: globalTax,
       discount: globalDiscount,
-      shipping,
       // Also set legacy fields for backward compatibility
       taxDetails: globalTax,
       discountDetails: globalDiscount,
-      shippingDetails: shipping,
     },
     // Clear items at root level to avoid duplication
     items: undefined,
@@ -266,12 +256,6 @@ const formInvoiceDetailsSchema = z.object({
   totalAmount: z.number().nullable(),
   status: z.string().optional(),
   purchaseOrderNumber: z.string().optional(),
-  shipping: baseAmountSchema
-    .extend({
-      cost: z.number(),
-      costType: z.enum(['percentage', 'amount']),
-    })
-    .optional(),
   paymentInformation: z
     .object({
       bankName: z.string().optional(),

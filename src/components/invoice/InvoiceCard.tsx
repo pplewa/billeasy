@@ -113,9 +113,9 @@ export function InvoiceCard({
             <span className="text-sm font-medium">Amount:</span>
             <span className="text-sm">
               {invoice.details?.currency}{' '}
-              {invoice.details?.items
+              {Array.isArray(invoice.details?.items) ? invoice.details?.items
                 ?.reduce((sum, item) => sum + (item?.unitPrice ?? 0) * (item?.quantity ?? 0), 0)
-                .toFixed(2)}
+                .toFixed(2) : 0}
             </span>
           </div>
         </div>
