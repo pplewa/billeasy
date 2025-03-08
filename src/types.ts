@@ -17,9 +17,10 @@ export type CurrencyType = string;
 // Invoice status types
 export enum InvoiceStatus {
   DRAFT = 'draft',
-  SENT = 'sent',
+  PENDING = 'pending',
   PAID = 'paid',
   OVERDUE = 'overdue',
+  CANCELLED = 'cancelled',
 }
 
 export type CurrencyDetails = {

@@ -16,10 +16,12 @@ export function InvoiceStatusBadge({ status, className }: InvoiceStatusBadgeProp
     switch (status) {
       case InvoiceStatus.PAID:
         return 'success';
-      case InvoiceStatus.SENT:
+      case InvoiceStatus.PENDING:
         return 'default'; // Using default as info
       case InvoiceStatus.OVERDUE:
         return 'destructive';
+      case InvoiceStatus.CANCELLED:
+        return 'outline';
       case InvoiceStatus.DRAFT:
       default:
         return 'secondary';
@@ -31,10 +33,12 @@ export function InvoiceStatusBadge({ status, className }: InvoiceStatusBadgeProp
     switch (status) {
       case InvoiceStatus.PAID:
         return 'Paid';
-      case InvoiceStatus.SENT:
-        return 'Sent';
+      case InvoiceStatus.PENDING:
+        return 'Pending';
       case InvoiceStatus.OVERDUE:
         return 'Overdue';
+      case InvoiceStatus.CANCELLED:
+        return 'Cancelled';
       case InvoiceStatus.DRAFT:
         return 'Draft';
       default:

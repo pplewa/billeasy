@@ -77,14 +77,17 @@ export function InvoiceStatusSelector({
         <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.DRAFT)}>
           <InvoiceStatusBadge status={InvoiceStatus.DRAFT} className="w-full justify-start" />
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.SENT)}>
-          <InvoiceStatusBadge status={InvoiceStatus.SENT} className="w-full justify-start" />
+        <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.PENDING)}>
+          <InvoiceStatusBadge status={InvoiceStatus.PENDING} className="w-full justify-start" />
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.PAID)}>
           <InvoiceStatusBadge status={InvoiceStatus.PAID} className="w-full justify-start" />
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.OVERDUE)}>
           <InvoiceStatusBadge status={InvoiceStatus.OVERDUE} className="w-full justify-start" />
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.CANCELLED)}>
+          <InvoiceStatusBadge status={InvoiceStatus.CANCELLED} className="w-full justify-start" />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
