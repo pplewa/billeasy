@@ -23,6 +23,8 @@ if ! command -v gh &> /dev/null; then
     echo "- SMTP_HOST: SMTP host"
     echo "- SMTP_USER: SMTP user"
     echo "- SMTP_PASS: SMTP password"
+    echo "- GOOGLE_MAPS_API_KEY: Google Maps API key"
+    echo "- OPENAI_API_KEY: OpenAI API key"
     exit 1
 fi
 
@@ -68,6 +70,14 @@ read -r SMTP_USER
 
 echo "Please enter your SMTP password:"
 read -r SMTP_PASS
+
+# Get Google Maps API key
+echo "Please enter your Google Maps API key:"
+read -r GOOGLE_MAPS_API_KEY
+
+# Get OpenAI API key
+echo "Please enter your OpenAI API key:"
+read -r OPENAI_API_KEY
 
 # Set GitHub secrets
 echo -e "${GREEN}Setting up GitHub repository secrets...${NC}"

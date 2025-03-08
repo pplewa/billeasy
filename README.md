@@ -59,6 +59,9 @@ A modern, full-stack starter template with authentication, internationalization,
 
    # Server-side key (used for actual API calls)
    GOOGLE_MAPS_API_KEY=your-google-maps-api-key
+
+   # OpenAI
+   OPENAI_API_KEY=your-openai-api-key-here
    ```
 
 4. Run the development server

@@ -31,6 +31,8 @@ jobs:
           SMTP_PORT=587
           SMTP_USER=${{ secrets.SMTP_USER }}
           SMTP_PASS=${{ secrets.SMTP_PASS }}
+          GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
           EMAIL_FROM=team@billeasy.online
           NEXT_PUBLIC_APP_URL=https://billeasy.online
           EOF
