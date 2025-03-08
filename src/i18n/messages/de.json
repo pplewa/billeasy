@@ -146,7 +146,8 @@
       "nextPageLabel": "Zur nächsten Seite gehen",
       "previousPageLabel": "Zur vorherigen Seite gehen",
       "morePagesLabel": "Weitere Seiten"
-    }
+    },
+    "signIn": "Anmelden"
   },
   "footer": {
     "allRightsReserved": "Alle Rechte vorbehalten",
@@ -439,7 +440,9 @@
           "description": "Rechnungsstatus konnte nicht aktualisiert werden"
         }
       }
-    }
+    },
+    "authRequired": "Authentifizierung erforderlich",
+    "authRequiredDescription": "Sie müssen sich anmelden, um auf diese Seite zuzugreifen. Bitte melden Sie sich an, um fortzufahren."
   },
   "drafts": {
     "draftName": "Entwurfsname",

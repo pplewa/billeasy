@@ -146,7 +146,8 @@
       "nextPageLabel": "Aller à la page suivante",
       "previousPageLabel": "Aller à la page précédente",
       "morePagesLabel": "Plus de pages"
-    }
+    },
+    "signIn": "Se Connecter"
   },
   "footer": {
     "allRightsReserved": "Tous droits réservés",
@@ -439,7 +440,9 @@
           "description": "Impossible de mettre à jour le statut de la facture"
         }
       }
-    }
+    },
+    "authRequired": "Authentification Requise",
+    "authRequiredDescription": "Vous devez vous connecter pour accéder à cette page. Veuillez vous connecter pour continuer."
   },
   "drafts": {
     "draftName": "Nom du brouillon",

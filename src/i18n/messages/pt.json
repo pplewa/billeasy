@@ -146,7 +146,8 @@
       "nextPageLabel": "Ir para a próxima página",
       "previousPageLabel": "Ir para a página anterior",
       "morePagesLabel": "Mais páginas"
-    }
+    },
+    "signIn": "Entrar"
   },
   "footer": {
     "allRightsReserved": "Todos os direitos reservados",
@@ -439,7 +440,9 @@
           "description": "Falha ao atualizar o status da fatura"
         }
       }
-    }
+    },
+    "authRequired": "Autenticação Necessária",
+    "authRequiredDescription": "Você precisa fazer login para acessar esta página. Por favor, faça login para continuar."
   },
   "drafts": {
     "draftName": "Nome do rascunho",

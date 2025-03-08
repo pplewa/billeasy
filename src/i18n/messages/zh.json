@@ -146,7 +146,8 @@
       "nextPageLabel": "转到下一页",
       "previousPageLabel": "转到上一页",
       "morePagesLabel": "更多页面"
-    }
+    },
+    "signIn": "登录"
   },
   "footer": {
     "allRightsReserved": "版权所有",
@@ -439,7 +440,9 @@
           "description": "无法更新发票状态"
         }
       }
-    }
+    },
+    "authRequired": "需要身份验证",
+    "authRequiredDescription": "您需要登录才能访问此页面。请登录以继续。"
   },
   "drafts": {
     "draftName": "草稿名称",

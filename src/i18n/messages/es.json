@@ -146,7 +146,8 @@
       "nextPageLabel": "Ir a la siguiente página",
       "previousPageLabel": "Ir a la página anterior",
       "morePagesLabel": "Más páginas"
-    }
+    },
+    "signIn": "Iniciar Sesión"
   },
   "footer": {
     "allRightsReserved": "Todos los derechos reservados",
@@ -439,7 +440,9 @@
           "description": "No se pudo actualizar el estado de la factura"
         }
       }
-    }
+    },
+    "authRequired": "Autenticación Requerida",
+    "authRequiredDescription": "Debes iniciar sesión para acceder a esta página. Por favor, inicia sesión para continuar."
   },
   "drafts": {
     "draftName": "Nombre del borrador",

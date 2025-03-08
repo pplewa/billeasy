@@ -146,7 +146,8 @@
       "nextPageLabel": "Go to next page",
       "previousPageLabel": "Go to previous page",
       "morePagesLabel": "More pages"
-    }
+    },
+    "signIn": "Sign in"
   },
   "footer": {
     "allRightsReserved": "All rights reserved",

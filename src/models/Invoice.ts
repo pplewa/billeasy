@@ -1,7 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { InvoiceType } from '@/types';
 
-export interface InvoiceDocument extends InvoiceType, Document {
+export interface InvoiceDocument extends Omit<InvoiceType, '_id'>, Document {
+  _id: string;
   createdAt: Date;
   updatedAt: Date;
 }
