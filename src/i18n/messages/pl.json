@@ -321,7 +321,19 @@
       "errorDescription": "Nie udało się usunąć faktury"
     },
     "create": "Utwórz Fakturę",
-    "edit": "Edytuj Fakturę",
+    "edit": {
+      "value": "Edytuj Fakturę",
+      "toast": {
+        "success": {
+          "title": "Faktura Zaktualizowana",
+          "description": "Twoja faktura została pomyślnie zaktualizowana"
+        },
+        "error": {
+          "title": "Aktualizacja Nieudana",
+          "description": "Nie udało się zaktualizować faktury. Proszę spróbować ponownie."
+        }
+      }
+    },
     "itemsDetected": "Wykryto pozycje",
     "noDraftsFound": "Nie znaleziono wersji roboczych",
     "startCreatingDraft": "Zacznij tworzyć fakturę, aby automatycznie zapisać wersję roboczą",

@@ -321,7 +321,18 @@
       "errorDescription": "Échec de la suppression de la facture"
     },
     "create": "Créer une facture",
-    "edit": "Modifier la facture",
+    "edit": {
+      "toast": {
+        "success": {
+          "title": "Facture Mise à Jour",
+          "description": "Votre facture a été mise à jour avec succès"
+        },
+        "error": {
+          "title": "Mise à Jour Échouée",
+          "description": "Impossible de mettre à jour la facture. Veuillez réessayer."
+        }
+      }
+    },
     "itemsDetected": "Articles détectés",
     "noDraftsFound": "Aucun brouillon trouvé",
     "startCreatingDraft": "Commencez à créer une facture pour enregistrer automatiquement un brouillon",

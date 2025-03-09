@@ -321,7 +321,19 @@
       "errorDescription": "删除发票失败"
     },
     "create": "创建发票",
-    "edit": "编辑发票",
+    "edit": {
+      "value": "编辑发票",
+      "toast": {
+        "success": {
+          "title": "发票已更新",
+          "description": "您的发票已成功更新"
+        },
+        "error": {
+          "title": "更新失败",
+          "description": "无法更新发票。请重试。"
+        }
+      }
+    },
     "itemsDetected": "检测到项目",
     "noDraftsFound": "未找到草稿",
     "startCreatingDraft": "开始创建发票以自动保存草稿",

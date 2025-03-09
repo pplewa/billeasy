@@ -321,7 +321,19 @@
       "errorDescription": "Fehler beim Löschen der Rechnung"
     },
     "create": "Rechnung erstellen",
-    "edit": "Rechnung bearbeiten",
+    "edit": {
+      "value": "Rechnung Bearbeiten",
+      "toast": {
+        "success": {
+          "title": "Rechnung Aktualisiert",
+          "description": "Ihre Rechnung wurde erfolgreich aktualisiert"
+        },
+        "error": {
+          "title": "Aktualisierung Fehlgeschlagen",
+          "description": "Die Rechnung konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut."
+        }
+      }
+    },
     "itemsDetected": "Positionen erkannt",
     "noDraftsFound": "Keine Entwürfe gefunden",
     "startCreatingDraft": "Beginnen Sie mit der Erstellung einer Rechnung, um automatisch einen Entwurf zu speichern",

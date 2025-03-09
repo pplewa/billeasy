@@ -321,7 +321,19 @@
       "errorDescription": "Failed to delete invoice"
     },
     "create": "Create Invoice",
-    "edit": "Edit Invoice",
+    "edit": {
+      "value": "Edit Invoice",
+      "toast": {
+        "success": {
+          "title": "Invoice Updated",
+          "description": "Your invoice has been successfully updated"
+        },
+        "error": {
+          "title": "Update Failed",
+          "description": "Unable to update the invoice. Please try again."
+        }
+      }
+    },
     "itemsDetected": "Detected Invoice Items",
     "noDraftsFound": "No drafts found",
     "startCreatingDraft": "Start creating an invoice to save drafts automatically.",

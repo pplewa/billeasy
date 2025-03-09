@@ -321,7 +321,19 @@
       "errorDescription": "Falha ao excluir a fatura"
     },
     "create": "Criar Fatura",
-    "edit": "Editar Fatura",
+    "edit": {
+      "value": "Editar Fatura",
+      "toast": {
+        "success": {
+          "title": "Fatura Atualizada",
+          "description": "Sua fatura foi atualizada com sucesso"
+        },
+        "error": {
+          "title": "Atualização Falhou",
+          "description": "Não foi possível atualizar a fatura. Por favor, tente novamente."
+        }
+      }
+    },
     "itemsDetected": "Itens detectados",
     "noDraftsFound": "Nenhum rascunho encontrado",
     "startCreatingDraft": "Comece a criar uma fatura para salvar automaticamente um rascunho",

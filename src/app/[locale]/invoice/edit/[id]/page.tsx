@@ -103,16 +103,16 @@ export default function EditInvoicePage({
 
       await updateInvoice(invoiceId, formData);
       toast({
-        title: 'Success',
-        description: 'Invoice updated successfully',
+        title: invoiceT('edit.toast.success.title'),
+        description: invoiceT('edit.toast.success.description')
       });
       router.push(`/${locale}/invoice/view/${invoiceId}`);
     } catch (error) {
       console.error('Error updating invoice:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to update invoice. Please try again.',
-        variant: 'destructive',
+        title: invoiceT('edit.toast.error.title'),
+        description: invoiceT('edit.toast.error.description'),
+        variant: 'destructive'
       });
     } finally {
       setIsSubmitting(false);
@@ -158,7 +158,7 @@ export default function EditInvoicePage({
       `}</style>
 
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
-        <h1 className="text-3xl font-bold tracking-tight">{invoiceT('edit')}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{invoiceT('edit.value')}</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
           <Button variant="outline" asChild>
             <Link href={`/${locale}/invoice/edit/${invoiceId}`}>

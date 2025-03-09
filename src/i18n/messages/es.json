@@ -321,7 +321,19 @@
       "errorDescription": "No se pudo eliminar la factura"
     },
     "create": "Crear Factura",
-    "edit": "Editar Factura",
+    "edit": {
+      "value": "Editar Factura",
+      "toast": {
+        "success": {
+          "title": "Factura Actualizada",
+          "description": "Su factura ha sido actualizada con éxito"
+        },
+        "error": {
+          "title": "Actualización Fallida",
+          "description": "No se pudo actualizar la factura. Por favor, inténtelo de nuevo."
+        }
+      }
+    },
     "itemsDetected": "Elementos detectados",
     "noDraftsFound": "No se encontraron borradores",
     "startCreatingDraft": "Comience a crear una factura para guardar automáticamente un borrador",
