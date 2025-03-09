@@ -27,6 +27,7 @@ interface InvoiceExportModalProps {
   form?: any; // Using any to avoid complex form typing issues across different form implementations
   invoice?: FormInvoiceType;
   isLoading?: boolean;
+  selectedTemplate?: number;
 }
 
 /**
@@ -37,6 +38,7 @@ export function InvoiceExportModal({
   form,
   invoice,
   isLoading = false,
+  selectedTemplate,
 }: InvoiceExportModalProps) {
   const [open, setOpen] = useState(false);
   const t = useTranslations('invoice.export');
@@ -45,17 +47,23 @@ export function InvoiceExportModal({
    * Export the invoice in the specified format
    */
   const handleExport = (exportType: ExportTypes) => {
-    let invoiceData;
+    let invoiceData: FormInvoiceType;
 
     // Use data from either the form or the direct invoice prop
     if (form) {
       // Cast the form values to FormInvoiceType to ensure compatibility
       invoiceData = form.getValues() as unknown as FormInvoiceType;
     } else if (invoice) {
-      invoiceData = invoice;
+      invoiceData = { ...invoice };
     } else {
       console.error('No invoice data available for export');
       return;
+    }
+
+    // Update the template in the invoice data if provided
+    if (selectedTemplate && invoiceData.details) {
+      const details = { ...invoiceData.details, pdfTemplate: selectedTemplate };
+      invoiceData = { ...invoiceData, details };
     }
 
     // Export the invoice

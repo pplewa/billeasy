@@ -154,7 +154,7 @@ export async function exportInvoiceService(req: NextRequest) {
                                 
                                 @page {
                                     size: A4;
-                                    margin: 0;
+                                    margin: 1cm;
                                 }
                                 
                                 table {
