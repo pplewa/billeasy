@@ -155,9 +155,7 @@
       "previousPageLabel": "转到上一页",
       "morePagesLabel": "更多页面"
     },
-    "signIn": "登录",
-    "selectDate": "选择日期",
-    "selectCurrency": "选择货币"
+    "signIn": "登录"
   },
   "footer": {
     "allRightsReserved": "版权所有",
@@ -540,7 +538,9 @@
       "dueDate": "到期日期",
       "currency": "货币",
       "searchCurrency": "搜索货币",
-      "noCurrencyFound": "未找到货币"
+      "noCurrencyFound": "未找到货币",
+      "selectDate": "选择日期",
+      "selectCurrency": "选择货币"
     },
     "paymentInfo": {
       "title": "付款信息",

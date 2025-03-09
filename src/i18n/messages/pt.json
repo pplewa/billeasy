@@ -538,7 +538,9 @@
       "dueDate": "Data de Vencimento",
       "currency": "Moeda",
       "searchCurrency": "Pesquisar Moeda",
-      "noCurrencyFound": "Nenhuma moeda encontrada"
+      "noCurrencyFound": "Nenhuma moeda encontrada",
+      "selectDate": "Selecionar Data",
+      "selectCurrency": "Selecionar Moeda"
     },
     "paymentInfo": {
       "title": "Informações de Pagamento",
@@ -624,9 +626,7 @@
       "sort": {
         "placeholder": "Ordenar por"
       }
-    },
-    "selectDate": "Selecionar Data",
-    "selectCurrency": "Selecionar Moeda"
+    }
   },
   "invoiceTemplate": {
     "title": "Modelo de Fatura",

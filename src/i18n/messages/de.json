@@ -155,9 +155,7 @@
       "previousPageLabel": "Zur vorherigen Seite gehen",
       "morePagesLabel": "Weitere Seiten"
     },
-    "signIn": "Anmelden",
-    "selectDate": "Datum auswählen",
-    "selectCurrency": "Währung auswählen"
+    "signIn": "Anmelden"
   },
   "footer": {
     "allRightsReserved": "Alle Rechte vorbehalten",
@@ -627,7 +625,9 @@
       "dueDate": "Fälligkeitsdatum",
       "currency": "Währung",
       "searchCurrency": "Währung suchen",
-      "noCurrencyFound": "Keine Währung gefunden"
+      "noCurrencyFound": "Keine Währung gefunden",
+      "selectDate": "Datum auswählen",
+      "selectCurrency": "Währung auswählen"
     },
     "paymentInfo": {
       "title": "Zahlungsinformationen",

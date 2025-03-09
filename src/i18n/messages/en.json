@@ -450,9 +450,7 @@
           "description": "Failed to update invoice status"
         }
       }
-    },
-    "selectDate": "Select Date",
-    "selectCurrency": "Select Currency"
+    }
   },
   "drafts": {
     "draftName": "Draft Name",
@@ -627,7 +625,9 @@
       "dueDate": "Due Date",
       "currency": "Currency",
       "searchCurrency": "Search Currency",
-      "noCurrencyFound": "No currency found"
+      "noCurrencyFound": "No currency found",
+      "selectDate": "Select Date",
+      "selectCurrency": "Select Currency"
     },
     "paymentInfo": {
       "title": "Payment Information",

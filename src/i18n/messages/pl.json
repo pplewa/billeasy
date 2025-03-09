@@ -155,9 +155,7 @@
       "previousPageLabel": "Przejdź do poprzedniej strony",
       "morePagesLabel": "Więcej stron"
     },
-    "signIn": "Zaloguj się",
-    "selectDate": "Wybierz Datę",
-    "selectCurrency": "Wybierz Walutę"
+    "signIn": "Zaloguj się"
   },
   "footer": {
     "allRightsReserved": "Wszelkie prawa zastrzeżone",
@@ -540,7 +538,9 @@
       "dueDate": "Data Płatności",
       "currency": "Waluta",
       "searchCurrency": "Wyszukaj walutę",
-      "noCurrencyFound": "Nie znaleziono waluty"
+      "noCurrencyFound": "Nie znaleziono waluty",
+      "selectDate": "Wybierz Datę",
+      "selectCurrency": "Wybierz Walutę"
     },
     "paymentInfo": {
       "title": "Informacje o Płatności",

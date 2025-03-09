@@ -155,9 +155,7 @@
       "previousPageLabel": "Ir a la página anterior",
       "morePagesLabel": "Más páginas"
     },
-    "signIn": "Iniciar Sesión",
-    "selectDate": "Seleccionar Fecha",
-    "selectCurrency": "Seleccionar Moneda"
+    "signIn": "Iniciar Sesión"
   },
   "footer": {
     "allRightsReserved": "Todos los derechos reservados",
@@ -627,7 +625,9 @@
       "dueDate": "Fecha de Vencimiento",
       "currency": "Moneda",
       "searchCurrency": "Buscar Moneda",
-      "noCurrencyFound": "No se encontró ninguna moneda"
+      "noCurrencyFound": "No se encontró ninguna moneda",
+      "selectDate": "Seleccionar Fecha",
+      "selectCurrency": "Seleccionar Moneda"
     },
     "paymentInfo": {
       "title": "Información de Pago",

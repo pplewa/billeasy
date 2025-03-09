@@ -155,9 +155,7 @@
       "previousPageLabel": "Aller à la page précédente",
       "morePagesLabel": "Plus de pages"
     },
-    "signIn": "Se Connecter",
-    "selectDate": "Sélectionner une Date",
-    "selectCurrency": "Sélectionner une Devise"
+    "signIn": "Se Connecter"
   },
   "footer": {
     "allRightsReserved": "Tous droits réservés",
@@ -627,7 +625,9 @@
       "dueDate": "Date d'Échéance",
       "currency": "Devise",
       "searchCurrency": "Rechercher une devise",
-      "noCurrencyFound": "Aucune devise trouvée"
+      "noCurrencyFound": "Aucune devise trouvée",
+      "selectDate": "Sélectionner une date",
+      "selectCurrency": "Sélectionner une devise"
     },
     "paymentInfo": {
       "title": "Informations de Paiement",

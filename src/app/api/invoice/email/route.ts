@@ -27,12 +27,6 @@ export async function POST(request: Request) {
     // In a real implementation, this would connect to an email service
     // For example, using Nodemailer, SendGrid, or another email provider
 
-    // For now, simulate email sending
-    console.log('Sending email to:', recipient);
-    console.log('Subject:', subject);
-    console.log('Message:', message);
-    console.log('Invoice:', invoice);
-
     // Return success response
     return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
   } catch (error) {

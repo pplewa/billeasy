@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 // UI Components
 import { Label } from '@/components/ui/label';
@@ -48,6 +49,7 @@ export function TemplateViewSelector({
   onTemplateChange,
 }: TemplateViewSelectorProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<number>(initialTemplate);
+  const t = useTranslations('invoiceTemplate');
 
   // Handle template selection change
   const handleTemplateChange = (value: string) => {
@@ -59,7 +61,7 @@ export function TemplateViewSelector({
   return (
     <div className="flex items-center gap-2">
       <Label htmlFor="template-select" className="whitespace-nowrap">
-        Template:
+        {t('title')}
       </Label>
       <Select value={selectedTemplate.toString()} onValueChange={handleTemplateChange}>
         <SelectTrigger id="template-select" className="w-[60px]">
