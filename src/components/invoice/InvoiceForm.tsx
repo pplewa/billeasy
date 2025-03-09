@@ -27,12 +27,12 @@ function Step1() {
 
         {/* Centered swap button between the sections */}
         <div className="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-          <AddressSwapButton mode="form" />
+          <AddressSwapButton />
         </div>
 
         {/* Mobile swap button */}
         <div className="flex md:hidden justify-center my-2">
-          <AddressSwapButton mode="form" />
+          <AddressSwapButton />
         </div>
 
         <BillToSection />
@@ -90,7 +90,7 @@ export function InvoiceForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
         <Wizard>
           <Step1 />
           <Step2 />

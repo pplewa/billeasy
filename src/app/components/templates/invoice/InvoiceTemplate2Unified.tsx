@@ -54,7 +54,7 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
         <div>
-          <h3 className="text-lg font-medium text-gray-800 mb-2">{t('billFrom')}:</h3>
+          <h3 className="text-lg font-medium text-gray-800 mb-2">{t('billFrom')}</h3>
           <div className="text-gray-600">
             <p className="font-semibold">{sender?.name}</p>
             <p>{sender?.address}</p>
@@ -75,7 +75,7 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
           </div>
         </div>
         <div className="sm:text-right">
-          <h3 className="text-lg font-medium text-gray-800 mb-2">{t('billTo')}:</h3>
+          <h3 className="text-lg font-medium text-gray-800 mb-2">{t('billTo')}</h3>
           <div className="text-gray-600">
             <p className="font-semibold">{receiver?.name}</p>
             <p>{receiver?.address}</p>
@@ -171,9 +171,9 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                   <tr key={item.id || index} className="border-b border-gray-100">
                     <td className="py-3 px-4">
                       <div className="font-medium">{item.name}</div>
-                      {item.description && (
+                      {/* {item.description && (
                         <div className="text-sm text-gray-500">{item.description}</div>
-                      )}
+                      )} */}
                     </td>
                     <td className="text-right py-3 px-4">{quantity}</td>
                     <td className="text-right py-3 px-4">

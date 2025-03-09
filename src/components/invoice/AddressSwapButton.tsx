@@ -13,21 +13,12 @@ type AddressFields = {
   country: string | null;
 };
 
-/**
- * A reusable button component for swapping sender and receiver information
- * Can operate in two modes:
- * 1. Form mode: Uses react-hook-form to swap form data
- * 2. Parser mode: Uses invoice parser store to swap parsed data
- */
-export function AddressSwapButton({ mode = 'form' }: { mode?: 'form' | 'parser' }) {
+export function AddressSwapButton() {
   const { toast } = useToast();
   const { getValues, setValue } = useFormContext<FormInvoiceType>();
   const t = useTranslations('invoice.addressSwap');
 
   const handleSwap = () => {
-    // Log the current mode
-    console.log(`Swapping addresses in ${mode} mode`);
-
     // Get current values
     const sender = getValues('sender') || {};
     const receiver = getValues('receiver') || {};

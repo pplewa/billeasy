@@ -396,10 +396,6 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
 
       <ItemsUpdater parsedInvoice={parsedInvoice} />
 
-      <div className="flex justify-center my-4">
-        {parsedInvoice && <AddressSwapButton mode="parser" />}
-      </div>
-
       <InvoiceContextProvider
         form={form}
         invoice={null}

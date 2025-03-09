@@ -153,9 +153,9 @@ const InvoiceTemplate1 = (data: InvoiceType) => {
                   <tr key={item.id || index} className="border-b border-gray-100">
                     <td className="py-3 px-4">
                       <div className="font-medium">{item.name}</div>
-                      {item.description && (
+                      {/* {item.description && (
                         <div className="text-sm text-gray-500">{item.description}</div>
-                      )}
+                      )} */}
                     </td>
                     <td className="text-right py-3 px-4">{quantity}</td>
                     <td className="text-right py-3 px-4">
