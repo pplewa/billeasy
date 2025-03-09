@@ -3,12 +3,13 @@ import { deleteInvoice, duplicateInvoice } from '@/services/invoice/client/invoi
 import { formatDate } from '@/lib/utils/formatting';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Pencil, Trash, Copy, Eye, MoreHorizontal, ArrowRight } from 'lucide-react';
+import { Pencil, Trash, Copy, Eye, MoreHorizontal, ArrowRight, FileDown, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { InvoiceStatus } from '@/types';
 import { useTranslations } from 'next-intl';
+import { InvoiceStatusSelector } from './InvoiceStatusSelector';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,8 +17,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
 
 interface InvoiceCardProps {
   invoice: InvoiceDocument;
@@ -25,6 +24,8 @@ interface InvoiceCardProps {
   onDelete: (id: string) => void;
   onDuplicate: (invoice: InvoiceDocument) => void;
   onStatusChange?: (id: string, status: string) => void;
+  onExport?: (id: string) => void;
+  onEmail?: (id: string) => void;
 }
 
 export function InvoiceCard({
@@ -33,12 +34,16 @@ export function InvoiceCard({
   onDelete,
   onDuplicate,
   onStatusChange,
+  onExport,
+  onEmail,
 }: InvoiceCardProps) {
   const { toast } = useToast();
   const t = useTranslations('invoice');
   const tCommon = useTranslations('common');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDuplicating, setIsDuplicating] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const [isEmailing, setIsEmailing] = useState(false);
 
   // Format the invoice date
   const formattedDate = formatDate(new Date(invoice.details?.invoiceDate || new Date()));
@@ -109,28 +114,34 @@ export function InvoiceCard({
       setIsDuplicating(false);
     }
   };
-
-  // Get status badge colors
-  const getStatusColor = () => {
-    switch (status.toLowerCase()) {
-      case 'paid':
-        return 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200';
-      case 'pending':
-        return 'bg-amber-100 text-amber-700 hover:bg-amber-200';
-      case 'sent':
-        return 'bg-blue-100 text-blue-700 hover:bg-blue-200';
-      case 'overdue':
-        return 'bg-red-100 text-red-700 hover:bg-red-200';
-      case 'cancelled':
-        return 'bg-gray-100 text-gray-700 hover:bg-gray-200';
-      default:
-        return 'bg-slate-100 text-slate-700 hover:bg-slate-200';
+  
+  // Handle export
+  const handleExport = () => {
+    if (onExport) {
+      setIsExporting(true);
+      try {
+        onExport(invoiceId);
+      } finally {
+        setIsExporting(false);
+      }
+    }
+  };
+  
+  // Handle email
+  const handleEmail = () => {
+    if (onEmail) {
+      setIsEmailing(true);
+      try {
+        onEmail(invoiceId);
+      } finally {
+        setIsEmailing(false);
+      }
     }
   };
 
   return (
     <Card className="w-full flex items-stretch overflow-hidden transition-all duration-200 hover:shadow-md border-l-4 rounded-l-none" style={{ borderLeftColor: getBorderColor(status) }}>
-      <CardContent className="p-0">
+      <CardContent className="p-0 w-full">
         <div className="flex flex-col sm:flex-row  h-full">
           {/* Left side - Invoice Info */}
           <div className="flex-grow p-5">
@@ -143,9 +154,11 @@ export function InvoiceCard({
                   {formattedDate}
                 </div>
               </div>
-              <Badge variant="outline" className={cn("font-medium rounded-full px-3", getStatusColor())}>
-                {status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}
-              </Badge>
+              <InvoiceStatusSelector
+                invoiceId={invoiceId}
+                currentStatus={status}
+                onStatusChange={handleStatusChange}
+              />
             </div>
             
             <div className="grid grid-cols-2 gap-4 mb-4">
@@ -154,7 +167,7 @@ export function InvoiceCard({
                   {t('table.client')}
                 </p>
                 <p className="text-sm font-medium truncate">
-                  {invoice.receiver?.name || t('table.noClient')}
+                  {invoice.receiver?.name || t('client')}
                 </p>
               </div>
               <div>
@@ -188,21 +201,17 @@ export function InvoiceCard({
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-8 w-8">
                   <MoreHorizontal className="h-4 w-4" />
-                  <span className="sr-only">More Options</span>
+                  <span className="sr-only">{tCommon('actions')}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.DRAFT)}>
-                  Mark as Draft
+                <DropdownMenuItem onClick={handleExport} disabled={isExporting}>
+                  <FileDown className="mr-2 h-4 w-4" />
+                  {isExporting ? tCommon('saving') : tCommon('export')}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.PENDING)}>
-                  Mark as Pending
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleStatusChange(InvoiceStatus.PAID)}>
-                  Mark as Paid
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleStatusChange('sent')}>
-                  Mark as Sent
+                <DropdownMenuItem onClick={handleEmail} disabled={isEmailing}>
+                  <Mail className="mr-2 h-4 w-4" />
+                  {isEmailing ? tCommon('saving') : tCommon('email')}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleDuplicate} disabled={isDuplicating}>
@@ -219,7 +228,7 @@ export function InvoiceCard({
             <Button variant="outline" size="icon" className="h-8 w-8 border-dashed" asChild>
               <Link href={`/${locale}/invoice/view/${invoiceId}`}>
                 <ArrowRight className="h-4 w-4" />
-                <span className="sr-only">Open Invoice</span>
+                <span className="sr-only">{tCommon('view')}</span>
               </Link>
             </Button>
           </div>

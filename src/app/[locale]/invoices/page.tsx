@@ -35,6 +35,7 @@ import {
   deleteInvoice,
   fetchInvoices,
   duplicateInvoice,
+  fetchInvoiceById,
 } from '@/services/invoice/client/invoiceClient';
 import {
   Loader2,
@@ -55,6 +56,10 @@ import { useEffect, useState, useMemo } from 'react';
 import { InvoiceStatusSelector } from '@/components/invoice/InvoiceStatusSelector';
 import { InvoiceStatus as InvoiceStatusEnum } from '@/types';
 import { useTranslations } from 'next-intl';
+import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
+import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
+import { Dialog } from '@/components/ui/dialog';
+import { FormInvoiceType } from '@/lib/types/invoice';
 
 // Define available view modes
 type ViewMode = 'card' | 'list';
@@ -91,6 +96,7 @@ export default function InvoicesPage() {
   // Get translations
   const t = useTranslations();
   const invoiceT = useTranslations('invoice');
+  const tCommon = useTranslations('common');
 
   // States for data management
   const [invoices, setInvoices] = useState<InvoiceDocument[]>([]);
@@ -109,6 +115,11 @@ export default function InvoicesPage() {
   const [sortBy, setSortBy] = useState<SortOption>('date_desc');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(12);
+
+  // New states for export and email
+  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceDocument | null>(null);
+  const [exportModalOpen, setExportModalOpen] = useState(false);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
 
   useEffect(() => {
     loadInvoices();
@@ -289,6 +300,46 @@ export default function InvoicesPage() {
     }
   };
 
+  const handleExportInvoice = async (id: string) => {
+    try {
+      // Fetch the invoice data first
+      const invoice = await fetchInvoiceById(id);
+      
+      // Set the invoice to be exported in a state
+      setSelectedInvoice(invoice);
+      
+      // Open the export modal
+      setExportModalOpen(true);
+    } catch (error) {
+      console.error('Error preparing invoice for export:', error);
+      toast({
+        title: tCommon('error'),
+        description: t('invoice.actions.exportError'),
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleEmailInvoice = async (id: string) => {
+    try {
+      // Fetch the invoice data first
+      const invoice = await fetchInvoiceById(id);
+      
+      // Set the invoice to be emailed in a state
+      setSelectedInvoice(invoice);
+      
+      // Open the email modal
+      setEmailModalOpen(true);
+    } catch (error) {
+      console.error('Error preparing invoice for email:', error);
+      toast({
+        title: tCommon('error'),
+        description: t('invoice.actions.emailError'),
+        variant: 'destructive',
+      });
+    }
+  };
+
   // Render list view for invoices
   const renderListView = () => {
     return (
@@ -445,6 +496,8 @@ export default function InvoicesPage() {
             onDelete={handleDeleteInvoice}
             onDuplicate={handleDuplicateInvoice}
             onStatusChange={handleStatusChange}
+            onExport={handleExportInvoice}
+            onEmail={handleEmailInvoice}
           />
         ))}
       </>
@@ -773,6 +826,29 @@ export default function InvoicesPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Export and Email modals */}
+      {selectedInvoice && (
+        <>
+          <Dialog open={exportModalOpen} onOpenChange={setExportModalOpen}>
+            <InvoiceExportModal 
+              invoice={selectedInvoice as unknown as FormInvoiceType} 
+              isLoading={false}
+            >
+              <span></span>
+            </InvoiceExportModal>
+          </Dialog>
+          
+          <Dialog open={emailModalOpen} onOpenChange={setEmailModalOpen}>
+            <InvoiceEmailModal
+              invoice={selectedInvoice as unknown as FormInvoiceType}
+              isLoading={false}
+            >
+              <span></span>
+            </InvoiceEmailModal>
+          </Dialog>
+        </>
+      )}
     </div>
   );
 }
