@@ -654,19 +654,18 @@
       "paymentTermsPlaceholder": "z.B., Netto 30"
     },
     "items": {
-      "title": "Positionen",
-      "addItem": "Position Hinzufügen",
-      "name": "Name",
-      "namePlaceholder": "Positionsname",
-      "description": "Beschreibung",
-      "descriptionPlaceholder": "Positionsbeschreibung",
+      "title": "Positionsartikel",
+      "name": "Artikel",
+      "namePlaceholder": "Artikelname",
       "quantity": "Menge",
       "price": "Preis",
-      "tax": "Steuer (%)",
-      "discount": "Rabatt (%)",
-      "amount": "Betrag",
-      "actions": "Aktionen",
-      "noItems": "Noch keine Positionen hinzugefügt. Fügen Sie Ihre erste Position hinzu, um zu beginnen."
+      "discount": "Rabatt",
+      "tax": "Steuer",
+      "amount": "Gesamt",
+      "addItem": "Artikel hinzufügen",
+      "itemCount": "{count, plural, =0 {Keine Artikel} one {# Artikel} other {# Artikel}}",
+      "duplicate": "Artikel duplizieren",
+      "remove": "Artikel entfernen"
     },
     "taxDetails": {
       "title": "Steuerdetails",

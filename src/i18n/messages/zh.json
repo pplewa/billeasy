@@ -567,19 +567,18 @@
       "paymentTermsPlaceholder": "例如，30天内"
     },
     "items": {
-      "title": "项目",
-      "addItem": "添加项目",
-      "name": "名称",
+      "title": "行项目",
+      "name": "项目",
       "namePlaceholder": "项目名称",
-      "description": "描述",
-      "descriptionPlaceholder": "项目描述",
       "quantity": "数量",
       "price": "价格",
-      "tax": "税费 (%)",
-      "discount": "折扣 (%)",
-      "amount": "金额",
-      "actions": "操作",
-      "noItems": "尚未添加项目。添加您的第一个项目以开始。"
+      "discount": "折扣",
+      "tax": "税费",
+      "amount": "总计",
+      "addItem": "添加项目",
+      "itemCount": "{count, plural, =0 {无项目} one {# 个项目} other {# 个项目}}",
+      "duplicate": "复制项目",
+      "remove": "删除项目"
     },
     "taxDetails": {
       "title": "税费详情",

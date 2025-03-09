@@ -19,6 +19,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { FormInput } from '@/components/ui/form-input';
@@ -38,6 +39,9 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
   });
+
+  // Translation hook
+  const t = useTranslations('form.items');
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -200,7 +204,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
         <div className="col-span-3">
           <FormInput
             {...register(`details.items.${index}.name`)}
-            placeholder="Item name"
+            placeholder={t('namePlaceholder')}
             className="h-9"
           />
         </div>
@@ -212,7 +216,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             {...register(`details.items.${index}.quantity`, {
               setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
-            placeholder="Qty"
+            placeholder={t('quantity')}
             className="h-9"
             onBlur={calculateTotal}
           />
@@ -226,7 +230,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             {...register(`details.items.${index}.unitPrice`, {
               setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
-            placeholder="Price"
+            placeholder={t('price')}
             className="h-9"
             onBlur={calculateTotal}
           />
@@ -240,7 +244,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             {...register(`details.items.${index}.discount.amount`, {
               setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
-            placeholder="Discount"
+            placeholder={t('discount')}
             className="h-9"
             onBlur={(e) => {
               // Ensure we persist values
@@ -304,7 +308,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             {...register(`details.items.${index}.tax.amount`, {
               setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
-            placeholder="Tax"
+            placeholder={t('tax')}
             className="h-9"
             onBlur={(e) => {
               // Force persistence on blur
@@ -382,7 +386,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
           size="icon"
           onClick={onDuplicate}
           className="h-8 w-8"
-          title="Duplicate item"
+          title={t('duplicate')}
         >
           <Copy className="h-4 w-4" />
         </Button>
@@ -393,7 +397,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
           size="icon"
           onClick={onRemove}
           className="h-8 w-8 text-destructive hover:text-destructive"
-          title="Remove item"
+          title={t('remove')}
         >
           <Trash2 className="h-4 w-4" />
         </Button>
@@ -415,6 +419,9 @@ export function Items() {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
+  // Translation hook
+  const t = useTranslations('form.items');
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -445,17 +452,17 @@ export function Items() {
   return (
     <Card className="w-full">
       <CardHeader className="pb-3">
-        <CardTitle>Line Items</CardTitle>
+        <CardTitle>{t('title')}</CardTitle>
       </CardHeader>
       <CardContent>
         {/* Column Headers */}
         <div className="grid grid-cols-12 gap-2 px-12 mb-2 text-sm font-medium text-muted-foreground">
-          <div className="col-span-3">Item</div>
-          <div className="col-span-1">Qty</div>
-          <div className="col-span-2">Price</div>
-          <div className="col-span-2">Discount</div>
-          <div className="col-span-2">Tax</div>
-          <div className="col-span-2">Total</div>
+          <div className="col-span-3">{t('name')}</div>
+          <div className="col-span-1">{t('quantity')}</div>
+          <div className="col-span-2">{t('price')}</div>
+          <div className="col-span-2">{t('discount')}</div>
+          <div className="col-span-2">{t('tax')}</div>
+          <div className="col-span-2">{t('amount')}</div>
         </div>
 
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -491,12 +498,12 @@ export function Items() {
             }}
           >
             <Plus className="h-4 w-4 mr-2" />
-            Add Item
+            {t('addItem')}
           </Button>
 
           {fields.length > 0 && (
             <div className="text-sm text-muted-foreground">
-              {fields.length} item{fields.length !== 1 ? 's' : ''}
+              {t('itemCount', { count: fields.length })}
             </div>
           )}
         </div>

@@ -159,7 +159,6 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
       restructuredInvoice.sender = restructuredInvoice.sender || {};
       restructuredInvoice.receiver = restructuredInvoice.receiver || {};
 
-      console.log('Storing restructured invoice:', JSON.stringify(restructuredInvoice, null, 2));
       setParsedInvoice(restructuredInvoice);
 
       // Redirect to invoice creation page

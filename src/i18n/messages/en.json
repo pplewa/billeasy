@@ -654,19 +654,18 @@
       "paymentTermsPlaceholder": "e.g., Net 30"
     },
     "items": {
-      "title": "Items",
-      "addItem": "Add Item",
-      "name": "Name",
+      "title": "Line Items",
+      "name": "Item",
       "namePlaceholder": "Item name",
-      "description": "Description",
-      "descriptionPlaceholder": "Item description",
-      "quantity": "Quantity",
+      "quantity": "Qty",
       "price": "Price",
-      "tax": "Tax (%)",
-      "discount": "Discount (%)",
-      "amount": "Amount",
-      "actions": "Actions",
-      "noItems": "No items added yet. Add your first item to get started."
+      "discount": "Discount",
+      "tax": "Tax",
+      "amount": "Total",
+      "addItem": "Add Item",
+      "itemCount": "{count, plural, =0 {No items} one {# item} other {# items}}",
+      "duplicate": "Duplicate item",
+      "remove": "Remove item"
     },
     "taxDetails": {
       "title": "Tax Details",
