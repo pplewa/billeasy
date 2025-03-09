@@ -9,7 +9,7 @@ const SMTP_HOST = process.env.SMTP_HOST;
 const SMTP_PORT = parseInt(process.env.SMTP_PORT || '587', 10);
 const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
-const EMAIL_FROM = process.env.EMAIL_FROM || 'noreply@billeasy.com';
+const EMAIL_FROM = process.env.EMAIL_FROM || 'noreply@billeasy.online';
 
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({

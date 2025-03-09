@@ -9,7 +9,7 @@ import { FormInvoiceType, ParsedInvoiceType } from '@/lib/types/invoice';
 import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import useInvoiceParserStore from '@/store/invoice-parser-store';
 import useAuthStore from '@/store/auth-store';
@@ -22,138 +22,10 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Download, AlertCircle, Zap, Mail, Printer } from 'lucide-react';
+import { Download, AlertCircle, Mail, Printer } from 'lucide-react';
 import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
 import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
 import { useTranslations } from 'next-intl';
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-// TODO: Known TypeScript Issues
-// This file has several TypeScript issues related to type compatibility between
-// the old schema types and the new ones. These issues will be addressed in a future update.
-
-// Define ParsedInvoice type at the top of the file
-type ParsedInvoiceItem = {
-  id?: string;
-  name?: string;
-  description?: string;
-  quantity?: number;
-  unitPrice?: number;
-  total?: number;
-};
-
-interface AddressInfo {
-  name?: string | null;
-  address?: string | null;
-  city?: string | null;
-  zipCode?: string | null;
-  country?: string | null;
-  email?: string | null;
-  phone?: string | null;
-  customInputs?: unknown;
-  [key: string]: unknown;
-}
-
-interface InvoiceDetails {
-  status?: string | null;
-  items?: Array<ParsedInvoiceItem> | null | string;
-  invoiceNumber?: string | null;
-  invoiceDate?: string | Date | null;
-  dueDate?: string | Date | null;
-  currency?: string | null;
-  subTotal?: number | string | null;
-  totalAmount?: number | string | null;
-  signature?: unknown;
-  [key: string]: unknown;
-}
-
-// Using a more flexible type that matches both form and parser data
-type ParsedInvoice = {
-  sender?: AddressInfo | null;
-  receiver?: AddressInfo | null;
-  details?: InvoiceDetails | null;
-  [key: string]: unknown;
-} | null;
-
-// Type guard for ParsedInvoiceItem array
-function isValidItemsArray(items: unknown): items is Array<ParsedInvoiceItem> {
-  return (
-    Array.isArray(items) &&
-    items.length > 0 &&
-    items.every((item) => typeof item === 'object' && item !== null && 'id' in item)
-  );
-}
-
-// Component to force update items when user clicks a button
-function ForceUpdateButton({ parsedInvoice }: { parsedInvoice: ParsedInvoiceType }) {
-  const { toast } = useToast();
-  const formMethods = useFormContext<FormInvoiceType>();
-
-  const handleForceUpdate = () => {
-    if (!formMethods || !parsedInvoice) {
-      toast({
-        title: 'Form Not Ready',
-        description: 'Please wait for the form to initialize.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    try {
-      const formData = InvoiceTransformer.transformParsedToForm(parsedInvoice);
-
-      if (!InvoiceTransformer.isValidFormData(formData)) {
-        toast({
-          title: 'Invalid Data',
-          description: 'The parsed invoice data is not valid.',
-          variant: 'destructive',
-        });
-        return;
-      }
-
-      // Update form with transformed data
-      Object.entries(formData).forEach(([key, value]) => {
-        formMethods.setValue(key as keyof FormInvoiceType, value);
-      });
-
-      // Verify update was successful
-      const updatedItems = formMethods.getValues('details.items');
-
-      if (updatedItems && updatedItems.length > 0) {
-        toast({
-          title: 'Invoice Data Updated',
-          description: `Updated invoice details and ${updatedItems.length} items. Please check all sections.`,
-        });
-      } else {
-        toast({
-          title: 'Update Failed',
-          description: 'Failed to add items. Please try again or add items manually.',
-          variant: 'destructive',
-        });
-      }
-    } catch (error) {
-      console.error('Error updating invoice data:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to update invoice data. Please try again.',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  return (
-    <Button
-      onClick={handleForceUpdate}
-      size="lg"
-      className="w-full md:w-auto font-bold"
-      variant="destructive"
-    >
-      <Zap className="w-4 h-4 mr-2" />
-      Force Update Invoice
-    </Button>
-  );
-}
 
 // Component to automatically update items when form is mounted
 function ItemsUpdater({ parsedInvoice }: { parsedInvoice: ParsedInvoiceType | null }) {
@@ -202,7 +74,6 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
   const { user, isLoading: authLoading } = useAuthStore();
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [actionType, setActionType] = useState<'save' | 'export'>('save');
-  const printRef = useRef<HTMLDivElement>(null);
 
   // Get locale from params
   useEffect(() => {
@@ -339,24 +210,6 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
         <h1 className="text-3xl font-bold tracking-tight">{invoiceT('create')}</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
-          <Button
-            variant="outline"
-            className="w-full md:w-auto"
-            onClick={handlePrint}
-            disabled={isSubmitting}
-          >
-            <Printer className="w-4 h-4 mr-2" />
-            {t('common.print')}
-          </Button>
-
-          {user && (
-            <InvoiceEmailModal form={form}>
-              <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
-                <Mail className="w-4 h-4 mr-2" />
-                {t('common.email')}
-              </Button>
-            </InvoiceEmailModal>
-          )}
 
           <InvoiceExportModal form={form}>
             <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
@@ -385,9 +238,6 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
                 {parsedInvoice.details.items.length} {t('common.itemsLoaded')}
               </p>
               <p className="text-sm text-muted-foreground">{t('common.itemsNotVisible')}</p>
-              <div className="mt-2">
-                <ForceUpdateButton parsedInvoice={parsedInvoice} />
-              </div>
             </div>
           </div>
         </div>
