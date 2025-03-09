@@ -25,7 +25,6 @@ import { Button } from '@/components/ui/button';
 import { Download, AlertCircle, Zap, Mail, Printer } from 'lucide-react';
 import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
 import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
-import { AddressSwapButton } from '@/components/invoice/AddressSwapButton';
 import { useTranslations } from 'next-intl';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
