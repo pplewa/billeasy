@@ -521,8 +521,8 @@
       "customFields": {
         "show": "添加自定义字段",
         "hide": "隐藏自定义字段",
-        "fieldName": "字段名称 {number}",
-        "fieldValue": "字段值 {number}",
+        "fieldName": "字段名称",
+        "fieldValue": "字段值",
         "fieldNamePlaceholder": "字段名称",
         "fieldValuePlaceholder": "字段值",
         "addAnother": "添加另一个字段"

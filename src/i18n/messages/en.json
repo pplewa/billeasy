@@ -608,8 +608,8 @@
       "customFields": {
         "show": "Add Custom Fields",
         "hide": "Hide Custom Fields",
-        "fieldName": "Field Name {number}",
-        "fieldValue": "Field Value {number}",
+        "fieldName": "Field Name",
+        "fieldValue": "Field Value",
         "fieldNamePlaceholder": "Field name",
         "fieldValuePlaceholder": "Field value",
         "addAnother": "Add Another Field"

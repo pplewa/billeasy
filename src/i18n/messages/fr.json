@@ -608,8 +608,8 @@
       "customFields": {
         "show": "Ajouter des Champs Personnalisés",
         "hide": "Masquer les Champs Personnalisés",
-        "fieldName": "Nom du Champ {number}",
-        "fieldValue": "Valeur du Champ {number}",
+        "fieldName": "Nom du Champ",
+        "fieldValue": "Valeur du Champ",
         "fieldNamePlaceholder": "Nom du champ",
         "fieldValuePlaceholder": "Valeur du champ",
         "addAnother": "Ajouter un Autre Champ"

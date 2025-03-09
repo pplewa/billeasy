@@ -1,7 +1,7 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig = {
-  serverExternalPackages: ['mongoose'],
+  serverExternalPackages: ['mongoose', 'pdf-parse'],
   images: {
     domains: ['localhost'],
     remotePatterns: [

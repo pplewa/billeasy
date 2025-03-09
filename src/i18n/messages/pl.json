@@ -521,8 +521,8 @@
       "customFields": {
         "show": "Dodaj Pola Niestandardowe",
         "hide": "Ukryj Pola Niestandardowe",
-        "fieldName": "Nazwa Pola {number}",
-        "fieldValue": "Wartość Pola {number}",
+        "fieldName": "Nazwa Pola",
+        "fieldValue": "Wartość Pola",
         "fieldNamePlaceholder": "Nazwa pola",
         "fieldValuePlaceholder": "Wartość pola",
         "addAnother": "Dodaj Kolejne Pole"

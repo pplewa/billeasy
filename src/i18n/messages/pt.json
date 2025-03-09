@@ -521,8 +521,8 @@
       "customFields": {
         "show": "Adicionar Campos Personalizados",
         "hide": "Ocultar Campos Personalizados",
-        "fieldName": "Nome do Campo {number}",
-        "fieldValue": "Valor do Campo {number}",
+        "fieldName": "Nome do Campo",
+        "fieldValue": "Valor do Campo",
         "fieldNamePlaceholder": "Nome do campo",
         "fieldValuePlaceholder": "Valor do campo",
         "addAnother": "Adicionar Outro Campo"

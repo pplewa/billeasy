@@ -608,8 +608,8 @@
       "customFields": {
         "show": "Benutzerdefinierte Felder Hinzufügen",
         "hide": "Benutzerdefinierte Felder Ausblenden",
-        "fieldName": "Feldname {number}",
-        "fieldValue": "Feldwert {number}",
+        "fieldName": "Feldname",
+        "fieldValue": "Feldwert",
         "fieldNamePlaceholder": "Feldname",
         "fieldValuePlaceholder": "Feldwert",
         "addAnother": "Weiteres Feld Hinzufügen"
