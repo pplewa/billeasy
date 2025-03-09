@@ -155,7 +155,9 @@
       "previousPageLabel": "转到上一页",
       "morePagesLabel": "更多页面"
     },
-    "signIn": "登录"
+    "signIn": "登录",
+    "selectDate": "选择日期",
+    "selectCurrency": "选择货币"
   },
   "footer": {
     "allRightsReserved": "版权所有",

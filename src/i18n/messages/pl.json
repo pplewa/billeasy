@@ -155,7 +155,9 @@
       "previousPageLabel": "Przejdź do poprzedniej strony",
       "morePagesLabel": "Więcej stron"
     },
-    "signIn": "Zaloguj się"
+    "signIn": "Zaloguj się",
+    "selectDate": "Wybierz Datę",
+    "selectCurrency": "Wybierz Walutę"
   },
   "footer": {
     "allRightsReserved": "Wszelkie prawa zastrzeżone",

@@ -624,7 +624,9 @@
       "sort": {
         "placeholder": "Ordenar por"
       }
-    }
+    },
+    "selectDate": "Selecionar Data",
+    "selectCurrency": "Selecionar Moeda"
   },
   "invoiceTemplate": {
     "title": "Modelo de Fatura",
