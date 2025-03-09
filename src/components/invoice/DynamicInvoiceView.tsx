@@ -29,6 +29,7 @@ interface DynamicInvoiceViewProps {
  * Used in the invoice view page to preview the invoice with different templates
  */
 const DynamicInvoiceView = ({ invoice, templateId = 1 }: DynamicInvoiceViewProps) => {
+
   // Process the invoice data to ensure compatibility with templates
   const processedInvoice = useMemo(() => {
     // Normalize the invoice to ensure consistent structure
@@ -49,7 +50,7 @@ const DynamicInvoiceView = ({ invoice, templateId = 1 }: DynamicInvoiceViewProps
   const DynamicInvoice = useMemo(
     () =>
       dynamic<InvoiceType>(
-        () => import(`@/app/components/templates/invoice/${templateName}Unified`),
+        () => import(`@/app/components/templates/invoice/${templateName}`),
         {
           loading: () => <DynamicInvoiceViewSkeleton />,
         }
