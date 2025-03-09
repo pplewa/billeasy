@@ -32,10 +32,14 @@ function SignInContent() {
     setIsLoading(true);
 
     try {
+      // Get the current locale from the URL
+      const currentLocale = window.location.pathname.split('/')[1];
+
       const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-next-locale': currentLocale, // Add locale header
         },
         body: JSON.stringify({ email }),
       });
