@@ -24,14 +24,15 @@ export async function POST(request: NextRequest) {
     await connectToDatabase();
 
     // Improved locale detection with logging
-    const localeFromHeader = request.headers.get('x-next-locale') || 
-                              request.headers.get('accept-language')?.split(',')[0].split('-')[0] || 
-                              'en';
-    
+    const localeFromHeader =
+      request.headers.get('x-next-locale') ||
+      request.headers.get('accept-language')?.split(',')[0].split('-')[0] ||
+      'en';
+
     // Validate locale is one of the supported locales
     const supportedLocales: Locale[] = ['en', 'es', 'fr', 'de', 'pl', 'pt', 'zh'];
-    const locale = supportedLocales.includes(localeFromHeader as Locale) 
-      ? localeFromHeader as Locale 
+    const locale = supportedLocales.includes(localeFromHeader as Locale)
+      ? (localeFromHeader as Locale)
       : 'en';
 
     console.log(`Sending auth email for ${email} with locale: ${locale}`);

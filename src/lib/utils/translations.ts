@@ -3,7 +3,10 @@ import { getTranslations as getServerTranslations } from 'next-intl/server';
 /**
  * Type definition for a translation function
  */
-export type TranslationFunction = (key: string, params?: Record<string, string | number | boolean>) => string;
+export type TranslationFunction = (
+  key: string,
+  params?: Record<string, string | number | boolean>
+) => string;
 
 /**
  * Determines whether the code is running in a server context
@@ -32,12 +35,14 @@ export const getTranslationFunction = async (
   if (isServer() && !clientTranslation) {
     return await getServerTranslation(namespace);
   }
-  
+
   // If client translation is provided, use it
   if (clientTranslation) {
     return clientTranslation;
   }
-  
+
   // Fallback case (should not happen in practice)
-  throw new Error('No translation function available. Make sure to provide clientTranslation in client components.');
-}; 
+  throw new Error(
+    'No translation function available. Make sure to provide clientTranslation in client components.'
+  );
+};

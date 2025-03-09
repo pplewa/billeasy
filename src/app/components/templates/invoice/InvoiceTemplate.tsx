@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { InvoiceType } from '@/lib/types';
-import { Template1 } from './InvoiceTemplate1';
+import Template1 from './InvoiceTemplate1';
 import { Template2 } from './InvoiceTemplate2';
 import { Template3 } from './InvoiceTemplate3';
 import { Template4 } from './InvoiceTemplate4';
@@ -15,10 +15,10 @@ import { Template4 } from './InvoiceTemplate4';
 const InvoiceTemplate = (data: InvoiceType) => {
   // Get client-side translations
   const t = useTranslations('invoice');
-  
+
   // Get template ID from the data
   const templateId = data.details?.pdfTemplate || 1;
-  
+
   // Render the appropriate template with client-side translations
   switch (templateId) {
     case 1:
@@ -59,4 +59,4 @@ export const InvoiceTemplate3 = (data: InvoiceType) => {
 export const InvoiceTemplate4 = (data: InvoiceType) => {
   const t = useTranslations('invoice');
   return <Template4 data={data} t={t} />;
-}; 
+};

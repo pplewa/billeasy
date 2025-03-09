@@ -14,7 +14,7 @@ import { Template4 } from '../InvoiceTemplate4';
 export async function renderInvoiceTemplate(data: InvoiceType, templateId: number) {
   // Get server-side translations
   const t = await getTranslations('invoice');
-  
+
   // Render the appropriate template based on templateId
   switch (templateId) {
     case 1:
@@ -29,4 +29,4 @@ export async function renderInvoiceTemplate(data: InvoiceType, templateId: numbe
       // Default to template 1
       return <Template1 data={data} t={t} />;
   }
-} 
+}

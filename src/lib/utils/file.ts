@@ -7,8 +7,10 @@
 export const getInvoiceTemplate = async (templateId: number) => {
   try {
     // Import the server-side render function
-    const { renderInvoiceTemplate } = await import('../../app/components/templates/invoice/server/renderTemplate');
-    
+    const { renderInvoiceTemplate } = await import(
+      '../../app/components/templates/invoice/server/renderTemplate'
+    );
+
     // Return a function that renders the template with the provided data
     return async (props: Record<string, unknown>) => {
       // Create a deep copy of the props to avoid mutating the original

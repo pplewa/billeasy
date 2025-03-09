@@ -67,11 +67,11 @@ export async function createAuthToken(email: string): Promise<string> {
  */
 export async function sendAuthEmail(email: string, locale: Locale = 'en'): Promise<boolean> {
   const token = await createAuthToken(email);
-  
+
   // Get the localized verify path for the given locale
   const verifyPaths = routing.pathnames['/verify'];
   const localizedVerifyPath = verifyPaths[locale] || verifyPaths.en;
-  
+
   // Construct the full URL with localized verify path
   const url = `${APP_URL}/${locale}${localizedVerifyPath}?token=${token}`;
 

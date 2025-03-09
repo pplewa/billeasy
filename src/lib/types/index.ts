@@ -4,4 +4,4 @@
  */
 export interface TranslationFunction {
   (key: string, params?: Record<string, string | number | boolean>): string;
-} 
+}

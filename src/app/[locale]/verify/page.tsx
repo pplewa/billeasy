@@ -104,9 +104,7 @@ function VerifyContent() {
               <div className="rounded-full bg-green-100 p-4">
                 <CheckCircle2 className="h-16 w-16 text-green-600" />
               </div>
-              <p className="text-sm text-muted-foreground text-center">
-                {t('redirecting')}
-              </p>
+              <p className="text-sm text-muted-foreground text-center">{t('redirecting')}</p>
             </div>
           )}
 
@@ -145,9 +143,7 @@ export default function VerifyPage() {
               <CardTitle className="text-2xl font-bold text-center">
                 {tCommon('verifying')}
               </CardTitle>
-              <CardDescription className="text-center">
-                {t('verifyLoading')}
-              </CardDescription>
+              <CardDescription className="text-center">{t('verifyLoading')}</CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center py-8">
               <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-primary"></div>

@@ -65,13 +65,18 @@ export default async function middleware(request: NextRequest) {
   // Handle authentication
   const authToken = request.cookies.get('authToken')?.value;
   const isAuthenticated = !!authToken; // Simple check for auth token presence
-  const currentLocale = routing.locales.find(locale => pathname.startsWith(`/${locale}/`)) || defaultLocale;
+  const currentLocale =
+    routing.locales.find((locale) => pathname.startsWith(`/${locale}/`)) || defaultLocale;
   const signInPath = routing.pathnames['/signin'][currentLocale];
 
   // If the path requires authentication and the user is not authenticated, redirect to sign in
-  if (pathnameWithoutLocale !== signInPath && !isPublicPath(pathnameWithoutLocale) && !isAuthenticated) {
+  if (
+    pathnameWithoutLocale !== signInPath &&
+    !isPublicPath(pathnameWithoutLocale) &&
+    !isAuthenticated
+  ) {
     // Determine the current locale, defaulting to the default locale if not found
-    
+
     const signInUrl = new URL(`/${currentLocale}${signInPath}`, request.url);
     signInUrl.searchParams.set('callbackUrl', pathname);
     return NextResponse.redirect(signInUrl);

@@ -18,7 +18,7 @@ export interface InvoiceTemplateProps {
  * Invoice Template 3 - Creative Professional
  * This template is implementation only with no client/server directives
  * It's used by both client and server rendering
- * 
+ *
  * Features a modern, creative design with accent colors and stylish typography
  */
 export function Template3({ data, t }: InvoiceTemplateProps) {
@@ -26,7 +26,7 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
   const sender = data.sender || {};
   const receiver = data.receiver || {};
   const details = data.details || {};
-  
+
   // Type-safe access to signature
   const signature = details.signature as Signature | undefined;
 
@@ -58,7 +58,7 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
             {String(sender?.name || '')}
           </h1>
         </div>
-        
+
         <div className="w-1/2 text-right">
           <div className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 p-6 rounded-lg text-white">
             <h2 className="text-2xl font-light mb-2">{t('invoiceNumber')}</h2>
@@ -177,4 +177,4 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
       )}
     </div>
   );
-} 
+}

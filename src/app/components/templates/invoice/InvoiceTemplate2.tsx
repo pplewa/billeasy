@@ -25,7 +25,7 @@ export function Template2({ data, t }: InvoiceTemplateProps) {
   const sender = data.sender || {};
   const receiver = data.receiver || {};
   const details = data.details || {};
-  
+
   // Type-safe access to signature
   const signature = details.signature as Signature | undefined;
 
@@ -111,9 +111,15 @@ export function Template2({ data, t }: InvoiceTemplateProps) {
           <thead>
             <tr className="bg-gray-50 text-left">
               <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase">{t('item')}</th>
-              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">{t('qty')}</th>
-              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">{t('price')}</th>
-              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">{t('total')}</th>
+              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">
+                {t('qty')}
+              </th>
+              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">
+                {t('price')}
+              </th>
+              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">
+                {t('total')}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -141,7 +147,9 @@ export function Template2({ data, t }: InvoiceTemplateProps) {
                 <tr key={item.id || index} className="border-t border-gray-100">
                   <td className="py-4 px-4">
                     <div className="font-medium text-gray-800">{String(item.name || '')}</div>
-                    {item.description && <div className="text-gray-500 text-sm mt-1">{String(item.description)}</div>}
+                    {item.description && (
+                      <div className="text-gray-500 text-sm mt-1">{String(item.description)}</div>
+                    )}
                   </td>
                   <td className="py-4 px-4 text-right">{quantity}</td>
                   <td className="py-4 px-4 text-right">
@@ -174,18 +182,34 @@ export function Template2({ data, t }: InvoiceTemplateProps) {
               {details?.tax && (
                 <div className="flex justify-between py-2">
                   <span className="text-gray-600">
-                    {t('tax')} ({typeof details.tax === 'object' && 'amountType' in details.tax && details.tax.amountType === 'percentage' 
-                      ? `${typeof details.tax === 'object' && 'amount' in details.tax ? details.tax.amount : ''}%` 
-                      : ''}):
+                    {t('tax')} (
+                    {typeof details.tax === 'object' &&
+                    'amountType' in details.tax &&
+                    details.tax.amountType === 'percentage'
+                      ? `${typeof details.tax === 'object' && 'amount' in details.tax ? details.tax.amount : ''}%`
+                      : ''}
+                    ):
                   </span>
                   <span className="font-medium text-gray-800">
-                    {typeof details.tax === 'object' && 'amountType' in details.tax && details.tax.amountType === 'percentage'
+                    {typeof details.tax === 'object' &&
+                    'amountType' in details.tax &&
+                    details.tax.amountType === 'percentage'
                       ? formatCurrency(
-                          subTotal * (parseNumber(typeof details.tax === 'object' && 'amount' in details.tax ? details.tax.amount : 0) / 100),
+                          subTotal *
+                            (parseNumber(
+                              typeof details.tax === 'object' && 'amount' in details.tax
+                                ? details.tax.amount
+                                : 0
+                            ) /
+                              100),
                           String(details?.currency || 'USD')
                         )
                       : formatCurrency(
-                          parseNumber(typeof details.tax === 'object' && 'amount' in details.tax ? details.tax.amount : 0),
+                          parseNumber(
+                            typeof details.tax === 'object' && 'amount' in details.tax
+                              ? details.tax.amount
+                              : 0
+                          ),
                           String(details?.currency || 'USD')
                         )}
                   </span>
@@ -196,19 +220,33 @@ export function Template2({ data, t }: InvoiceTemplateProps) {
                 <div className="flex justify-between py-2">
                   <span className="text-gray-600">
                     {t('discount')} (
-                    {typeof details.discount === 'object' && 'amountType' in details.discount && details.discount.amountType === 'percentage'
+                    {typeof details.discount === 'object' &&
+                    'amountType' in details.discount &&
+                    details.discount.amountType === 'percentage'
                       ? `${typeof details.discount === 'object' && 'amount' in details.discount ? details.discount.amount : ''}%`
                       : ''}
                     ):
                   </span>
                   <span className="font-medium text-gray-800">
-                    {typeof details.discount === 'object' && 'amountType' in details.discount && details.discount.amountType === 'percentage'
+                    {typeof details.discount === 'object' &&
+                    'amountType' in details.discount &&
+                    details.discount.amountType === 'percentage'
                       ? formatCurrency(
-                          subTotal * (parseNumber(typeof details.discount === 'object' && 'amount' in details.discount ? details.discount.amount : 0) / 100),
+                          subTotal *
+                            (parseNumber(
+                              typeof details.discount === 'object' && 'amount' in details.discount
+                                ? details.discount.amount
+                                : 0
+                            ) /
+                              100),
                           String(details?.currency || 'USD')
                         )
                       : formatCurrency(
-                          parseNumber(typeof details.discount === 'object' && 'amount' in details.discount ? details.discount.amount : 0),
+                          parseNumber(
+                            typeof details.discount === 'object' && 'amount' in details.discount
+                              ? details.discount.amount
+                              : 0
+                          ),
                           String(details?.currency || 'USD')
                         )}
                   </span>
@@ -249,24 +287,30 @@ export function Template2({ data, t }: InvoiceTemplateProps) {
           <div>
             <h3 className="text-lg font-medium text-gray-800 mb-2">{t('paymentInfo')}</h3>
             <div className="text-gray-600">
-              {typeof details.paymentInformation === 'object' && 'bankName' in details.paymentInformation && details.paymentInformation.bankName && (
-                <p>
-                  <span className="font-medium">{t('bank')}: </span>
-                  {String(details.paymentInformation.bankName)}
-                </p>
-              )}
-              {typeof details.paymentInformation === 'object' && 'accountName' in details.paymentInformation && details.paymentInformation.accountName && (
-                <p>
-                  <span className="font-medium">{t('accountName')}: </span>
-                  {String(details.paymentInformation.accountName)}
-                </p>
-              )}
-              {typeof details.paymentInformation === 'object' && 'accountNumber' in details.paymentInformation && details.paymentInformation.accountNumber && (
-                <p>
-                  <span className="font-medium">{t('accountNumber')}: </span>
-                  {String(details.paymentInformation.accountNumber)}
-                </p>
-              )}
+              {typeof details.paymentInformation === 'object' &&
+                'bankName' in details.paymentInformation &&
+                details.paymentInformation.bankName && (
+                  <p>
+                    <span className="font-medium">{t('bank')}: </span>
+                    {String(details.paymentInformation.bankName)}
+                  </p>
+                )}
+              {typeof details.paymentInformation === 'object' &&
+                'accountName' in details.paymentInformation &&
+                details.paymentInformation.accountName && (
+                  <p>
+                    <span className="font-medium">{t('accountName')}: </span>
+                    {String(details.paymentInformation.accountName)}
+                  </p>
+                )}
+              {typeof details.paymentInformation === 'object' &&
+                'accountNumber' in details.paymentInformation &&
+                details.paymentInformation.accountNumber && (
+                  <p>
+                    <span className="font-medium">{t('accountNumber')}: </span>
+                    {String(details.paymentInformation.accountNumber)}
+                  </p>
+                )}
             </div>
           </div>
         )}
@@ -277,16 +321,9 @@ export function Template2({ data, t }: InvoiceTemplateProps) {
           <div className="text-center">
             <div
               className="inline-block border-b border-gray-400 pb-1 px-8"
-              style={
-                signature.fontFamily
-                  ? { fontFamily: signature.fontFamily }
-                  : undefined
-              }
+              style={signature.fontFamily ? { fontFamily: signature.fontFamily } : undefined}
             >
-              <span
-                className="text-2xl"
-                style={{ fontFamily: signature.fontFamily || 'cursive' }}
-              >
+              <span className="text-2xl" style={{ fontFamily: signature.fontFamily || 'cursive' }}>
                 {signature.name}
               </span>
             </div>
@@ -300,4 +337,4 @@ export function Template2({ data, t }: InvoiceTemplateProps) {
       </div>
     </InvoiceLayout>
   );
-} 
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { InvoiceType } from '@/lib/types';
-import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting';
+import { formatDate, parseNumber } from '@/lib/utils/formatting';
 
 // Type for signature to avoid unknown type errors
 interface Signature {
@@ -18,7 +18,7 @@ export interface InvoiceTemplateProps {
  * Invoice Template 4 - Premium Corporate
  * This template is implementation only with no client/server directives
  * It's used by both client and server rendering
- * 
+ *
  * Features a premium corporate design with elegant typography and layout
  */
 export function Template4({ data, t }: InvoiceTemplateProps) {
@@ -26,7 +26,7 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
   const sender = data.sender || {};
   const receiver = data.receiver || {};
   const details = data.details || {};
-  
+
   // Type-safe access to signature
   const signature = details.signature as Signature | undefined;
 
@@ -146,7 +146,9 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
                   <th className="py-4 px-6 text-right text-blue-900 font-semibold">
                     {t('unitPrice')}
                   </th>
-                  <th className="py-4 px-6 text-right text-blue-900 font-semibold">{t('amount')}</th>
+                  <th className="py-4 px-6 text-right text-blue-900 font-semibold">
+                    {t('amount')}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -160,7 +162,9 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
                     </td>
                     <td className="py-4 px-6 text-right">{String(item.quantity || '')}</td>
                     <td className="py-4 px-6 text-right">{String(item.unitPrice || '')}</td>
-                    <td className="py-4 px-6 text-right font-medium">{String(item.amount || '')}</td>
+                    <td className="py-4 px-6 text-right font-medium">
+                      {String(item.amount || '')}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -223,4 +227,4 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
       <div className="h-4 bg-blue-900" />
     </div>
   );
-} 
+}
