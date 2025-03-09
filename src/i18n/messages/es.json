@@ -321,7 +321,19 @@
       "errorDescription": "No se pudo eliminar la factura"
     },
     "create": "Crear Factura",
-    "edit": "Editar Factura",
+    "edit": {
+      "value": "Editar Factura",
+      "toast": {
+        "success": {
+          "title": "Factura Actualizada",
+          "description": "Su factura ha sido actualizada con éxito"
+        },
+        "error": {
+          "title": "Actualización Fallida",
+          "description": "No se pudo actualizar la factura. Por favor, inténtelo de nuevo."
+        }
+      }
+    },
     "itemsDetected": "Elementos detectados",
     "noDraftsFound": "No se encontraron borradores",
     "startCreatingDraft": "Comience a crear una factura para guardar automáticamente un borrador",
@@ -608,8 +620,8 @@
       "customFields": {
         "show": "Agregar Campos Personalizados",
         "hide": "Ocultar Campos Personalizados",
-        "fieldName": "Nombre del Campo {number}",
-        "fieldValue": "Valor del Campo {number}",
+        "fieldName": "Nombre del Campo",
+        "fieldValue": "Valor del Campo",
         "fieldNamePlaceholder": "Nombre del campo",
         "fieldValuePlaceholder": "Valor del campo",
         "addAnother": "Agregar Otro Campo"
@@ -642,19 +654,18 @@
       "paymentTermsPlaceholder": "p. ej., Neto 30"
     },
     "items": {
-      "title": "Elementos",
-      "addItem": "Agregar Elemento",
-      "name": "Nombre",
-      "namePlaceholder": "Nombre del elemento",
-      "description": "Descripción",
-      "descriptionPlaceholder": "Descripción del elemento",
-      "quantity": "Cantidad",
+      "title": "Líneas de Artículos",
+      "name": "Artículo",
+      "namePlaceholder": "Nombre del artículo",
+      "quantity": "Cant",
       "price": "Precio",
-      "tax": "Impuesto (%)",
-      "discount": "Descuento (%)",
-      "amount": "Importe",
-      "actions": "Acciones",
-      "noItems": "Aún no se han agregado elementos. Agregue su primer elemento para comenzar."
+      "discount": "Descuento",
+      "tax": "Impuesto",
+      "amount": "Total",
+      "addItem": "Agregar Artículo",
+      "itemCount": "{count, plural, =0 {Sin artículos} one {# artículo} other {# artículos}}",
+      "duplicate": "Duplicar artículo",
+      "remove": "Eliminar artículo"
     },
     "taxDetails": {
       "title": "Detalles de Impuestos",

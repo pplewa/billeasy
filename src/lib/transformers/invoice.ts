@@ -17,6 +17,7 @@ export class InvoiceTransformer {
    */
   private static transformParsedItemToFormItem(item: ParsedItemType): FormItemType {
     return {
+      ...item,
       id: item.id || crypto.randomUUID(),
       name: item.name || 'Item',
       description: item.description || '',
@@ -28,12 +29,14 @@ export class InvoiceTransformer {
         amountType: 'percentage',
         taxId: undefined,
         taxName: undefined,
+        ...item.tax
       },
       discount: {
         amount: 0,
         amountType: 'percentage',
         discountCode: undefined,
         discountName: undefined,
+        ...item.discount
       },
     };
   }

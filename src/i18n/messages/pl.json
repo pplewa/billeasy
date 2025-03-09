@@ -321,7 +321,19 @@
       "errorDescription": "Nie udało się usunąć faktury"
     },
     "create": "Utwórz Fakturę",
-    "edit": "Edytuj Fakturę",
+    "edit": {
+      "value": "Edytuj Fakturę",
+      "toast": {
+        "success": {
+          "title": "Faktura Zaktualizowana",
+          "description": "Twoja faktura została pomyślnie zaktualizowana"
+        },
+        "error": {
+          "title": "Aktualizacja Nieudana",
+          "description": "Nie udało się zaktualizować faktury. Proszę spróbować ponownie."
+        }
+      }
+    },
     "itemsDetected": "Wykryto pozycje",
     "noDraftsFound": "Nie znaleziono wersji roboczych",
     "startCreatingDraft": "Zacznij tworzyć fakturę, aby automatycznie zapisać wersję roboczą",
@@ -521,8 +533,8 @@
       "customFields": {
         "show": "Dodaj Pola Niestandardowe",
         "hide": "Ukryj Pola Niestandardowe",
-        "fieldName": "Nazwa Pola {number}",
-        "fieldValue": "Wartość Pola {number}",
+        "fieldName": "Nazwa Pola",
+        "fieldValue": "Wartość Pola",
         "fieldNamePlaceholder": "Nazwa pola",
         "fieldValuePlaceholder": "Wartość pola",
         "addAnother": "Dodaj Kolejne Pole"
@@ -556,18 +568,17 @@
     },
     "items": {
       "title": "Pozycje",
-      "addItem": "Dodaj Pozycję",
-      "name": "Nazwa",
+      "name": "Pozycja",
       "namePlaceholder": "Nazwa pozycji",
-      "description": "Opis",
-      "descriptionPlaceholder": "Opis pozycji",
       "quantity": "Ilość",
       "price": "Cena",
-      "tax": "Podatek (%)",
-      "discount": "Rabat (%)",
-      "amount": "Kwota",
-      "actions": "Akcje",
-      "noItems": "Nie dodano jeszcze żadnych pozycji. Dodaj pierwszą pozycję, aby rozpocząć."
+      "discount": "Rabat",
+      "tax": "Podatek",
+      "amount": "Razem",
+      "addItem": "Dodaj Pozycję",
+      "itemCount": "{count, plural, =0 {Brak pozycji} one {# pozycja} other {# pozycje}}",
+      "duplicate": "Duplikuj pozycję",
+      "remove": "Usuń pozycję"
     },
     "taxDetails": {
       "title": "Szczegóły Podatku",

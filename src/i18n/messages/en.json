@@ -321,7 +321,19 @@
       "errorDescription": "Failed to delete invoice"
     },
     "create": "Create Invoice",
-    "edit": "Edit Invoice",
+    "edit": {
+      "value": "Edit Invoice",
+      "toast": {
+        "success": {
+          "title": "Invoice Updated",
+          "description": "Your invoice has been successfully updated"
+        },
+        "error": {
+          "title": "Update Failed",
+          "description": "Unable to update the invoice. Please try again."
+        }
+      }
+    },
     "itemsDetected": "Detected Invoice Items",
     "noDraftsFound": "No drafts found",
     "startCreatingDraft": "Start creating an invoice to save drafts automatically.",
@@ -608,8 +620,8 @@
       "customFields": {
         "show": "Add Custom Fields",
         "hide": "Hide Custom Fields",
-        "fieldName": "Field Name {number}",
-        "fieldValue": "Field Value {number}",
+        "fieldName": "Field Name",
+        "fieldValue": "Field Value",
         "fieldNamePlaceholder": "Field name",
         "fieldValuePlaceholder": "Field value",
         "addAnother": "Add Another Field"
@@ -642,19 +654,18 @@
       "paymentTermsPlaceholder": "e.g., Net 30"
     },
     "items": {
-      "title": "Items",
-      "addItem": "Add Item",
-      "name": "Name",
+      "title": "Line Items",
+      "name": "Item",
       "namePlaceholder": "Item name",
-      "description": "Description",
-      "descriptionPlaceholder": "Item description",
-      "quantity": "Quantity",
+      "quantity": "Qty",
       "price": "Price",
-      "tax": "Tax (%)",
-      "discount": "Discount (%)",
-      "amount": "Amount",
-      "actions": "Actions",
-      "noItems": "No items added yet. Add your first item to get started."
+      "discount": "Discount",
+      "tax": "Tax",
+      "amount": "Total",
+      "addItem": "Add Item",
+      "itemCount": "{count, plural, =0 {No items} one {# item} other {# items}}",
+      "duplicate": "Duplicate item",
+      "remove": "Remove item"
     },
     "taxDetails": {
       "title": "Tax Details",

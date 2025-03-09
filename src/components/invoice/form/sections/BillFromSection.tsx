@@ -38,7 +38,6 @@ interface FormErrors {
 }
 
 export function BillFromSection() {
-  const [showCustomInputs, setShowCustomInputs] = useState(false);
   const t = useTranslations('form');
   const {
     register,
@@ -71,9 +70,9 @@ export function BillFromSection() {
   const zipCodeValue = watch('sender.zipCode') || undefined;
   const countryValue = watch('sender.country') || undefined;
 
-  // Safely handle custom inputs array
+  // Safely handle custom inputs array, ensure at least one empty field
   const customInputs = getValues('sender.customInputs') || [];
-  const customInputsArray = Array.isArray(customInputs) ? customInputs : [];
+  const [customInputsArray, setCustomInputsArray] = useState(customInputs);
 
   return (
     <Card className="w-full">
@@ -123,23 +122,18 @@ export function BillFromSection() {
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => setShowCustomInputs(!showCustomInputs)}
+            onClick={() => {
+              const newCustomInputsArray = [...customInputsArray, { key: '', value: '' }];
+              setCustomInputsArray(newCustomInputsArray);
+              setValue('sender.customInputs', newCustomInputsArray);
+            }}
             className="flex items-center"
           >
-            {showCustomInputs ? (
-              <>
-                <X className="mr-2 h-4 w-4" />
-                {t('billFrom.customFields.hide')}
-              </>
-            ) : (
-              <>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                {t('billFrom.customFields.show')}
-              </>
-            )}
+            <PlusCircle className="mr-2 h-4 w-4" />
+            {t('billFrom.customFields.show')}
           </Button>
 
-          {showCustomInputs && (
+          {customInputsArray.length > 0 && (
             <div className="mt-4 space-y-4">
               {customInputsArray.map((customInput: CustomInput, index: number) => (
                 <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -160,11 +154,13 @@ export function BillFromSection() {
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="absolute top-8 right-2 h-8 w-8"
+                      className="absolute top-9 right-1 h-8 w-8"
                       onClick={() => {
-                        const updatedInputs = [...customInputsArray];
-                        updatedInputs.splice(index, 1);
-                        setValue('sender.customInputs', updatedInputs);
+                        const newCustomInputsArray = customInputsArray.filter(
+                          (_, i) => i !== index
+                        );
+                        setCustomInputsArray(newCustomInputsArray);
+                        setValue('sender.customInputs', newCustomInputsArray);
                       }}
                     >
                       <Trash className="h-4 w-4" />
@@ -172,19 +168,6 @@ export function BillFromSection() {
                   </div>
                 </div>
               ))}
-
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setValue('sender.customInputs', [...customInputsArray, { key: '', value: '' }]);
-                }}
-                className="flex items-center"
-              >
-                <PlusCircle className="mr-2 h-4 w-4" />
-                {t('billFrom.customFields.addAnother')}
-              </Button>
             </div>
           )}
         </div>

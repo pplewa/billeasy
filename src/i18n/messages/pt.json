@@ -321,7 +321,19 @@
       "errorDescription": "Falha ao excluir a fatura"
     },
     "create": "Criar Fatura",
-    "edit": "Editar Fatura",
+    "edit": {
+      "value": "Editar Fatura",
+      "toast": {
+        "success": {
+          "title": "Fatura Atualizada",
+          "description": "Sua fatura foi atualizada com sucesso"
+        },
+        "error": {
+          "title": "Atualização Falhou",
+          "description": "Não foi possível atualizar a fatura. Por favor, tente novamente."
+        }
+      }
+    },
     "itemsDetected": "Itens detectados",
     "noDraftsFound": "Nenhum rascunho encontrado",
     "startCreatingDraft": "Comece a criar uma fatura para salvar automaticamente um rascunho",
@@ -521,8 +533,8 @@
       "customFields": {
         "show": "Adicionar Campos Personalizados",
         "hide": "Ocultar Campos Personalizados",
-        "fieldName": "Nome do Campo {number}",
-        "fieldValue": "Valor do Campo {number}",
+        "fieldName": "Nome do Campo",
+        "fieldValue": "Valor do Campo",
         "fieldNamePlaceholder": "Nome do campo",
         "fieldValuePlaceholder": "Valor do campo",
         "addAnother": "Adicionar Outro Campo"
@@ -555,19 +567,18 @@
       "paymentTermsPlaceholder": "p. ex., Líquido 30"
     },
     "items": {
-      "title": "Itens",
-      "addItem": "Adicionar Item",
-      "name": "Nome",
+      "title": "Itens da Linha",
+      "name": "Item",
       "namePlaceholder": "Nome do item",
-      "description": "Descrição",
-      "descriptionPlaceholder": "Descrição do item",
-      "quantity": "Quantidade",
+      "quantity": "Qtd",
       "price": "Preço",
-      "tax": "Imposto (%)",
-      "discount": "Desconto (%)",
-      "amount": "Valor",
-      "actions": "Ações",
-      "noItems": "Nenhum item adicionado ainda. Adicione seu primeiro item para começar."
+      "discount": "Desconto",
+      "tax": "Imposto",
+      "amount": "Total",
+      "addItem": "Adicionar Item",
+      "itemCount": "{count, plural, =0 {Sem itens} one {# item} other {# itens}}",
+      "duplicate": "Duplicar item",
+      "remove": "Remover item"
     },
     "taxDetails": {
       "title": "Detalhes do Imposto",

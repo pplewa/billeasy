@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { FormInput } from '@/components/ui/form-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, X } from 'lucide-react';
+import { PlusCircle, X, Trash } from 'lucide-react';
 import { AddressLookahead, AddressDetails } from '@/components/ui/address-lookahead';
 
 import { InvoiceType } from '@/types';
@@ -38,7 +38,6 @@ interface FormErrors {
 }
 
 export function BillToSection() {
-  const [showCustomInputs, setShowCustomInputs] = useState(false);
   const {
     register,
     formState: { errors },
@@ -71,9 +70,9 @@ export function BillToSection() {
   const zipCodeValue = watch('receiver.zipCode') || undefined;
   const countryValue = watch('receiver.country') || undefined;
 
-  // Safely handle custom inputs array
+  // Safely handle custom inputs array, ensure at least one empty field
   const customInputs = getValues('receiver.customInputs') || [];
-  const customInputsArray = Array.isArray(customInputs) ? customInputs : [];
+  const [customInputsArray, setCustomInputsArray] = useState(customInputs);
 
   return (
     <Card className="w-full">
@@ -128,27 +127,22 @@ export function BillToSection() {
 
         {/* Custom inputs section */}
         <div className="pt-2">
-          <Button
+        <Button
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => setShowCustomInputs(!showCustomInputs)}
+            onClick={() => {
+              const newCustomInputsArray = [...customInputsArray, { key: '', value: '' }];
+              setCustomInputsArray(newCustomInputsArray);
+              setValue('receiver.customInputs', newCustomInputsArray);
+            }}
             className="flex items-center"
           >
-            {showCustomInputs ? (
-              <>
-                <X className="mr-2 h-4 w-4" />
-                {t('customFields.hide')}
-              </>
-            ) : (
-              <>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                {t('customFields.show')}
-              </>
-            )}
+            <PlusCircle className="mr-2 h-4 w-4" />
+            {t('customFields.show')}
           </Button>
 
-          {showCustomInputs && (
+          {customInputsArray.length > 0 && (
             <div className="mt-4 space-y-4">
               {customInputsArray.map((customInput: CustomInput, index: number) => (
                 <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -158,27 +152,31 @@ export function BillToSection() {
                     error={typedErrors.receiver?.customInputs?.[index]?.key?.message}
                     placeholder={t('customFields.fieldNamePlaceholder')}
                   />
-                  <FormInput
-                    label={t('customFields.fieldValue', { number: index + 1 })}
-                    {...register(`receiver.customInputs.${index}.value` as const)}
-                    error={typedErrors.receiver?.customInputs?.[index]?.value?.message}
-                    placeholder={t('customFields.fieldValuePlaceholder')}
-                  />
+                  <div className="relative">
+                    <FormInput
+                      label={t('customFields.fieldValue')}
+                      {...register(`receiver.customInputs.${index}.value` as const)}
+                      error={typedErrors.receiver?.customInputs?.[index]?.value?.message}
+                      placeholder={t('customFields.fieldValuePlaceholder')}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute top-9 right-1 h-8 w-8"
+                      onClick={() => {
+                        const newCustomInputsArray = customInputsArray.filter(
+                          (_, i) => i !== index
+                        );
+                        setCustomInputsArray(newCustomInputsArray);
+                        setValue('sender.customInputs', newCustomInputsArray);
+                      }}
+                    >
+                      <Trash className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               ))}
-
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setValue('receiver.customInputs', [...customInputsArray, { key: '', value: '' }]);
-                }}
-                className="flex items-center"
-              >
-                <PlusCircle className="mr-2 h-4 w-4" />
-                {t('customFields.addAnother')}
-              </Button>
             </div>
           )}
         </div>
