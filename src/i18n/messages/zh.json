@@ -536,7 +536,9 @@
       "poNumberPlaceholder": "采-001",
       "invoiceDate": "发票日期",
       "dueDate": "到期日期",
-      "currency": "货币"
+      "currency": "货币",
+      "searchCurrency": "搜索货币",
+      "noCurrencyFound": "未找到货币"
     },
     "paymentInfo": {
       "title": "付款信息",

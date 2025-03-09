@@ -623,7 +623,9 @@
       "poNumberPlaceholder": "BE-001",
       "invoiceDate": "Rechnungsdatum",
       "dueDate": "Fälligkeitsdatum",
-      "currency": "Währung"
+      "currency": "Währung",
+      "searchCurrency": "Währung suchen",
+      "noCurrencyFound": "Keine Währung gefunden"
     },
     "paymentInfo": {
       "title": "Zahlungsinformationen",

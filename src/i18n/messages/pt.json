@@ -536,7 +536,9 @@
       "poNumberPlaceholder": "PED-001",
       "invoiceDate": "Data da Fatura",
       "dueDate": "Data de Vencimento",
-      "currency": "Moeda"
+      "currency": "Moeda",
+      "searchCurrency": "Pesquisar Moeda",
+      "noCurrencyFound": "Nenhuma moeda encontrada"
     },
     "paymentInfo": {
       "title": "Informações de Pagamento",

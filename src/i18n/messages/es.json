@@ -623,7 +623,9 @@
       "poNumberPlaceholder": "OC-001",
       "invoiceDate": "Fecha de Factura",
       "dueDate": "Fecha de Vencimiento",
-      "currency": "Moneda"
+      "currency": "Moneda",
+      "searchCurrency": "Buscar Moneda",
+      "noCurrencyFound": "No se encontró ninguna moneda"
     },
     "paymentInfo": {
       "title": "Información de Pago",

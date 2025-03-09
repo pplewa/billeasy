@@ -536,7 +536,9 @@
       "poNumberPlaceholder": "ZAM-001",
       "invoiceDate": "Data Faktury",
       "dueDate": "Data Płatności",
-      "currency": "Waluta"
+      "currency": "Waluta",
+      "searchCurrency": "Wyszukaj walutę",
+      "noCurrencyFound": "Nie znaleziono waluty"
     },
     "paymentInfo": {
       "title": "Informacje o Płatności",

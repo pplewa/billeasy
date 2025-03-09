@@ -623,7 +623,9 @@
       "poNumberPlaceholder": "BC-001",
       "invoiceDate": "Date de Facture",
       "dueDate": "Date d'Échéance",
-      "currency": "Devise"
+      "currency": "Devise",
+      "searchCurrency": "Rechercher une devise",
+      "noCurrencyFound": "Aucune devise trouvée"
     },
     "paymentInfo": {
       "title": "Informations de Paiement",

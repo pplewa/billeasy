@@ -623,7 +623,9 @@
       "poNumberPlaceholder": "PO-001",
       "invoiceDate": "Invoice Date",
       "dueDate": "Due Date",
-      "currency": "Currency"
+      "currency": "Currency",
+      "searchCurrency": "Search Currency",
+      "noCurrencyFound": "No currency found"
     },
     "paymentInfo": {
       "title": "Payment Information",
