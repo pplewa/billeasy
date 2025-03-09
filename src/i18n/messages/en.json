@@ -293,7 +293,7 @@
     },
     "itemsPerPage": "{count} per page",
     "table": {
-      "number": "Invoice #",
+      "number": "Invoice",
       "date": "Date",
       "client": "Client",
       "amount": "Amount",
