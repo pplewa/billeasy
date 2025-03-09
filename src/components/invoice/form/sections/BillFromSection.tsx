@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { FormInput } from '@/components/ui/form-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, X, Trash } from 'lucide-react';
+import { PlusCircle, Trash } from 'lucide-react';
 import { AddressLookahead, AddressDetails } from '@/components/ui/address-lookahead';
 
 import { InvoiceType } from '@/types';
