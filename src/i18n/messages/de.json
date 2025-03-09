@@ -27,7 +27,11 @@
     "noAccountNeeded": "Keine Anmeldung erforderlich, um Rechnungen zu erstellen.",
     "tryItOut": "Zuerst ausprobieren",
     "emailSentDescription": "Der Link läuft in 30 Minuten ab. Wenn Sie die E-Mail nicht sehen, überprüfen Sie Ihren Spam-Ordner.",
-    "returnToHome": "Zurück zur Startseite"
+    "returnToHome": "Zurück zur Startseite",
+    "verifyLoading": "Bitte warten Sie",
+    "verifySuccess": " während wir Ihre Anmeldedaten überprüfen",
+    "verifyError": "Anmeldung erfolgreich",
+    "redirecting": "Wir konnten Ihren Anmeldelink nicht überprüfen,Weiterleitung zu Ihrem Dashboard..."
   },
   "dashboard": {
     "welcome": "Willkommen in Ihrem Dashboard",

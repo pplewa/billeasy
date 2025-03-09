@@ -27,7 +27,11 @@
     "noAccountNeeded": "Pas besoin de compte pour créer des factures.",
     "tryItOut": "Essayez d'abord",
     "emailSentDescription": "Le lien expirera dans 30 minutes. Si vous ne voyez pas l'e-mail, vérifiez votre dossier spam.",
-    "returnToHome": "Retour à l'accueil"
+    "returnToHome": "Retour à l'accueil",
+    "verifyLoading": "Veuillez patienter pendant que nous vérifions vos identifiants",
+    "verifySuccess": "Connexion réussie",
+    "verifyError": "Nous n'avons pas pu vérifier votre lien de connexion",
+    "redirecting": "Redirection vers votre tableau de bord..."
   },
   "dashboard": {
     "welcome": "Bienvenue sur votre tableau de bord",

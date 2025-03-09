@@ -27,7 +27,11 @@
     "noAccountNeeded": "Não é necessário criar uma conta para gerar faturas.",
     "tryItOut": "Experimente primeiro",
     "emailSentDescription": "O link expirará em 30 minutos. Se não encontrar o e-mail, verifique sua pasta de spam.",
-    "returnToHome": "Voltar para a Página Inicial"
+    "returnToHome": "Voltar para a Página Inicial",
+    "verifyLoading": "Por favor",
+    "verifySuccess": " aguarde enquanto verificamos suas credenciais",
+    "verifyError": "Login realizado com sucesso",
+    "redirecting": "Não foi possível verificar seu link de login,Redirecionando para seu painel..."
   },
   "dashboard": {
     "welcome": "Bem-vindo ao seu painel",

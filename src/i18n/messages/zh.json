@@ -27,7 +27,11 @@
     "noAccountNeeded": "创建发票无需账户。",
     "tryItOut": "先试试看",
     "emailSentDescription": "链接将在30分钟内过期。如果您没有看到邮件，请检查垃圾邮件文件夹。",
-    "returnToHome": "返回主页"
+    "returnToHome": "返回主页",
+    "verifyLoading": "请稍等，正在验证您的凭据",
+    "verifySuccess": "登录成功",
+    "verifyError": "无法验证您的登录链接",
+    "redirecting": "正在重定向到您的仪表板..."
   },
   "dashboard": {
     "welcome": "欢迎来到您的仪表板",
@@ -649,5 +653,9 @@
       "body": "我们很高兴地通知您，您的发票 {invoiceNumber} 已准备好下载。请查看附件中的 PDF 文档。",
       "signature": "此致，\nBillEasy 团队"
     }
-  }
+  },
+  "verifyLoading": "请稍等，正在验证您的凭据",
+  "verifySuccess": "登录成功",
+  "verifyError": "无法验证您的登录链接",
+  "redirecting": "正在重定向到您的仪表板..."
 }

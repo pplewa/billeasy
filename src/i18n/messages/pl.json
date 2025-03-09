@@ -27,7 +27,11 @@
     "noAccountNeeded": "Nie potrzebujesz konta, aby tworzyć faktury.",
     "tryItOut": "Wypróbuj najpierw",
     "emailSentDescription": "Link wygaśnie za 30 minut. Jeśli nie widzisz wiadomości, sprawdź folder spam.",
-    "returnToHome": "Wróć do strony głównej"
+    "returnToHome": "Powrót do strony głównej",
+    "verifyLoading": "Proszę czekać",
+    "verifySuccess": " podczas weryfikacji Twoich danych",
+    "verifyError": "Logowanie zakończone sukcesem",
+    "redirecting": "Nie mogliśmy zweryfikować Twojego linku logowania,Przekierowywanie do Twojego pulpitu nawigacyjnego..."
   },
   "dashboard": {
     "welcome": "Witaj w swoim panelu",
@@ -649,5 +653,9 @@
       "body": "Z przyjemnością informujemy, że Twoja faktura {invoiceNumber} jest gotowa do pobrania. Prosimy o zapoznanie się z załączonym dokumentem PDF.",
       "signature": "Pozdrawiamy,\nZespół BillEasy"
     }
-  }
+  },
+  "verifyLoading": "Proszę czekać, podczas weryfikacji Twoich danych",
+  "verifySuccess": "Logowanie zakończone sukcesem",
+  "verifyError": "Nie mogliśmy zweryfikować Twojego linku logowania",
+  "redirecting": "Przekierowywanie do Twojego pulpitu nawigacyjnego..."
 }

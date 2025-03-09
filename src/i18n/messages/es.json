@@ -27,7 +27,11 @@
     "noAccountNeeded": "No se necesita cuenta para crear facturas.",
     "tryItOut": "Pruébalo primero",
     "emailSentDescription": "El enlace expirará en 30 minutos. Si no ve el correo electrónico, revise su carpeta de spam.",
-    "returnToHome": "Volver al Inicio"
+    "returnToHome": "Volver al Inicio",
+    "verifyLoading": "Por favor, espere mientras verificamos sus credenciales",
+    "verifySuccess": "Inicio de sesión exitoso",
+    "verifyError": "No pudimos verificar su enlace de inicio de sesión",
+    "redirecting": "Redirigiendo a su panel..."
   },
   "dashboard": {
     "welcome": "Bienvenido a tu panel",
@@ -724,5 +728,9 @@
       "body": "Nos complace informarle que su factura {invoiceNumber} está lista para descargar. Encontrará el documento PDF adjunto.",
       "signature": "Saludos cordiales,\nEquipo de BillEasy"
     }
-  }
+  },
+  "verifyLoading": "Por favor, espere mientras verificamos sus credenciales",
+  "verifySuccess": "Inicio de sesión exitoso",
+  "verifyError": "No pudimos verificar su enlace de inicio de sesión",
+  "redirecting": "Redirigiendo a su panel..."
 }

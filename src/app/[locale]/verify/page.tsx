@@ -86,9 +86,9 @@ function VerifyContent() {
             {status === 'error' && t('error')}
           </CardTitle>
           <CardDescription className="text-center">
-            {status === 'loading' && 'Please wait while we verify your credentials'}
-            {status === 'success' && 'Your sign-in was successful'}
-            {status === 'error' && "We couldn't verify your sign-in link"}
+            {status === 'loading' && t('verifyLoading')}
+            {status === 'success' && t('verifySuccess')}
+            {status === 'error' && t('verifyError')}
           </CardDescription>
         </CardHeader>
 
@@ -105,7 +105,7 @@ function VerifyContent() {
                 <CheckCircle2 className="h-16 w-16 text-green-600" />
               </div>
               <p className="text-sm text-muted-foreground text-center">
-                Redirecting to your dashboard...
+                {t('redirecting')}
               </p>
             </div>
           )}
@@ -133,15 +133,20 @@ function VerifyContent() {
 }
 
 export default function VerifyPage() {
+  const tCommon = useTranslations('common');
+  const t = useTranslations('auth');
+
   return (
     <Suspense
       fallback={
         <div className="flex min-h-[calc(100vh-117px)] flex-col items-center justify-center px-4 py-12">
           <Card className="mx-auto w-full max-w-md bg-card/90 backdrop-blur-sm">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl font-bold text-center">Verifying...</CardTitle>
+              <CardTitle className="text-2xl font-bold text-center">
+                {tCommon('verifying')}
+              </CardTitle>
               <CardDescription className="text-center">
-                Please wait while we process your sign-in
+                {t('verifyLoading')}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center py-8">

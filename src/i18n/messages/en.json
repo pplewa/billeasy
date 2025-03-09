@@ -27,7 +27,11 @@
     "noAccountNeeded": "No account needed to create invoices.",
     "tryItOut": "Try it out first",
     "emailSentDescription": "The link will expire in 30 minutes. If you don't see the email, check your spam folder.",
-    "returnToHome": "Return to Home"
+    "returnToHome": "Return to Home",
+    "verifyLoading": "Please wait while we verify your credentials",
+    "verifySuccess": "Your sign-in was successful",
+    "verifyError": "We couldn't verify your sign-in link",
+    "redirecting": "Redirecting to your dashboard..."
   },
   "dashboard": {
     "welcome": "Welcome to your dashboard",
