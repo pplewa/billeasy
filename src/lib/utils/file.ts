@@ -5,20 +5,14 @@
  * @returns Promise resolving to the invoice template component or null if not found.
  */
 export const getInvoiceTemplate = async (templateId: number) => {
-  // Dynamic template component name
-  const componentName = `InvoiceTemplate${templateId}`;
-
   try {
-    // Using dynamic import
-    const importedModule = await import(
-      `@/app/components/templates/invoice/${componentName}Unified`
+    // Import the server-side render function
+    const { renderInvoiceTemplate } = await import(
+      '../../app/components/templates/invoice/server/renderTemplate'
     );
 
-    // Get the original template component
-    const OriginalTemplate = importedModule.default;
-
-    // Return a wrapper function that processes the props before passing to the original template
-    return (props: Record<string, unknown>) => {
+    // Return a function that renders the template with the provided data
+    return async (props: Record<string, unknown>) => {
       // Create a deep copy of the props to avoid mutating the original
       const processedProps = JSON.parse(JSON.stringify(props));
 
@@ -35,11 +29,12 @@ export const getInvoiceTemplate = async (templateId: number) => {
         );
       }
 
-      // Return the original template with processed props
-      return OriginalTemplate(processedProps);
+      // Return the rendered template using the server-side rendering function
+      const renderedTemplate = await renderInvoiceTemplate(processedProps, templateId);
+      return renderedTemplate;
     };
   } catch (err) {
-    console.error(`Error importing template ${componentName}: ${err}`);
+    console.error(`Error importing template for ID ${templateId}:`, err);
     // Provide a default template
     return null;
   }

@@ -23,9 +23,19 @@ export async function POST(request: NextRequest) {
     // Connect to the database
     await connectToDatabase();
 
-    // Get the preferred locale from the request headers or use default
-    const localeFromHeader = request.headers.get('x-next-locale') || 'en';
-    const locale = localeFromHeader as Locale;
+    // Improved locale detection with logging
+    const localeFromHeader =
+      request.headers.get('x-next-locale') ||
+      request.headers.get('accept-language')?.split(',')[0].split('-')[0] ||
+      'en';
+
+    // Validate locale is one of the supported locales
+    const supportedLocales: Locale[] = ['en', 'es', 'fr', 'de', 'pl', 'pt', 'zh'];
+    const locale = supportedLocales.includes(localeFromHeader as Locale)
+      ? (localeFromHeader as Locale)
+      : 'en';
+
+    console.log(`Sending auth email for ${email} with locale: ${locale}`);
 
     // Send the authentication email
     await sendAuthEmail(email, locale);

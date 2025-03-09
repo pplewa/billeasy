@@ -6,7 +6,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
-import { Toaster } from 'sonner';
+import { Toaster } from '@/components/ui/toaster';
 
 import { dancingScript, greatVibes, pacifico, outfit } from '@/lib/fonts';
 import Footer from '@/components/layout/Footer';
@@ -51,7 +51,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             </div>
           </AuthProvider>
         </NextIntlClientProvider>
-        <Toaster richColors position="top-right" />
+        <Toaster />
       </body>
     </html>
   );

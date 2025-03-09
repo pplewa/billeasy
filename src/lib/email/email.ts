@@ -46,6 +46,10 @@ type EmailContent = {
 export async function sendMagicLinkEmail(to: string, url: string, locale: Locale = 'en') {
   const transporter = createTransporter();
 
+  // Validate and normalize locale
+  const supportedLocales: Locale[] = ['en', 'es', 'fr', 'de', 'pl', 'pt', 'zh'];
+  const normalizedLocale = supportedLocales.includes(locale) ? locale : 'en';
+
   // Get subject and text based on locale
   const subjects: EmailContent = {
     en: 'Your Sign-In Link for Bill Easy',
@@ -161,9 +165,9 @@ export async function sendMagicLinkEmail(to: string, url: string, locale: Locale
     `,
   };
 
-  const subject = subjects[locale] || subjects.en;
-  const text = texts[locale] || texts.en;
-  const html = htmls[locale] || htmls.en;
+  const subject = subjects[normalizedLocale] || subjects.en;
+  const text = texts[normalizedLocale] || texts.en;
+  const html = htmls[normalizedLocale] || htmls.en;
 
   // Send the email
   const info = await transporter.sendMail({

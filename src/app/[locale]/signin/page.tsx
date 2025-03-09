@@ -32,10 +32,14 @@ function SignInContent() {
     setIsLoading(true);
 
     try {
+      // Get the current locale from the URL
+      const currentLocale = window.location.pathname.split('/')[1];
+
       const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-next-locale': currentLocale, // Add locale header
         },
         body: JSON.stringify({ email }),
       });
@@ -69,7 +73,7 @@ function SignInContent() {
             {isSent ? t('checkEmail') : t('signIn')}
           </CardTitle>
           <CardDescription className="text-center">
-            {isSent ? t('emailSent', { email }) : 'Sign in with your email to access your invoices'}
+            {isSent ? t('emailSent', { email }) : t('noAccountNeeded')}
           </CardDescription>
         </CardHeader>
 
@@ -80,8 +84,7 @@ function SignInContent() {
                 <Check className="h-8 w-8 text-green-600" />
               </div>
               <p className="text-sm text-center text-muted-foreground">
-                The link will expire in 30 minutes. If you don&apos;t see the email, check your spam
-                folder.
+                {t('emailSentDescription')}
               </p>
             </div>
           ) : (
@@ -135,14 +138,14 @@ function SignInContent() {
         <CardFooter className="flex flex-col space-y-4 pt-0">
           {isSent ? (
             <Button variant="outline" className="w-full" onClick={() => router.push('/')}>
-              Return to Home
+              {t('returnToHome')}
             </Button>
           ) : (
             <div className="text-center text-sm text-muted-foreground">
               <p>
-                No account needed to create invoices.{' '}
+                {t('noAccountNeeded')}{' '}
                 <Link href="/" className="text-primary hover:underline">
-                  Try it out first
+                  {t('tryItOut')}
                 </Link>
               </p>
             </div>

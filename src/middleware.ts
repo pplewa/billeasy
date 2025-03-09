@@ -6,8 +6,40 @@ import { defaultLocale, routing } from './i18n/routing';
 const publicPaths = [
   '/',
   '/signin',
+  '/iniciar-sesion',
+  '/connexion',
+  '/anmelden',
+  '/zaloguj-sie',
+  '/entrar',
+  '/登录',
   '/verify',
+  '/verificar',
+  '/verifier',
+  '/verifizieren',
+  '/weryfikacja',
+  '/verificar',
+  '/验证',
   '/invoice/create',
+  '/factura/crear',
+  '/facture/creer',
+  '/rechnung/erstellen',
+  '/faktura/utworz',
+  '/fatura/criar',
+  '/发票/创建',
+  '/privacy-policy',
+  '/politica-de-privacidad',
+  '/politique-de-confidentialite',
+  '/datenschutzrichtlinie',
+  '/polityka-prywatnosci',
+  '/politica-de-privacidade',
+  '/隐私政策',
+  '/terms-of-service',
+  '/terminos-de-servicio',
+  '/conditions-d-utilisation',
+  '/nutzungsbedingungen',
+  '/warunki-korzystania-z-uslugi',
+  '/termos-de-servico',
+  '/服务条款',
   '/api/invoice/parse/text',
   '/api/invoice/parse/file',
 ];
@@ -33,16 +65,25 @@ export default async function middleware(request: NextRequest) {
   // Handle authentication
   const authToken = request.cookies.get('authToken')?.value;
   const isAuthenticated = !!authToken; // Simple check for auth token presence
+  const currentLocale =
+    routing.locales.find((locale) => pathname.startsWith(`/${locale}/`)) || defaultLocale;
+  const signInPath = routing.pathnames['/signin'][currentLocale];
 
   // If the path requires authentication and the user is not authenticated, redirect to sign in
-  if (!isPublicPath(pathnameWithoutLocale) && !isAuthenticated) {
-    const signInUrl = new URL(`/${defaultLocale}/signin`, request.url);
+  if (
+    pathnameWithoutLocale !== signInPath &&
+    !isPublicPath(pathnameWithoutLocale) &&
+    !isAuthenticated
+  ) {
+    // Determine the current locale, defaulting to the default locale if not found
+
+    const signInUrl = new URL(`/${currentLocale}${signInPath}`, request.url);
     signInUrl.searchParams.set('callbackUrl', pathname);
     return NextResponse.redirect(signInUrl);
   }
 
   // If the path is sign-in related and the user is authenticated, redirect to dashboard
-  if (pathnameWithoutLocale === '/signin' && isAuthenticated) {
+  if (pathnameWithoutLocale === signInPath && isAuthenticated) {
     return NextResponse.redirect(new URL(`/${defaultLocale}/invoices`, request.url));
   }
 

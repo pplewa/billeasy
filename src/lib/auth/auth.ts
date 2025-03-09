@@ -1,4 +1,4 @@
-import { Locale } from '@/i18n/routing';
+import { Locale, routing } from '@/i18n/routing';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
@@ -67,7 +67,13 @@ export async function createAuthToken(email: string): Promise<string> {
  */
 export async function sendAuthEmail(email: string, locale: Locale = 'en'): Promise<boolean> {
   const token = await createAuthToken(email);
-  const url = `${APP_URL}/${locale}/verify?token=${token}`;
+
+  // Get the localized verify path for the given locale
+  const verifyPaths = routing.pathnames['/verify'];
+  const localizedVerifyPath = verifyPaths[locale] || verifyPaths.en;
+
+  // Construct the full URL with localized verify path
+  const url = `${APP_URL}/${locale}${localizedVerifyPath}?token=${token}`;
 
   await sendMagicLinkEmail(email, url, locale);
 

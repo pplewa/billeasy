@@ -8,7 +8,7 @@ interface EmailInvoiceParams {
 }
 
 /**
- * Sends an invoice email to the specified recipient
+ * Sends an invoice email to the specified recipient with PDF attachment
  * @param params Email parameters including invoice data, recipient, subject and message
  * @returns Promise that resolves when the email is sent
  */

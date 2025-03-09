@@ -49,7 +49,7 @@ const DynamicInvoiceView = ({ invoice, templateId = 1 }: DynamicInvoiceViewProps
   const DynamicInvoice = useMemo(
     () =>
       dynamic<InvoiceType>(
-        () => import(`@/app/components/templates/invoice/${templateName}Unified`),
+        () => import(`@/app/components/templates/invoice/${templateName}Client`),
         {
           loading: () => <DynamicInvoiceViewSkeleton />,
         }

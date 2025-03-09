@@ -70,8 +70,6 @@ export async function getAddressSuggestions({
     throw new Error('Google Maps API key is not configured');
   }
 
-  console.log({ GOOGLE_MAPS_API_KEY });
-
   try {
     const params = new URLSearchParams({
       input,

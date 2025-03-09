@@ -129,7 +129,8 @@ export async function exportInvoiceService(req: NextRequest) {
 
           // Generate HTML content
           const ReactDOMServer = (await import('react-dom/server')).default;
-          const htmlContent = ReactDOMServer.renderToStaticMarkup(InvoiceTemplate(body));
+          const template = await InvoiceTemplate(body);
+          const htmlContent = ReactDOMServer.renderToStaticMarkup(template);
 
           // Add HTML wrapper with styles
           const fullHtml = `
@@ -153,7 +154,7 @@ export async function exportInvoiceService(req: NextRequest) {
                                 
                                 @page {
                                     size: A4;
-                                    margin: 0;
+                                    margin: 1cm;
                                 }
                                 
                                 table {

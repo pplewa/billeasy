@@ -248,7 +248,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
               <Zap className="h-8 w-8 text-primary" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
+          <h1 className="text-4xl md:text-6xl font-bold pb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
             {t('hero.title')}
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12">

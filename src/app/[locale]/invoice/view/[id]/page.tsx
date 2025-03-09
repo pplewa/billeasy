@@ -443,7 +443,10 @@ export default function ViewInvoicePage() {
               {t('email')}
             </Button>
           </InvoiceEmailModal>
-          <InvoiceExportModal invoice={adaptToInvoiceType(invoice)}>
+          <InvoiceExportModal 
+            invoice={adaptToInvoiceType(invoice)} 
+            selectedTemplate={selectedTemplate}
+          >
             <Button>
               <Download className="mr-2 h-4 w-4" />
               {t('export')}
