@@ -13,17 +13,21 @@
   "auth": {
     "signIn": "Entrar",
     "signOut": "Sair",
-    "emailPlaceholder": "Digite seu email",
-    "emailLabel": "Email",
+    "emailPlaceholder": "Digite seu e-mail",
+    "emailLabel": "E-mail",
     "submit": "Continuar",
-    "sendLink": "Enviar link mágico",
-    "checkEmail": "Verifique seu email",
-    "emailSent": "Enviamos um link de acesso para {email}",
-    "verify": "Verificando seu acesso...",
+    "sendLink": "Enviar Link Mágico",
+    "checkEmail": "Verifique seu e-mail",
+    "emailSent": "Enviamos um link de login para {email}",
+    "verify": "Verificando seu login...",
     "success": "Login realizado com sucesso!",
     "error": "Algo deu errado",
     "invalidLink": "Link inválido ou expirado",
-    "tryAgain": "Tentar novamente"
+    "tryAgain": "Tentar novamente",
+    "noAccountNeeded": "Não é necessário criar uma conta para gerar faturas.",
+    "tryItOut": "Experimente primeiro",
+    "emailSentDescription": "O link expirará em 30 minutos. Se não encontrar o e-mail, verifique sua pasta de spam.",
+    "returnToHome": "Voltar para a Página Inicial"
   },
   "dashboard": {
     "welcome": "Bem-vindo ao seu painel",

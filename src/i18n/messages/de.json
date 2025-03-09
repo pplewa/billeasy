@@ -13,17 +13,21 @@
   "auth": {
     "signIn": "Anmelden",
     "signOut": "Abmelden",
-    "emailPlaceholder": "Geben Sie Ihre E-Mail ein",
-    "emailLabel": "E-Mail",
+    "emailPlaceholder": "Geben Sie Ihre E-Mail-Adresse ein",
+    "emailLabel": "E-Mail-Adresse",
     "submit": "Fortfahren",
-    "sendLink": "Magic Link senden",
-    "checkEmail": "Überprüfen Sie Ihre E-Mail",
+    "sendLink": "Magischen Link senden",
+    "checkEmail": "Überprüfen Sie Ihre E-Mails",
     "emailSent": "Wir haben einen Anmeldelink an {email} gesendet",
-    "verify": "Überprüfung Ihrer Anmeldung...",
+    "verify": "Anmeldung wird überprüft...",
     "success": "Erfolgreich angemeldet!",
-    "error": "Etwas ist schief gelaufen",
+    "error": "Etwas ist schiefgelaufen",
     "invalidLink": "Ungültiger oder abgelaufener Link",
-    "tryAgain": "Erneut versuchen"
+    "tryAgain": "Erneut versuchen",
+    "noAccountNeeded": "Keine Anmeldung erforderlich, um Rechnungen zu erstellen.",
+    "tryItOut": "Zuerst ausprobieren",
+    "emailSentDescription": "Der Link läuft in 30 Minuten ab. Wenn Sie die E-Mail nicht sehen, überprüfen Sie Ihren Spam-Ordner.",
+    "returnToHome": "Zurück zur Startseite"
   },
   "dashboard": {
     "welcome": "Willkommen in Ihrem Dashboard",

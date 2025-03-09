@@ -18,12 +18,16 @@
     "submit": "继续",
     "sendLink": "发送魔法链接",
     "checkEmail": "检查您的电子邮件",
-    "emailSent": "我们已向 {email} 发送了登录链接",
+    "emailSent": "我们已将登录链接发送到 {email}",
     "verify": "正在验证您的登录...",
     "success": "登录成功！",
     "error": "出现错误",
-    "invalidLink": "无效或过期的链接",
-    "tryAgain": "重试"
+    "invalidLink": "无效或已过期的链接",
+    "tryAgain": "重试",
+    "noAccountNeeded": "创建发票无需账户。",
+    "tryItOut": "先试试看",
+    "emailSentDescription": "链接将在30分钟内过期。如果您没有看到邮件，请检查垃圾邮件文件夹。",
+    "returnToHome": "返回主页"
   },
   "dashboard": {
     "welcome": "欢迎来到您的仪表板",

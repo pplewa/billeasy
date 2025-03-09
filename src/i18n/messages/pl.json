@@ -13,17 +13,21 @@
   "auth": {
     "signIn": "Zaloguj się",
     "signOut": "Wyloguj się",
-    "emailPlaceholder": "Wprowadź swój email",
-    "emailLabel": "Email",
+    "emailPlaceholder": "Wprowadź swój adres e-mail",
+    "emailLabel": "Adres e-mail",
     "submit": "Kontynuuj",
     "sendLink": "Wyślij magiczny link",
-    "checkEmail": "Sprawdź swój email",
-    "emailSent": "Wysłaliśmy link logowania na adres {email}",
+    "checkEmail": "Sprawdź swoją skrzynkę e-mail",
+    "emailSent": "Wysłaliśmy link logowania na {email}",
     "verify": "Weryfikacja logowania...",
     "success": "Zalogowano pomyślnie!",
     "error": "Coś poszło nie tak",
     "invalidLink": "Nieprawidłowy lub wygasły link",
-    "tryAgain": "Spróbuj ponownie"
+    "tryAgain": "Spróbuj ponownie",
+    "noAccountNeeded": "Nie potrzebujesz konta, aby tworzyć faktury.",
+    "tryItOut": "Wypróbuj najpierw",
+    "emailSentDescription": "Link wygaśnie za 30 minut. Jeśli nie widzisz wiadomości, sprawdź folder spam.",
+    "returnToHome": "Wróć do strony głównej"
   },
   "dashboard": {
     "welcome": "Witaj w swoim panelu",

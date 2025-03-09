@@ -13,17 +13,21 @@
   "auth": {
     "signIn": "Se connecter",
     "signOut": "Se déconnecter",
-    "emailPlaceholder": "Entrez votre email",
-    "emailLabel": "Email",
+    "emailPlaceholder": "Entrez votre e-mail",
+    "emailLabel": "E-mail",
     "submit": "Continuer",
-    "sendLink": "Envoyer un lien magique",
-    "checkEmail": "Vérifiez votre email",
-    "emailSent": "Nous avons envoyé un lien à {email}",
+    "sendLink": "Envoyer le lien magique",
+    "checkEmail": "Vérifiez votre e-mail",
+    "emailSent": "Nous avons envoyé un lien de connexion à {email}",
     "verify": "Vérification de votre connexion...",
     "success": "Connexion réussie !",
-    "error": "Une erreur s'est produite",
+    "error": "Quelque chose s'est mal passé",
     "invalidLink": "Lien invalide ou expiré",
-    "tryAgain": "Réessayer"
+    "tryAgain": "Réessayer",
+    "noAccountNeeded": "Pas besoin de compte pour créer des factures.",
+    "tryItOut": "Essayez d'abord",
+    "emailSentDescription": "Le lien expirera dans 30 minutes. Si vous ne voyez pas l'e-mail, vérifiez votre dossier spam.",
+    "returnToHome": "Retour à l'accueil"
   },
   "dashboard": {
     "welcome": "Bienvenue sur votre tableau de bord",

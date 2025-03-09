@@ -23,7 +23,11 @@
     "success": "Successfully signed in!",
     "error": "Something went wrong",
     "invalidLink": "Invalid or expired link",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "noAccountNeeded": "No account needed to create invoices.",
+    "tryItOut": "Try it out first",
+    "emailSentDescription": "The link will expire in 30 minutes. If you don't see the email, check your spam folder.",
+    "returnToHome": "Return to Home"
   },
   "dashboard": {
     "welcome": "Welcome to your dashboard",
