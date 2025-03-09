@@ -4,7 +4,7 @@ import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting'
 
 // Type for signature to avoid unknown type errors
 interface Signature {
-  url?: string;
+  data?: string;
   fontFamily?: string;
 }
 
@@ -70,12 +70,15 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
       {/* Contact Information Grid */}
       <div className="grid grid-cols-2 gap-12 mt-12 mb-12">
         <div className="from-section">
-          <h3 className="text-sm uppercase tracking-wider text-purple-600 mb-4">{t('from')}:</h3>
+          <h3 className="text-sm uppercase tracking-wider text-purple-600 mb-4">
+            {t('billFrom')}:
+          </h3>
           <address className="not-italic">
             <p className="font-medium text-lg text-gray-800">{String(sender?.name || '')}</p>
             <p className="text-gray-600">{String(sender?.address || '')}</p>
             <p className="text-gray-600">
-              {String(sender?.zipCode || '')}, {String(sender?.city || '')}
+              {String(sender?.zipCode || '')}
+              {sender?.city ? `, ${String(sender?.city || '')}` : ''}
             </p>
             <p className="text-gray-600">{String(sender?.country || '')}</p>
           </address>
@@ -87,7 +90,8 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
             <p className="font-medium text-lg text-gray-800">{String(receiver?.name || '')}</p>
             <p className="text-gray-600">{String(receiver?.address || '')}</p>
             <p className="text-gray-600">
-              {String(receiver?.zipCode || '')}, {String(receiver?.city || '')}
+              {String(receiver?.zipCode || '')}
+              {receiver?.city ? `, ${String(receiver?.city || '')}` : ''}
             </p>
             <p className="text-gray-600">{String(receiver?.country || '')}</p>
           </address>
@@ -119,26 +123,97 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
         <table className="w-full">
           <thead>
             <tr className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
-              <th className="py-4 px-6 text-left rounded-tl-lg">{t('description')}</th>
-              <th className="py-4 px-6 text-right">{t('quantity')}</th>
-              <th className="py-4 px-6 text-right">{t('unitPrice')}</th>
-              <th className="py-4 px-6 text-right rounded-tr-lg">{t('amount')}</th>
+              <th className="py-4 px-6 text-left rounded-tl-lg">{t('item')}</th>
+              <th className="py-4 px-6 text-right">{t('qty')}</th>
+              <th className="py-4 px-6 text-right">{t('price')}</th>
+              <th className="py-4 px-6 text-right">{t('discount')}</th>
+              <th className="py-4 px-6 text-right">{t('tax')}</th>
+              <th className="py-4 px-6 text-right rounded-tr-lg">{t('total')}</th>
             </tr>
           </thead>
           <tbody>
-            {invoiceItems.map((item, index) => (
-              <tr key={index} className="border-b border-purple-100">
-                <td className="py-4 px-6">
-                  <p className="font-medium text-gray-800">{String(item.description || '')}</p>
-                  {item.details && (
-                    <p className="text-sm text-gray-600 mt-1">{String(item.details)}</p>
-                  )}
-                </td>
-                <td className="py-4 px-6 text-right">{String(item.quantity || '')}</td>
-                <td className="py-4 px-6 text-right">{String(item.unitPrice || '')}</td>
-                <td className="py-4 px-6 text-right">{String(item.amount || '')}</td>
-              </tr>
-            ))}
+            {invoiceItems.map((item, index) => {
+              let quantity = 1;
+              let unitPrice = 0;
+
+              // Extract quantity and price based on their location
+              if (typeof item.quantity === 'number') {
+                quantity = item.quantity;
+              } else if (typeof item.quantity === 'string') {
+                quantity = parseFloat(item.quantity) || 1;
+              }
+
+              if (typeof item.price === 'number') {
+                unitPrice = item.price;
+              } else if (typeof item.price === 'string') {
+                unitPrice = parseFloat(item.price) || 0;
+              }
+
+              // Initial subtotal calculation
+              const itemSubtotal = unitPrice * quantity;
+
+              // Calculate discount
+              let discountAmount = 0;
+              if (item.discount) {
+                if (item.discount.amountType === 'percentage') {
+                  discountAmount = itemSubtotal * (parseNumber(item.discount.amount) / 100);
+                } else {
+                  discountAmount = parseNumber(item.discount.amount);
+                }
+              }
+
+              // Calculate tax
+              let taxAmount = 0;
+              if (item.tax) {
+                const taxableAmount = itemSubtotal - discountAmount;
+                if (item.tax.amountType === 'percentage') {
+                  taxAmount = taxableAmount * (parseNumber(item.tax.amount) / 100);
+                } else {
+                  taxAmount = parseNumber(item.tax.amount);
+                }
+              }
+
+              // Calculate final total
+              const itemTotal = itemSubtotal - discountAmount + taxAmount;
+
+              return (
+                <tr key={item.id || index} className="border-b border-purple-100">
+                  <td className="py-4 px-6">
+                    <div className="font-medium">{String(item.name || '')}</div>
+                    {item.description && (
+                      <div className="font-medium text-gray-800">{String(item.description)}</div>
+                    )}
+                  </td>
+                  <td className="py-4 px-6 text-right text-right">{quantity}</td>
+                  <td className="py-4 px-6 text-right text-right">
+                    {formatCurrency(unitPrice, String(details?.currency || 'USD'))}
+                  </td>
+                  <td className="py-3 px-4 text-right">
+                    {item.discount
+                      ? item.discount.amountType === 'percentage'
+                        ? `${parseNumber(item.discount.amount)}%`
+                        : formatCurrency(
+                            parseNumber(item.discount.amount),
+                            String(details?.currency || 'USD')
+                          )
+                      : '-'}
+                  </td>
+                  <td className="py-4 px-6 text-right">
+                    {item.tax
+                      ? item.tax.amountType === 'percentage'
+                        ? `${parseNumber(item.tax.amount)}%`
+                        : formatCurrency(
+                            parseNumber(item.tax.amount),
+                            String(details?.currency || 'USD')
+                          )
+                      : '-'}
+                  </td>
+                  <td className="py-4 px-6 text-right font-medium">
+                    {formatCurrency(itemTotal, String(details?.currency || 'USD'))}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -164,13 +239,20 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
         <div className="mt-12 pt-8 border-t border-purple-100">
           <div className="flex justify-end">
             <div className="text-center">
-              <img
-                src={signature.url}
-                alt={t('signature')}
-                className="h-16 object-contain mb-2"
-                style={{ fontFamily: signature.fontFamily }}
-              />
-              <p className="text-gray-600">{String(sender?.name || '')}</p>
+              {signature?.data?.startsWith('data:image') ? (
+                <img
+                  src={signature.data}
+                  alt={t('authorizedSignature')}
+                  className="h-16 object-contain mb-2"
+                />
+              ) : (
+                <div
+                  className="h-full w-full flex items-center justify-center"
+                  style={{ fontFamily: signature.fontFamily || undefined }}
+                >
+                  <p className="text-gray-600">{signature.data}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

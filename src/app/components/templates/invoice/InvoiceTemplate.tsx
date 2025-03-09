@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { InvoiceType } from '@/lib/types';
-import Template1 from './InvoiceTemplate1';
+import { Template1 } from './InvoiceTemplate1';
 import { Template2 } from './InvoiceTemplate2';
 import { Template3 } from './InvoiceTemplate3';
 import { Template4 } from './InvoiceTemplate4';

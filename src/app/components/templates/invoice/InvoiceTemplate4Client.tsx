@@ -1,5 +1,5 @@
 'use client';
 
 // Re-export from our central template component
-import { Template4 } from './InvoiceTemplate4';
-export default Template4;
+import { InvoiceTemplate4 } from './InvoiceTemplate';
+export default InvoiceTemplate4;
