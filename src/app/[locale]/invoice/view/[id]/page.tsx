@@ -370,62 +370,6 @@ export default function ViewInvoicePage() {
             size: auto;
             margin: 0mm;
           }
-
-          h1,
-          h2 {
-            color: #000;
-          }
-
-          table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-          }
-
-          th,
-          td {
-            border: 1px solid #000;
-            padding: 8px;
-            text-align: left;
-          }
-
-          th {
-            background-color: #f2f2f2;
-          }
-
-          .text-right {
-            text-align: right;
-          }
-
-          .font-semibold {
-            font-weight: 600;
-          }
-
-          .text-gray-600 {
-            color: #000;
-          }
-
-          .text-gray-700 {
-            color: #000;
-            font-weight: 600;
-          }
-
-          .text-gray-800 {
-            color: #000;
-            font-weight: 700;
-          }
-
-          .bg-white {
-            background-color: #fff;
-          }
-
-          .rounded-lg {
-            border-radius: 0;
-          }
-
-          .shadow-md {
-            box-shadow: none;
-          }
         }
       `}</style>
 

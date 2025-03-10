@@ -200,37 +200,38 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
           </div>
         )}
 
-        {details?.paymentInformation && (
-          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('paymentInfo')}:</h3>
-            <div className="text-gray-800">
-              {typeof details.paymentInformation === 'object' &&
-                'bankName' in details.paymentInformation &&
-                details.paymentInformation.bankName && (
-                  <p>
-                    <span className="font-medium">{t('bank')}: </span>
-                    {String(details.paymentInformation.bankName)}
-                  </p>
-                )}
-              {typeof details.paymentInformation === 'object' &&
-                'accountName' in details.paymentInformation &&
-                details.paymentInformation.accountName && (
-                  <p>
-                    <span className="font-medium">{t('accountName')}: </span>
-                    {String(details.paymentInformation.accountName)}
-                  </p>
-                )}
-              {typeof details.paymentInformation === 'object' &&
-                'accountNumber' in details.paymentInformation &&
-                details.paymentInformation.accountNumber && (
-                  <p>
-                    <span className="font-medium">{t('accountNumber')}: </span>
-                    {String(details.paymentInformation.accountNumber)}
-                  </p>
-                )}
+        {details?.paymentInformation &&
+          Object.values(details?.paymentInformation)?.filter(Boolean)?.length > 0 && (
+            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('paymentInfo')}:</h3>
+              <div className="text-gray-800">
+                {typeof details.paymentInformation === 'object' &&
+                  'bankName' in details.paymentInformation &&
+                  details.paymentInformation.bankName && (
+                    <p>
+                      <span className="font-medium">{t('bank')}: </span>
+                      {String(details.paymentInformation.bankName)}
+                    </p>
+                  )}
+                {typeof details.paymentInformation === 'object' &&
+                  'accountName' in details.paymentInformation &&
+                  details.paymentInformation.accountName && (
+                    <p>
+                      <span className="font-medium">{t('accountName')}: </span>
+                      {String(details.paymentInformation.accountName)}
+                    </p>
+                  )}
+                {typeof details.paymentInformation === 'object' &&
+                  'accountNumber' in details.paymentInformation &&
+                  details.paymentInformation.accountNumber && (
+                    <p>
+                      <span className="font-medium">{t('accountNumber')}: </span>
+                      {String(details.paymentInformation.accountNumber)}
+                    </p>
+                  )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
         {details.signature?.data && (
           <div className="mt-12 flex justify-end">

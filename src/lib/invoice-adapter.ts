@@ -115,7 +115,7 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
   }
 
   // Use the new computed details utility
-  return computeInvoiceDetails(invoice);
+  return computeInvoiceDetails(invoice) as InvoiceType;
 }
 
 /**
