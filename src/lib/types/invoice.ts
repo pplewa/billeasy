@@ -24,7 +24,7 @@ export interface AddressInfo {
 // Base amount type
 export interface BaseAmount {
   amount: number;
-  amountType: 'percentage' | 'amount';
+  amountType: 'percentage' | 'fixed';
 }
 
 // Tax and discount types

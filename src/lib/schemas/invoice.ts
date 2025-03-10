@@ -243,7 +243,7 @@ const addressInfoSchema = z.object({
 // Base amount schema
 const baseAmountSchema = z.object({
   amount: z.number(),
-  amountType: z.enum(['percentage', 'amount']),
+  amountType: z.enum(['percentage', 'fixed']),
 });
 
 // Tax and discount schemas

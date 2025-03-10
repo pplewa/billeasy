@@ -131,12 +131,12 @@ export const FORM_DEFAULT_VALUES = {
     currency: 'USD',
     taxDetails: {
       amount: 0,
-      amountType: 'amount',
+      amountType: 'fixed',
       taxID: '',
     },
     discountDetails: {
       amount: 0,
-      amountType: 'amount',
+      amountType: 'fixed',
     },
     paymentInformation: {
       bankName: '',
