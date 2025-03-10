@@ -2,11 +2,6 @@ import React from 'react';
 import { InvoiceType } from '@/lib/types';
 import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting';
 
-// Type for signature to avoid unknown type errors
-interface Signature {
-  data?: string;
-  fontFamily?: string;
-}
 
 // Shared interface for both client and server usage
 export interface InvoiceTemplateProps {
