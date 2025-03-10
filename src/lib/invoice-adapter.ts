@@ -1,4 +1,7 @@
 import { InvoiceType, ItemType } from '@/types-optional';
+import { 
+  computeInvoiceDetails 
+} from './invoice-utils';
 
 interface SourceInvoice {
   // Core properties that might exist in various formats
@@ -93,30 +96,6 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
     invoice.details.terms = invoice.details.paymentTerms;
   }
 
-  // Synchronize tax/taxDetails
-  if (invoice.details.tax && !invoice.details.taxDetails) {
-    invoice.details.taxDetails = invoice.details.tax;
-  } else if (invoice.details.taxDetails && !invoice.details.tax) {
-    invoice.details.tax = invoice.details.taxDetails;
-  } else if (!invoice.details.tax && !invoice.details.taxDetails) {
-    // Set default values if both are missing
-    const defaultTax = { amount: 0, amountType: 'percentage' };
-    invoice.details.tax = defaultTax;
-    invoice.details.taxDetails = defaultTax;
-  }
-
-  // Synchronize discount/discountDetails
-  if (invoice.details.discount && !invoice.details.discountDetails) {
-    invoice.details.discountDetails = invoice.details.discount;
-  } else if (invoice.details.discountDetails && !invoice.details.discount) {
-    invoice.details.discount = invoice.details.discountDetails;
-  } else if (!invoice.details.discount && !invoice.details.discountDetails) {
-    // Set default values if both are missing
-    const defaultDiscount = { amount: 0, amountType: 'percentage' };
-    invoice.details.discount = defaultDiscount;
-    invoice.details.discountDetails = defaultDiscount;
-  }
-
   // Ensure pdfTemplate is a number
   if (invoice.details.pdfTemplate) {
     invoice.details.pdfTemplate = Number(invoice.details.pdfTemplate);
@@ -137,23 +116,8 @@ export function normalizeInvoice(source: SourceInvoice | null | undefined): Invo
     }
   }
 
-  // Ensure tax object exists
-  if (!invoice.details.tax) {
-    invoice.details.tax = {
-      amount: 0,
-      amountType: 'percentage',
-    } as TaxDetails;
-  }
-
-  // Ensure discount object exists
-  if (!invoice.details.discount) {
-    invoice.details.discount = {
-      amount: 0,
-      amountType: 'percentage',
-    } as DiscountDetails;
-  }
-
-  return invoice;
+  // Use the new computed details utility
+  return computeInvoiceDetails(invoice);
 }
 
 /**
@@ -239,7 +203,10 @@ function normalizeItems(items: Record<string, unknown>[]): ItemType[] {
 /**
  * Calculates totals for an invoice based on item details
  */
-function calculateTotals(items: ItemType[]): { subTotal: number; totalAmount: number } {
+function calculateTotals(items: ItemType[]): { 
+  subTotal: number; 
+  totalAmount: number; 
+} {
   let subTotal = 0;
   let totalAmount = 0;
 
@@ -264,8 +231,9 @@ function calculateTotals(items: ItemType[]): { subTotal: number; totalAmount: nu
     let taxAmount = 0;
     if (item.tax && typeof item.tax === 'object') {
       const amount = Number(item.tax.amount ?? 0);
+      const taxableAmount = itemSubtotal - discountAmount;
       if (item.tax.amountType === 'percentage') {
-        taxAmount = (itemSubtotal - discountAmount) * (amount / 100);
+        taxAmount = taxableAmount * (amount / 100);
       } else {
         taxAmount = amount;
       }
@@ -274,7 +242,10 @@ function calculateTotals(items: ItemType[]): { subTotal: number; totalAmount: nu
     totalAmount += itemSubtotal - discountAmount + taxAmount;
   });
 
-  return { subTotal, totalAmount };
+  return { 
+    subTotal, 
+    totalAmount 
+  };
 }
 
 /**

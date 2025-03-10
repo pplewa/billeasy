@@ -23,19 +23,23 @@ export interface InvoiceTemplateProps {
  */
 export function Template3({ data, t }: InvoiceTemplateProps) {
   // Use fallbacks for type safety
-  const sender = data.sender || {};
-  const receiver = data.receiver || {};
-  const details = data.details || {};
+  const details = data?.details || {};
+  const invoiceItems = details.items || [];
+  const sender = data?.sender || {};
+  const receiver = data?.receiver || {};
 
-  // Type-safe access to signature
-  const signature = details.signature as Signature | undefined;
+  const processedItems = invoiceItems.map((item) => {
+    const quantity = Number(item.quantity || 1);
+    const unitPrice = Number(item.unitPrice || item.price || 0);
+    const itemSubtotal = quantity * unitPrice;
 
-  // Get the items from the correct location
-  const invoiceItems = Array.isArray(details.items) ? details.items : [];
-
-  // Calculate totals
-  const subTotal = parseNumber(details.subTotal);
-  const totalAmount = parseNumber(details.totalAmount);
+    return {
+      ...item,
+      quantity,
+      unitPrice,
+      itemSubtotal,
+    };
+  });
 
   return (
     <div className="min-h-[29.7cm] p-8 bg-gradient-to-br from-purple-50 to-white">
@@ -132,50 +136,7 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
             </tr>
           </thead>
           <tbody>
-            {invoiceItems.map((item, index) => {
-              let quantity = 1;
-              let unitPrice = 0;
-
-              // Extract quantity and price based on their location
-              if (typeof item.quantity === 'number') {
-                quantity = item.quantity;
-              } else if (typeof item.quantity === 'string') {
-                quantity = parseFloat(item.quantity) || 1;
-              }
-
-              if (typeof item.price === 'number') {
-                unitPrice = item.price;
-              } else if (typeof item.price === 'string') {
-                unitPrice = parseFloat(item.price) || 0;
-              }
-
-              // Initial subtotal calculation
-              const itemSubtotal = unitPrice * quantity;
-
-              // Calculate discount
-              let discountAmount = 0;
-              if (item.discount) {
-                if (item.discount.amountType === 'percentage') {
-                  discountAmount = itemSubtotal * (parseNumber(item.discount.amount) / 100);
-                } else {
-                  discountAmount = parseNumber(item.discount.amount);
-                }
-              }
-
-              // Calculate tax
-              let taxAmount = 0;
-              if (item.tax) {
-                const taxableAmount = itemSubtotal - discountAmount;
-                if (item.tax.amountType === 'percentage') {
-                  taxAmount = taxableAmount * (parseNumber(item.tax.amount) / 100);
-                } else {
-                  taxAmount = parseNumber(item.tax.amount);
-                }
-              }
-
-              // Calculate final total
-              const itemTotal = itemSubtotal - discountAmount + taxAmount;
-
+            {processedItems.map((item, index) => {
               return (
                 <tr key={item.id || index} className="border-b border-purple-100">
                   <td className="py-4 px-6">
@@ -184,9 +145,9 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
                       <div className="font-medium text-gray-800">{String(item.description)}</div>
                     )}
                   </td>
-                  <td className="py-4 px-6 text-right text-right">{quantity}</td>
+                  <td className="py-4 px-6 text-right text-right">{item.quantity}</td>
                   <td className="py-4 px-6 text-right text-right">
-                    {formatCurrency(unitPrice, String(details?.currency || 'USD'))}
+                    {formatCurrency(item.unitPrice, String(details?.currency || 'USD'))}
                   </td>
                   <td className="py-3 px-4 text-right">
                     {item.discount
@@ -209,7 +170,7 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
                       : '-'}
                   </td>
                   <td className="py-4 px-6 text-right font-medium">
-                    {formatCurrency(itemTotal, String(details?.currency || 'USD'))}
+                    {formatCurrency(item.itemSubtotal, String(details?.currency || 'USD'))}
                   </td>
                 </tr>
               );
@@ -223,34 +184,42 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
         <div className="w-1/3 space-y-3">
           <div className="flex justify-between py-2">
             <span className="text-gray-600">{t('subtotal')}</span>
-            <span className="font-medium">{subTotal}</span>
+            <span className="font-medium">{formatCurrency(details.subTotal || 0, String(details?.currency || 'USD'))}</span>
+          </div>
+          <div className="flex justify-between py-2">
+            <span className="text-gray-600">{t('tax')}</span>
+            <span className="font-medium">{formatCurrency(details.tax || 0, String(details?.currency || 'USD'))}</span>
+          </div>
+          <div className="flex justify-between py-2">
+            <span className="text-gray-600">{t('discount')}</span>
+            <span className="font-medium">{formatCurrency(details.discount || 0, String(details?.currency || 'USD'))}</span>
           </div>
           <div className="flex justify-between py-2 border-t border-purple-100">
             <span className="text-gray-600">{t('total')}</span>
             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
-              {totalAmount}
+              {formatCurrency(details.totalAmount || 0, String(details?.currency || 'USD'))}
             </span>
           </div>
         </div>
       </div>
 
       {/* Footer with Signature */}
-      {signature && (
+      {details.signature && (
         <div className="mt-12 pt-8 border-t border-purple-100">
           <div className="flex justify-end">
             <div className="text-center">
-              {signature?.data?.startsWith('data:image') ? (
+              {details.signature.startsWith('data:image') ? (
                 <img
-                  src={signature.data}
+                  src={details.signature}
                   alt={t('authorizedSignature')}
                   className="h-16 object-contain mb-2"
                 />
               ) : (
                 <div
                   className="h-full w-full flex items-center justify-center"
-                  style={{ fontFamily: signature.fontFamily || undefined }}
+                  style={{ fontFamily: details.signatureFontFamily || undefined }}
                 >
-                  <p className="text-gray-600">{signature.data}</p>
+                  <p className="text-gray-600">{details.signature}</p>
                 </div>
               )}
             </div>

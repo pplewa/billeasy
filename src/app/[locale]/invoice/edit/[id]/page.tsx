@@ -11,12 +11,11 @@ import { fetchInvoiceById, updateInvoice } from '@/services/invoice/client/invoi
 import { FormInvoiceType } from '@/lib/types/invoice';
 import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, Loader2, Mail, Printer, Edit } from 'lucide-react';
+import { Download, Loader2, Mail } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 
 export default function EditInvoicePage({
   params,
@@ -34,7 +33,6 @@ export default function EditInvoicePage({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [locale, setLocale] = useState<string>('');
   const [invoiceId, setInvoiceId] = useState<string>('');
-  const printRef = useRef<HTMLDivElement>(null);
 
   // Get translations
   const t = useTranslations();
@@ -116,13 +114,6 @@ export default function EditInvoicePage({
       });
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  // Handle print functionality
-  const handlePrint = () => {
-    if (printRef.current) {
-      window.print();
     }
   };
 

@@ -22,19 +22,13 @@ export interface InvoiceTemplateProps {
  */
 export function Template1({ data, t }: InvoiceTemplateProps) {
   // Use fallbacks for type safety
-  const sender = data.sender || {};
-  const receiver = data.receiver || {};
-  const details = data.details || {};
+  const details = data?.details || {};
+  const items = details.items || [];
+  const sender = data?.sender || {};
+  const receiver = data?.receiver || {};
 
   // Type-safe access to signature
   const signature = details.signature as Signature | undefined;
-
-  // Get the items from the correct location
-  const invoiceItems = Array.isArray(details.items) ? details.items : [];
-
-  // Calculate totals
-  const subTotal = parseNumber(details.subTotal);
-  const totalAmount = parseNumber(details.totalAmount);
 
   return (
     <InvoiceLayout>
@@ -117,50 +111,7 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
             </tr>
           </thead>
           <tbody>
-            {invoiceItems.map((item, index) => {
-              let quantity = 1;
-              let unitPrice = 0;
-
-              // Extract quantity and price based on their location
-              if (typeof item.quantity === 'number') {
-                quantity = item.quantity;
-              } else if (typeof item.quantity === 'string') {
-                quantity = parseFloat(item.quantity) || 1;
-              }
-
-              if (typeof item.price === 'number') {
-                unitPrice = item.price;
-              } else if (typeof item.price === 'string') {
-                unitPrice = parseFloat(item.price) || 0;
-              }
-
-              // Initial subtotal calculation
-              const itemSubtotal = unitPrice * quantity;
-
-              // Calculate discount
-              let discountAmount = 0;
-              if (item.discount) {
-                if (item.discount.amountType === 'percentage') {
-                  discountAmount = itemSubtotal * (parseNumber(item.discount.amount) / 100);
-                } else {
-                  discountAmount = parseNumber(item.discount.amount);
-                }
-              }
-
-              // Calculate tax
-              let taxAmount = 0;
-              if (item.tax) {
-                const taxableAmount = itemSubtotal - discountAmount;
-                if (item.tax.amountType === 'percentage') {
-                  taxAmount = taxableAmount * (parseNumber(item.tax.amount) / 100);
-                } else {
-                  taxAmount = parseNumber(item.tax.amount);
-                }
-              }
-
-              // Calculate final total
-              const itemTotal = itemSubtotal - discountAmount + taxAmount;
-
+            {items.map((item, index) => {
               return (
                 <tr key={item.id || index} className="border-b border-gray-100">
                   <td className="py-3 px-4">
@@ -169,9 +120,9 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
                       <div className="text-sm text-gray-500">{String(item.description)}</div>
                     )}
                   </td>
-                  <td className="py-3 px-4 text-right">{quantity}</td>
+                  <td className="py-3 px-4 text-right">{item.quantity}</td>
                   <td className="py-3 px-4 text-right">
-                    {formatCurrency(unitPrice, String(details?.currency || 'USD'))}
+                    {formatCurrency(item.unitPrice, String(details?.currency || 'USD'))}
                   </td>
                   <td className="py-3 px-4 text-right">
                     {item.discount
@@ -194,7 +145,7 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
                       : '-'}
                   </td>
                   <td className="py-3 px-4 text-right font-medium">
-                    {formatCurrency(itemTotal, String(details?.currency || 'USD'))}
+                    {formatCurrency(item.total, String(details?.currency || 'USD'))}
                   </td>
                 </tr>
               );
@@ -207,83 +158,19 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
         <div className="w-full md:w-1/3">
           <div className="flex justify-between py-2">
             <span className="font-medium">{t('subtotal')}:</span>
-            <span>{formatCurrency(subTotal, String(details?.currency || 'USD'))}</span>
+            <span>{formatCurrency(details.subTotal || 0, String(details?.currency || 'USD'))}</span>
           </div>
-          {details?.tax && (
-            <div className="flex justify-between py-2">
-              <span className="font-medium">
-                {t('tax')} (
-                {typeof details.tax === 'object' &&
-                'amountType' in details.tax &&
-                details.tax.amountType === 'percentage'
-                  ? `${typeof details.tax === 'object' && 'amount' in details.tax ? details.tax.amount : ''}%`
-                  : ''}
-                ):
-              </span>
-              <span>
-                {typeof details.tax === 'object' &&
-                'amountType' in details.tax &&
-                details.tax.amountType === 'percentage'
-                  ? formatCurrency(
-                      subTotal *
-                        (parseNumber(
-                          typeof details.tax === 'object' && 'amount' in details.tax
-                            ? details.tax.amount
-                            : 0
-                        ) /
-                          100),
-                      String(details?.currency || 'USD')
-                    )
-                  : formatCurrency(
-                      parseNumber(
-                        typeof details.tax === 'object' && 'amount' in details.tax
-                          ? details.tax.amount
-                          : 0
-                      ),
-                      String(details?.currency || 'USD')
-                    )}
-              </span>
-            </div>
-          )}
-          {details?.discount && (
-            <div className="flex justify-between py-2">
-              <span className="font-medium">
-                {t('discount')} (
-                {typeof details.discount === 'object' &&
-                'amountType' in details.discount &&
-                details.discount.amountType === 'percentage'
-                  ? `${typeof details.discount === 'object' && 'amount' in details.discount ? details.discount.amount : ''}%`
-                  : ''}
-                ):
-              </span>
-              <span>
-                {typeof details.discount === 'object' &&
-                'amountType' in details.discount &&
-                details.discount.amountType === 'percentage'
-                  ? formatCurrency(
-                      subTotal *
-                        (parseNumber(
-                          typeof details.discount === 'object' && 'amount' in details.discount
-                            ? details.discount.amount
-                            : 0
-                        ) /
-                          100),
-                      String(details?.currency || 'USD')
-                    )
-                  : formatCurrency(
-                      parseNumber(
-                        typeof details.discount === 'object' && 'amount' in details.discount
-                          ? details.discount.amount
-                          : 0
-                      ),
-                      String(details?.currency || 'USD')
-                    )}
-              </span>
-            </div>
-          )}
+          <div className="flex justify-between py-2">
+            <span className="font-medium">{t('tax')}:</span>
+            <span>{formatCurrency(details.tax || 0, String(details?.currency || 'USD'))}</span>
+          </div>
+          {details.discount ? <div className="flex justify-between py-2">
+            <span className="font-medium">{t('discount')}:</span>
+            <span>{formatCurrency(details.discount || 0, String(details?.currency || 'USD'))}</span>
+          </div> : null}
           <div className="flex justify-between py-2 border-t border-gray-200 font-semibold">
             <span>{t('total')}:</span>
-            <span>{formatCurrency(totalAmount, String(details?.currency || 'USD'))}</span>
+            <span>{formatCurrency(details.totalAmount || 0, String(details?.currency || 'USD'))}</span>
           </div>
         </div>
       </div>

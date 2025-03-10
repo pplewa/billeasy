@@ -22,9 +22,8 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Download, AlertCircle, Mail, Printer } from 'lucide-react';
+import { Download, AlertCircle } from 'lucide-react';
 import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
-import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
 import { useTranslations } from 'next-intl';
 
 // Component to automatically update items when form is mounted
@@ -175,13 +174,6 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
     const formData = form.getValues();
     saveDraftInvoice(formData);
     router.push(`/${locale}/signin?redirect=/invoice/create`);
-  };
-
-  // Handle print functionality
-  const handlePrint = () => {
-    setTimeout(() => {
-      window.print();
-    }, 100);
   };
 
   return (

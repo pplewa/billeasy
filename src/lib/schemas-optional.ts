@@ -127,29 +127,6 @@ const InvoiceDetailsSchema = z.object({
   // Template fields
   pdfTemplate: fieldValidators.numberOptional,
   invoiceLogo: fieldValidators.stringOptional,
-  // Tax and discount fields
-  tax: z.preprocess(
-    (val) => val ?? {},
-    z
-      .object({
-        amount: fieldValidators.numberOptional,
-        amountType: fieldValidators.stringOptional,
-      })
-      .passthrough()
-      .optional()
-      .nullable()
-  ),
-  discount: z.preprocess(
-    (val) => val ?? {},
-    z
-      .object({
-        amount: fieldValidators.numberOptional,
-        amountType: fieldValidators.stringOptional,
-      })
-      .passthrough()
-      .optional()
-      .nullable()
-  ),
   // Signature field
   signature: z.preprocess(
     (val) => val ?? {},

@@ -9,7 +9,6 @@ import {
   ReceiverSchema,
   PaymentInformationSchema,
   SignatureSchema,
-  AmountTypeSchema,
 } from './components';
 
 /**
@@ -45,17 +44,12 @@ export const DetailsSchema = z.object({
   subTotal: fieldValidators.numberOptional,
   totalAmount: fieldValidators.numberOptional,
 
-  // Global tax, discount (in addition to per-item)
-  tax: AmountTypeSchema,
-  discount: AmountTypeSchema,
-
   // For backwards compatibility
   notes: fieldValidators.stringOptional, // Alias for additionalNotes
   terms: fieldValidators.stringOptional, // Alias for paymentTerms
 
-  // Also include legacy field names for templates that still use them
-  taxDetails: AmountTypeSchema,
-  discountDetails: AmountTypeSchema,
+  tax: fieldValidators.numberOptional,
+  discount: fieldValidators.numberOptional,
 });
 
 /**
