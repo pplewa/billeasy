@@ -9,7 +9,7 @@ export const ENV = process.env.NODE_ENV;
 /**
  * Websites
  */
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+export const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 /**
  * API endpoints

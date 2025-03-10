@@ -14,12 +14,14 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Zap, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
+import useInvoiceParserStore from '@/store/invoice-parser-store';
 
 function VerifyContent() {
   const t = useTranslations('auth');
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
+  const { setParsedInvoice, removeDraftInvoice } = useInvoiceParserStore();
 
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [error, setError] = useState('');
@@ -58,6 +60,17 @@ function VerifyContent() {
 
         // Redirect to invoices after a short delay
         setTimeout(() => {
+          try {
+            const storedDraftInvoices = localStorage.getItem('draftInvoices');
+            if (storedDraftInvoices) {
+              const draftInvoices = JSON.parse(storedDraftInvoices);
+              const latestDraft = draftInvoices[draftInvoices.length - 1];
+              setParsedInvoice(latestDraft);
+              removeDraftInvoice(latestDraft.id);
+            }
+          } catch (err) {
+            console.error('Error parsing draft invoices:', err);
+          }
           router.push('/invoices');
         }, 2000);
       } catch (err) {
@@ -68,7 +81,7 @@ function VerifyContent() {
     }
 
     verifyToken();
-  }, [token, router, setUser, t]);
+  }, [token, router, setUser, t, setParsedInvoice, removeDraftInvoice]);
 
   return (
     <div className="flex min-h-[calc(100vh-117px)] flex-col items-center justify-center px-4 py-12">
