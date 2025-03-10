@@ -45,11 +45,11 @@ export default function MainNav() {
       <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
-            <Image 
-              src="/logo-only.png" 
-              alt="BillEasy Logo" 
-              width={32} 
-              height={32} 
+            <Image
+              src="/logo-only.png"
+              alt="BillEasy Logo"
+              width={32}
+              height={32}
               className="h-8 w-8"
             />
             <span className="text-xl font-bold">Bill Easy</span>

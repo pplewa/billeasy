@@ -1,7 +1,5 @@
 import { InvoiceType, ItemType } from '@/types-optional';
-import { 
-  computeInvoiceDetails 
-} from './invoice-utils';
+import { computeInvoiceDetails } from './invoice-utils';
 
 interface SourceInvoice {
   // Core properties that might exist in various formats
@@ -203,9 +201,9 @@ function normalizeItems(items: Record<string, unknown>[]): ItemType[] {
 /**
  * Calculates totals for an invoice based on item details
  */
-function calculateTotals(items: ItemType[]): { 
-  subTotal: number; 
-  totalAmount: number; 
+function calculateTotals(items: ItemType[]): {
+  subTotal: number;
+  totalAmount: number;
 } {
   let subTotal = 0;
   let totalAmount = 0;
@@ -242,9 +240,9 @@ function calculateTotals(items: ItemType[]): {
     totalAmount += itemSubtotal - discountAmount + taxAmount;
   });
 
-  return { 
-    subTotal, 
-    totalAmount 
+  return {
+    subTotal,
+    totalAmount,
   };
 }
 

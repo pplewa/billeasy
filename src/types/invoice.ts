@@ -15,7 +15,7 @@ export interface InvoiceDetails {
   status: InvoiceStatus;
   paymentInformation: PaymentInformation;
   paymentTerms: string;
-  
+
   // Computed properties
   readonly tax: number;
   readonly discount: number;

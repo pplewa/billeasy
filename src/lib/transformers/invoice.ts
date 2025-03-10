@@ -29,14 +29,14 @@ export class InvoiceTransformer {
         amountType: 'percentage',
         taxId: undefined,
         taxName: undefined,
-        ...item.tax
+        ...item.tax,
       },
       discount: {
         amount: 0,
         amountType: 'percentage',
         discountCode: undefined,
         discountName: undefined,
-        ...item.discount
+        ...item.discount,
       },
     };
   }

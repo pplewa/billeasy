@@ -49,11 +49,11 @@ export async function POST(request: Request) {
       // Generate invoice PDF using the same functionality as the export feature
       const invoiceNumber = invoice.details?.invoiceNumber || 'unknown';
       const pdfBuffer = await generateDetailedInvoicePdf(invoice);
-      
+
       if (!pdfBuffer) {
         return NextResponse.json({ message: 'Failed to generate invoice PDF' }, { status: 500 });
       }
-      
+
       // Create a simple email template without using React components or hooks
       const emailHTML = `
         <!DOCTYPE html>
@@ -132,7 +132,7 @@ export async function POST(request: Request) {
         </body>
         </html>
       `;
-      
+
       // Prepare email with PDF attachment
       const mailOptions: SendMailOptions = {
         from: `BillEasy <${EMAIL_FROM}>`,
@@ -156,18 +156,21 @@ BillEasy Team
           },
         ],
       };
-      
+
       // Send the email
       await transporter.sendMail(mailOptions);
-      
+
       // Return success response
       return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
     } catch (error) {
       console.error('Error in email sending process:', error);
-      return NextResponse.json({ 
-        message: 'Failed to process invoice or send email', 
-        error: error instanceof Error ? error.message : String(error)
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          message: 'Failed to process invoice or send email',
+          error: error instanceof Error ? error.message : String(error),
+        },
+        { status: 500 }
+      );
     }
   } catch (error) {
     console.error('Error sending email:', error);
@@ -177,7 +180,7 @@ BillEasy Team
 
 /**
  * Generate a detailed PDF document from the invoice data using the same approach as the export feature
- * 
+ *
  * @param invoice - The invoice data
  * @returns A Buffer containing the PDF data, or null if generation fails
  */
@@ -186,19 +189,19 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
     // Import necessary modules
     const puppeteer = await import('puppeteer');
     const ReactDOMServer = (await import('react-dom/server')).default;
-    
+
     // Get the selected invoice template - same approach as export functionality
     const templateId = invoice.details?.pdfTemplate || 1;
     const InvoiceTemplate = await getInvoiceTemplate(templateId);
-    
+
     if (!InvoiceTemplate) {
       throw new Error(`Template with ID ${templateId} not found`);
     }
-    
+
     // Generate HTML content from the React component
     const template = await InvoiceTemplate(invoice);
     const htmlContent = ReactDOMServer.renderToStaticMarkup(template);
-    
+
     // Add HTML wrapper with styles - same as export functionality
     const fullHtml = `
       <!DOCTYPE html>
@@ -384,20 +387,20 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
       </body>
       </html>
     `;
-    
+
     // Launch a headless browser - same approach as export functionality
     const browser = await puppeteer.default.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
-    
+
     try {
       // Create a new page
       const page = await browser.newPage();
-      
+
       // Set content to our HTML
       await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
-      
+
       // Generate PDF with the same settings as export functionality
       const pdfBuffer = await page.pdf({
         format: 'A4',
@@ -408,10 +411,10 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
         scale: 1,
         timeout: 60000, // 60 seconds timeout
       });
-      
+
       // Close the browser
       await browser.close();
-      
+
       // Return the PDF buffer
       return Buffer.from(pdfBuffer);
     } catch (error) {

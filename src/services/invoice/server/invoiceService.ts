@@ -139,22 +139,26 @@ export async function updateInvoice(
     // Carefully merge the new data with existing data
     const mergedData: InvoiceType = {
       _id: existingData._id?.toString() || undefined,
-      sender: invoiceData.sender !== undefined 
-        ? invoiceData.sender 
-        : (existingData.sender || undefined),
-      receiver: invoiceData.receiver !== undefined 
-        ? invoiceData.receiver 
-        : (existingData.receiver || undefined),
+      sender:
+        invoiceData.sender !== undefined ? invoiceData.sender : existingData.sender || undefined,
+      receiver:
+        invoiceData.receiver !== undefined
+          ? invoiceData.receiver
+          : existingData.receiver || undefined,
       details: {
         ...(existingData.details || {}),
         ...(invoiceData.details || {}),
       },
-      settings: invoiceData.settings !== undefined 
-        ? invoiceData.settings 
-        : (existingData.settings || undefined),
-      items: invoiceData.items !== undefined 
-        ? invoiceData.items 
-        : (Array.isArray(existingData.items) ? existingData.items : []),
+      settings:
+        invoiceData.settings !== undefined
+          ? invoiceData.settings
+          : existingData.settings || undefined,
+      items:
+        invoiceData.items !== undefined
+          ? invoiceData.items
+          : Array.isArray(existingData.items)
+            ? existingData.items
+            : [],
       createdAt: existingData.createdAt,
       updatedAt: new Date(),
     };

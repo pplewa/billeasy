@@ -6,7 +6,8 @@ export const metadata: Metadata = {
     default: 'BillEasy - Simplified Billing and Invoice Management',
     template: '%s | BillEasy',
   },
-  description: 'Streamline your business finances with BillEasy - A comprehensive billing and invoicing solution for modern businesses. Manage invoices, track expenses, and simplify financial workflows effortlessly.',
+  description:
+    'Streamline your business finances with BillEasy - A comprehensive billing and invoicing solution for modern businesses. Manage invoices, track expenses, and simplify financial workflows effortlessly.',
   applicationName: 'BillEasy',
   keywords: [
     'billing',
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     'business tools',
     'expense tracking',
     'invoice generator',
-    'small business software'
+    'small business software',
   ],
   authors: [{ name: 'BillEasy Team' }],
   creator: 'BillEasy Development Team',
@@ -27,7 +28,8 @@ export const metadata: Metadata = {
     url: 'https://billeasy.online',
     siteName: 'BillEasy',
     title: 'BillEasy - Simplified Billing and Invoice Management',
-    description: 'Streamline your business finances with BillEasy - A comprehensive billing and invoicing solution for modern businesses.',
+    description:
+      'Streamline your business finances with BillEasy - A comprehensive billing and invoicing solution for modern businesses.',
     images: [
       {
         url: '/logo.png',
@@ -40,7 +42,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'BillEasy - Simplified Billing and Invoice Management',
-    description: 'Streamline your business finances with BillEasy - A comprehensive billing and invoicing solution for modern businesses.',
+    description:
+      'Streamline your business finances with BillEasy - A comprehensive billing and invoicing solution for modern businesses.',
     images: ['/logo.png'],
   },
   icons: {
@@ -49,9 +52,7 @@ export const metadata: Metadata = {
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
-    apple: [
-      { url: '/apple-touch-icon.png' },
-    ],
+    apple: [{ url: '/apple-touch-icon.png' }],
   },
 };
 

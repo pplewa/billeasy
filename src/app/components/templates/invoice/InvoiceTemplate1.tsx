@@ -164,13 +164,19 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
             <span className="font-medium">{t('tax')}:</span>
             <span>{formatCurrency(details.tax || 0, String(details?.currency || 'USD'))}</span>
           </div>
-          {details.discount ? <div className="flex justify-between py-2">
-            <span className="font-medium">{t('discount')}:</span>
-            <span>{formatCurrency(details.discount || 0, String(details?.currency || 'USD'))}</span>
-          </div> : null}
+          {details.discount ? (
+            <div className="flex justify-between py-2">
+              <span className="font-medium">{t('discount')}:</span>
+              <span>
+                {formatCurrency(details.discount || 0, String(details?.currency || 'USD'))}
+              </span>
+            </div>
+          ) : null}
           <div className="flex justify-between py-2 border-t border-gray-200 font-semibold">
             <span>{t('total')}:</span>
-            <span>{formatCurrency(details.totalAmount || 0, String(details?.currency || 'USD'))}</span>
+            <span>
+              {formatCurrency(details.totalAmount || 0, String(details?.currency || 'USD'))}
+            </span>
           </div>
         </div>
       </div>

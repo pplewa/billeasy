@@ -115,18 +115,18 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
   const taxObj = normalized.details?.tax ?? defaultTax;
   const tax: BaseAmount = {
     amount: Number((taxObj as { amount?: unknown })?.amount ?? 0),
-    amountType: 
-      String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'percentage' 
-        ? 'percentage' 
+    amountType:
+      String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'percentage'
+        ? 'percentage'
         : 'fixed',
   };
 
   const discountObj = normalized.details?.discount ?? defaultTax;
   const discount: BaseAmount = {
     amount: Number((discountObj as { amount?: unknown })?.amount ?? 0),
-    amountType: 
-      String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'percentage' 
-        ? 'percentage' 
+    amountType:
+      String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'percentage'
+        ? 'percentage'
         : 'fixed',
   };
 
@@ -351,7 +351,7 @@ export default function ViewInvoicePage() {
             color-adjust: exact !important;
           }
 
-          .print-invoice .shadow-lg{
+          .print-invoice .shadow-lg {
             box-shadow: none !important;
           }
 
@@ -457,8 +457,8 @@ export default function ViewInvoicePage() {
               {t('email')}
             </Button>
           </InvoiceEmailModal>
-          <InvoiceExportModal 
-            invoice={adaptToInvoiceType(invoice)} 
+          <InvoiceExportModal
+            invoice={adaptToInvoiceType(invoice)}
             selectedTemplate={selectedTemplate}
           >
             <Button>

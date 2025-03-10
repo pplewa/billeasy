@@ -93,7 +93,6 @@ export default function InvoicesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(12);
 
-  
   useEffect(() => {
     loadInvoices();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -318,9 +317,7 @@ export default function InvoicesPage() {
                       className="cursor-pointer"
                       onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
                     >
-                      {invoice.details?.dueDate
-                        ? formatDate(invoice.details.dueDate)
-                        : 'N/A'}
+                      {invoice.details?.dueDate ? formatDate(invoice.details.dueDate) : 'N/A'}
                     </TableCell>
                     <TableCell
                       className="cursor-pointer"

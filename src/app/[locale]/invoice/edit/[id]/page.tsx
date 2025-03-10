@@ -102,7 +102,7 @@ export default function EditInvoicePage({
       await updateInvoice(invoiceId, formData);
       toast({
         title: invoiceT('edit.toast.success.title'),
-        description: invoiceT('edit.toast.success.description')
+        description: invoiceT('edit.toast.success.description'),
       });
       router.push(`/${locale}/invoice/view/${invoiceId}`);
     } catch (error) {
@@ -110,7 +110,7 @@ export default function EditInvoicePage({
       toast({
         title: invoiceT('edit.toast.error.title'),
         description: invoiceT('edit.toast.error.description'),
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);

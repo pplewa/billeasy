@@ -82,6 +82,8 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
       return 'lookahead';
     });
 
+    console.log({ forceManualMode });
+
     // Update mode when forceManualMode changes
     useEffect(() => {
       if (forceManualMode) {

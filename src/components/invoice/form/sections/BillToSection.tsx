@@ -127,7 +127,7 @@ export function BillToSection() {
 
         {/* Custom inputs section */}
         <div className="pt-2">
-        <Button
+          <Button
             type="button"
             variant="outline"
             size="sm"

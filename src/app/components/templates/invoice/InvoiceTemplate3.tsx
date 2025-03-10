@@ -2,7 +2,6 @@ import React from 'react';
 import { InvoiceType } from '@/lib/types';
 import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting';
 
-
 // Shared interface for both client and server usage
 export interface InvoiceTemplateProps {
   data: InvoiceType;
@@ -179,15 +178,21 @@ export function Template3({ data, t }: InvoiceTemplateProps) {
         <div className="w-1/3 space-y-3">
           <div className="flex justify-between py-2">
             <span className="text-gray-600">{t('subtotal')}</span>
-            <span className="font-medium">{formatCurrency(details.subTotal || 0, String(details?.currency || 'USD'))}</span>
+            <span className="font-medium">
+              {formatCurrency(details.subTotal || 0, String(details?.currency || 'USD'))}
+            </span>
           </div>
           <div className="flex justify-between py-2">
             <span className="text-gray-600">{t('tax')}</span>
-            <span className="font-medium">{formatCurrency(details.tax || 0, String(details?.currency || 'USD'))}</span>
+            <span className="font-medium">
+              {formatCurrency(details.tax || 0, String(details?.currency || 'USD'))}
+            </span>
           </div>
           <div className="flex justify-between py-2">
             <span className="text-gray-600">{t('discount')}</span>
-            <span className="font-medium">{formatCurrency(details.discount || 0, String(details?.currency || 'USD'))}</span>
+            <span className="font-medium">
+              {formatCurrency(details.discount || 0, String(details?.currency || 'USD'))}
+            </span>
           </div>
           <div className="flex justify-between py-2 border-t border-purple-100">
             <span className="text-gray-600">{t('total')}</span>

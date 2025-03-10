@@ -12,11 +12,11 @@ export function calculateInvoiceTax(invoice: InvoiceType): number {
     if (!item.tax) return total;
 
     const itemSubtotal = (item.quantity || 0) * (item.unitPrice || 0);
-    
+
     if (item.tax.amountType === 'percentage') {
-      return total + (itemSubtotal * (item.tax.amount / 100));
+      return total + itemSubtotal * (item.tax.amount / 100);
     }
-    
+
     return total + (item.tax.amount || 0);
   }, 0);
 }
@@ -33,11 +33,11 @@ export function calculateInvoiceDiscount(invoice: InvoiceType): number {
     if (!item.discount) return total;
 
     const itemSubtotal = (item.quantity || 0) * (item.unitPrice || 0);
-    
+
     if (item.discount.amountType === 'percentage') {
-      return total + (itemSubtotal * (item.discount.amount / 100));
+      return total + itemSubtotal * (item.discount.amount / 100);
     }
-    
+
     return total + (item.discount.amount || 0);
   }, 0);
 }
@@ -65,9 +65,9 @@ export function computeInvoiceDetails(invoice: InvoiceType): InvoiceType {
           return calculateInvoiceDiscount(invoice);
         },
         enumerable: true,
-      }
+      },
     });
   }
 
   return computedInvoice;
-} 
+}

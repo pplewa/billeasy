@@ -202,7 +202,6 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
         <h1 className="text-3xl font-bold tracking-tight">{invoiceT('create')}</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
-
           <InvoiceExportModal form={form}>
             <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Download className="w-4 h-4 mr-2" />
