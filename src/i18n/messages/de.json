@@ -269,6 +269,7 @@
   },
   "invoice": {
     "pageTitle": "Rechnungen",
+    "additionalNotes": "Zusätzliche Hinweise",
     "totalInvoices": "{count, plural, =0 {Keine Rechnungen} one {# Rechnung} other {# Rechnungen}}",
     "createInvoice": "Rechnung erstellen",
     "searchPlaceholder": "Rechnungen suchen...",

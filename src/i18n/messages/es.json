@@ -269,6 +269,7 @@
   },
   "invoice": {
     "pageTitle": "Facturas",
+    "additionalNotes": "Notas Adicionales",
     "totalInvoices": "{count, plural, =0 {Sin facturas} one {# factura} other {# facturas}}",
     "createInvoice": "Crear Factura",
     "searchPlaceholder": "Buscar facturas...",

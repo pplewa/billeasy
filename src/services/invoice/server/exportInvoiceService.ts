@@ -134,188 +134,35 @@ export async function exportInvoiceService(req: NextRequest) {
 
           // Add HTML wrapper with styles
           const fullHtml = `
-                        <!DOCTYPE html>
-                        <html>
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <title>Invoice ${body.details?.invoiceNumber || ''}</title>
-                            <style>
-                                @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-                                @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Satisfy&family=Caveat&family=Homemade+Apple&display=swap');
-                                
-                                body {
-                                    font-family: 'Outfit', 'Helvetica', 'Arial', sans-serif;
-                                    margin: 0;
-                                    padding: 0;
-                                    color: #333;
-                                    line-height: 1.5;
-                                }
-                                
-                                @page {
-                                    size: A4;
-                                    margin: 1cm;
-                                }
-                                
-                                table {
-                                    width: 100%;
-                                    border-collapse: collapse;
-                                }
-                                
-                                th, td {
-                                    border: 1px solid #e2e8f0;
-                                    padding: 8px;
-                                    text-align: left;
-                                }
-                                
-                                th {
-                                    background-color: #f8fafc;
-                                    font-weight: 600;
-                                }
-                                
-                                .rounded-xl {
-                                    border-radius: 0.75rem;
-                                }
-                                
-                                .border {
-                                    border: 1px solid #e2e8f0;
-                                }
-                                
-                                .border-t {
-                                    border-top: 1px solid #e2e8f0;
-                                }
-                                
-                                .border-gray-200 {
-                                    border-color: #e2e8f0;
-                                }
-                                
-                                .p-4 {
-                                    padding: 1rem;
-                                }
-                                
-                                .py-2 {
-                                    padding-top: 0.5rem;
-                                    padding-bottom: 0.5rem;
-                                }
-                                
-                                .px-2 {
-                                    padding-left: 0.5rem;
-                                    padding-right: 0.5rem;
-                                }
-                                
-                                .mt-8 {
-                                    margin-top: 2rem;
-                                }
-                                
-                                .text-right {
-                                    text-align: right;
-                                }
-                                
-                                .text-center {
-                                    text-align: center;
-                                }
-                                
-                                .font-medium {
-                                    font-weight: 500;
-                                }
-                                
-                                .font-semibold {
-                                    font-weight: 600;
-                                }
-                                
-                                .text-gray-800 {
-                                    color: #1f2937;
-                                }
-                                
-                                .text-gray-600 {
-                                    color: #4b5563;
-                                }
-                                
-                                .text-gray-500 {
-                                    color: #6b7280;
-                                }
-                                
-                                .text-xs {
-                                    font-size: 0.75rem;
-                                }
-                                
-                                .text-lg {
-                                    font-size: 1.125rem;
-                                }
-                                
-                                .text-xl {
-                                    font-size: 1.25rem;
-                                }
-                                
-                                .text-2xl {
-                                    font-size: 1.5rem;
-                                }
-                                
-                                .uppercase {
-                                    text-transform: uppercase;
-                                }
-                                
-                                .whitespace-pre-line {
-                                    white-space: pre-line;
-                                }
-                                
-                                .flex {
-                                    display: flex;
-                                }
-                                
-                                .justify-end {
-                                    justify-content: flex-end;
-                                }
-                                
-                                .justify-between {
-                                    justify-content: space-between;
-                                }
-                                
-                                .items-end {
-                                    align-items: flex-end;
-                                }
-                                
-                                .flex-col {
-                                    flex-direction: column;
-                                }
-                                
-                                .w-full {
-                                    width: 100%;
-                                }
-                                
-                                .object-contain {
-                                    object-fit: contain;
-                                }
-                                
-                                @media (min-width: 640px) {
-                                    .sm\\:p-10 {
-                                        padding: 2.5rem;
-                                    }
-                                    
-                                    .sm\\:w-1\\/2 {
-                                        width: 50%;
-                                    }
-                                    
-                                    .sm\\:grid-cols-2 {
-                                        grid-template-columns: repeat(2, minmax(0, 1fr));
-                                    }
-                                    
-                                    .sm\\:text-right {
-                                        text-align: right;
-                                    }
-                                }
-                                
-                                @media (min-width: 1024px) {
-                                    .lg\\:w-1\\/3 {
-                                        width: 33.333333%;
-                                    }
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            ${htmlContent}
-                        </body>
-                        </html>
+                         <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Invoice ${body.details?.invoiceNumber || ''}</title>
+                <style>
+                    body {
+                        font-family: 'Helvetica', 'Arial', sans-serif;
+                        margin: 0;
+                        padding: 0;
+                        color: #333;
+                    }
+                    @page {
+                        size: A4;
+                        margin: 0;
+                    }
+                    @media print {
+                        html, body {
+                            width: 210mm;
+                            height: 297mm;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                ${htmlContent}
+            </body>
+            </html>
                     `;
 
           try {

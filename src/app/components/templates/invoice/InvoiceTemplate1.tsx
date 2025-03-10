@@ -47,10 +47,13 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
           <address className="mt-4 not-italic text-gray-800">
             {String(sender?.address || '')}
             <br />
-            {String(sender?.zipCode || '')}, {String(sender?.city || '')}
+            {String(sender?.zipCode || '')}{sender?.city ? `, ${String(sender?.city || '')}` : ''}
             <br />
             {String(sender?.country || '')}
             <br />
+            {Array.isArray(sender?.customInputs) && sender?.customInputs?.map((input, index) => (
+              <p key={`${index}-sender`}>{String(input.key)} {String(input.value)}</p>
+            ))}
           </address>
         </div>
       </div>
@@ -61,14 +64,17 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
           <div className="mt-2 text-gray-600">
             {receiver?.name && <p className="font-medium">{String(receiver?.name)}</p>}
             {receiver?.address && <p>{String(receiver?.address)}</p>}
-            {receiver?.zipCode && (
+            {receiver?.zipCode || receiver?.city && (
               <p>
-                {String(receiver?.zipCode)}, {String(receiver?.city || '')}
+                {String(receiver?.zipCode)}{receiver?.city ? `, ${String(receiver?.city || '')}` : ''}
               </p>
             )}
             {receiver?.country && <p>{String(receiver?.country)}</p>}
             <p>{String(receiver?.email || '')}</p>
             <p>{String(receiver?.phone || '')}</p>
+            {Array.isArray(receiver?.customInputs) && receiver?.customInputs?.map((input, index) => (
+              <p key={`${index}-receiver`}>{String(input.key)} {String(input.value)}</p>
+            ))}
           </div>
         </div>
         <div className="sm:text-right">
@@ -161,9 +167,7 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
           {discount ? (
             <div className="flex justify-between py-2">
               <span className="font-medium">{t('discount')}:</span>
-              <span>
-                {formatCurrency(discount || 0, String(details?.currency || 'USD'))}
-              </span>
+              <span>{formatCurrency(discount || 0, String(details?.currency || 'USD'))}</span>
             </div>
           ) : null}
           <div className="flex justify-between py-2 border-t border-gray-200 font-semibold">
@@ -221,18 +225,24 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
         </div>
       )}
 
-
       {details.signature?.data && (
         <div className="mt-12 flex justify-end">
           <div className="text-center">
-            <div
-              className="inline-block border-b border-gray-400 pb-1 px-8"
-            >
-               <img
+            <div className="inline-block border-b border-gray-400 pb-1 px-8">
+              {details.signature?.data.startsWith('data:image') ? (
+                <img
                   src={details.signature.data}
                   alt={t('authorizedSignature')}
                   className="h-16 object-contain mb-2"
                 />
+              ) : (
+                <div
+                  className="h-full w-full flex items-center justify-center"
+                  style={{ fontFamily: details.signature?.fontFamily || undefined }}
+                >
+                  <p className="text-gray-600">{details.signature.data}</p>
+                </div>
+              )}
             </div>
             <p className="mt-1 text-gray-600">{t('authorizedSignature')}</p>
           </div>
