@@ -51,8 +51,7 @@ export const DetailsSchema = z
 
     tax: fieldValidators.numberOptional,
     discount: fieldValidators.numberOptional,
-  })
-  .omit({ tax: true, discount: true });
+  });
 
 /**
  * Main invoice schema with all sections and transformations
@@ -65,7 +64,7 @@ export const InvoiceSchema = z
     // Main sections
     sender: SenderSchema.optional().nullable(),
     receiver: ReceiverSchema.optional().nullable(),
-    details: DetailsSchema.optional().nullable(),
+    details: DetailsSchema.omit({ tax: true, discount: true }).optional().nullable(),
 
     // Settings (will be merged into details in adapter functions)
     settings: z
