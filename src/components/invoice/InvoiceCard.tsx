@@ -16,7 +16,7 @@ import {
   Mail,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { InvoiceStatus } from '@/types';
 import { useTranslations } from 'next-intl';
@@ -28,6 +28,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { InvoiceExportModal } from './InvoiceExportModal';
+import { FormInvoiceType } from '@/lib/types/invoice';
+import { InvoiceEmailModal } from './InvoiceEmailModal';
 
 interface InvoiceCardProps {
   invoice: InvoiceDocument;
@@ -35,8 +38,6 @@ interface InvoiceCardProps {
   onDelete: (id: string) => void;
   onDuplicate: (invoice: InvoiceDocument) => void;
   onStatusChange?: (id: string, status: string) => void;
-  onExport?: (id: string) => void;
-  onEmail?: (id: string) => void;
 }
 
 export function InvoiceCard({
@@ -45,16 +46,12 @@ export function InvoiceCard({
   onDelete,
   onDuplicate,
   onStatusChange,
-  onExport,
-  onEmail,
 }: InvoiceCardProps) {
   const { toast } = useToast();
   const t = useTranslations('invoice');
   const tCommon = useTranslations('common');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDuplicating, setIsDuplicating] = useState(false);
-  const [isExporting, setIsExporting] = useState(false);
-  const [isEmailing, setIsEmailing] = useState(false);
 
   // Get the invoice ID as string
   const invoiceId = invoice._id.toString();
@@ -110,30 +107,6 @@ export function InvoiceCard({
       });
     } finally {
       setIsDuplicating(false);
-    }
-  };
-
-  // Handle export
-  const handleExport = () => {
-    if (onExport) {
-      setIsExporting(true);
-      try {
-        onExport(invoiceId);
-      } finally {
-        setIsExporting(false);
-      }
-    }
-  };
-
-  // Handle email
-  const handleEmail = () => {
-    if (onEmail) {
-      setIsEmailing(true);
-      try {
-        onEmail(invoiceId);
-      } finally {
-        setIsEmailing(false);
-      }
     }
   };
 
@@ -213,14 +186,21 @@ export function InvoiceCard({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={handleExport} disabled={isExporting}>
-                  <FileDown className="mr-2 h-4 w-4" />
-                  {isExporting ? tCommon('saving') : tCommon('export')}
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleEmail} disabled={isEmailing}>
-                  <Mail className="mr-2 h-4 w-4" />
-                  {isEmailing ? tCommon('saving') : tCommon('email')}
-                </DropdownMenuItem>
+                <InvoiceExportModal
+                  invoice={invoice as unknown as FormInvoiceType}
+                  isLoading={false}
+                >
+                  <DropdownMenuItem>
+                    <FileDown className="mr-2 h-4 w-4" />
+                    {tCommon('export')}
+                  </DropdownMenuItem>
+                </InvoiceExportModal>
+                <InvoiceEmailModal invoice={invoice as unknown as FormInvoiceType}>
+                  <DropdownMenuItem onClick={handleEmail} disabled={isEmailing}>
+                    <Mail className="mr-2 h-4 w-4" />
+                    {tCommon('email')}
+                  </DropdownMenuItem>
+                </InvoiceEmailModal>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleDuplicate} disabled={isDuplicating}>
                   <Copy className="mr-2 h-4 w-4" />
