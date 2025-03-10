@@ -50,7 +50,9 @@ export default async function SendPdfEmail({
         <Body className="bg-gray-100">
           <Container>
             <Section className="bg-white border-black-950 my-10 px-10 py-4 rounded-md">
-              <Img src={logo} alt="BillEasy Logo" width={200} height={120} />
+              <Text className="align-center">
+                <Img src={logo} alt="BillEasy Logo" width={256} height={256} />
+              </Text>
               <Heading className="leading-tight">{t('heading')}</Heading>
 
               <Text>{t('body', { invoiceNumber: `#${invoiceNumber}` })}</Text>
