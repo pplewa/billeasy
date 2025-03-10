@@ -127,8 +127,44 @@ export async function updateInvoice(
   try {
     await connectToDatabase();
 
-    // Process invoice data through schema validation and transformation
-    const processedData = processInvoice(invoiceData);
+    // First, fetch the existing invoice
+    const existingInvoice = await Invoice.findById(id);
+    if (!existingInvoice) {
+      return null;
+    }
+
+    // Convert existing invoice to a plain object
+    const existingData = existingInvoice.toObject();
+
+    // Carefully merge the new data with existing data
+    const mergedData: InvoiceType = {
+      _id: existingData._id?.toString() || undefined,
+      sender:
+        invoiceData.sender !== undefined ? invoiceData.sender : existingData.sender || undefined,
+      receiver:
+        invoiceData.receiver !== undefined
+          ? invoiceData.receiver
+          : existingData.receiver || undefined,
+      details: {
+        ...(existingData.details || {}),
+        ...(invoiceData.details || {}),
+      },
+      settings:
+        invoiceData.settings !== undefined
+          ? invoiceData.settings
+          : existingData.settings || undefined,
+      items:
+        invoiceData.items !== undefined
+          ? invoiceData.items
+          : Array.isArray(existingData.items)
+            ? existingData.items
+            : [],
+      createdAt: existingData.createdAt,
+      updatedAt: new Date(),
+    };
+
+    // Process the merged data
+    const processedData = processInvoice(mergedData);
 
     // Perform the update with processed data
     const updatedInvoice = await Invoice.findByIdAndUpdate(

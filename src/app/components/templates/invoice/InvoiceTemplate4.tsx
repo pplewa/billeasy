@@ -1,230 +1,285 @@
 import React from 'react';
+import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting';
+import InvoiceLayout from './InvoiceLayout';
 import { InvoiceType } from '@/lib/types';
-import { formatDate, parseNumber } from '@/lib/utils/formatting';
 
-// Type for signature to avoid unknown type errors
-interface Signature {
-  url?: string;
-  fontFamily?: string;
-}
-
-// Shared interface for both client and server usage
+// Reuse the existing interface
 export interface InvoiceTemplateProps {
   data: InvoiceType;
   t: (key: string, params?: Record<string, string | number | boolean>) => string;
 }
 
 /**
- * Invoice Template 4 - Premium Corporate
- * This template is implementation only with no client/server directives
- * It's used by both client and server rendering
- *
- * Features a premium corporate design with elegant typography and layout
+ * Invoice Template 4 - Elegant Sophisticated Style
+ * Clean, refined design with a focus on elegance and sophistication
  */
 export function Template4({ data, t }: InvoiceTemplateProps) {
-  // Use fallbacks for type safety
-  const sender = data.sender || {};
-  const receiver = data.receiver || {};
-  const details = data.details || {};
-
-  // Type-safe access to signature
-  const signature = details.signature as Signature | undefined;
-
-  // Get the items from the correct location
-  const invoiceItems = Array.isArray(details.items) ? details.items : [];
-
-  // Calculate totals
-  const subTotal = parseNumber(details.subTotal);
-  const totalAmount = parseNumber(details.totalAmount);
+  // Use fallbacks for type safety (same as Template1)
+  const details = data?.details || {};
+  const items = details.items || [];
+  const sender = data?.sender || {};
+  const receiver = data?.receiver || {};
+  const tax = (details as { tax: number })?.tax || 0;
+  const discount = (details as { details: number })?.details || 0;
 
   return (
-    <div className="min-h-[29.7cm] bg-white">
-      {/* Top Bar */}
-      <div className="h-4 bg-blue-900" />
-
-      {/* Main Content */}
-      <div className="p-8 lg:p-12">
-        {/* Header */}
-        <div className="flex justify-between items-start mb-16">
-          <div className="w-1/2">
+    <InvoiceLayout>
+      <div className="bg-white">
+        <div className="flex justify-between items-start border-b-2 border-gray-200 pb-6 mb-8">
+          <div>
             {details?.invoiceLogo && (
               <img
                 src={details.invoiceLogo as string}
-                width={160}
-                height={100}
+                width={200}
+                height={150}
                 alt={`${t('templatePreview', { id: 4 })} - ${String(sender?.name || 'Company')}`}
                 className="object-contain mb-4"
               />
             )}
-            <h1 className="text-2xl font-semibold text-blue-900">{String(sender?.name || '')}</h1>
-          </div>
-
-          <div className="w-1/2">
-            <div className="float-right text-right">
-              <h2 className="text-4xl font-light text-blue-900 mb-2">{t('invoice')}</h2>
-              <div className="text-gray-600">
-                <p className="text-lg">
-                  <span className="font-medium">{t('invoiceNumber')}: </span>
-                  {String(details?.invoiceNumber || '')}
-                </p>
-                <p>
-                  <span className="font-medium">{t('invoiceDate')}: </span>
-                  {formatDate(details?.invoiceDate)}
-                </p>
-                <p>
-                  <span className="font-medium">{t('dueDate')}: </span>
-                  {formatDate(details?.dueDate)}
-                </p>
-                {details?.purchaseOrderNumber && (
-                  <p>
-                    <span className="font-medium">{t('poNumber')}: </span>
-                    {String(details.purchaseOrderNumber)}
+            <h1 className="text-2xl font-bold text-gray-900 tracking-wide">
+              {String(sender?.name || '')}
+            </h1>
+            <address className="not-italic text-gray-600 mt-2 text-sm">
+              {String(sender?.address || '')}
+              <br />
+              {String(sender?.zipCode || '')}
+              {sender?.city ? `, ${String(sender?.city || '')}` : ''}
+              <br />
+              {String(sender?.country || '')}
+              {Array.isArray(sender?.customInputs) &&
+                sender?.customInputs?.map((input, index) => (
+                  <p key={`${index}-sender`}>
+                    {String(input.key)} {String(input.value)}
                   </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Addresses */}
-        <div className="grid grid-cols-2 gap-16 mb-16">
-          {/* From Address */}
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-blue-900 mb-3">
-              {t('from')}
-            </h3>
-            <div className="p-6 bg-gray-50 rounded-lg">
-              <address className="not-italic">
-                <p className="font-medium text-lg text-gray-900">{String(sender?.name || '')}</p>
-                <div className="text-gray-600 mt-2 space-y-1">
-                  <p>{String(sender?.address || '')}</p>
-                  <p>
-                    {String(sender?.zipCode || '')}, {String(sender?.city || '')}
-                  </p>
-                  <p>{String(sender?.country || '')}</p>
-                  <p className="mt-3">{String(sender?.email || '')}</p>
-                  <p>{String(sender?.phone || '')}</p>
-                </div>
-              </address>
-            </div>
-          </div>
-
-          {/* To Address */}
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-blue-900 mb-3">
-              {t('billTo')}
-            </h3>
-            <div className="p-6 bg-gray-50 rounded-lg">
-              <address className="not-italic">
-                <p className="font-medium text-lg text-gray-900">{String(receiver?.name || '')}</p>
-                <div className="text-gray-600 mt-2 space-y-1">
-                  <p>{String(receiver?.address || '')}</p>
-                  <p>
-                    {String(receiver?.zipCode || '')}, {String(receiver?.city || '')}
-                  </p>
-                  <p>{String(receiver?.country || '')}</p>
-                  <p className="mt-3">{String(receiver?.email || '')}</p>
-                  <p>{String(receiver?.phone || '')}</p>
-                </div>
-              </address>
-            </div>
-          </div>
-        </div>
-
-        {/* Items Table */}
-        <div className="mb-16">
-          <div className="overflow-hidden rounded-lg border border-gray-200">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-gray-50 text-sm uppercase tracking-wider">
-                  <th className="py-4 px-6 text-left text-blue-900 font-semibold">
-                    {t('description')}
-                  </th>
-                  <th className="py-4 px-6 text-right text-blue-900 font-semibold">
-                    {t('quantity')}
-                  </th>
-                  <th className="py-4 px-6 text-right text-blue-900 font-semibold">
-                    {t('unitPrice')}
-                  </th>
-                  <th className="py-4 px-6 text-right text-blue-900 font-semibold">
-                    {t('amount')}
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {invoiceItems.map((item, index) => (
-                  <tr key={index} className="text-gray-700">
-                    <td className="py-4 px-6">
-                      <p className="font-medium">{String(item.description || '')}</p>
-                      {item.details && (
-                        <p className="text-sm text-gray-500 mt-1">{String(item.details)}</p>
-                      )}
-                    </td>
-                    <td className="py-4 px-6 text-right">{String(item.quantity || '')}</td>
-                    <td className="py-4 px-6 text-right">{String(item.unitPrice || '')}</td>
-                    <td className="py-4 px-6 text-right font-medium">
-                      {String(item.amount || '')}
-                    </td>
-                  </tr>
                 ))}
-              </tbody>
-            </table>
+            </address>
+          </div>
+
+          <div className="text-right">
+            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-5 rounded-lg">
+              <h2 className="text-4xl font-light text-indigo-800 mb-4">
+                #{String(details?.invoiceNumber || '')}
+              </h2>
+              <div className="space-y-2 text-gray-700">
+                <p>
+                  <span className="font-medium text-indigo-900">{t('invoiceDate')}: </span>
+                  <span className="text-gray-800">{formatDate(details?.invoiceDate)}</span>
+                </p>
+                <p>
+                  <span className="font-medium text-indigo-900">{t('dueDate')}: </span>
+                  <span className="text-gray-800">{formatDate(details?.dueDate)}</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Totals and Notes */}
-        <div className="grid grid-cols-2 gap-16">
-          {/* Notes */}
+        <div className="grid grid-cols-2 gap-8 mb-8">
           <div>
-            {details?.notes && (
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-blue-900 mb-3">
-                  {t('notes')}
-                </h3>
-                <div className="p-6 bg-gray-50 rounded-lg">
-                  <p className="text-gray-600 whitespace-pre-line">{String(details.notes)}</p>
-                </div>
-              </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-3 border-b pb-2">
+              {t('billTo')}:
+            </h3>
+            <div className="text-gray-800 space-y-1">
+              {receiver?.name && <p className="font-medium">{String(receiver?.name)}</p>}
+              {receiver?.address && <p>{String(receiver?.address)}</p>}
+              {receiver?.zipCode ||
+                (receiver?.city && (
+                  <p>
+                    {String(receiver?.zipCode)}
+                    {receiver?.city ? `, ${String(receiver?.city || '')}` : ''}
+                  </p>
+                ))}
+              {receiver?.country && <p>{String(receiver?.country)}</p>}
+              <p>{String(receiver?.email || '')}</p>
+              <p>{String(receiver?.phone || '')}</p>
+              {Array.isArray(receiver?.customInputs) &&
+                receiver?.customInputs?.map((input, index) => (
+                  <p key={`${index}-receiver`}>
+                    {String(input.key)} {String(input.value)}
+                  </p>
+                ))}
+            </div>
+          </div>
+
+          <div className="text-right">
+            {details?.purchaseOrderNumber && (
+              <p>
+                <span className="font-medium text-indigo-900">{t('poNumber')}: </span>
+                <span className="text-gray-800">{String(details.purchaseOrderNumber)}</span>
+              </p>
             )}
           </div>
+        </div>
 
-          {/* Totals */}
-          <div>
-            <div className="bg-gray-50 rounded-lg p-6">
-              <div className="space-y-3">
-                <div className="flex justify-between text-gray-700">
-                  <span>{t('subtotal')}</span>
-                  <span className="font-medium">{subTotal}</span>
-                </div>
-                <div className="flex justify-between text-gray-700 pt-3 border-t border-gray-200">
-                  <span className="font-medium text-blue-900">{t('total')}</span>
-                  <span className="text-xl font-bold text-blue-900">{totalAmount}</span>
-                </div>
+        <table className="w-full mb-8 border-collapse">
+          <thead className="bg-indigo-100">
+            <tr>
+              <th className="py-3 px-4 text-left font-semibold text-indigo-900">{t('item')}</th>
+              <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('qty')}</th>
+              <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('price')}</th>
+              <th className="py-3 px-4 text-right font-semibold text-indigo-900">
+                {t('discount')}
+              </th>
+              <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('tax')}</th>
+              <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('total')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr
+                key={item.id || index}
+                className="border-b border-gray-200 hover:bg-indigo-50/50 transition-colors"
+              >
+                <td className="py-3 px-4">
+                  <div className="font-medium">{String(item.name || '')}</div>
+                  {item.description && (
+                    <div className="text-sm text-gray-500">{String(item.description)}</div>
+                  )}
+                </td>
+                <td className="py-3 px-4 text-right">{item.quantity}</td>
+                <td className="py-3 px-4 text-right">
+                  {formatCurrency(item.unitPrice, String(details?.currency || 'USD'))}
+                </td>
+                <td className="py-3 px-4 text-right">
+                  {item.discount
+                    ? item.discount.amountType === 'percentage'
+                      ? `${parseNumber(item.discount.amount)}%`
+                      : formatCurrency(
+                          parseNumber(item.discount.amount),
+                          String(details?.currency || 'USD')
+                        )
+                    : '-'}
+                </td>
+                <td className="py-3 px-4 text-right">
+                  {item.tax
+                    ? item.tax.amountType === 'percentage'
+                      ? `${parseNumber(item.tax.amount)}%`
+                      : formatCurrency(
+                          parseNumber(item.tax.amount),
+                          String(details?.currency || 'USD')
+                        )
+                    : '-'}
+                </td>
+                <td className="py-3 px-4 text-right font-medium">
+                  {formatCurrency(item.total, String(details?.currency || 'USD'))}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="flex justify-end mb-8">
+          <div className="w-1/3 bg-indigo-50 rounded-lg p-4">
+            <div className="flex justify-between py-2 border-b border-indigo-200">
+              <span className="text-indigo-900">{t('subtotal')}:</span>
+              <span className="text-gray-800">
+                {formatCurrency(details.subTotal || 0, String(details?.currency || 'USD'))}
+              </span>
+            </div>
+            <div className="flex justify-between py-2 border-b border-indigo-200">
+              <span className="text-indigo-900">{t('tax')}:</span>
+              <span className="text-gray-800">
+                {formatCurrency(tax || 0, String(details?.currency || 'USD'))}
+              </span>
+            </div>
+            {discount ? (
+              <div className="flex justify-between py-2 border-b border-indigo-200">
+                <span className="text-indigo-900">{t('discount')}:</span>
+                <span className="text-gray-800">
+                  {formatCurrency(discount || 0, String(details?.currency || 'USD'))}
+                </span>
               </div>
+            ) : null}
+            <div className="flex justify-between py-3 font-bold text-lg">
+              <span className="text-indigo-900">{t('total')}:</span>
+              <span className="text-indigo-950">
+                {formatCurrency(details.totalAmount || 0, String(details?.currency || 'USD'))}
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Footer with Signature */}
-        {signature && (
-          <div className="mt-16 pt-8 border-t border-gray-200">
-            <div className="flex justify-end">
-              <div className="text-center">
-                <img
-                  src={signature.url}
-                  alt={t('signature')}
-                  className="h-16 object-contain mb-2"
-                  style={{ fontFamily: signature.fontFamily }}
-                />
-                <p className="font-medium text-gray-900">{String(sender?.name || '')}</p>
+        {details?.notes && (
+          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">
+              {t('notes')}:
+            </h3>
+            <p className="text-gray-800 whitespace-pre-line">{String(details.notes)}</p>
+          </div>
+        )}
+
+        {details?.terms && (
+          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">
+              {t('terms')}:
+            </h3>
+            <p className="text-gray-800 whitespace-pre-line">{String(details.terms)}</p>
+          </div>
+        )}
+
+        {details?.paymentInformation &&
+          Object.values(details?.paymentInformation)?.filter(Boolean)?.length > 0 && (
+            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">
+                {t('paymentInfo')}:
+              </h3>
+              <div className="text-gray-800 space-y-1">
+                {typeof details.paymentInformation === 'object' &&
+                  'bankName' in details.paymentInformation &&
+                  details.paymentInformation.bankName && (
+                    <p>
+                      <span className="font-medium text-indigo-900">{t('bank')}: </span>
+                      {String(details.paymentInformation.bankName)}
+                    </p>
+                  )}
+                {typeof details.paymentInformation === 'object' &&
+                  'accountName' in details.paymentInformation &&
+                  details.paymentInformation.accountName && (
+                    <p>
+                      <span className="font-medium text-indigo-900">{t('accountName')}: </span>
+                      {String(details.paymentInformation.accountName)}
+                    </p>
+                  )}
+                {typeof details.paymentInformation === 'object' &&
+                  'accountNumber' in details.paymentInformation &&
+                  details.paymentInformation.accountNumber && (
+                    <p>
+                      <span className="font-medium text-indigo-900">{t('accountNumber')}: </span>
+                      {String(details.paymentInformation.accountNumber)}
+                    </p>
+                  )}
               </div>
+            </div>
+          )}
+
+        {details.signature?.data && (
+          <div className="mt-12 flex justify-end">
+            <div className="text-center">
+              <div className="inline-block border-b border-indigo-400 pb-1 px-8">
+                {details.signature?.data.startsWith('data:image') ? (
+                  <img
+                    src={details.signature.data}
+                    alt={t('authorizedSignature')}
+                    className="h-16 object-contain mb-2"
+                  />
+                ) : (
+                  <div
+                    className="h-full w-full flex items-center justify-center"
+                    style={{ fontFamily: details.signature?.fontFamily || undefined }}
+                  >
+                    <p className="text-gray-700">{details.signature.data}</p>
+                  </div>
+                )}
+              </div>
+              <p className="mt-1 text-gray-600">{t('authorizedSignature')}</p>
             </div>
           </div>
         )}
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="h-4 bg-blue-900" />
-    </div>
+        <div className="mt-12 text-center text-gray-500 text-sm">
+          <p>{t('thankYou')}</p>
+        </div>
+      </div>
+    </InvoiceLayout>
   );
 }

@@ -116,18 +116,18 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
   const tax: BaseAmount = {
     amount: Number((taxObj as { amount?: unknown })?.amount ?? 0),
     amountType:
-      String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount'
-        ? 'amount'
-        : 'percentage',
+      String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'percentage'
+        ? 'percentage'
+        : 'fixed',
   };
 
   const discountObj = normalized.details?.discount ?? defaultTax;
   const discount: BaseAmount = {
     amount: Number((discountObj as { amount?: unknown })?.amount ?? 0),
     amountType:
-      String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount'
-        ? 'amount'
-        : 'percentage',
+      String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'percentage'
+        ? 'percentage'
+        : 'fixed',
   };
 
   // Ensure sender and receiver are always objects
@@ -346,71 +346,29 @@ export default function ViewInvoicePage() {
             padding: 0;
           }
 
+          * {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+
+          .print-invoice .shadow-lg {
+            box-shadow: none !important;
+          }
+
           .container {
             width: 100%;
             max-width: 100%;
-            padding: 20px;
-            margin: 0;
+            padding: 0 !important;
+            margin: 0 !important;
           }
 
           .print-hidden {
             display: none !important;
           }
 
-          h1,
-          h2 {
-            color: #000;
-          }
-
-          table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-          }
-
-          th,
-          td {
-            border: 1px solid #000;
-            padding: 8px;
-            text-align: left;
-          }
-
-          th {
-            background-color: #f2f2f2;
-          }
-
-          .text-right {
-            text-align: right;
-          }
-
-          .font-semibold {
-            font-weight: 600;
-          }
-
-          .text-gray-600 {
-            color: #000;
-          }
-
-          .text-gray-700 {
-            color: #000;
-            font-weight: 600;
-          }
-
-          .text-gray-800 {
-            color: #000;
-            font-weight: 700;
-          }
-
-          .bg-white {
-            background-color: #fff;
-          }
-
-          .rounded-lg {
-            border-radius: 0;
-          }
-
-          .shadow-md {
-            box-shadow: none;
+          @page {
+            size: auto;
+            margin: 0mm;
           }
         }
       `}</style>
@@ -443,8 +401,8 @@ export default function ViewInvoicePage() {
               {t('email')}
             </Button>
           </InvoiceEmailModal>
-          <InvoiceExportModal 
-            invoice={adaptToInvoiceType(invoice)} 
+          <InvoiceExportModal
+            invoice={adaptToInvoiceType(invoice)}
             selectedTemplate={selectedTemplate}
           >
             <Button>
@@ -457,7 +415,7 @@ export default function ViewInvoicePage() {
       </div>
 
       {/* Replace the existing invoice content with the dynamic template */}
-      <div className="print:shadow-none print:p-0 print:border-0">
+      <div className="print:shadow-none print:p-0 print:border-0 print-invoice">
         <DynamicInvoiceView invoice={adaptToInvoiceType(invoice)} templateId={selectedTemplate} />
       </div>
     </div>

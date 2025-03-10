@@ -269,6 +269,7 @@
   },
   "invoice": {
     "pageTitle": "Invoices",
+    "additionalNotes": "Additional Notes",
     "totalInvoices": "{count, plural, =0 {No invoices} one {# invoice} other {# invoices}}",
     "createInvoice": "Create Invoice",
     "searchPlaceholder": "Search invoices...",
@@ -293,7 +294,7 @@
     },
     "itemsPerPage": "{count} per page",
     "table": {
-      "number": "Invoice #",
+      "number": "Invoice",
       "date": "Date",
       "client": "Client",
       "amount": "Amount",

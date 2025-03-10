@@ -269,6 +269,7 @@
   },
   "invoice": {
     "pageTitle": "发票",
+    "additionalNotes": "额外备注",
     "totalInvoices": "{count, plural, =0 {无发票} one {# 张发票} other {# 张发票}}",
     "createInvoice": "创建发票",
     "searchPlaceholder": "搜索发票...",

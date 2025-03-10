@@ -11,12 +11,11 @@ import { fetchInvoiceById, updateInvoice } from '@/services/invoice/client/invoi
 import { FormInvoiceType } from '@/lib/types/invoice';
 import { InvoiceTransformer } from '@/lib/transformers/invoice';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Download, Loader2, Mail, Printer, Edit } from 'lucide-react';
+import { Download, Loader2, Mail } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 
 export default function EditInvoicePage({
   params,
@@ -34,7 +33,6 @@ export default function EditInvoicePage({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [locale, setLocale] = useState<string>('');
   const [invoiceId, setInvoiceId] = useState<string>('');
-  const printRef = useRef<HTMLDivElement>(null);
 
   // Get translations
   const t = useTranslations();
@@ -104,7 +102,7 @@ export default function EditInvoicePage({
       await updateInvoice(invoiceId, formData);
       toast({
         title: invoiceT('edit.toast.success.title'),
-        description: invoiceT('edit.toast.success.description')
+        description: invoiceT('edit.toast.success.description'),
       });
       router.push(`/${locale}/invoice/view/${invoiceId}`);
     } catch (error) {
@@ -112,17 +110,10 @@ export default function EditInvoicePage({
       toast({
         title: invoiceT('edit.toast.error.title'),
         description: invoiceT('edit.toast.error.description'),
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  // Handle print functionality
-  const handlePrint = () => {
-    if (printRef.current) {
-      window.print();
     }
   };
 
@@ -160,18 +151,6 @@ export default function EditInvoicePage({
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
         <h1 className="text-3xl font-bold tracking-tight">{invoiceT('edit.value')}</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
-          <Button variant="outline" asChild>
-            <Link href={`/${locale}/invoice/edit/${invoiceId}`}>
-              <Edit className="mr-2 h-4 w-4" />
-              {t('common.edit')}
-            </Link>
-          </Button>
-
-          <Button variant="outline" onClick={handlePrint}>
-            <Printer className="mr-2 h-4 w-4" />
-            {t('common.print')}
-          </Button>
-
           <InvoiceEmailModal invoice={invoice}>
             <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Mail className="w-4 h-4 mr-2" />

@@ -3,13 +3,14 @@ import { getCurrentUser } from '@/lib/auth/auth';
 import nodemailer, { SendMailOptions } from 'nodemailer';
 import { InvoiceType } from '@/types';
 import { getInvoiceTemplate } from '@/lib/utils/file';
+import { normalizeInvoice } from '@/lib/invoice-adapter';
 
 // Get email configuration from environment variables
 const SMTP_HOST = process.env.SMTP_HOST;
 const SMTP_PORT = parseInt(process.env.SMTP_PORT || '587', 10);
 const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
-const EMAIL_FROM = process.env.EMAIL_FROM || 'noreply@billeasy.com';
+const EMAIL_FROM = process.env.EMAIL_FROM || 'noreply@billeasy.online';
 
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({
@@ -49,11 +50,11 @@ export async function POST(request: Request) {
       // Generate invoice PDF using the same functionality as the export feature
       const invoiceNumber = invoice.details?.invoiceNumber || 'unknown';
       const pdfBuffer = await generateDetailedInvoicePdf(invoice);
-      
+
       if (!pdfBuffer) {
         return NextResponse.json({ message: 'Failed to generate invoice PDF' }, { status: 500 });
       }
-      
+
       // Create a simple email template without using React components or hooks
       const emailHTML = `
         <!DOCTYPE html>
@@ -132,7 +133,7 @@ export async function POST(request: Request) {
         </body>
         </html>
       `;
-      
+
       // Prepare email with PDF attachment
       const mailOptions: SendMailOptions = {
         from: `BillEasy <${EMAIL_FROM}>`,
@@ -156,18 +157,21 @@ BillEasy Team
           },
         ],
       };
-      
+
       // Send the email
       await transporter.sendMail(mailOptions);
-      
+
       // Return success response
       return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
     } catch (error) {
       console.error('Error in email sending process:', error);
-      return NextResponse.json({ 
-        message: 'Failed to process invoice or send email', 
-        error: error instanceof Error ? error.message : String(error)
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          message: 'Failed to process invoice or send email',
+          error: error instanceof Error ? error.message : String(error),
+        },
+        { status: 500 }
+      );
     }
   } catch (error) {
     console.error('Error sending email:', error);
@@ -177,7 +181,7 @@ BillEasy Team
 
 /**
  * Generate a detailed PDF document from the invoice data using the same approach as the export feature
- * 
+ *
  * @param invoice - The invoice data
  * @returns A Buffer containing the PDF data, or null if generation fails
  */
@@ -186,19 +190,19 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
     // Import necessary modules
     const puppeteer = await import('puppeteer');
     const ReactDOMServer = (await import('react-dom/server')).default;
-    
+
     // Get the selected invoice template - same approach as export functionality
     const templateId = invoice.details?.pdfTemplate || 1;
     const InvoiceTemplate = await getInvoiceTemplate(templateId);
-    
+
     if (!InvoiceTemplate) {
       throw new Error(`Template with ID ${templateId} not found`);
     }
-    
+
     // Generate HTML content from the React component
-    const template = await InvoiceTemplate(invoice);
+    const template = await InvoiceTemplate(normalizeInvoice(invoice) as Record<string, unknown>);
     const htmlContent = ReactDOMServer.renderToStaticMarkup(template);
-    
+
     // Add HTML wrapper with styles - same as export functionality
     const fullHtml = `
       <!DOCTYPE html>
@@ -207,10 +211,11 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Invoice ${invoice.details?.invoiceNumber || ''}</title>
+          <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
           <style>
               @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
               @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Satisfy&family=Caveat&family=Homemade+Apple&display=swap');
-              
+             
               body {
                   font-family: 'Outfit', 'Helvetica', 'Arial', sans-serif;
                   margin: 0;
@@ -221,161 +226,15 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
               
               @page {
                   size: A4;
-                  margin: 1cm;
+                  margin: 0;
               }
-              
-              table {
-                  width: 100%;
-                  border-collapse: collapse;
-              }
-              
-              th, td {
-                  border: 1px solid #e2e8f0;
-                  padding: 8px;
-                  text-align: left;
-              }
-              
-              th {
-                  background-color: #f8fafc;
-                  font-weight: 600;
-              }
-              
-              .rounded-xl {
-                  border-radius: 0.75rem;
-              }
-              
-              .border {
-                  border: 1px solid #e2e8f0;
-              }
-              
-              .border-t {
-                  border-top: 1px solid #e2e8f0;
-              }
-              
-              .border-gray-200 {
-                  border-color: #e2e8f0;
-              }
-              
-              .p-4 {
-                  padding: 1rem;
-              }
-              
-              .py-2 {
-                  padding-top: 0.5rem;
-                  padding-bottom: 0.5rem;
-              }
-              
-              .px-2 {
-                  padding-left: 0.5rem;
-                  padding-right: 0.5rem;
-              }
-              
-              .mt-8 {
-                  margin-top: 2rem;
-              }
-              
-              .text-right {
-                  text-align: right;
-              }
-              
-              .text-center {
-                  text-align: center;
-              }
-              
-              .font-medium {
-                  font-weight: 500;
-              }
-              
-              .font-semibold {
-                  font-weight: 600;
-              }
-              
-              .text-gray-800 {
-                  color: #1f2937;
-              }
-              
-              .text-gray-600 {
-                  color: #4b5563;
-              }
-              
-              .text-gray-500 {
-                  color: #6b7280;
-              }
-              
-              .text-xs {
-                  font-size: 0.75rem;
-              }
-              
-              .text-lg {
-                  font-size: 1.125rem;
-              }
-              
-              .text-xl {
-                  font-size: 1.25rem;
-              }
-              
-              .text-2xl {
-                  font-size: 1.5rem;
-              }
-              
-              .uppercase {
-                  text-transform: uppercase;
-              }
-              
-              .whitespace-pre-line {
-                  white-space: pre-line;
-              }
-              
-              .flex {
-                  display: flex;
-              }
-              
-              .justify-end {
-                  justify-content: flex-end;
-              }
-              
-              .justify-between {
-                  justify-content: space-between;
-              }
-              
-              .items-end {
-                  align-items: flex-end;
-              }
-              
-              .flex-col {
-                  flex-direction: column;
-              }
-              
-              .w-full {
-                  width: 100%;
-              }
-              
-              .object-contain {
-                  object-fit: contain;
-              }
-              
-              @media (min-width: 640px) {
-                  .sm\\:p-10 {
-                      padding: 2.5rem;
-                  }
-                  
-                  .sm\\:w-1\\/2 {
-                      width: 50%;
-                  }
-                  
-                  .sm\\:grid-cols-2 {
-                      grid-template-columns: repeat(2, minmax(0, 1fr));
-                  }
-                  
-                  .sm\\:text-right {
-                      text-align: right;
-                  }
-              }
-              
-              @media (min-width: 1024px) {
-                  .lg\\:w-1\\/3 {
-                      width: 33.333333%;
-                  }
+                
+              @media print{
+                * {
+                  -webkit-box-shadow: none;
+                  -moz-box-shadow:    none;
+                  box-shadow:         none; 
+                }
               }
           </style>
       </head>
@@ -384,20 +243,20 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
       </body>
       </html>
     `;
-    
+
     // Launch a headless browser - same approach as export functionality
     const browser = await puppeteer.default.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
-    
+
     try {
       // Create a new page
       const page = await browser.newPage();
-      
+
       // Set content to our HTML
       await page.setContent(fullHtml, { waitUntil: 'networkidle0' });
-      
+
       // Generate PDF with the same settings as export functionality
       const pdfBuffer = await page.pdf({
         format: 'A4',
@@ -408,10 +267,10 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
         scale: 1,
         timeout: 60000, // 60 seconds timeout
       });
-      
+
       // Close the browser
       await browser.close();
-      
+
       // Return the PDF buffer
       return Buffer.from(pdfBuffer);
     } catch (error) {

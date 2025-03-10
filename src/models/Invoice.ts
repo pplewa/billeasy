@@ -83,25 +83,6 @@ const PaymentInformationSchema = new Schema(
   { _id: false, strict: false }
 );
 
-// Discount Details Schema
-const DiscountDetailsSchema = new Schema(
-  {
-    amount: { type: Number },
-    amountType: { type: String },
-  },
-  { _id: false, strict: false }
-);
-
-// Tax Details Schema
-const TaxDetailsSchema = new Schema(
-  {
-    amount: { type: Number },
-    taxID: { type: String },
-    amountType: { type: String },
-  },
-  { _id: false, strict: false }
-);
-
 // Signature Schema
 const SignatureSchema = new Schema(
   {
@@ -122,8 +103,6 @@ const InvoiceDetailsSchema = new Schema(
     currency: { type: String },
     items: [ItemSchema],
     paymentInformation: PaymentInformationSchema,
-    taxDetails: TaxDetailsSchema,
-    discountDetails: DiscountDetailsSchema,
     subTotal: { type: Number },
     totalAmount: { type: Number },
     totalAmountInWords: { type: String },

@@ -87,7 +87,9 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
       if (forceManualMode) {
         setMode('manual');
       }
-    }, [forceManualMode]);
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Input state
     const [inputValue, setInputValue] = useState<string>(value || defaultValue || '');

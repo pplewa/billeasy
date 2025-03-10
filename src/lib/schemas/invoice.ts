@@ -9,7 +9,6 @@ import {
   ReceiverSchema,
   PaymentInformationSchema,
   SignatureSchema,
-  AmountTypeSchema,
 } from './components';
 
 /**
@@ -45,17 +44,9 @@ export const DetailsSchema = z.object({
   subTotal: fieldValidators.numberOptional,
   totalAmount: fieldValidators.numberOptional,
 
-  // Global tax, discount (in addition to per-item)
-  tax: AmountTypeSchema,
-  discount: AmountTypeSchema,
-
   // For backwards compatibility
   notes: fieldValidators.stringOptional, // Alias for additionalNotes
   terms: fieldValidators.stringOptional, // Alias for paymentTerms
-
-  // Also include legacy field names for templates that still use them
-  taxDetails: AmountTypeSchema,
-  discountDetails: AmountTypeSchema,
 });
 
 /**
@@ -173,30 +164,6 @@ export function processInvoice(invoiceData: unknown): Invoice {
     }
   });
 
-  // Process global tax, discount
-  const globalTax = data.details?.tax ||
-    data.details?.taxDetails || { amount: 0, amountType: 'percentage' };
-  const globalDiscount = data.details?.discount ||
-    data.details?.discountDetails || { amount: 0, amountType: 'percentage' };
-
-  // Calculate global tax
-  if (globalTax.amount) {
-    if (globalTax.amountType === 'percentage') {
-      totalTax += (subTotal - totalDiscount) * (globalTax.amount / 100);
-    } else {
-      totalTax += globalTax.amount;
-    }
-  }
-
-  // Calculate global discount
-  if (globalDiscount.amount) {
-    if (globalDiscount.amountType === 'percentage') {
-      totalDiscount += subTotal * (globalDiscount.amount / 100);
-    } else {
-      totalDiscount += globalDiscount.amount;
-    }
-  }
-
   // Calculate total amount
   const totalAmount = subTotal - totalDiscount + totalTax;
 
@@ -211,11 +178,6 @@ export function processInvoice(invoiceData: unknown): Invoice {
       items,
       subTotal,
       totalAmount,
-      tax: globalTax,
-      discount: globalDiscount,
-      // Also set legacy fields for backward compatibility
-      taxDetails: globalTax,
-      discountDetails: globalDiscount,
     },
     // Clear items at root level to avoid duplication
     items: undefined,
@@ -243,7 +205,7 @@ const addressInfoSchema = z.object({
 // Base amount schema
 const baseAmountSchema = z.object({
   amount: z.number(),
-  amountType: z.enum(['percentage', 'amount']),
+  amountType: z.enum(['percentage', 'fixed']),
 });
 
 // Tax and discount schemas

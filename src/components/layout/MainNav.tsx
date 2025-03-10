@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Globe } from 'lucide-react';
+import Image from 'next/image';
 
 export default function MainNav() {
   const t = useTranslations('navigation');
@@ -40,11 +41,18 @@ export default function MainNav() {
   };
 
   return (
-    <header className="border-b sticky top-0 z-40 bg-white">
+    <header className="border-b sticky top-0 z-40 bg-white print-hidden">
       <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="text-xl font-bold">
-            Bill Easy
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/logo-only.png"
+              alt="BillEasy Logo"
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
+            <span className="text-xl font-bold">Bill Easy</span>
           </Link>
           <nav className="hidden md:flex gap-6">
             {user && (

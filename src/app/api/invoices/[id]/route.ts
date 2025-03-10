@@ -61,18 +61,6 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         | number; // Can be either object or number
     }
 
-    // CRITICAL: Log the received data before any processing
-    console.log(
-      'API received update with tax data:',
-      body.details?.items?.map((item: InvoiceItem) => ({
-        name: item.name,
-        tax: item.tax,
-        taxRate: item.taxRate,
-      }))
-    );
-
-    // ⚠️ ISSUE: The tax amount is being lost here - let's fix this
-
     // FIX: Preserve tax values explicitly during update
     if (body.details?.items) {
       // Process each item to ensure tax data is preserved

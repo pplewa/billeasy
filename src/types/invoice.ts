@@ -15,18 +15,39 @@ export interface InvoiceDetails {
   status: InvoiceStatus;
   paymentInformation: PaymentInformation;
   paymentTerms: string;
+
+  // Computed properties
+  readonly tax: number;
+  readonly discount: number;
 }
 
 export interface InvoiceFormData {
-  details: InvoiceDetails;
-  items: Array<{
-    id: string;
-    description: string;
-    quantity: number;
-    price: number;
-    tax?: number;
-    discount?: number;
-  }>;
+  details: {
+    invoiceNumber?: string;
+    invoiceDate?: Date;
+    dueDate?: Date;
+    currency?: string;
+    items: Array<{
+      id: string;
+      description: string;
+      quantity: number;
+      price: number;
+      tax?: {
+        amount: number;
+        amountType: 'percentage' | 'fixed';
+      };
+      discount?: {
+        amount: number;
+        amountType: 'percentage' | 'fixed';
+      };
+    }>;
+    subTotal?: number;
+    totalAmount?: number;
+    totalTax?: number;
+    paymentInformation: PaymentInformation;
+    paymentTerms: string;
+    totalDiscount?: number;
+  };
   notes?: string;
   terms?: string;
   signature?: {

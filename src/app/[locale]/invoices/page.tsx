@@ -55,7 +55,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { InvoiceStatusSelector } from '@/components/invoice/InvoiceStatusSelector';
 import { InvoiceStatus as InvoiceStatusEnum } from '@/types';
 import { useTranslations } from 'next-intl';
-
+import { formatCurrency, formatDate } from '@/lib/utils/formatting';
 // Define available view modes
 type ViewMode = 'card' | 'list';
 
@@ -64,23 +64,6 @@ type InvoiceStatus = 'draft' | 'pending' | 'paid' | 'overdue' | 'cancelled' | 'a
 
 // Define available sort options
 type SortOption = 'date_desc' | 'date_asc' | 'amount_desc' | 'amount_asc' | 'status';
-
-// Utility functions for formatting
-const formatDate = (date: Date): string => {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  }).format(date);
-};
-
-const formatCurrency = (amount: number, currency = 'USD'): string => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    minimumFractionDigits: 2,
-  }).format(amount);
-};
 
 export default function InvoicesPage() {
   const router = useRouter();
@@ -299,6 +282,7 @@ export default function InvoicesPage() {
               <TableRow className="bg-secondary/30">
                 <TableHead>{t('invoice.table.number')}</TableHead>
                 <TableHead>{t('invoice.table.date')}</TableHead>
+                <TableHead>{t('invoice.dueDate')}</TableHead>
                 <TableHead>{t('invoice.table.client')}</TableHead>
                 <TableHead>{t('invoice.table.amount')}</TableHead>
                 <TableHead className="text-center">{t('invoice.table.status')}</TableHead>
@@ -326,15 +310,14 @@ export default function InvoicesPage() {
                       onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
                     >
                       {invoice.details?.invoiceDate
-                        ? formatDate(
-                            new Date(
-                              invoice.details.invoiceDate !== null &&
-                              invoice.details.invoiceDate !== undefined
-                                ? String(invoice.details.invoiceDate)
-                                : Date.now()
-                            )
-                          )
+                        ? formatDate(invoice.details.invoiceDate)
                         : 'N/A'}
+                    </TableCell>
+                    <TableCell
+                      className="cursor-pointer"
+                      onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
+                    >
+                      {invoice.details?.dueDate ? formatDate(invoice.details.dueDate) : 'N/A'}
                     </TableCell>
                     <TableCell
                       className="cursor-pointer"
@@ -660,7 +643,7 @@ export default function InvoicesPage() {
               <div className="flex gap-1">
                 <Button
                   variant="outline"
-                  size="icon"
+                  size="sm"
                   onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
                 >
@@ -712,7 +695,7 @@ export default function InvoicesPage() {
                 })}
                 <Button
                   variant="outline"
-                  size="icon"
+                  size="sm"
                   onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
                 >

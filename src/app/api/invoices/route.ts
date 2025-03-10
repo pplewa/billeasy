@@ -79,14 +79,6 @@ export async function POST(request: NextRequest) {
             };
           }
 
-          // Ensure tax object has all required fields
-          if (item.tax && typeof item.tax === 'object') {
-            item.tax = {
-              amount: item.tax.amount || 0,
-              amountType: item.tax.amountType || 'percentage',
-            };
-          }
-
           return item;
         }
       );

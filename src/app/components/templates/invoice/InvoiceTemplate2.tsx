@@ -3,337 +3,261 @@ import { formatCurrency, formatDate, parseNumber } from '@/lib/utils/formatting'
 import InvoiceLayout from './InvoiceLayout';
 import { InvoiceType } from '@/lib/types';
 
-// Type for signature to avoid unknown type errors
-interface Signature {
-  name?: string;
-  fontFamily?: string;
-}
-
-// Shared interface for both client and server usage
+// Reuse the existing interface
 export interface InvoiceTemplateProps {
   data: InvoiceType;
   t: (key: string, params?: Record<string, string | number | boolean>) => string;
 }
 
 /**
- * Invoice Template 2 - Minimalist Modern
- * This template is implementation only with no client/server directives
- * It's used by both client and server rendering
+ * Invoice Template 2 - Modern Minimalist Style
+ * Clean, professional design with a focus on readability and elegance
  */
 export function Template2({ data, t }: InvoiceTemplateProps) {
-  // Use fallbacks for type safety
-  const sender = data.sender || {};
-  const receiver = data.receiver || {};
-  const details = data.details || {};
-
-  // Type-safe access to signature
-  const signature = details.signature as Signature | undefined;
-
-  // Get the items from the correct location
-  const invoiceItems = Array.isArray(details.items) ? details.items : [];
-
-  // Calculate totals
-  const subTotal = parseNumber(details.subTotal);
-  const totalAmount = parseNumber(details.totalAmount);
+  // Use fallbacks for type safety (same as Template1)
+  const details = data?.details || {};
+  const items = details.items || [];
+  const sender = data?.sender || {};
+  const receiver = data?.receiver || {};
+  const tax = (details as { tax: number })?.tax || 0;
+  const discount = (details as { details: number })?.details || 0;
 
   return (
     <InvoiceLayout>
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          {details?.invoiceLogo && (
-            <img
-              src={details.invoiceLogo as string}
-              width={140}
-              height={100}
-              alt={`${t('templatePreview', { id: 2 })} - ${String(sender?.name || 'Company')}`}
-              className="object-contain"
-            />
-          )}
-        </div>
-        <div className="text-right">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">{t('invoiceNumber')}</h2>
-          <span className="mt-1 block text-gray-500">{String(details?.invoiceNumber || '')}</span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
-        <div>
-          <h3 className="text-lg font-medium text-gray-800 mb-2">{t('billFrom')}</h3>
-          <div className="text-gray-600">
-            <p className="font-semibold">{String(sender?.name || '')}</p>
-            <p>{String(sender?.address || '')}</p>
-            <p>
+      <div className="bg-white rounded-lg shadow-sm">
+        <div className="flex justify-between items-start border-b pb-6 mb-6">
+          <div>
+            {details?.invoiceLogo && (
+              <img
+                src={details.invoiceLogo as string}
+                width={160}
+                height={120}
+                alt={`${t('templatePreview', { id: 2 })} - ${String(sender?.name || 'Company')}`}
+                className="object-contain mb-4"
+              />
+            )}
+            <h1 className="text-xl font-bold text-gray-800">{String(sender?.name || '')}</h1>
+            <address className="not-italic text-gray-600 mt-2">
+              {String(sender?.address || '')}
+              <br />
               {String(sender?.zipCode || '')}
-              {sender?.city ? `, ${String(sender?.city)}` : ''}
-            </p>
-            <p>{String(sender?.country || '')}</p>
-            <p>{String(sender?.email || '')}</p>
-            <p>{String(sender?.phone || '')}</p>
+              {sender?.city ? `, ${String(sender?.city || '')}` : ''}
+              <br />
+              {String(sender?.country || '')}
+              {Array.isArray(sender?.customInputs) &&
+                sender?.customInputs?.map((input, index) => (
+                  <p key={`${index}-sender`}>
+                    {String(input.key)} {String(input.value)}
+                  </p>
+                ))}
+            </address>
           </div>
-        </div>
-        <div className="sm:text-right">
-          <h3 className="text-lg font-medium text-gray-800 mb-2">{t('billTo')}</h3>
-          <div className="text-gray-600">
-            <p className="font-semibold">{String(receiver?.name || '')}</p>
-            <p>{String(receiver?.address || '')}</p>
-            <p>
-              {String(receiver?.zipCode || '')}
-              {receiver?.city ? `, ${String(receiver?.city)}` : ''}
-            </p>
-            <p>{String(receiver?.country || '')}</p>
-            <p>{String(receiver?.email || '')}</p>
-            <p>{String(receiver?.phone || '')}</p>
-          </div>
-        </div>
-      </div>
 
-      <div className="border rounded-lg overflow-hidden mb-8">
-        <div className="bg-gray-50 p-4 border-b">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <h4 className="text-sm font-medium text-gray-500 uppercase">{t('invoiceDate')}</h4>
-              <p className="text-gray-800">{formatDate(details?.invoiceDate)}</p>
+          <div className="text-right">
+            <h2 className="text-3xl font-light text-gray-500">
+              #{String(details?.invoiceNumber || '')}
+            </h2>
+            <div className="mt-4 space-y-2 text-gray-700">
+              <p>
+                <span className="font-medium">{t('invoiceDate')}: </span>
+                {formatDate(details?.invoiceDate)}
+              </p>
+              <p>
+                <span className="font-medium">{t('dueDate')}: </span>
+                {formatDate(details?.dueDate)}
+              </p>
             </div>
-            <div>
-              <h4 className="text-sm font-medium text-gray-500 uppercase">{t('dueDate')}</h4>
-              <p className="text-gray-800">{formatDate(details?.dueDate)}</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 mb-8">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">{t('billTo')}:</h3>
+            <div className="text-gray-700">
+              {receiver?.name && <p className="font-medium">{String(receiver?.name)}</p>}
+              {receiver?.address && <p>{String(receiver?.address)}</p>}
+              {receiver?.zipCode ||
+                (receiver?.city && (
+                  <p>
+                    {String(receiver?.zipCode)}
+                    {receiver?.city ? `, ${String(receiver?.city || '')}` : ''}
+                  </p>
+                ))}
+              {receiver?.country && <p>{String(receiver?.country)}</p>}
+              <p>{String(receiver?.email || '')}</p>
+              <p>{String(receiver?.phone || '')}</p>
+              {Array.isArray(receiver?.customInputs) &&
+                receiver?.customInputs?.map((input, index) => (
+                  <p key={`${index}-receiver`}>
+                    {String(input.key)} {String(input.value)}
+                  </p>
+                ))}
             </div>
+          </div>
+
+          <div className="text-right">
             {details?.purchaseOrderNumber && (
-              <div>
-                <h4 className="text-sm font-medium text-gray-500 uppercase">{t('poNumber')}</h4>
-                <p className="text-gray-800">{String(details.purchaseOrderNumber)}</p>
-              </div>
+              <p>
+                <span className="font-medium">{t('poNumber')}: </span>
+                {String(details.purchaseOrderNumber)}
+              </p>
             )}
           </div>
         </div>
 
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 text-left">
-              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase">{t('item')}</th>
-              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">
-                {t('qty')}
-              </th>
-              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">
-                {t('price')}
-              </th>
-              <th className="py-3 px-4 font-medium text-gray-500 text-sm uppercase text-right">
-                {t('total')}
-              </th>
+        <table className="w-full mb-8 border-collapse">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="py-3 px-4 text-left font-medium text-gray-700">{t('item')}</th>
+              <th className="py-3 px-4 text-right font-medium text-gray-700">{t('qty')}</th>
+              <th className="py-3 px-4 text-right font-medium text-gray-700">{t('price')}</th>
+              <th className="py-3 px-4 text-right font-medium text-gray-700">{t('discount')}</th>
+              <th className="py-3 px-4 text-right font-medium text-gray-700">{t('tax')}</th>
+              <th className="py-3 px-4 text-right font-medium text-gray-700">{t('total')}</th>
             </tr>
           </thead>
           <tbody>
-            {invoiceItems.map((item, index) => {
-              let quantity = 1;
-              let unitPrice = 0;
-
-              // Extract quantity and price based on their location
-              if (typeof item.quantity === 'number') {
-                quantity = item.quantity;
-              } else if (typeof item.quantity === 'string') {
-                quantity = parseFloat(item.quantity) || 1;
-              }
-
-              if (typeof item.price === 'number') {
-                unitPrice = item.price;
-              } else if (typeof item.price === 'string') {
-                unitPrice = parseFloat(item.price) || 0;
-              }
-
-              // Calculate total for this item
-              const itemTotal = quantity * unitPrice;
-
-              return (
-                <tr key={item.id || index} className="border-t border-gray-100">
-                  <td className="py-4 px-4">
-                    <div className="font-medium text-gray-800">{String(item.name || '')}</div>
-                    {item.description && (
-                      <div className="text-gray-500 text-sm mt-1">{String(item.description)}</div>
-                    )}
-                  </td>
-                  <td className="py-4 px-4 text-right">{quantity}</td>
-                  <td className="py-4 px-4 text-right">
-                    {formatCurrency(unitPrice, String(details?.currency || 'USD'))}
-                  </td>
-                  <td className="py-4 px-4 text-right font-medium text-gray-800">
-                    {formatCurrency(itemTotal, String(details?.currency || 'USD'))}
-                  </td>
-                </tr>
-              );
-            })}
+            {items.map((item, index) => (
+              <tr key={item.id || index} className="border-b border-gray-200">
+                <td className="py-3 px-4">
+                  <div className="font-medium">{String(item.name || '')}</div>
+                  {item.description && (
+                    <div className="text-sm text-gray-500">{String(item.description)}</div>
+                  )}
+                </td>
+                <td className="py-3 px-4 text-right">{item.quantity}</td>
+                <td className="py-3 px-4 text-right">
+                  {formatCurrency(item.unitPrice, String(details?.currency || 'USD'))}
+                </td>
+                <td className="py-3 px-4 text-right">
+                  {item.discount
+                    ? item.discount.amountType === 'percentage'
+                      ? `${parseNumber(item.discount.amount)}%`
+                      : formatCurrency(
+                          parseNumber(item.discount.amount),
+                          String(details?.currency || 'USD')
+                        )
+                    : '-'}
+                </td>
+                <td className="py-3 px-4 text-right">
+                  {item.tax
+                    ? item.tax.amountType === 'percentage'
+                      ? `${parseNumber(item.tax.amount)}%`
+                      : formatCurrency(
+                          parseNumber(item.tax.amount),
+                          String(details?.currency || 'USD')
+                        )
+                    : '-'}
+                </td>
+                <td className="py-3 px-4 text-right font-medium">
+                  {formatCurrency(item.total, String(details?.currency || 'USD'))}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
-      </div>
 
-      <div className="flex justify-end">
-        <div className="w-80">
-          <div className="border rounded-lg overflow-hidden">
-            <div className="p-4 bg-gray-50 border-b">
-              <h3 className="font-medium text-gray-800">{t('total')}</h3>
-            </div>
-            <div className="p-4">
-              <div className="flex justify-between py-2">
-                <span className="text-gray-600">{t('subtotal')}:</span>
-                <span className="font-medium text-gray-800">
-                  {formatCurrency(subTotal, String(details?.currency || 'USD'))}
-                </span>
-              </div>
-
-              {details?.tax && (
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600">
-                    {t('tax')} (
-                    {typeof details.tax === 'object' &&
-                    'amountType' in details.tax &&
-                    details.tax.amountType === 'percentage'
-                      ? `${typeof details.tax === 'object' && 'amount' in details.tax ? details.tax.amount : ''}%`
-                      : ''}
-                    ):
-                  </span>
-                  <span className="font-medium text-gray-800">
-                    {typeof details.tax === 'object' &&
-                    'amountType' in details.tax &&
-                    details.tax.amountType === 'percentage'
-                      ? formatCurrency(
-                          subTotal *
-                            (parseNumber(
-                              typeof details.tax === 'object' && 'amount' in details.tax
-                                ? details.tax.amount
-                                : 0
-                            ) /
-                              100),
-                          String(details?.currency || 'USD')
-                        )
-                      : formatCurrency(
-                          parseNumber(
-                            typeof details.tax === 'object' && 'amount' in details.tax
-                              ? details.tax.amount
-                              : 0
-                          ),
-                          String(details?.currency || 'USD')
-                        )}
-                  </span>
-                </div>
-              )}
-
-              {details?.discount && (
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-600">
-                    {t('discount')} (
-                    {typeof details.discount === 'object' &&
-                    'amountType' in details.discount &&
-                    details.discount.amountType === 'percentage'
-                      ? `${typeof details.discount === 'object' && 'amount' in details.discount ? details.discount.amount : ''}%`
-                      : ''}
-                    ):
-                  </span>
-                  <span className="font-medium text-gray-800">
-                    {typeof details.discount === 'object' &&
-                    'amountType' in details.discount &&
-                    details.discount.amountType === 'percentage'
-                      ? formatCurrency(
-                          subTotal *
-                            (parseNumber(
-                              typeof details.discount === 'object' && 'amount' in details.discount
-                                ? details.discount.amount
-                                : 0
-                            ) /
-                              100),
-                          String(details?.currency || 'USD')
-                        )
-                      : formatCurrency(
-                          parseNumber(
-                            typeof details.discount === 'object' && 'amount' in details.discount
-                              ? details.discount.amount
-                              : 0
-                          ),
-                          String(details?.currency || 'USD')
-                        )}
-                  </span>
-                </div>
-              )}
-
-              <div className="flex justify-between py-2 border-t mt-2">
-                <span className="font-medium text-gray-800">{t('total')}:</span>
-                <span className="font-bold text-gray-800">
-                  {formatCurrency(totalAmount, String(details?.currency || 'USD'))}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-        {(details?.notes || details?.terms) && (
-          <div>
-            {details.notes && (
-              <div className="mb-6">
-                <h3 className="text-lg font-medium text-gray-800 mb-2">{t('notes')}</h3>
-                <p className="text-gray-600 whitespace-pre-line">{String(details.notes)}</p>
-              </div>
-            )}
-
-            {details.terms && (
-              <div>
-                <h3 className="text-lg font-medium text-gray-800 mb-2">{t('terms')}</h3>
-                <p className="text-gray-600 whitespace-pre-line">{String(details.terms)}</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {details?.paymentInformation && (
-          <div>
-            <h3 className="text-lg font-medium text-gray-800 mb-2">{t('paymentInfo')}</h3>
-            <div className="text-gray-600">
-              {typeof details.paymentInformation === 'object' &&
-                'bankName' in details.paymentInformation &&
-                details.paymentInformation.bankName && (
-                  <p>
-                    <span className="font-medium">{t('bank')}: </span>
-                    {String(details.paymentInformation.bankName)}
-                  </p>
-                )}
-              {typeof details.paymentInformation === 'object' &&
-                'accountName' in details.paymentInformation &&
-                details.paymentInformation.accountName && (
-                  <p>
-                    <span className="font-medium">{t('accountName')}: </span>
-                    {String(details.paymentInformation.accountName)}
-                  </p>
-                )}
-              {typeof details.paymentInformation === 'object' &&
-                'accountNumber' in details.paymentInformation &&
-                details.paymentInformation.accountNumber && (
-                  <p>
-                    <span className="font-medium">{t('accountNumber')}: </span>
-                    {String(details.paymentInformation.accountNumber)}
-                  </p>
-                )}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {signature && signature.name && (
-        <div className="mt-12 flex justify-end">
-          <div className="text-center">
-            <div
-              className="inline-block border-b border-gray-400 pb-1 px-8"
-              style={signature.fontFamily ? { fontFamily: signature.fontFamily } : undefined}
-            >
-              <span className="text-2xl" style={{ fontFamily: signature.fontFamily || 'cursive' }}>
-                {signature.name}
+        <div className="flex justify-end mb-8">
+          <div className="w-1/3">
+            <div className="flex justify-between py-2 border-b">
+              <span className="text-gray-700">{t('subtotal')}:</span>
+              <span>
+                {formatCurrency(details.subTotal || 0, String(details?.currency || 'USD'))}
               </span>
             </div>
-            <p className="mt-1 text-gray-600">{t('authorizedSignature')}</p>
+            <div className="flex justify-between py-2 border-b">
+              <span className="text-gray-700">{t('tax')}:</span>
+              <span>{formatCurrency(tax || 0, String(details?.currency || 'USD'))}</span>
+            </div>
+            {discount ? (
+              <div className="flex justify-between py-2 border-b">
+                <span className="text-gray-700">{t('discount')}:</span>
+                <span>{formatCurrency(discount || 0, String(details?.currency || 'USD'))}</span>
+              </div>
+            ) : null}
+            <div className="flex justify-between py-3 font-bold text-lg">
+              <span className="text-gray-800">{t('total')}:</span>
+              <span className="text-gray-900">
+                {formatCurrency(details.totalAmount || 0, String(details?.currency || 'USD'))}
+              </span>
+            </div>
           </div>
         </div>
-      )}
 
-      <div className="mt-12 text-center text-gray-500 text-sm">
-        <p>{t('thankYou')}</p>
+        {details?.notes && (
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">{t('notes')}:</h3>
+            <p className="text-gray-700 whitespace-pre-line">{String(details.notes)}</p>
+          </div>
+        )}
+
+        {details?.terms && (
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">{t('terms')}:</h3>
+            <p className="text-gray-700 whitespace-pre-line">{String(details.terms)}</p>
+          </div>
+        )}
+
+        {details?.paymentInformation &&
+          Object.values(details?.paymentInformation)?.filter(Boolean)?.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">{t('paymentInfo')}:</h3>
+              <div className="text-gray-700">
+                {typeof details.paymentInformation === 'object' &&
+                  'bankName' in details.paymentInformation &&
+                  details.paymentInformation.bankName && (
+                    <p>
+                      <span className="font-medium">{t('bank')}: </span>
+                      {String(details.paymentInformation.bankName)}
+                    </p>
+                  )}
+                {typeof details.paymentInformation === 'object' &&
+                  'accountName' in details.paymentInformation &&
+                  details.paymentInformation.accountName && (
+                    <p>
+                      <span className="font-medium">{t('accountName')}: </span>
+                      {String(details.paymentInformation.accountName)}
+                    </p>
+                  )}
+                {typeof details.paymentInformation === 'object' &&
+                  'accountNumber' in details.paymentInformation &&
+                  details.paymentInformation.accountNumber && (
+                    <p>
+                      <span className="font-medium">{t('accountNumber')}: </span>
+                      {String(details.paymentInformation.accountNumber)}
+                    </p>
+                  )}
+              </div>
+            </div>
+          )}
+
+        {details.signature?.data && (
+          <div className="mt-12 flex justify-end">
+            <div className="text-center">
+              <div className="inline-block border-b border-gray-400 pb-1 px-8">
+                {details.signature?.data.startsWith('data:image') ? (
+                  <img
+                    src={details.signature.data}
+                    alt={t('authorizedSignature')}
+                    className="h-16 object-contain mb-2"
+                  />
+                ) : (
+                  <div
+                    className="h-full w-full flex items-center justify-center"
+                    style={{ fontFamily: details.signature?.fontFamily || undefined }}
+                  >
+                    <p className="text-gray-600">{details.signature.data}</p>
+                  </div>
+                )}
+              </div>
+              <p className="mt-1 text-gray-600">{t('authorizedSignature')}</p>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-12 text-center text-gray-500 text-sm">
+          <p>{t('thankYou')}</p>
+        </div>
       </div>
     </InvoiceLayout>
   );
