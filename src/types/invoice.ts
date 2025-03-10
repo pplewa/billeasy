@@ -44,6 +44,8 @@ export interface InvoiceFormData {
     subTotal?: number;
     totalAmount?: number;
     totalTax?: number;
+    paymentInformation: PaymentInformation;
+    paymentTerms: string;
     totalDiscount?: number;
   };
   notes?: string;

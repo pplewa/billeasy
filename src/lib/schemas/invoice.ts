@@ -164,30 +164,6 @@ export function processInvoice(invoiceData: unknown): Invoice {
     }
   });
 
-  // Process global tax, discount
-  const globalTax = data.details?.tax ||
-    data.details?.taxDetails || { amount: 0, amountType: 'percentage' };
-  const globalDiscount = data.details?.discount ||
-    data.details?.discountDetails || { amount: 0, amountType: 'percentage' };
-
-  // Calculate global tax
-  if (globalTax.amount) {
-    if (globalTax.amountType === 'percentage') {
-      totalTax += (subTotal - totalDiscount) * (globalTax.amount / 100);
-    } else {
-      totalTax += globalTax.amount;
-    }
-  }
-
-  // Calculate global discount
-  if (globalDiscount.amount) {
-    if (globalDiscount.amountType === 'percentage') {
-      totalDiscount += subTotal * (globalDiscount.amount / 100);
-    } else {
-      totalDiscount += globalDiscount.amount;
-    }
-  }
-
   // Calculate total amount
   const totalAmount = subTotal - totalDiscount + totalTax;
 
@@ -202,11 +178,6 @@ export function processInvoice(invoiceData: unknown): Invoice {
       items,
       subTotal,
       totalAmount,
-      tax: globalTax,
-      discount: globalDiscount,
-      // Also set legacy fields for backward compatibility
-      taxDetails: globalTax,
-      discountDetails: globalDiscount,
     },
     // Clear items at root level to avoid duplication
     items: undefined,

@@ -200,7 +200,7 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
     }
 
     // Generate HTML content from the React component
-    const template = await InvoiceTemplate(normalizeInvoice(invoice));
+    const template = await InvoiceTemplate(normalizeInvoice(invoice) as Record<string, unknown>);
     const htmlContent = ReactDOMServer.renderToStaticMarkup(template);
 
     // Add HTML wrapper with styles - same as export functionality

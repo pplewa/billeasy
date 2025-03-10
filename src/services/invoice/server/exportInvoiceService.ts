@@ -130,7 +130,7 @@ export async function exportInvoiceService(req: NextRequest) {
 
           // Generate HTML content
           const ReactDOMServer = (await import('react-dom/server')).default;
-          const template = await InvoiceTemplate(normalizeInvoice(body));
+          const template = await InvoiceTemplate(normalizeInvoice(body) as Record<string, unknown>);
           const htmlContent = ReactDOMServer.renderToStaticMarkup(template);
 
           // Add HTML wrapper with styles
