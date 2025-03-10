@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getInvoiceTemplate } from '@/lib/utils/file';
+import { normalizeInvoice } from '@/lib/invoice-adapter';
+import { Locale } from '@/i18n/routing';
 
 // Helpers
 import { flattenObject } from '@/lib/utils/object';
-import { getInvoiceTemplate } from '@/lib/utils/file';
 
 // Types
 import { ExportTypes } from '@/types';
-import { normalizeInvoice } from '@/lib/invoice-adapter';
 
 /**
  * Convert an object to XML string
@@ -54,7 +55,24 @@ function objectToXml(obj: Record<string, unknown>, rootName: string = 'root'): s
  */
 export async function exportInvoiceService(req: NextRequest) {
   try {
+    // Parse the request body
     const body = await req.json();
+
+    // Get locale from headers or default to 'en'
+    const localeFromHeader =
+      req.headers.get('x-next-locale') ||
+      req.headers.get('accept-language')?.split(',')[0].split('-')[0] ||
+      'en';
+
+    // Validate locale is one of the supported locales
+    const supportedLocales: Locale[] = ['en', 'es', 'fr', 'de', 'pl', 'pt', 'zh'];
+    const locale = supportedLocales.includes(localeFromHeader as Locale)
+      ? (localeFromHeader as Locale)
+      : 'en';
+
+    // Log the locale being used
+    console.log(`Exporting invoice with locale: ${locale}`);
+
     const format = req.nextUrl.searchParams.get('format');
 
     switch (format) {
@@ -122,7 +140,7 @@ export async function exportInvoiceService(req: NextRequest) {
 
           // Get the selected invoice template
           const templateId = body.details?.pdfTemplate || 1;
-          const InvoiceTemplate = await getInvoiceTemplate(templateId);
+          const InvoiceTemplate = await getInvoiceTemplate(templateId, locale);
 
           if (!InvoiceTemplate) {
             throw new Error(`Template with ID ${templateId} not found`);
@@ -136,7 +154,7 @@ export async function exportInvoiceService(req: NextRequest) {
           // Add HTML wrapper with styles
           const fullHtml = `
                         <!DOCTYPE html>
-                        <html>
+                        <html lang="${locale}">
                         <head>
                             <meta charset="UTF-8">
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">

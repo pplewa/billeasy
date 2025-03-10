@@ -26,18 +26,18 @@ type SendPdfEmailProps = {
   locale?: Locale;
 };
 
-export default async function SendPdfEmail({ 
-  invoiceNumber, 
-  customMessage, 
-  locale = 'en' 
+export default async function SendPdfEmail({
+  invoiceNumber,
+  customMessage,
+  locale = 'en',
 }: SendPdfEmailProps) {
   // Validate locale is one of the supported locales
   const supportedLocales: Locale[] = ['en', 'es', 'fr', 'de', 'pl', 'pt', 'zh'];
   const validLocale = supportedLocales.includes(locale) ? locale : 'en';
 
-  const t = await getTranslations({ 
-    locale: validLocale, 
-    namespace: 'emailTemplate.sendPdfEmail' 
+  const t = await getTranslations({
+    locale: validLocale,
+    namespace: 'emailTemplate.sendPdfEmail',
   });
 
   const logo = `${BASE_URL}/images/logo.png`;
@@ -55,9 +55,7 @@ export default async function SendPdfEmail({
 
               <Text>{t('body', { invoiceNumber: `#${invoiceNumber}` })}</Text>
 
-              {customMessage && (
-                <Text className="mt-4 italic">{customMessage}</Text>
-              )}
+              {customMessage && <Text className="mt-4 italic">{customMessage}</Text>}
 
               <Hr />
 

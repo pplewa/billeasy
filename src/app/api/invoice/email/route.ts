@@ -37,13 +37,7 @@ export async function POST(request: Request) {
 
     // Get request body
     const body = await request.json();
-    const { 
-      invoice, 
-      recipient, 
-      subject, 
-      message: customMessage, 
-      locale = 'en' 
-    } = body;
+    const { invoice, recipient, subject, message: customMessage, locale = 'en' } = body;
 
     // Validate required fields
     if (!invoice || !recipient || !subject || !customMessage) {
@@ -59,7 +53,7 @@ export async function POST(request: Request) {
     try {
       // Generate invoice PDF using the same functionality as the export feature
       const invoiceNumber = invoice.details?.invoiceNumber || 'unknown';
-      const pdfBuffer = await generateDetailedInvoicePdf(invoice);
+      const pdfBuffer = await generateDetailedInvoicePdf(invoice, locale);
 
       if (!pdfBuffer) {
         return NextResponse.json({ message: 'Failed to generate invoice PDF' }, { status: 500 });
@@ -67,16 +61,19 @@ export async function POST(request: Request) {
 
       // Validate locale is one of the supported locales
       const supportedLocales: Locale[] = ['en', 'es', 'fr', 'de', 'pl', 'pt', 'zh'];
-      const validLocale = supportedLocales.includes(locale as Locale) ? locale as Locale : 'en';
+      const validLocale = supportedLocales.includes(locale as Locale) ? (locale as Locale) : 'en';
 
       // Get translations for the email template
-      const t = await getTranslations({ locale: validLocale, namespace: 'emailTemplate.sendPdfEmail' });
+      const t = await getTranslations({
+        locale: validLocale,
+        namespace: 'emailTemplate.sendPdfEmail',
+      });
 
       // Render the email template
       const SendPdfEmail = await SendPdfEmailComponent({
-        invoiceNumber, 
-        customMessage, 
-        locale: validLocale 
+        invoiceNumber,
+        customMessage,
+        locale: validLocale,
       });
       const emailHtml = await render(SendPdfEmail);
 
@@ -107,10 +104,13 @@ ${t('signature')}
       await transporter.sendMail(mailOptions);
 
       // Return success response
-      return NextResponse.json({ 
-        message: 'Email sent successfully',
-        locale: validLocale 
-      }, { status: 200 });
+      return NextResponse.json(
+        {
+          message: 'Email sent successfully',
+          locale: validLocale,
+        },
+        { status: 200 }
+      );
     } catch (error) {
       console.error('Error in email sending process:', error);
       return NextResponse.json(
@@ -131,9 +131,13 @@ ${t('signature')}
  * Generate a detailed PDF document from the invoice data using the same approach as the export feature
  *
  * @param invoice - The invoice data
+ * @param locale - The locale to use for translations (optional, defaults to 'en')
  * @returns A Buffer containing the PDF data, or null if generation fails
  */
-async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer | null> {
+async function generateDetailedInvoicePdf(
+  invoice: InvoiceType,
+  locale: Locale = 'en'
+): Promise<Buffer | null> {
   try {
     // Import necessary modules
     const puppeteer = await import('puppeteer');
@@ -141,7 +145,7 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
 
     // Get the selected invoice template - same approach as export functionality
     const templateId = invoice.details?.pdfTemplate || 1;
-    const InvoiceTemplate = await getInvoiceTemplate(templateId);
+    const InvoiceTemplate = await getInvoiceTemplate(templateId, locale);
 
     if (!InvoiceTemplate) {
       throw new Error(`Template with ID ${templateId} not found`);
@@ -154,7 +158,7 @@ async function generateDetailedInvoicePdf(invoice: InvoiceType): Promise<Buffer 
     // Add HTML wrapper with styles - same as export functionality
     const fullHtml = `
       <!DOCTYPE html>
-      <html>
+      <html lang="${locale}">
       <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">

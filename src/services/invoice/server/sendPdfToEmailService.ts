@@ -46,8 +46,9 @@ export async function sendPdfToEmailService(req: NextRequest): Promise<boolean> 
     const invoicePdf = fd.get('invoicePdf') as File;
     const invoiceNumber = fd.get('invoiceNumber') as string;
 
-    // Get email html content - render returns a Promise that resolves to a string
-    const emailHTML = await render(SendPdfEmail({ invoiceNumber }));
+    // Get email html content - first await the component, then render it
+    const EmailComponent = await SendPdfEmail({ invoiceNumber });
+    const emailHTML = await render(EmailComponent);
 
     // Convert file to buffer
     const invoiceBuffer = await fileToBuffer(invoicePdf);

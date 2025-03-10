@@ -14,11 +14,13 @@ import { FormInvoiceType } from '@/lib/types/invoice';
  * @returns {Promise<void>} A promise that resolves when the export is completed.
  */
 export const exportInvoice = async (exportAs: ExportTypes, formValues: FormInvoiceType) => {
+  const currentLocale = window.location.pathname.split('/')[1];
   return fetch(`${EXPORT_INVOICE_API}?format=${exportAs}`, {
     method: 'POST',
     body: JSON.stringify(formValues),
     headers: {
       'Content-Type': 'application/json',
+      'x-next-locale': currentLocale,
     },
   })
     .then((res) => res.blob())

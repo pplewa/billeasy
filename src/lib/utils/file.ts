@@ -1,10 +1,13 @@
+import { Locale } from '@/i18n/routing';
+
 /**
  * Dynamically imports and retrieves an invoice template React component based on the provided template ID.
  *
  * @param templateId - The ID of the invoice template.
+ * @param locale - The locale to use for translations (optional, defaults to 'en').
  * @returns Promise resolving to the invoice template component or null if not found.
  */
-export const getInvoiceTemplate = async (templateId: number) => {
+export const getInvoiceTemplate = async (templateId: number, locale: Locale = 'en') => {
   try {
     // Import the server-side render function
     const { renderInvoiceTemplate } = await import(
@@ -29,8 +32,8 @@ export const getInvoiceTemplate = async (templateId: number) => {
         );
       }
 
-      // Return the rendered template using the server-side rendering function
-      const renderedTemplate = await renderInvoiceTemplate(processedProps, templateId);
+      // Return the rendered template using the server-side rendering function with locale
+      const renderedTemplate = await renderInvoiceTemplate(processedProps, templateId, locale);
       return renderedTemplate;
     };
   } catch (err) {
