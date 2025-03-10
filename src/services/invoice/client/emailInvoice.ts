@@ -5,6 +5,7 @@ interface EmailInvoiceParams {
   recipient: string;
   subject: string;
   message: string;
+  locale?: string;
 }
 
 /**
@@ -13,15 +14,19 @@ interface EmailInvoiceParams {
  * @returns Promise that resolves when the email is sent
  */
 export async function sendInvoiceEmail(params: EmailInvoiceParams): Promise<void> {
-  const { invoice, recipient, subject, message } = params;
+  const { invoice, recipient, subject, message, locale } = params;
 
   try {
+    // Get current locale if not provided
+    const currentLocale = locale || document.documentElement.lang || 'en';
+
     // Prepare request body
     const requestBody = {
       invoice,
       recipient,
       subject,
       message,
+      locale: currentLocale,
     };
 
     // Send POST request to email API endpoint

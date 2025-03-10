@@ -4,6 +4,10 @@ import nodemailer, { SendMailOptions } from 'nodemailer';
 import { InvoiceType } from '@/types';
 import { getInvoiceTemplate } from '@/lib/utils/file';
 import { normalizeInvoice } from '@/lib/invoice-adapter';
+import { render } from '@react-email/render';
+import SendPdfEmailComponent from '@/app/components/templates/email/SendPdfEmail';
+import { getTranslations } from 'next-intl/server';
+import { Locale } from '@/i18n/routing';
 
 // Get email configuration from environment variables
 const SMTP_HOST = process.env.SMTP_HOST;
@@ -33,10 +37,16 @@ export async function POST(request: Request) {
 
     // Get request body
     const body = await request.json();
-    const { invoice, recipient, subject, message } = body;
+    const { 
+      invoice, 
+      recipient, 
+      subject, 
+      message: customMessage, 
+      locale = 'en' 
+    } = body;
 
     // Validate required fields
-    if (!invoice || !recipient || !subject || !message) {
+    if (!invoice || !recipient || !subject || !customMessage) {
       return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
@@ -55,100 +65,35 @@ export async function POST(request: Request) {
         return NextResponse.json({ message: 'Failed to generate invoice PDF' }, { status: 500 });
       }
 
-      // Create a simple email template without using React components or hooks
-      const emailHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="UTF-8">
-          <title>Invoice #${invoiceNumber}</title>
-          <style>
-            body {
-              font-family: 'Helvetica', 'Arial', sans-serif;
-              margin: 0;
-              padding: 0;
-              background-color: #f7f7f7;
-              color: #333333;
-            }
-            .container {
-              max-width: 600px;
-              margin: 0 auto;
-              padding: 20px;
-            }
-            .header {
-              text-align: center;
-              margin-bottom: 20px;
-            }
-            .logo {
-              max-width: 200px;
-              height: auto;
-            }
-            .content {
-              background-color: #ffffff;
-              padding: 30px;
-              border-radius: 5px;
-              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            }
-            .heading {
-              font-size: 24px;
-              font-weight: bold;
-              margin-bottom: 20px;
-              color: #222222;
-            }
-            .message {
-              line-height: 1.6;
-              margin-bottom: 30px;
-            }
-            .footer {
-              margin-top: 20px;
-              text-align: center;
-              font-size: 12px;
-              color: #777777;
-            }
-            hr {
-              border: none;
-              border-top: 1px solid #e1e1e1;
-              margin: 20px 0;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <img src="https://billeasy.com/assets/img/logo.png" alt="BillEasy Logo" class="logo">
-            </div>
-            <div class="content">
-              <div class="heading">Thanks for using BillEasy!</div>
-              <div class="message">
-                <p>We're pleased to inform you that your invoice #${invoiceNumber} is ready for download. Please find the attached PDF document.</p>
-                <p>${message}</p>
-              </div>
-              <hr>
-              <p>Best Regards,<br>BillEasy Team</p>
-            </div>
-            <div class="footer">
-              <p>&copy; ${new Date().getFullYear()} BillEasy. All rights reserved.</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `;
+      // Validate locale is one of the supported locales
+      const supportedLocales: Locale[] = ['en', 'es', 'fr', 'de', 'pl', 'pt', 'zh'];
+      const validLocale = supportedLocales.includes(locale as Locale) ? locale as Locale : 'en';
+
+      // Get translations for the email template
+      const t = await getTranslations({ locale: validLocale, namespace: 'emailTemplate.sendPdfEmail' });
+
+      // Render the email template
+      const SendPdfEmail = await SendPdfEmailComponent({
+        invoiceNumber, 
+        customMessage, 
+        locale: validLocale 
+      });
+      const emailHtml = await render(SendPdfEmail);
 
       // Prepare email with PDF attachment
       const mailOptions: SendMailOptions = {
         from: `BillEasy <${EMAIL_FROM}>`,
         to: recipient,
         subject: subject,
-        html: emailHTML,
+        html: emailHtml,
         text: `
-Thanks for using BillEasy!
+${t('preview', { invoiceNumber })}
 
-We're pleased to inform you that your invoice #${invoiceNumber} is ready for download. Please find the attached PDF document.
+${t('body', { invoiceNumber: `#${invoiceNumber}` })}
 
-${message}
+${customMessage}
 
-Best Regards,
-BillEasy Team
+${t('signature')}
 `,
         attachments: [
           {
@@ -162,7 +107,10 @@ BillEasy Team
       await transporter.sendMail(mailOptions);
 
       // Return success response
-      return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
+      return NextResponse.json({ 
+        message: 'Email sent successfully',
+        locale: validLocale 
+      }, { status: 200 });
     } catch (error) {
       console.error('Error in email sending process:', error);
       return NextResponse.json(

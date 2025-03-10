@@ -18,6 +18,7 @@ import { sendInvoiceEmail } from '@/services/invoice/client/emailInvoice';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 
 interface InvoiceEmailModalProps {
   children: React.ReactNode;
@@ -40,6 +41,7 @@ export function InvoiceEmailModal({
   const [sending, setSending] = useState(false);
   const [recipient, setRecipient] = useState('');
   const t = useTranslations('invoice.email');
+  const locale = useLocale();
   const [subject, setSubject] = useState(t('defaultSubject'));
   const [message, setMessage] = useState(t('defaultMessage'));
   const { toast } = useToast();
@@ -68,6 +70,7 @@ export function InvoiceEmailModal({
         recipient,
         subject,
         message,
+        locale,
       });
 
       toast({

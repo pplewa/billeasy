@@ -17,15 +17,30 @@ import { Tailwind } from '@react-email/tailwind';
 import { BASE_URL } from '@/lib/variables';
 
 // Internationalization
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+import { Locale } from '@/i18n/routing';
 
 type SendPdfEmailProps = {
   invoiceNumber: string;
+  customMessage?: string;
+  locale?: Locale;
 };
 
-export default function SendPdfEmail({ invoiceNumber }: SendPdfEmailProps) {
-  const t = useTranslations('emailTemplate.sendPdfEmail');
-  const logo = `${BASE_URL}/assets/img/logo.png`;
+export default async function SendPdfEmail({ 
+  invoiceNumber, 
+  customMessage, 
+  locale = 'en' 
+}: SendPdfEmailProps) {
+  // Validate locale is one of the supported locales
+  const supportedLocales: Locale[] = ['en', 'es', 'fr', 'de', 'pl', 'pt', 'zh'];
+  const validLocale = supportedLocales.includes(locale) ? locale : 'en';
+
+  const t = await getTranslations({ 
+    locale: validLocale, 
+    namespace: 'emailTemplate.sendPdfEmail' 
+  });
+
+  const logo = `${BASE_URL}/images/logo.png`;
 
   return (
     <Html>
@@ -39,6 +54,10 @@ export default function SendPdfEmail({ invoiceNumber }: SendPdfEmailProps) {
               <Heading className="leading-tight">{t('heading')}</Heading>
 
               <Text>{t('body', { invoiceNumber: `#${invoiceNumber}` })}</Text>
+
+              {customMessage && (
+                <Text className="mt-4 italic">{customMessage}</Text>
+              )}
 
               <Hr />
 
