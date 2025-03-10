@@ -42,8 +42,7 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
           </h1>
         </div>
         <div className="text-right">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">{t('invoiceNumber')}</h2>
-          <span className="mt-1 block text-gray-500">{String(details?.invoiceNumber || '')}</span>
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">#{String(details?.invoiceNumber || '')}</h2>
           <address className="mt-4 not-italic text-gray-800">
             {String(sender?.address || '')}
             <br />

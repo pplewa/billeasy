@@ -205,7 +205,12 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
           <FormInput
             {...register(`details.items.${index}.name`)}
             placeholder={t('namePlaceholder')}
-            className="h-9"
+            className="h-6"
+          />
+          <hr className='m-1' />
+          <FormInput
+            {...register(`details.items.${index}.description`)}
+            className="h-6"
           />
         </div>
 
@@ -217,7 +222,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
               setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             placeholder={t('quantity')}
-            className="h-9"
+            className="h-14"
             onBlur={calculateTotal}
           />
         </div>
@@ -231,7 +236,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
               setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             placeholder={t('price')}
-            className="h-9"
+            className="h-14"
             onBlur={calculateTotal}
           />
         </div>
@@ -245,7 +250,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
               setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             placeholder={t('discount')}
-            className="h-9"
+            className="h-14"
             onBlur={(e) => {
               // Ensure we persist values
               if (e.target.value === '') {
@@ -257,7 +262,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
 
           <select
             {...register(`details.items.${index}.discount.amountType`)}
-            className="h-9 w-10 rounded-md border text-xs"
+            className="h-14 w-10 rounded-md border text-xs"
             onChange={(e) => {
               // Set the value directly and then calculate
               const newAmountType = e.target.value;
@@ -309,7 +314,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
               setValueAs: (v) => (v === '' || v === null || v === undefined ? 0 : Number(v)),
             })}
             placeholder={t('tax')}
-            className="h-9"
+            className="h-14"
             onBlur={(e) => {
               // Force persistence on blur
               const value = e.target.value === '' ? 0 : Number(e.target.value);
@@ -320,7 +325,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
 
           <select
             {...register(`details.items.${index}.tax.amountType`)}
-            className="h-9 w-10 rounded-md border text-xs"
+            className="h-14 w-10 rounded-md border text-xs"
             onChange={(e) => {
               // Set the value directly and then calculate
               const newAmountType = e.target.value;
@@ -373,7 +378,7 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             })}
             readOnly
             placeholder="0.00"
-            className="h-9 font-medium bg-secondary/50 border-secondary"
+            className="h-14 font-medium bg-secondary/50 border-secondary"
           />
         </div>
       </div>
