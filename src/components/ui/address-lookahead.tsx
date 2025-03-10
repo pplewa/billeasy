@@ -82,14 +82,14 @@ const AddressLookahead = forwardRef<HTMLInputElement, AddressLookaheadProps>(
       return 'lookahead';
     });
 
-    console.log({ forceManualMode });
-
     // Update mode when forceManualMode changes
     useEffect(() => {
       if (forceManualMode) {
         setMode('manual');
       }
-    }, [forceManualMode]);
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Input state
     const [inputValue, setInputValue] = useState<string>(value || defaultValue || '');
