@@ -14,41 +14,40 @@ import {
 /**
  * Schema for invoice details section
  */
-export const DetailsSchema = z
-  .object({
-    // Basic invoice info
-    invoiceNumber: fieldValidators.stringOptional,
-    invoiceDate: fieldValidators.dateOptional,
-    dueDate: fieldValidators.dateOptional,
-    currency: fieldValidators.stringOptional,
-    status: fieldValidators.stringOptional,
+export const DetailsSchema = z.object({
+  // Basic invoice info
+  invoiceNumber: fieldValidators.stringOptional,
+  invoiceDate: fieldValidators.dateOptional,
+  dueDate: fieldValidators.dateOptional,
+  currency: fieldValidators.stringOptional,
+  status: fieldValidators.stringOptional,
 
-    // Content fields
-    items: fieldValidators.arrayOptional(ItemSchema),
-    additionalNotes: fieldValidators.stringOptional,
-    paymentTerms: fieldValidators.stringOptional,
+  // Content fields
+  items: fieldValidators.arrayOptional(ItemSchema),
+  additionalNotes: fieldValidators.stringOptional,
+  paymentTerms: fieldValidators.stringOptional,
 
-    // Template-related fields
-    pdfTemplate: fieldValidators.numberOptional,
-    invoiceLogo: fieldValidators.stringOptional,
+  // Template-related fields
+  pdfTemplate: fieldValidators.numberOptional,
+  invoiceLogo: fieldValidators.stringOptional,
 
-    // Purchase order info
-    purchaseOrderNumber: fieldValidators.stringOptional,
+  // Purchase order info
+  purchaseOrderNumber: fieldValidators.stringOptional,
 
-    // Payment information
-    paymentInformation: PaymentInformationSchema,
+  // Payment information
+  paymentInformation: PaymentInformationSchema,
 
-    // Signature
-    signature: SignatureSchema,
+  // Signature
+  signature: SignatureSchema,
 
-    // Calculated totals
-    subTotal: fieldValidators.numberOptional,
-    totalAmount: fieldValidators.numberOptional,
+  // Calculated totals
+  subTotal: fieldValidators.numberOptional,
+  totalAmount: fieldValidators.numberOptional,
 
-    // For backwards compatibility
-    notes: fieldValidators.stringOptional, // Alias for additionalNotes
-    terms: fieldValidators.stringOptional, // Alias for paymentTerms
-  });
+  // For backwards compatibility
+  notes: fieldValidators.stringOptional, // Alias for additionalNotes
+  terms: fieldValidators.stringOptional, // Alias for paymentTerms
+});
 
 /**
  * Main invoice schema with all sections and transformations

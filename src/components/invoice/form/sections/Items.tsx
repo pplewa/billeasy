@@ -207,11 +207,8 @@ function SortableItem({ id, index, onRemove, onDuplicate }: SortableItemProps) {
             placeholder={t('namePlaceholder')}
             className="h-6"
           />
-          <hr className='m-1' />
-          <FormInput
-            {...register(`details.items.${index}.description`)}
-            className="h-6"
-          />
+          <hr className="m-1" />
+          <FormInput {...register(`details.items.${index}.description`)} className="h-6" />
         </div>
 
         {/* Quantity */}

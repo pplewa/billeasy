@@ -42,18 +42,24 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
             <address className="not-italic text-gray-600 mt-2 text-sm">
               {String(sender?.address || '')}
               <br />
-              {String(sender?.zipCode || '')}{sender?.city ? `, ${String(sender?.city || '')}` : ''}
+              {String(sender?.zipCode || '')}
+              {sender?.city ? `, ${String(sender?.city || '')}` : ''}
               <br />
               {String(sender?.country || '')}
-              {Array.isArray(sender?.customInputs) && sender?.customInputs?.map((input, index) => (
-                <p key={`${index}-sender`}>{String(input.key)} {String(input.value)}</p>
-              ))}
+              {Array.isArray(sender?.customInputs) &&
+                sender?.customInputs?.map((input, index) => (
+                  <p key={`${index}-sender`}>
+                    {String(input.key)} {String(input.value)}
+                  </p>
+                ))}
             </address>
           </div>
-          
+
           <div className="text-right">
             <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-5 rounded-lg">
-              <h2 className="text-4xl font-light text-indigo-800 mb-4">#{String(details?.invoiceNumber || '')}</h2>
+              <h2 className="text-4xl font-light text-indigo-800 mb-4">
+                #{String(details?.invoiceNumber || '')}
+              </h2>
               <div className="space-y-2 text-gray-700">
                 <p>
                   <span className="font-medium text-indigo-900">{t('invoiceDate')}: </span>
@@ -70,24 +76,31 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
 
         <div className="grid grid-cols-2 gap-8 mb-8">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3 border-b pb-2">{t('billTo')}:</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-3 border-b pb-2">
+              {t('billTo')}:
+            </h3>
             <div className="text-gray-800 space-y-1">
               {receiver?.name && <p className="font-medium">{String(receiver?.name)}</p>}
               {receiver?.address && <p>{String(receiver?.address)}</p>}
-              {receiver?.zipCode || receiver?.city && (
-                <p>
-                  {String(receiver?.zipCode)}{receiver?.city ? `, ${String(receiver?.city || '')}` : ''}
-                </p>
-              )}
+              {receiver?.zipCode ||
+                (receiver?.city && (
+                  <p>
+                    {String(receiver?.zipCode)}
+                    {receiver?.city ? `, ${String(receiver?.city || '')}` : ''}
+                  </p>
+                ))}
               {receiver?.country && <p>{String(receiver?.country)}</p>}
               <p>{String(receiver?.email || '')}</p>
               <p>{String(receiver?.phone || '')}</p>
-              {Array.isArray(receiver?.customInputs) && receiver?.customInputs?.map((input, index) => (
-                <p key={`${index}-receiver`}>{String(input.key)} {String(input.value)}</p>
-              ))}
+              {Array.isArray(receiver?.customInputs) &&
+                receiver?.customInputs?.map((input, index) => (
+                  <p key={`${index}-receiver`}>
+                    {String(input.key)} {String(input.value)}
+                  </p>
+                ))}
             </div>
           </div>
-          
+
           <div className="text-right">
             {details?.purchaseOrderNumber && (
               <p>
@@ -104,14 +117,19 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
               <th className="py-3 px-4 text-left font-semibold text-indigo-900">{t('item')}</th>
               <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('qty')}</th>
               <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('price')}</th>
-              <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('discount')}</th>
+              <th className="py-3 px-4 text-right font-semibold text-indigo-900">
+                {t('discount')}
+              </th>
               <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('tax')}</th>
               <th className="py-3 px-4 text-right font-semibold text-indigo-900">{t('total')}</th>
             </tr>
           </thead>
           <tbody>
             {items.map((item, index) => (
-              <tr key={item.id || index} className="border-b border-gray-200 hover:bg-indigo-50/50 transition-colors">
+              <tr
+                key={item.id || index}
+                className="border-b border-gray-200 hover:bg-indigo-50/50 transition-colors"
+              >
                 <td className="py-3 px-4">
                   <div className="font-medium">{String(item.name || '')}</div>
                   {item.description && (
@@ -154,16 +172,22 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
           <div className="w-1/3 bg-indigo-50 rounded-lg p-4">
             <div className="flex justify-between py-2 border-b border-indigo-200">
               <span className="text-indigo-900">{t('subtotal')}:</span>
-              <span className="text-gray-800">{formatCurrency(details.subTotal || 0, String(details?.currency || 'USD'))}</span>
+              <span className="text-gray-800">
+                {formatCurrency(details.subTotal || 0, String(details?.currency || 'USD'))}
+              </span>
             </div>
             <div className="flex justify-between py-2 border-b border-indigo-200">
               <span className="text-indigo-900">{t('tax')}:</span>
-              <span className="text-gray-800">{formatCurrency(tax || 0, String(details?.currency || 'USD'))}</span>
+              <span className="text-gray-800">
+                {formatCurrency(tax || 0, String(details?.currency || 'USD'))}
+              </span>
             </div>
             {discount ? (
               <div className="flex justify-between py-2 border-b border-indigo-200">
                 <span className="text-indigo-900">{t('discount')}:</span>
-                <span className="text-gray-800">{formatCurrency(discount || 0, String(details?.currency || 'USD'))}</span>
+                <span className="text-gray-800">
+                  {formatCurrency(discount || 0, String(details?.currency || 'USD'))}
+                </span>
               </div>
             ) : null}
             <div className="flex justify-between py-3 font-bold text-lg">
@@ -177,21 +201,27 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
 
         {details?.notes && (
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">{t('notes')}:</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">
+              {t('notes')}:
+            </h3>
             <p className="text-gray-800 whitespace-pre-line">{String(details.notes)}</p>
           </div>
         )}
 
         {details?.terms && (
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">{t('terms')}:</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">
+              {t('terms')}:
+            </h3>
             <p className="text-gray-800 whitespace-pre-line">{String(details.terms)}</p>
           </div>
         )}
 
         {details?.paymentInformation && (
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">{t('paymentInfo')}:</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2 border-b pb-2">
+              {t('paymentInfo')}:
+            </h3>
             <div className="text-gray-800 space-y-1">
               {typeof details.paymentInformation === 'object' &&
                 'bankName' in details.paymentInformation &&
@@ -251,4 +281,4 @@ export function Template4({ data, t }: InvoiceTemplateProps) {
       </div>
     </InvoiceLayout>
   );
-} 
+}

@@ -42,17 +42,23 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
           </h1>
         </div>
         <div className="text-right">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">#{String(details?.invoiceNumber || '')}</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
+            #{String(details?.invoiceNumber || '')}
+          </h2>
           <address className="mt-4 not-italic text-gray-800">
             {String(sender?.address || '')}
             <br />
-            {String(sender?.zipCode || '')}{sender?.city ? `, ${String(sender?.city || '')}` : ''}
+            {String(sender?.zipCode || '')}
+            {sender?.city ? `, ${String(sender?.city || '')}` : ''}
             <br />
             {String(sender?.country || '')}
             <br />
-            {Array.isArray(sender?.customInputs) && sender?.customInputs?.map((input, index) => (
-              <p key={`${index}-sender`}>{String(input.key)} {String(input.value)}</p>
-            ))}
+            {Array.isArray(sender?.customInputs) &&
+              sender?.customInputs?.map((input, index) => (
+                <p key={`${index}-sender`}>
+                  {String(input.key)} {String(input.value)}
+                </p>
+              ))}
           </address>
         </div>
       </div>
@@ -63,17 +69,22 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
           <div className="mt-2 text-gray-600">
             {receiver?.name && <p className="font-medium">{String(receiver?.name)}</p>}
             {receiver?.address && <p>{String(receiver?.address)}</p>}
-            {receiver?.zipCode || receiver?.city && (
-              <p>
-                {String(receiver?.zipCode)}{receiver?.city ? `, ${String(receiver?.city || '')}` : ''}
-              </p>
-            )}
+            {receiver?.zipCode ||
+              (receiver?.city && (
+                <p>
+                  {String(receiver?.zipCode)}
+                  {receiver?.city ? `, ${String(receiver?.city || '')}` : ''}
+                </p>
+              ))}
             {receiver?.country && <p>{String(receiver?.country)}</p>}
             <p>{String(receiver?.email || '')}</p>
             <p>{String(receiver?.phone || '')}</p>
-            {Array.isArray(receiver?.customInputs) && receiver?.customInputs?.map((input, index) => (
-              <p key={`${index}-receiver`}>{String(input.key)} {String(input.value)}</p>
-            ))}
+            {Array.isArray(receiver?.customInputs) &&
+              receiver?.customInputs?.map((input, index) => (
+                <p key={`${index}-receiver`}>
+                  {String(input.key)} {String(input.value)}
+                </p>
+              ))}
           </div>
         </div>
         <div className="sm:text-right">
