@@ -16,7 +16,7 @@ import {
   Mail,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { InvoiceStatus } from '@/types';
 import { useTranslations } from 'next-intl';
@@ -190,13 +190,19 @@ export function InvoiceCard({
                   invoice={invoice as unknown as FormInvoiceType}
                   isLoading={false}
                 >
-                  <DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onSelect={(event) => event.preventDefault()}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <FileDown className="mr-2 h-4 w-4" />
                     {tCommon('export')}
                   </DropdownMenuItem>
                 </InvoiceExportModal>
                 <InvoiceEmailModal invoice={invoice as unknown as FormInvoiceType}>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onSelect={(event) => event.preventDefault()}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Mail className="mr-2 h-4 w-4" />
                     {tCommon('email')}
                   </DropdownMenuItem>
