@@ -283,6 +283,7 @@ export default function InvoicesPage() {
               <TableRow className="bg-secondary/30">
                 <TableHead>{t('invoice.table.number')}</TableHead>
                 <TableHead>{t('invoice.table.date')}</TableHead>
+                <TableHead>{t('invoice.dueDate')}</TableHead>
                 <TableHead>{t('invoice.table.client')}</TableHead>
                 <TableHead>{t('invoice.table.amount')}</TableHead>
                 <TableHead className="text-center">{t('invoice.table.status')}</TableHead>
@@ -310,14 +311,15 @@ export default function InvoicesPage() {
                       onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
                     >
                       {invoice.details?.invoiceDate
-                        ? formatDate(
-                            new Date(
-                              invoice.details.invoiceDate !== null &&
-                              invoice.details.invoiceDate !== undefined
-                                ? String(invoice.details.invoiceDate)
-                                : Date.now()
-                            )
-                          )
+                        ? formatDate(invoice.details.invoiceDate)
+                        : 'N/A'}
+                    </TableCell>
+                    <TableCell
+                      className="cursor-pointer"
+                      onClick={() => router.push(`/${locale}/invoice/view/${invoiceId}`)}
+                    >
+                      {invoice.details?.dueDate
+                        ? formatDate(invoice.details.dueDate)
                         : 'N/A'}
                     </TableCell>
                     <TableCell
@@ -644,7 +646,7 @@ export default function InvoicesPage() {
               <div className="flex gap-1">
                 <Button
                   variant="outline"
-                  size="icon"
+                  size="sm"
                   onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
                 >
@@ -696,7 +698,7 @@ export default function InvoicesPage() {
                 })}
                 <Button
                   variant="outline"
-                  size="icon"
+                  size="sm"
                   onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
                 >

@@ -122,7 +122,7 @@ export function InvoiceCard({
             <div className="flex items-start justify-between mb-3">
               <div>
                 <h3 className="text-lg font-semibold tracking-tight">
-                  {t('table.number')} #{invoice.details?.invoiceNumber}
+                  #{invoice.details?.invoiceNumber}
                 </h3>
               </div>
               <InvoiceStatusSelector
@@ -133,14 +133,18 @@ export function InvoiceCard({
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="text-sm text-muted-foreground mt-1 flex">
-                <Calendar className="mr-1 h-5 w-5" />{' '}
-                {formatDate(new Date(invoice.details?.invoiceDate || new Date()))}
-              </div>
-              <div className="text-sm text-muted-foreground mt-1 flex">
-                <CalendarCheck className="mr-1 h-5 w-5" />{' '}
-                {formatDate(new Date(invoice.details?.dueDate || new Date()))}
-              </div>
+              {invoice.details?.invoiceDate && (
+                <div className="text-sm text-muted-foreground mt-1 flex">
+                  <Calendar className="mr-1 h-5 w-5" />
+                  {formatDate(invoice.details?.invoiceDate)}
+                </div>
+              )}
+              {invoice.details?.dueDate && (
+                <div className="text-sm text-muted-foreground mt-1 flex">
+                  <CalendarCheck className="mr-1 h-5 w-5" />
+                  {formatDate(invoice.details?.dueDate)}
+                </div>
+              )}
               <div>
                 <p className="text-xs text-muted-foreground uppercase tracking-wide">
                   {t('table.client')}
@@ -190,7 +194,7 @@ export function InvoiceCard({
                   invoice={invoice as unknown as FormInvoiceType}
                   isLoading={false}
                 >
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     onSelect={(event) => event.preventDefault()}
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -199,7 +203,7 @@ export function InvoiceCard({
                   </DropdownMenuItem>
                 </InvoiceExportModal>
                 <InvoiceEmailModal invoice={invoice as unknown as FormInvoiceType}>
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     onSelect={(event) => event.preventDefault()}
                     onClick={(e) => e.stopPropagation()}
                   >
