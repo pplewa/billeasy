@@ -60,7 +60,7 @@ import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
 import { InvoiceEmailModal } from '@/components/invoice/InvoiceEmailModal';
 import { Dialog } from '@/components/ui/dialog';
 import { FormInvoiceType } from '@/lib/types/invoice';
-
+import { formatCurrency, formatDate } from '@/lib/utils/formatting';
 // Define available view modes
 type ViewMode = 'card' | 'list';
 
@@ -69,23 +69,6 @@ type InvoiceStatus = 'draft' | 'pending' | 'paid' | 'overdue' | 'cancelled' | 'a
 
 // Define available sort options
 type SortOption = 'date_desc' | 'date_asc' | 'amount_desc' | 'amount_asc' | 'status';
-
-// Utility functions for formatting
-const formatDate = (date: Date): string => {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  }).format(date);
-};
-
-const formatCurrency = (amount: number, currency = 'USD'): string => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    minimumFractionDigits: 2,
-  }).format(amount);
-};
 
 export default function InvoicesPage() {
   const router = useRouter();

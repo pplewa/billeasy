@@ -1,9 +1,20 @@
 import { InvoiceDocument } from '@/lib/db/models/Invoice';
 import { deleteInvoice, duplicateInvoice } from '@/services/invoice/client/invoiceClient';
-import { formatDate } from '@/lib/utils/formatting';
+import { formatCurrency, formatDate } from '@/lib/utils/formatting';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Pencil, Trash, Copy, Eye, MoreHorizontal, ArrowRight, FileDown, Mail } from 'lucide-react';
+import {
+  Pencil,
+  Trash,
+  Copy,
+  Eye,
+  Calendar,
+  CalendarCheck,
+  MoreHorizontal,
+  ArrowRight,
+  FileDown,
+  Mail,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
@@ -45,24 +56,11 @@ export function InvoiceCard({
   const [isExporting, setIsExporting] = useState(false);
   const [isEmailing, setIsEmailing] = useState(false);
 
-  // Format the invoice date
-  const formattedDate = formatDate(new Date(invoice.details?.invoiceDate || new Date()));
-
   // Get the invoice ID as string
   const invoiceId = invoice._id.toString();
 
   // Get the invoice status or default to draft
   const status = invoice.details?.status || InvoiceStatus.DRAFT;
-
-  // Calculate the total amount
-  const totalAmount = Array.isArray(invoice.details?.items)
-    ? invoice.details?.items
-        ?.reduce((sum, item) => sum + (item?.unitPrice ?? 0) * (item?.quantity ?? 0), 0)
-        .toFixed(2)
-    : 0;
-
-  // Get currency
-  const currency = invoice.details?.currency || 'USD';
 
   // Handle status change
   const handleStatusChange = (newStatus: string) => {
@@ -114,7 +112,7 @@ export function InvoiceCard({
       setIsDuplicating(false);
     }
   };
-  
+
   // Handle export
   const handleExport = () => {
     if (onExport) {
@@ -126,7 +124,7 @@ export function InvoiceCard({
       }
     }
   };
-  
+
   // Handle email
   const handleEmail = () => {
     if (onEmail) {
@@ -140,7 +138,10 @@ export function InvoiceCard({
   };
 
   return (
-    <Card className="w-full flex items-stretch overflow-hidden transition-all duration-200 hover:shadow-md border-l-4 rounded-l-none" style={{ borderLeftColor: getBorderColor(status) }}>
+    <Card
+      className="w-full flex items-stretch overflow-hidden transition-all duration-200 hover:shadow-md border-l-4 rounded-l-none"
+      style={{ borderLeftColor: getBorderColor(status) }}
+    >
       <CardContent className="p-0 w-full">
         <div className="flex flex-col sm:flex-row  h-full">
           {/* Left side - Invoice Info */}
@@ -150,9 +151,6 @@ export function InvoiceCard({
                 <h3 className="text-lg font-semibold tracking-tight">
                   {t('table.number')} #{invoice.details?.invoiceNumber}
                 </h3>
-                <div className="text-sm text-muted-foreground mt-1">
-                  {formattedDate}
-                </div>
               </div>
               <InvoiceStatusSelector
                 invoiceId={invoiceId}
@@ -160,8 +158,16 @@ export function InvoiceCard({
                 onStatusChange={handleStatusChange}
               />
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="text-sm text-muted-foreground mt-1 flex">
+                <Calendar className="mr-1 h-5 w-5" />{' '}
+                {formatDate(new Date(invoice.details?.invoiceDate || new Date()))}
+              </div>
+              <div className="text-sm text-muted-foreground mt-1 flex">
+                <CalendarCheck className="mr-1 h-5 w-5" />{' '}
+                {formatDate(new Date(invoice.details?.dueDate || new Date()))}
+              </div>
               <div>
                 <p className="text-xs text-muted-foreground uppercase tracking-wide">
                   {t('table.client')}
@@ -175,12 +181,14 @@ export function InvoiceCard({
                   {t('table.amount')}
                 </p>
                 <p className="text-sm font-semibold">
-                  {currency} {totalAmount}
+                  {invoice.details?.totalAmount
+                    ? formatCurrency(invoice.details.totalAmount, invoice.details.currency || 'USD')
+                    : 'N/A'}
                 </p>
               </div>
             </div>
           </div>
-          
+
           {/* Right side - Actions */}
           <div className="flex sm:flex-col justify-between items-center bg-muted/30 p-3 sm:border-l">
             <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
@@ -189,7 +197,7 @@ export function InvoiceCard({
                 <span className="sr-only">{tCommon('view')}</span>
               </Link>
             </Button>
-            
+
             <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
               <Link href={`/${locale}/invoice/edit/${invoiceId}`}>
                 <Pencil className="h-4 w-4" />
@@ -218,13 +226,17 @@ export function InvoiceCard({
                   <Copy className="mr-2 h-4 w-4" />
                   {isDuplicating ? t('actions.duplicating') : t('actions.duplicate')}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleDelete} disabled={isDeleting} className="text-red-600 focus:text-red-600">
+                <DropdownMenuItem
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                  className="text-red-600 focus:text-red-600"
+                >
                   <Trash className="mr-2 h-4 w-4" />
                   {isDeleting ? tCommon('deleting') : tCommon('delete')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            
+
             <Button variant="outline" size="icon" className="h-8 w-8 border-dashed" asChild>
               <Link href={`/${locale}/invoice/view/${invoiceId}`}>
                 <ArrowRight className="h-4 w-4" />
