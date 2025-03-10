@@ -22,7 +22,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Download, AlertCircle } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { InvoiceExportModal } from '@/components/invoice/InvoiceExportModal';
 import { useTranslations } from 'next-intl';
 
@@ -218,21 +218,6 @@ export default function CreateInvoicePage({ params }: { params: Promise<{ locale
           </Button>
         </div>
       </div>
-
-      {parsedInvoice?.details?.items && parsedInvoice.details.items.length > 0 && (
-        <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-md">
-          <div className="flex items-start gap-2">
-            <AlertCircle className="h-5 w-5 text-yellow-500 mt-0.5" />
-            <div>
-              <h3 className="font-medium">{invoiceT('itemsDetected')}</h3>
-              <p>
-                {parsedInvoice.details.items.length} {t('common.itemsLoaded')}
-              </p>
-              <p className="text-sm text-muted-foreground">{t('common.itemsNotVisible')}</p>
-            </div>
-          </div>
-        </div>
-      )}
 
       <ItemsUpdater parsedInvoice={parsedInvoice} />
 
