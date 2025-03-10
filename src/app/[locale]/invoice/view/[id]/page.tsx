@@ -115,19 +115,19 @@ const adaptToInvoiceType = (doc: ViewInvoiceDocument): FormInvoiceType => {
   const taxObj = normalized.details?.tax ?? defaultTax;
   const tax: BaseAmount = {
     amount: Number((taxObj as { amount?: unknown })?.amount ?? 0),
-    amountType:
-      String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount'
-        ? 'amount'
-        : 'percentage',
+    amountType: 
+      String((taxObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'percentage' 
+        ? 'percentage' 
+        : 'fixed',
   };
 
   const discountObj = normalized.details?.discount ?? defaultTax;
   const discount: BaseAmount = {
     amount: Number((discountObj as { amount?: unknown })?.amount ?? 0),
-    amountType:
-      String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'amount'
-        ? 'amount'
-        : 'percentage',
+    amountType: 
+      String((discountObj as { amountType?: unknown })?.amountType ?? 'percentage') === 'percentage' 
+        ? 'percentage' 
+        : 'fixed',
   };
 
   // Ensure sender and receiver are always objects
@@ -346,15 +346,29 @@ export default function ViewInvoicePage() {
             padding: 0;
           }
 
+          * {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+
+          .print-invoice .shadow-lg{
+            box-shadow: none !important;
+          }
+
           .container {
             width: 100%;
             max-width: 100%;
-            padding: 20px;
-            margin: 0;
+            padding: 0 !important;
+            margin: 0 !important;
           }
 
           .print-hidden {
             display: none !important;
+          }
+
+          @page {
+            size: auto;
+            margin: 0mm;
           }
 
           h1,
@@ -457,7 +471,7 @@ export default function ViewInvoicePage() {
       </div>
 
       {/* Replace the existing invoice content with the dynamic template */}
-      <div className="print:shadow-none print:p-0 print:border-0">
+      <div className="print:shadow-none print:p-0 print:border-0 print-invoice">
         <DynamicInvoiceView invoice={adaptToInvoiceType(invoice)} templateId={selectedTemplate} />
       </div>
     </div>

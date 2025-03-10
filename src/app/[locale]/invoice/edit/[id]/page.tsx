@@ -160,18 +160,6 @@ export default function EditInvoicePage({
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between print-hidden">
         <h1 className="text-3xl font-bold tracking-tight">{invoiceT('edit.value')}</h1>
         <div className="flex gap-2 flex-wrap md:flex-nowrap">
-          <Button variant="outline" asChild>
-            <Link href={`/${locale}/invoice/edit/${invoiceId}`}>
-              <Edit className="mr-2 h-4 w-4" />
-              {t('common.edit')}
-            </Link>
-          </Button>
-
-          <Button variant="outline" onClick={handlePrint}>
-            <Printer className="mr-2 h-4 w-4" />
-            {t('common.print')}
-          </Button>
-
           <InvoiceEmailModal invoice={invoice}>
             <Button variant="outline" className="w-full md:w-auto" disabled={isSubmitting}>
               <Mail className="w-4 h-4 mr-2" />

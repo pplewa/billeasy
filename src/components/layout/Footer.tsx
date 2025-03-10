@@ -9,7 +9,7 @@ export default function Footer() {
   const appName = appT('name');
 
   return (
-    <footer className="border-t py-4 text-center text-sm text-gray-500">
+    <footer className="border-t py-4 text-center text-sm text-gray-500 print-hidden">
       <div className="container mx-auto px-4">
         &copy; {new Date().getFullYear()} {appName} {' · '} {t('allRightsReserved')} {' · '}
         <Link href={{ pathname: '/privacy-policy' }}>{t('privacyPolicy')}</Link>

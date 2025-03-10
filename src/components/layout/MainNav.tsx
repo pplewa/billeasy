@@ -41,7 +41,7 @@ export default function MainNav() {
   };
 
   return (
-    <header className="border-b sticky top-0 z-40 bg-white">
+    <header className="border-b sticky top-0 z-40 bg-white print-hidden">
       <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
