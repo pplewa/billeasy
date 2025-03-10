@@ -4,11 +4,6 @@ import InvoiceLayout from './InvoiceLayout';
 import { InvoiceType } from '@/lib/types';
 
 // Type for signature to avoid unknown type errors
-interface Signature {
-  name?: string;
-  fontFamily?: string;
-}
-
 // Shared interface for both client and server usage
 export interface InvoiceTemplateProps {
   data: InvoiceType;
@@ -26,9 +21,8 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
   const items = details.items || [];
   const sender = data?.sender || {};
   const receiver = data?.receiver || {};
-
-  // Type-safe access to signature
-  const signature = details.signature as Signature | undefined;
+  const tax = (details as { tax: number })?.tax || 0;
+  const discount = (details as { details: number })?.details || 0;
 
   return (
     <InvoiceLayout>
@@ -162,13 +156,13 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
           </div>
           <div className="flex justify-between py-2">
             <span className="font-medium">{t('tax')}:</span>
-            <span>{formatCurrency(details.tax || 0, String(details?.currency || 'USD'))}</span>
+            <span>{formatCurrency(tax || 0, String(details?.currency || 'USD'))}</span>
           </div>
-          {details.discount ? (
+          {discount ? (
             <div className="flex justify-between py-2">
               <span className="font-medium">{t('discount')}:</span>
               <span>
-                {formatCurrency(details.discount || 0, String(details?.currency || 'USD'))}
+                {formatCurrency(discount || 0, String(details?.currency || 'USD'))}
               </span>
             </div>
           ) : null}
@@ -227,16 +221,18 @@ export function Template1({ data, t }: InvoiceTemplateProps) {
         </div>
       )}
 
-      {signature && signature.name && (
+
+      {details.signature?.data && (
         <div className="mt-12 flex justify-end">
           <div className="text-center">
             <div
               className="inline-block border-b border-gray-400 pb-1 px-8"
-              style={signature.fontFamily ? { fontFamily: signature.fontFamily } : undefined}
             >
-              <span className="text-2xl" style={{ fontFamily: signature.fontFamily || 'cursive' }}>
-                {signature.name}
-              </span>
+               <img
+                  src={details.signature.data}
+                  alt={t('authorizedSignature')}
+                  className="h-16 object-contain mb-2"
+                />
             </div>
             <p className="mt-1 text-gray-600">{t('authorizedSignature')}</p>
           </div>

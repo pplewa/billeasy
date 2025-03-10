@@ -48,9 +48,6 @@ export const DetailsSchema = z
     // For backwards compatibility
     notes: fieldValidators.stringOptional, // Alias for additionalNotes
     terms: fieldValidators.stringOptional, // Alias for paymentTerms
-
-    tax: fieldValidators.numberOptional,
-    discount: fieldValidators.numberOptional,
   });
 
 /**
@@ -64,7 +61,7 @@ export const InvoiceSchema = z
     // Main sections
     sender: SenderSchema.optional().nullable(),
     receiver: ReceiverSchema.optional().nullable(),
-    details: DetailsSchema.omit({ tax: true, discount: true }).optional().nullable(),
+    details: DetailsSchema.optional().nullable(),
 
     // Settings (will be merged into details in adapter functions)
     settings: z
