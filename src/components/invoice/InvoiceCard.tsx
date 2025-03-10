@@ -196,7 +196,7 @@ export function InvoiceCard({
                   </DropdownMenuItem>
                 </InvoiceExportModal>
                 <InvoiceEmailModal invoice={invoice as unknown as FormInvoiceType}>
-                  <DropdownMenuItem onClick={handleEmail} disabled={isEmailing}>
+                  <DropdownMenuItem>
                     <Mail className="mr-2 h-4 w-4" />
                     {tCommon('email')}
                   </DropdownMenuItem>
